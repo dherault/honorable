@@ -5,6 +5,7 @@ import { CssBaseline, ThemeProvider, mergeTheme } from 'honorable'
 import theme from './extended-honorable-theme'
 
 import Home from './scenes/Home'
+import Onboarding from './scenes/Onboarding'
 
 import ThemeModeContext from './contexts/ThemeModeContext'
 
@@ -18,6 +19,10 @@ function App() {
         <CssBaseline />
         <BrowserRouter>
           <Routes>
+            <Route
+              path="/onboarding"
+              element={<Onboarding />}
+            />
             <Route
               path="*"
               element={<Home />}
