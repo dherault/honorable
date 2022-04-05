@@ -1,24 +1,32 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import flexpad from 'flexpad'
+import mpxx from 'mpxx'
+
 const { style } = document.body
-const properties = Object.getOwnPropertyNames(style)
-.filter(p => typeof style[p] === 'string') // drop functions etc
-.map(prop => // de-camelCase
-  // prop = prop.replace(/[A-Z]/g, function($0) { return '-' + $0.toLowerCase() });
+const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string'))]
 
-  // if (prop.startsWith("webkit-")) {
-  //   prop = "-" + prop;
-  // }
+function wrapComponentWithStyle(Component, name) {
+  function HonorableStyle(props) {
+    const { mp, flex, ...nextProps } = props
+    const styleProps = Object.assign(
+      mp ? mpxx(mp) : {},
+      flex ? flexpad(flex) : {},
+      Object.fromEntries(Object.entries(nextProps).filter(([key]) => styleProperties.includes(key))),
+    )
 
-  prop
-)
+    const NextComponent = Object.keys(styleProps).length ? styled(Component)(styleProps) : Component
 
-// Drop duplicates
-const dedupedProperties = [...new Set(properties)]
-
-console.log('dedupedProperties', dedupedProperties)
-function wrapComponentWithStyle(Component) {
-  function WrappedComponent(props) {
-    return <Component {...props} />
+    return <NextComponent {...nextProps} />
   }
+
+  HonorableStyle.propTypes = {
+    ...Component.propTypes,
+    ...Object.fromEntries(styleProperties.map(property => [property, PropTypes.string])),
+  }
+
+  return HonorableStyle
 }
 
 export default wrapComponentWithStyle
