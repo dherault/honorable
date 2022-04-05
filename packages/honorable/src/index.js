@@ -1,2 +1,3 @@
-export { default as Box } from './components/Box'
-export { default as Button } from './components/Button'
+export * from './components/tags'
+export { default as ThemeProvider } from './components/ThemeProvider'
+export { default as useTheme } from './hooks/useTheme'

@@ -4,11 +4,16 @@ import styled from 'styled-components'
 import flexpad from 'flexpad'
 import mpxx from 'mpxx'
 
+import useTheme from '../hooks/useTheme'
+
 const { style } = document.body
 const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string'))]
 
 function wrapComponentWithStyle(Component, name) {
   function HonorableStyle(props) {
+    const theme = useTheme()
+
+    console.log('theme', theme)
     const { mp, flex, ...nextProps } = props
     const styleProps = Object.assign(
       mp ? mpxx(mp) : {},
