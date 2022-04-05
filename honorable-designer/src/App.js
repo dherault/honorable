@@ -1,4 +1,4 @@
-import { Button, Div, ThemeProvider, useTheme } from 'honorable'
+import { Button, CssBaseline, Div, ThemeProvider, useTheme } from 'honorable'
 
 const theme = {
   mode: 'dark',
@@ -23,6 +23,7 @@ const theme = {
         outlined: {
           backgroundColor: 'transparent',
           border: '1px solid brand',
+          padding: 8,
           ':hover': {
             backgroundColor: 'brand',
           },
@@ -35,6 +36,7 @@ const theme = {
 function App() {
   return (
     <>
+      <CssBaseline />
       <Div
         flexpad="x5"
         border="1px solid blue"
