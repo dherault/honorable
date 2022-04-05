@@ -42,11 +42,18 @@ function isSelector(property) {
   return property.startsWith(' ') || selectorPrefixes.some(prefix => trimmedProperty.startsWith(prefix))
 }
 
+function extractDefaultStyle(theme) {
+  return {
+    fontFamily: theme.font,
+  }
+}
+
 function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   const HonorableStyle = styled(ComponentOrTag)(props => {
     const { theme, mp, flexpad: flexpadProp, ...nextProps } = props
 
     return Object.assign(
+      extractDefaultStyle(theme),
       ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : [{}]),
       flexpadProp ? flexpad(flexpadProp) : {},
       Object.fromEntries(
@@ -60,6 +67,7 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   function Honorable(props) {
     const theme = useTheme()
 
+    if (name === 'button') console.log('theme', theme)
     const workingTheme = theme[name]
 
     if (!workingTheme) {

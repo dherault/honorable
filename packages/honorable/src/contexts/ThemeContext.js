@@ -1,3 +1,5 @@
 import { createContext } from 'react'
 
-export default createContext({})
+import defaultTheme from '../data/defaultTheme'
+
+export default createContext(defaultTheme)

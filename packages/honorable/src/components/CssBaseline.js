@@ -1,6 +1,15 @@
+import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
-export default createGlobalStyle`
+import useTheme from '../hooks/useTheme'
+
+const GlobalStyle = createGlobalStyle`
+${({ theme }) => console.log(theme) || typeof theme.font === 'string' && `
+  html {
+    font-family: ${theme.font};
+  }
+`}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -351,3 +360,11 @@ template {
   display: none;
 }
 `
+
+function CssBaseline() {
+  const theme = useTheme()
+
+  return <GlobalStyle theme={theme} />
+}
+
+export default CssBaseline

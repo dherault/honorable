@@ -4,7 +4,7 @@
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon --watch src --exec npm run rm-react && npm run build",
+    "dev": "nodemon --watch src --exec \"npm run rm-react && npm run build\"",
     "build": "npx tsc",
     "rm-react": "rm -rf node_modules/react node_modules/react-dom node_modules/styled-components"
   },
@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "flexpad": "^3.0.0",
+    "lodash.merge": "^4.6.2",
     "mpxx": "^6.0.1",
     "prop-types": "^15.8.1"
   },
