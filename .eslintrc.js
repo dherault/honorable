@@ -20,4 +20,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
   ],
+  rules: {
+    'react/destructuring-assignment': 'off',
+  },
 }

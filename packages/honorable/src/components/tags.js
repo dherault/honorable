@@ -1,4 +1,4 @@
-const { default: createComponent } = require('../utils/createComponent')
+const { default: wrapComponentWithStyle } = require('../utils/wrapComponentWithStyle')
 const { default: capitalize } = require('../utils/capitalize')
 
 module.exports = Object.fromEntries(
@@ -151,5 +151,5 @@ module.exports = Object.fromEntries(
     'tt',
     'xmp',
   ]
-.map(tag => [capitalize(tag), createComponent(tag, tag)])
+.map(tag => [capitalize(tag), wrapComponentWithStyle(tag, tag)])
 )

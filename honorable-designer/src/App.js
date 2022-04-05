@@ -1,22 +1,34 @@
 import { Button, Div, ThemeProvider, useTheme } from 'honorable'
 
 const theme = {
+  mode: 'dark',
   colors: {
-    brand: '#0099ff',
+    brand: {
+      light: '#0099ff',
+      dark: '#9900ff',
+    },
   },
   button: {
     defaultProps: {
-      backgroundColor: '#0099ff',
+      backgroundColor: 'brand',
       border: 'none',
-      mp: 'py-1 px-2',
+      cursor: 'pointer',
+      padding: '0.5rem 1rem',
+      ':hover': {
+        backgroundColor: 'red',
+      },
     },
-    // props: {
-    //   variant: {
-    //     contained: {
-
-    //     },
-    //   },
-    // },
+    customProps: {
+      variant: {
+        outlined: {
+          backgroundColor: 'transparent',
+          border: '1px solid brand',
+          ':hover': {
+            backgroundColor: 'brand',
+          },
+        },
+      },
+    },
   },
 }
 
@@ -24,7 +36,7 @@ function App() {
   return (
     <>
       <Div
-        flex="x5"
+        flexpad="x5"
         border="1px solid blue"
         color="red"
       >
@@ -37,6 +49,12 @@ function App() {
         <ThemeProvider theme={theme}>
           <CustomComponent />
           <Button>
+            A themed button
+          </Button>
+          <Button
+            variant="outlined"
+            mp="ml-2"
+          >
             A themed button
           </Button>
         </ThemeProvider>
