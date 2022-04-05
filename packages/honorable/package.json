@@ -1,6 +1,6 @@
 {
   "name": "honorable",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,8 @@
   },
   "keywords": [
     "React",
-    "components"
+    "components",
+    "librarie"
   ],
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
