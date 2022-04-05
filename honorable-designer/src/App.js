@@ -1,7 +1,11 @@
-import { Button, CssBaseline, Div, ThemeProvider, useTheme } from 'honorable'
+import { CssBaseline, ThemeProvider } from 'honorable'
+import { useState } from 'react'
 
-const theme = {
-  mode: 'dark',
+import ApplicationLayout from './components/ApplicationLayout'
+
+const defaultTheme = {
+  // mode: 'dark',
+  font: 'sans-serif',
   colors: {
     brand: {
       light: '#0099ff',
@@ -34,44 +38,16 @@ const theme = {
 }
 
 function App() {
+  const [mode, setMode] = useState('light')
+  const [theme, setTheme] = useState(defaultTheme)
+
   return (
-    <>
+    <ThemeProvider theme={{ ...theme, mode }}>
       <CssBaseline />
-      <Div
-        flexpad="x5"
-        border="1px solid blue"
-        color="red"
-      >
-        A cool box
-      </Div>
-      <Button mp="my-2">
-        A cool button
-      </Button>
-      <div>
-        <ThemeProvider theme={theme}>
-          <CustomComponent />
-          <Button>
-            A themed button
-          </Button>
-          <Button
-            variant="outlined"
-            mp="ml-2"
-          >
-            A themed button
-          </Button>
-        </ThemeProvider>
-      </div>
-    </>
-  )
-}
-
-function CustomComponent() {
-  const theme = useTheme()
-
-  return (
-    <div style={{ backgroundColor: theme?.colors?.brand }}>
-      Custom component
-    </div>
+      <ApplicationLayout>
+        Foo
+      </ApplicationLayout>
+    </ThemeProvider>
   )
 }
 
