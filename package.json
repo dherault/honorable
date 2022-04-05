@@ -1,5 +1,5 @@
 {
-  "name": "holistic-monorepo",
+  "name": "honorable-monorepo",
   "private": true,
   "version": "0.0.0",
   "description": "An extensible React component librarie for 2022 and beyond",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dherault/holistic.git"
+    "url": "git+https://github.com/dherault/honorable.git"
   },
   "keywords": [
     "React",
@@ -18,9 +18,9 @@
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dherault/holistic/issues"
+    "url": "https://github.com/dherault/honorable/issues"
   },
-  "homepage": "https://github.com/dherault/holistic#readme",
+  "homepage": "https://github.com/dherault/honorable#readme",
   "devDependencies": {
     "eslint-config-dherault": "^1.7.2"
   }

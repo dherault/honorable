@@ -1,2 +1,2 @@
-# holistic
+# honorable
 An extensible React component library

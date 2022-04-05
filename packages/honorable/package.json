@@ -1,5 +1,5 @@
 {
-  "name": "holistic",
+  "name": "honorable",
   "version": "0.0.0",
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "\"git+https://github.com/dherault/holistic.git"
+    "url": "\"git+https://github.com/dherault/honorable.git"
   },
   "keywords": [
     "React",
