@@ -1,6 +1,9 @@
 export default {
   // mode: 'dark',
-  font: 'sans-serif',
+  font: {
+    family: '"Roboto", sans-serif',
+    size: '16px',
+  },
   colors: {
     brand: {
       light: '#0099ff',
@@ -21,9 +24,9 @@ export default {
     border: 'blue',
   },
   global: {
-    defaultProps: {
-      color: 'text',
-    },
+    // defaultProps: {
+    //   color: 'text',
+    // },
     customProps: {
       text: {
         small: {

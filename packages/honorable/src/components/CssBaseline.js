@@ -4,11 +4,12 @@ import { createGlobalStyle } from 'styled-components'
 import useTheme from '../hooks/useTheme'
 
 const GlobalStyle = createGlobalStyle`
-${({ theme }) => typeof theme.font === 'string' && `
-  html {
-    font-family: ${theme.font};
-  }
-`}
+html {
+  ${({ theme }) => console.log(theme) || `
+    ${typeof theme.font?.family !== 'undefined' ? `font-family: ${theme.font.family};` : ''}
+    ${typeof theme.font?.size !== 'undefined' ? `font-size: ${theme.font.size};` : ''}
+  `}
+}
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 

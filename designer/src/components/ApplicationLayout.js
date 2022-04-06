@@ -43,13 +43,13 @@ function ApplicationLayout({ children }) {
       </Link>
       <Div flexpad="x4s">
         <ThemeProvider theme={{ ...theme, mode }}>
-          <CssBaseline />
           <ThemeEditor
             theme={userTheme}
             setTheme={setUserTheme}
           />
         </ThemeProvider>
         <ThemeProvider theme={{ ...userTheme, mode }}>
+          <CssBaseline />
           <Div
             flexGrow={1}
             backgroundColor="background"
