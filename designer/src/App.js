@@ -8,6 +8,7 @@ import ApplicationLayout from './components/ApplicationLayout'
 
 import Dashboard from './scenes/Dashboard'
 import Typography from './scenes/Typography'
+import Colors from './scenes/Colors'
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
           <Route
             path="/typography"
             element={<Typography />}
+          />
+          <Route
+            path="/colors"
+            element={<Colors />}
           />
         </Routes>
       </ApplicationLayout>

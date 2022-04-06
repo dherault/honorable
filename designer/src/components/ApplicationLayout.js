@@ -41,6 +41,9 @@ function ApplicationLayout({ children }) {
       <Link to="/typography">
         Typography
       </Link>
+      <Link to="/colors">
+        Colors
+      </Link>
       <Div flexpad="x4s">
         <ThemeProvider theme={{ ...theme, mode }}>
           <ThemeEditor

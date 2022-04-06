@@ -6,7 +6,7 @@ function ThemeEditor({ collapsed = false, theme = {}, setTheme = () => null }) {
       width={512}
       height="100vh"
       borderRight="1px solid border"
-      backgroundColor="background"
+      backgroundColor="background-light"
       flexShrink={0}
     >
       ThemeEditor

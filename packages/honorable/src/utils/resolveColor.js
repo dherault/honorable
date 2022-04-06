@@ -47,7 +47,7 @@ function resolveColor(key, value, theme = {}) {
   .forEach(colorName => {
     if (resolvedValue.includes(colorName)) {
       resolvedValue = resolvedValue.replace(
-        colorName,
+        new RegExp(colorName, 'g'),
         getColor(colorName, theme)
       )
     }
