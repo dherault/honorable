@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { A, CssBaseline, Div, Span, ThemeProvider } from 'honorable'
+import { A, CssBaseline, Div, Span, Switch, ThemeProvider } from 'honorable'
 
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
@@ -20,7 +20,12 @@ function ApplicationLayout({ children }) {
         flexpad="x4"
         mp="px-2"
       >
+        <Switch
+          checked={mode === 'dark'}
+          onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
+        />
         <Span
+          mp="ml-2"
           userSelect="none"
           onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
         >
@@ -43,18 +48,24 @@ function ApplicationLayout({ children }) {
         <A
           as={Link}
           to="/"
+          mp="ml-2"
         >
           Dashboard
         </A>
-        <Link to="/">
-          Dashboard
-        </Link>
-        <Link to="/typography">
+        <A
+          as={Link}
+          to="/typography"
+          mp="ml-2"
+        >
           Typography
-        </Link>
-        <Link to="/colors">
+        </A>
+        <A
+          as={Link}
+          to="/colors"
+          mp="ml-2"
+        >
           Colors
-        </Link>
+        </A>
       </Div>
       <Div flexpad="x4s">
         <ThemeEditor
