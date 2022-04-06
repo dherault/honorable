@@ -22,5 +22,7 @@ module.exports = {
   ],
   rules: {
     'react/destructuring-assignment': 'off',
+    'import/no-unresolved': 'off',
+    'no-unused-vars': ['warn', { varsIgnorePattern: '^React$' }],
   },
 }

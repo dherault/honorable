@@ -1,17 +1,42 @@
-function resolveColor(value, theme = {}) {
+const colorProperties = [
+  'backgroundColor',
+  'background',
+  'border',
+  'borderBottom',
+  'borderLeft',
+  'borderRight',
+  'borderTop',
+  'borderColor',
+  'borderBottomColor',
+  'borderLeftColor',
+  'borderRightColor',
+  'borderTopColor',
+  'boxShadow',
+  'caretColor',
+  'color',
+  'columnRule',
+  'columnRuleColor',
+  'filter',
+  'opacity',
+  'outlineColor',
+  'outline',
+  'textDecoration',
+  'textDecorationColor',
+  'textShadow',
+]
+
+function resolveColor(key, value, theme = {}) {
   if (typeof value === 'object') {
     const resolvedObject = {}
 
     Object.keys(value).forEach(key => {
-      resolvedObject[key] = resolveColor(value[key], theme)
+      resolvedObject[key] = resolveColor(key, value[key], theme)
     })
 
     return resolvedObject
   }
 
-  if (typeof value !== 'string') {
-    return value
-  }
+  if (typeof value !== 'string' || !colorProperties.includes(key)) return value
 
   let resolvedValue = value
 

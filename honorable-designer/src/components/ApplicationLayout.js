@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { CssBaseline, Div, Span, ThemeProvider } from 'honorable'
-import { useState } from 'react'
 
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
@@ -10,8 +11,10 @@ function ApplicationLayout({ children }) {
   const [mode, setMode] = useState('light')
   const [userTheme, setUserTheme] = useState(defaultTheme)
 
+  useEffect(() => setUserTheme(defaultTheme), [setUserTheme])
+
   return (
-    <div>
+    <>
       <Span
         userSelect="none"
         onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
@@ -32,6 +35,12 @@ function ApplicationLayout({ children }) {
       >
         Erase theme
       </Span>
+      <Link to="/">
+        Dashboard
+      </Link>
+      <Link to="/typography">
+        Typography
+      </Link>
       <Div flexpad="x4s">
         <ThemeProvider theme={{ ...theme, mode }}>
           <CssBaseline />
@@ -49,7 +58,7 @@ function ApplicationLayout({ children }) {
           </Div>
         </ThemeProvider>
       </Div>
-    </div>
+    </>
   )
 }
 

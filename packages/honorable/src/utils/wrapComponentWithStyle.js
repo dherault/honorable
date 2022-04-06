@@ -1,70 +1,59 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import flexpad from 'flexpad'
+import fp from 'flexpad'
 import mpxx from 'mpxx'
 
 import useTheme from '../hooks/useTheme'
 
 import resolveColor from './resolveColor'
+import isSelector from './isSelector'
 
 const { style } = document.body
 const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string'))]
 
-const colorProperties = [
-  'backgroundColor',
-  'background',
-  'border',
-  'borderBottom',
-  'borderLeft',
-  'borderRight',
-  'borderTop',
-  'borderColor',
-  'borderBottomColor',
-  'borderLeftColor',
-  'borderRightColor',
-  'borderTopColor',
-  'boxShadow',
-  'caretColor',
-  'color',
-  'columnRule',
-  'columnRuleColor',
-  'filter',
-  'opacity',
-  'outlineColor',
-  'outline',
-  'textDecoration',
-  'textDecorationColor',
-  'textShadow',
-]
+function extractDefaultStyle(theme, props) {
+  const globalCustomProps = theme.global?.customProps
+  const customStyle = {}
 
-const selectorPrefixes = [':', '&', '>', '~', '+', '.', ',', '#']
+  if (globalCustomProps) {
+    Object.keys(props).forEach(propKey => {
+      if (!globalCustomProps[propKey]) return
 
-function isSelector(property) {
-  const trimmedProperty = property.trim()
+      const propValue = props[propKey]
 
-  return property.startsWith(' ') || selectorPrefixes.some(prefix => trimmedProperty.startsWith(prefix))
-}
+      if (Object.keys(globalCustomProps[propKey]).includes(propValue)) {
+        Object.assign(customStyle, globalCustomProps[propKey][propValue])
+      }
+    })
+  }
 
-function extractDefaultStyle(theme) {
   return {
-    fontFamily: theme.font,
+    ...(theme.global?.defaultProps || {}),
+    ...customStyle,
   }
 }
 
 function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   const HonorableStyle = styled(ComponentOrTag)(props => {
-    const { theme, mp, flexpad: flexpadProp, ...nextProps } = props
+    const { theme, mp, flexpad, ...nextProps } = props
+    const styleProps = {}
 
-    return Object.assign(
-      extractDefaultStyle(theme),
-      ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : [{}]),
-      flexpadProp ? flexpad(flexpadProp) : {},
-      Object.fromEntries(
-        Object.entries(nextProps)
-        .filter(([key]) => styleProperties.includes(key) || isSelector(key))
-        .map(([key, value]) => colorProperties.includes(key) || isSelector(key) ? [key, resolveColor(value, theme)] : [key, value])
+    Object.entries(nextProps).forEach(([key, value]) => {
+      if (styleProperties.includes(key) || isSelector(key)) {
+        styleProps[key] = value
+      }
+    })
+
+    return resolveColor(
+      null,
+      Object.assign(
+        extractDefaultStyle(theme, nextProps),
+        ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : []),
+        flexpad ? fp(flexpad) : {},
+        styleProps,
       ),
+      theme
     )
   })
 

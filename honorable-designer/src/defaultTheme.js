@@ -7,32 +7,47 @@ export default {
       dark: '#9900ff',
     },
     background: {
-      light: 'white',
+      light: 'transparent',
       dark: '#333',
+    },
+    'background-light': {
+      light: '#eee',
+      dark: '#444',
+    },
+    text: {
+      light: 'inherit',
+      dark: 'white',
     },
     border: 'blue',
   },
-  button: {
+  global: {
     defaultProps: {
-      backgroundColor: 'brand',
-      border: 'none',
-      cursor: 'pointer',
-      padding: '0.5rem 1rem',
-      ':hover': {
-        backgroundColor: 'red',
-      },
+      color: 'text',
     },
     customProps: {
-      variant: {
-        outlined: {
-          backgroundColor: 'transparent',
-          border: '1px solid brand',
-          padding: 8,
-          ':hover': {
-            backgroundColor: 'brand',
-          },
+      text: {
+        small: {
+          fontSize: '0.75rem',
         },
       },
+    },
+  },
+  button: {
+    defaultProps: {
+      // backgroundColor: 'brand',
+      // border: 'none',
+      // cursor: 'pointer',
+      // padding: '0.5rem 1rem',
+      // ':hover': {
+      //   backgroundColor: 'red',
+      // },
+    },
+  },
+  pre: {
+    defaultProps: {
+      display: 'inline',
+      padding: 4,
+      backgroundColor: 'background-light',
     },
   },
 }
