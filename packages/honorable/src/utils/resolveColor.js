@@ -1,4 +1,4 @@
-function resolveColor(value, theme) {
+function resolveColor(value, theme = {}) {
   if (typeof value === 'object') {
     const resolvedObject = {}
 
@@ -13,24 +13,34 @@ function resolveColor(value, theme) {
     return value
   }
 
-  const namedColors = Object.keys(theme.colors || {}).sort((a, b) => b.length - a.length)
-
   let resolvedValue = value
 
-  namedColors.forEach(colorName => {
+  Object.keys(theme.colors || {})
+  .sort((a, b) => b.length - a.length)
+  .forEach(colorName => {
     if (resolvedValue.includes(colorName)) {
       resolvedValue = resolvedValue.replace(
         colorName,
-        typeof theme.colors[colorName] === 'string'
-          ? theme.colors[colorName]
-          : typeof theme.colors[colorName] === 'object'
-            ? theme.colors[colorName][theme.mode]
-            : colorName
+        getColor(colorName, theme)
       )
     }
   })
 
   return resolvedValue
+}
+
+function getColor(color, theme, previousColor, i = 0) {
+  if (i >= 128) {
+    throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
+  }
+
+  const foundColor = typeof theme.colors[color] === 'string'
+    ? theme.colors[color]
+    : typeof theme.colors[color] === 'object'
+      ? theme.colors[color][theme.mode]
+      : color
+
+  return foundColor === previousColor ? foundColor : getColor(foundColor, theme, foundColor, i + 1)
 }
 
 export default resolveColor

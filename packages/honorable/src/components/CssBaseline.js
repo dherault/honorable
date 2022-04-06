@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components'
 import useTheme from '../hooks/useTheme'
 
 const GlobalStyle = createGlobalStyle`
-${({ theme }) => console.log(theme) || typeof theme.font === 'string' && `
+${({ theme }) => typeof theme.font === 'string' && `
   html {
     font-family: ${theme.font};
   }

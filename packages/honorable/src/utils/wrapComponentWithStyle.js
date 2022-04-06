@@ -15,8 +15,12 @@ const colorProperties = [
   'backgroundColor',
   'background',
   'border',
-  'borderBottomColor',
+  'borderBottom',
+  'borderLeft',
+  'borderRight',
+  'borderTop',
   'borderColor',
+  'borderBottomColor',
   'borderLeftColor',
   'borderRightColor',
   'borderTopColor',
@@ -67,11 +71,15 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   function Honorable(props) {
     const theme = useTheme()
 
-    if (name === 'button') console.log('theme', theme)
     const workingTheme = theme[name]
 
     if (!workingTheme) {
-      return <HonorableStyle {...props} />
+      return (
+        <HonorableStyle
+          theme={theme}
+          {...props}
+        />
+      )
     }
 
     const { customProps, defaultProps = {} } = workingTheme
@@ -99,7 +107,7 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
 
   Honorable.propTypes = {
     ...ComponentOrTag.propTypes,
-    ...Object.fromEntries(styleProperties.map(property => [property, PropTypes.string])),
+    ...Object.fromEntries(styleProperties.map(property => [property, PropTypes.oneOfType([PropTypes.string, PropTypes.number])])),
   }
 
   return Honorable
