@@ -18,12 +18,8 @@ function extractDefaultStyle(theme, props) {
 
   if (globalCustomProps) {
     Object.keys(props).forEach(propKey => {
-      if (!globalCustomProps[propKey]) return
-
-      const propValue = props[propKey]
-
-      if (Object.keys(globalCustomProps[propKey]).includes(propValue)) {
-        Object.assign(customStyle, globalCustomProps[propKey][propValue])
+      if (globalCustomProps[propKey]?.[props[propKey]]) {
+        Object.assign(customStyle, globalCustomProps[propKey][props[propKey]])
       }
     })
   }
@@ -79,8 +75,6 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
         otherProps[key] = value
       }
     })
-
-    console.log('extend', extend)
 
     return (
       <HonorableStyle

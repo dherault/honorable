@@ -45,13 +45,6 @@ function ApplicationLayout({ children }) {
         <Span
           mp="ml-2"
           userSelect="none"
-          onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
-        >
-          {mode}
-        </Span>
-        <Span
-          mp="ml-2"
-          userSelect="none"
           onClick={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
         >
           Reset theme

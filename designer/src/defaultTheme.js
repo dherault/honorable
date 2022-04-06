@@ -153,12 +153,12 @@ function createElevation() {
     '0px 9px 46px 8px',
   ]
 
-  const elevation = {}
+  const elevation = [{ boxShadow: 'none' }]
 
-  for (let i = 1; i < 12 + 1; i++) {
-    elevation[i] = {
+  for (let i = 1; i <= 24; i++) {
+    elevation.push({
       boxShadow: `${umbra[i]} shadow, ${penumbra[i]} shadow, ${ambiant[i]} shadow`,
-    }
+    })
   }
 
   return elevation
