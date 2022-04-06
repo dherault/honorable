@@ -1,6 +1,6 @@
 import { Div } from 'honorable'
 
-function ThemeEditor({ collapsed = false, theme = {}, setTheme = () => null }) {
+function ThemeEditor({ theme = {}, setTheme = () => null }) {
   return (
     <Div
       width={512}
