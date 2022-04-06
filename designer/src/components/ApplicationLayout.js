@@ -21,6 +21,24 @@ function ApplicationLayout({ children }) {
         mp="px-2"
       >
         <Switch
+          checkedBackground={(
+            <Span
+              paddingLeft={4}
+              paddingTop={3}
+              fontSize={18}
+            >
+              🌜
+            </Span>
+          )}
+          uncheckedBackground={(
+            <Span
+              paddingRight={4}
+              paddingTop={3}
+              fontSize={18}
+            >
+              🌞
+            </Span>
+          )}
           checked={mode === 'dark'}
           onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
         />

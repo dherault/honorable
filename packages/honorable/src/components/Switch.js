@@ -1,13 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import extractComponentThemeStyle from '../utils/extractComponentThemeStyle'
 import useTheme from '../hooks/useTheme'
 
 import { Div, Span } from './tags'
-
-function extend(componentTheme, key, props) {
-  return null
-}
 
 const Handle = styled(Span)`
   &:hover {
@@ -15,14 +12,13 @@ const Handle = styled(Span)`
   }
 `
 
-function Switch({ checked, onChange, ...props }) {
+function Switch({ checked, onChange, checkedBackground, uncheckedBackground, ...props }) {
   const theme = useTheme()
-  const componentTheme = theme.switch || {}
-  const extendProps = { checked, ...props }
+  const extendProps = { checked, checkedBackground, uncheckedBackground, ...props }
 
   return (
     <Div
-      flexpad="x4"
+      flexpad="y2s"
       display="inline-flex"
       position="relative"
       width={50}
@@ -31,18 +27,36 @@ function Switch({ checked, onChange, ...props }) {
       backgroundColor="background-light"
       userSelect="none"
       cursor="pointer"
-      extend={extend(componentTheme, 'root', extendProps)}
+      extend={extractComponentThemeStyle(theme.switch, 'root', extendProps)}
       onClick={event => onChange(event, !checked)}
+      role="button"
     >
+      {checked && !!checkedBackground && (
+        <Div
+          flexpad="x4"
+          flexGrow={1}
+        >
+          {checkedBackground}
+        </Div>
+      )}
+      {!checked && !!uncheckedBackground && (
+        <Div
+          flexpad="x6"
+          flexGrow={1}
+        >
+          {uncheckedBackground}
+        </Div>
+      )}
       <Handle
-        position="relative"
-        width={22}
-        height={22}
-        borderRadius={22 / 2}
+        position="absolute"
+        width={20}
+        height={20}
+        borderRadius={20 / 2}
         backgroundColor="white"
-        left={checked ? 'calc(100% - 24px)' : 2}
+        top={2}
+        left={checked ? 'calc(100% - 22px)' : 2}
         transition="left 150ms ease"
-        extend={extend(componentTheme, 'handle', extendProps)}
+        extend={extractComponentThemeStyle(theme.switch, 'handle', extendProps)}
       />
     </Div>
   )

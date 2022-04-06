@@ -43,14 +43,31 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
     const appliedCustomProps = {}
 
     if (customProps) {
-      Object.keys(props).forEach(propKey => {
-        if (customProps[propKey] && typeof customProps[propKey][props[propKey]] === 'object') {
-          Object.assign(appliedCustomProps, customProps[propKey][props[propKey]])
-        }
-      })
+      if (typeof customProps === 'object') {
+        Object.keys(props).forEach(propKey => {
+          if (typeof customProps[propKey] === 'object') {
+            const propValue = customProps[propKey][props[propKey]] || {}
+
+            if (typeof propValue === 'object') Object.assign(appliedCustomProps, propValue)
+            else if (typeof propValue === 'function') Object.assign(appliedCustomProps, propValue(props))
+          }
+          else if (typeof customProps[propKey] === 'function') {
+            Object.assign(appliedCustomProps, customProps[propKey](props))
+          }
+          else {
+            console.warn(`Invalid customProp value for ${name}: ${propKey}. Expected object or function but got ${typeof customProps[propKey]}.`)
+          }
+        })
+      }
+      else if (typeof customProps === 'function') {
+        Object.assign(appliedCustomProps, customProps(props))
+      }
+      else {
+        console.warn(`Invalid customProp value for ${name}. Expected object or function but got ${typeof customProps}.`)
+      }
     }
 
-    const { mp, flexpad, ...nextProps } = props
+    const { mp, flexpad, extend = {}, ...nextProps } = props
     const stylePropsFromProps = {}
     const otherProps = {}
 
@@ -63,6 +80,8 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
       }
     })
 
+    console.log('extend', extend)
+
     return (
       <HonorableStyle
         honorable={resolveColor(
@@ -74,6 +93,7 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
             ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : []),
             flexpad ? fp(flexpad) : {},
             stylePropsFromProps,
+            extend,
           ),
           theme
         )}
