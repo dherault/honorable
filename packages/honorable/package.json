@@ -1,12 +1,12 @@
 {
   "name": "honorable",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "npm run rm-react && npm run rm-build && nodemon --watch src --exec \"npm run build\"",
+    "dev": "npm run rm-peerDependencies && npm run rm-build && nodemon --watch src --exec \"npm run build\"",
     "build": "npx tsc",
-    "rm-react": "rimraf node_modules/react node_modules/react-dom node_modules/styled-components",
+    "rm-peerDependencies": "rimraf node_modules/react node_modules/react-dom node_modules/styled-components",
     "rm-build": "rimraf dist",
     "prepublishOnly": "npm run rm-build && npm run build"
   },

@@ -40,6 +40,8 @@ function resolveColor(key, value, theme = {}) {
     return resolvedObject
   }
 
+  if (typeof value !== 'string') return value
+
   let resolvedValue = value
 
   Object.keys(theme.colors || {})
