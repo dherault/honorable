@@ -1,3 +1,5 @@
+import isSelector from './isSelector'
+
 const colorProperties = [
   'backgroundColor',
   'background',
@@ -26,7 +28,9 @@ const colorProperties = [
 ]
 
 function resolveColor(key, value, theme = {}) {
-  if (typeof value === 'object') {
+  if (!(!key || isSelector(key) || colorProperties.includes(key))) return value
+
+  if (typeof value === 'object' && !isSelector(key)) {
     const resolvedObject = {}
 
     Object.keys(value).forEach(key => {
@@ -35,8 +39,6 @@ function resolveColor(key, value, theme = {}) {
 
     return resolvedObject
   }
-
-  if (typeof value !== 'string' || !colorProperties.includes(key)) return value
 
   let resolvedValue = value
 

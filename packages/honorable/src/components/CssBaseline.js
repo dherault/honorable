@@ -2,12 +2,15 @@ import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
 import useTheme from '../hooks/useTheme'
+import resolveColor from '../utils/resolveColor'
 
 const GlobalStyle = createGlobalStyle`
 html {
-  ${({ theme }) => console.log(theme) || `
+  ${({ theme = {} }) => `
     ${typeof theme.font?.family !== 'undefined' ? `font-family: ${theme.font.family};` : ''}
     ${typeof theme.font?.size !== 'undefined' ? `font-size: ${theme.font.size};` : ''}
+    ${typeof theme.colors?.text !== 'undefined' ? `color: ${resolveColor(null, 'text', theme)};` : ''}
+    ${typeof theme.colors?.background !== 'undefined' ? `background-color: ${resolveColor(null, 'background', theme)};` : ''}
   `}
 }
 

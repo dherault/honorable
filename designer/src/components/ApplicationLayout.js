@@ -50,10 +50,7 @@ function ApplicationLayout({ children }) {
         </ThemeProvider>
         <ThemeProvider theme={{ ...userTheme, mode }}>
           <CssBaseline />
-          <Div
-            flexGrow={1}
-            backgroundColor="background"
-          >
+          <Div flexGrow={1}>
             {children}
           </Div>
         </ThemeProvider>
