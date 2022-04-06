@@ -1,23 +1,25 @@
 import React from 'react'
-import { createGlobalStyle } from 'styled-components'
+import { Global, css } from '@emotion/react'
 
 import useTheme from '../hooks/useTheme'
-import resolveColor from '../utils/resolveColor'
 
-const GlobalStyle = createGlobalStyle`
+function CssBaseline() {
+  const theme = useTheme()
+
+  return (
+    <Global
+      styles={css`
 html {
-  ${({ theme = {} }) => `
-    ${typeof theme.font?.family !== 'undefined' ? `font-family: ${theme.font.family};` : ''}
-    ${typeof theme.font?.size !== 'undefined' ? `font-size: ${theme.font.size};` : ''}
-    ${typeof theme.colors?.text !== 'undefined' ? `color: ${resolveColor(null, 'text', theme)};` : ''}
-    ${typeof theme.colors?.background !== 'undefined' ? `background-color: ${resolveColor(null, 'background', theme)};` : ''}
-  `}
+  ${typeof theme.font?.family !== 'undefined' ? `font-family: ${theme.font.family};` : ''}
+  ${typeof theme.font?.size !== 'undefined' ? `font-size: ${theme.font.size};` : ''}
+  ${typeof theme.colors?.text !== 'undefined' ? `color: ${theme.utils.resolveColor('text')};` : ''}
+  ${typeof theme.colors?.background !== 'undefined' ? `background-color: ${theme.utils.resolveColor('background')};` : ''}
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
-   ========================================================================== */
+    ========================================================================== */
 
 /**
  * 1. Correct the line height in all browsers.
@@ -30,7 +32,7 @@ html {
 }
 
 /* Sections
-   ========================================================================== */
+    ========================================================================== */
 
 /**
  * Remove the margin in all browsers.
@@ -59,7 +61,7 @@ h1 {
 }
 
 /* Grouping content
-   ========================================================================== */
+    ========================================================================== */
 
 /**
  * 1. Add the correct box sizing in Firefox.
@@ -83,7 +85,7 @@ pre {
 }
 
 /* Text-level semantics
-   ========================================================================== */
+    ========================================================================== */
 
 /**
  * Remove the gray background on active links in IE 10.
@@ -155,7 +157,7 @@ sup {
 }
 
 /* Embedded content
-   ========================================================================== */
+    ========================================================================== */
 
 /**
  * Remove the border on images inside links in IE 10.
@@ -166,7 +168,7 @@ img {
 }
 
 /* Forms
-   ========================================================================== */
+    ========================================================================== */
 
 /**
  * 1. Change the font styles in all browsers.
@@ -327,26 +329,26 @@ textarea {
 }
 
 /* Interactive
-   ========================================================================== */
+    ========================================================================== */
 
 /*
- * Add the correct display in Edge, IE 10+, and Firefox.
- */
+  * Add the correct display in Edge, IE 10+, and Firefox.
+  */
 
 details {
   display: block;
 }
 
 /*
- * Add the correct display in all browsers.
- */
+  * Add the correct display in all browsers.
+  */
 
 summary {
   display: list-item;
 }
 
 /* Misc
-   ========================================================================== */
+    ========================================================================== */
 
 /**
  * Add the correct display in IE 10+.
@@ -363,12 +365,9 @@ template {
 [hidden] {
   display: none;
 }
-`
-
-function CssBaseline() {
-  const theme = useTheme()
-
-  return <GlobalStyle theme={theme} />
+`}
+    />
+  )
 }
 
 export default CssBaseline

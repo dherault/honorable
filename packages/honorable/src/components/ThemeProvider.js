@@ -1,6 +1,6 @@
 import React from 'react'
 import merge from 'lodash.merge'
-import { ThemeProvider as StyledComponentsProvider } from 'styled-components'
+import { ThemeProvider as EmotionProvider } from '@emotion/react'
 
 import ThemeContext from '../contexts/ThemeContext'
 
@@ -12,9 +12,9 @@ function ThemeProvider({ theme = {}, children }) {
 
   return (
     <ThemeContext.Provider value={userTheme}>
-      <StyledComponentsProvider theme={userTheme}>
+      <EmotionProvider theme={userTheme}>
         {children}
-      </StyledComponentsProvider>
+      </EmotionProvider>
     </ThemeContext.Provider>
   )
 }
