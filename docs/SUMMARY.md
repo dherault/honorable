@@ -1,3 +1,3 @@
 # Table of contents
 
-* [honorable](README.md)
+* [Honorable](README.md)
