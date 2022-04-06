@@ -35,43 +35,11 @@ function extractDefaultStyle(theme, props) {
 }
 
 function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
-  const HonorableStyle = styled(ComponentOrTag)(props => {
-    const { theme, mp, flexpad, ...nextProps } = props
-    const styleProps = {}
-
-    Object.entries(nextProps).forEach(([key, value]) => {
-      if (styleProperties.includes(key) || isSelector(key)) {
-        styleProps[key] = value
-      }
-    })
-
-    return resolveColor(
-      null,
-      Object.assign(
-        extractDefaultStyle(theme, nextProps),
-        ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : []),
-        flexpad ? fp(flexpad) : {},
-        styleProps,
-      ),
-      theme
-    )
-  })
+  const HonorableStyle = styled(ComponentOrTag)(props => props.honorable)
 
   function Honorable(props) {
     const theme = useTheme()
-
-    const workingTheme = theme[name]
-
-    if (!workingTheme) {
-      return (
-        <HonorableStyle
-          theme={theme}
-          {...props}
-        />
-      )
-    }
-
-    const { customProps, defaultProps = {} } = workingTheme
+    const { customProps, defaultProps = {} } = theme[name] || {}
     const appliedCustomProps = {}
 
     if (customProps) {
@@ -82,12 +50,34 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
       })
     }
 
+    const { mp, flexpad, ...nextProps } = props
+    const stylePropsFromProps = {}
+    const otherProps = {}
+
+    Object.entries(nextProps).forEach(([key, value]) => {
+      if (styleProperties.includes(key) || isSelector(key)) {
+        stylePropsFromProps[key] = value
+      }
+      else {
+        otherProps[key] = value
+      }
+    })
+
     return (
       <HonorableStyle
-        theme={theme}
-        {...defaultProps}
-        {...appliedCustomProps}
-        {...props}
+        honorable={resolveColor(
+          null,
+          Object.assign(
+            extractDefaultStyle(theme, nextProps),
+            defaultProps,
+            appliedCustomProps,
+            ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : []),
+            flexpad ? fp(flexpad) : {},
+            stylePropsFromProps,
+          ),
+          theme
+        )}
+        {...otherProps}
       />
     )
   }

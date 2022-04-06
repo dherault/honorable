@@ -30,7 +30,7 @@ const colorProperties = [
 function resolveColor(key, value, theme = {}) {
   if (!(!key || isSelector(key) || colorProperties.includes(key))) return value
 
-  if (typeof value === 'object' && !isSelector(key)) {
+  if (typeof value === 'object') {
     const resolvedObject = {}
 
     Object.keys(value).forEach(key => {

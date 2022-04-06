@@ -40,6 +40,14 @@ export default {
       elevation: createElevation(),
     },
   },
+  a: {
+    defaultProps: {
+      // color: 'brand',
+      '&:hover': {
+        color: 'brand',
+      },
+    },
+  },
   button: {
     defaultProps: {
       // backgroundColor: 'brand',

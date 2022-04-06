@@ -9,6 +9,7 @@ import ApplicationLayout from './components/ApplicationLayout'
 import Dashboard from './scenes/Dashboard'
 import Typography from './scenes/Typography'
 import Colors from './scenes/Colors'
+import Form from './scenes/Form'
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
           <Route
             path="/colors"
             element={<Colors />}
+          />
+          <Route
+            path="/form"
+            element={<Form />}
           />
         </Routes>
       </ApplicationLayout>
