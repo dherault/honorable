@@ -11,7 +11,7 @@ function extend(componentTheme, key, props) {
 
 const Handle = styled(Span)`
   &:hover {
-    box-shadow: 0 0 0 2px red;
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.utils.resolveColor('shadow')};
   }
 `
 
