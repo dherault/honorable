@@ -19,97 +19,103 @@ function ApplicationLayout({ children }) {
 
   return (
     <ThemeProvider theme={{ ...theme, mode }}>
-      <Nav
-        position="relative"
-        elevation={2}
-        height={64}
-        flexpad="x4"
-        mp="px-2"
+      <Div
+        height="100vh"
+        flexpad="y2s"
       >
-        <Img
-          src="/images/logo.png"
-          width={32}
-          marginTop={-4}
-        />
-        <H1 mp="ml-2">
-          Honorable Designer
-        </H1>
-        <A
-          as={Link}
-          to="/"
-          mp="ml-4"
+        <Nav
+          position="relative"
+          elevation={2}
+          height={64}
+          flexpad="x4"
+          mp="px-2"
         >
-          Dashboard
-        </A>
-        <A
-          as={Link}
-          to="/typography"
-          mp="ml-2"
+          <Img
+            src="/images/logo.png"
+            width={32}
+            marginTop={-4}
+          />
+          <H1 mp="ml-2">
+            Honorable Designer
+          </H1>
+          <A
+            as={Link}
+            to="/"
+            mp="ml-4"
+          >
+            Dashboard
+          </A>
+          <A
+            as={Link}
+            to="/typography"
+            mp="ml-2"
+          >
+            Typography
+          </A>
+          <A
+            as={Link}
+            to="/colors"
+            mp="ml-2"
+          >
+            Colors
+          </A>
+          <Div flexGrow={1} />
+          <Switch
+            checkedBackground={(
+              <Span
+                paddingLeft={4}
+                paddingTop={3}
+                fontSize={18}
+              >
+                🌜
+              </Span>
+            )}
+            uncheckedBackground={(
+              <Span
+                paddingRight={4}
+                paddingTop={3}
+                fontSize={18}
+              >
+                🌞
+              </Span>
+            )}
+            checked={mode === 'dark'}
+            onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
+          />
+          <Span
+            mp="ml-2"
+            userSelect="none"
+            onClick={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
+          >
+            Reset theme
+          </Span>
+          <Span
+            mp="ml-2"
+            userSelect="none"
+            onClick={() => window.confirm('Are you sure you want to erase the theme?') && setUserTheme({})}
+          >
+            Erase theme
+          </Span>
+          <Button
+            onClick={handleExport}
+            mp="ml-2"
+          >
+            Export theme
+          </Button>
+        </Nav>
+        <Div
+          flexGrow={1}
+          flexpad="x4s"
         >
-          Typography
-        </A>
-        <A
-          as={Link}
-          to="/colors"
-          mp="ml-2"
-        >
-          Colors
-        </A>
-        <Div flexGrow={1} />
-        <Switch
-          checkedBackground={(
-            <Span
-              paddingLeft={4}
-              paddingTop={3}
-              fontSize={18}
-            >
-              🌜
-            </Span>
-          )}
-          uncheckedBackground={(
-            <Span
-              paddingRight={4}
-              paddingTop={3}
-              fontSize={18}
-            >
-              🌞
-            </Span>
-          )}
-          checked={mode === 'dark'}
-          onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
-        />
-        <Span
-          mp="ml-2"
-          userSelect="none"
-          onClick={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
-        >
-          Reset theme
-        </Span>
-        <Span
-          mp="ml-2"
-          userSelect="none"
-          onClick={() => window.confirm('Are you sure you want to erase the theme?') && setUserTheme({})}
-        >
-          Erase theme
-        </Span>
-        <Button
-          onClick={handleExport}
-          mp="ml-2"
-        >
-          Export theme
-        </Button>
-      </Nav>
-      <Div flexpad="x4s">
-        <ThemeEditor
-          theme={userTheme}
-          setTheme={setUserTheme}
-        />
-        <ThemeProvider theme={{ ...userTheme, mode }}>
-          <CssBaseline />
-          <Div flexGrow={1}>
+          <ThemeEditor
+            theme={userTheme}
+            setTheme={setUserTheme}
+          />
+          <ThemeProvider theme={{ ...userTheme, mode }}>
+            <CssBaseline />
             {children}
-          </Div>
-        </ThemeProvider>
+          </ThemeProvider>
+        </Div>
       </Div>
     </ThemeProvider>
   )

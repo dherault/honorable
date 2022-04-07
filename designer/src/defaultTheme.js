@@ -1,12 +1,12 @@
 import { lighten } from 'honorable'
 
 const brand = '#0099ff'
-const lightBrand = lighten(brand)
-const lighterBrand = lighten(brand, 50)
+// const lightBrand = lighten(brand)
+// const lighterBrand = lighten(brand, 50)
 // const darkBrand = darken(brand)
 
 export default {
-  // mode: 'dark',
+  mode: 'light',
   font: {
     family: '"Roboto", sans-serif',
     size: '16px',
@@ -15,10 +15,6 @@ export default {
     brand: {
       light: '#0099ff',
       dark: '#0099ff',
-    },
-    'brand-light': {
-      light: lightBrand,
-      dark: lightBrand,
     },
     background: {
       light: 'transparent',
@@ -70,7 +66,7 @@ export default {
       padding: '0.5rem 1rem',
       transition: 'all 150ms ease',
       ':hover': {
-        backgroundColor: 'brand-light',
+        backgroundColor: lighten(brand),
       },
       ':active': {
         backgroundColor: 'brand',
