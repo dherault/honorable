@@ -42,16 +42,13 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
       if (typeof customProps === 'object') {
         Object.keys(props).forEach(propKey => {
           if (typeof customProps[propKey] === 'object') {
-            const propValue = customProps[propKey][props[propKey]] || {}
+            const propValue = (props[propKey] === true ? customProps[propKey] : customProps[propKey][props[propKey]]) || {}
 
             if (typeof propValue === 'object') Object.assign(appliedCustomProps, propValue)
             else if (typeof propValue === 'function') Object.assign(appliedCustomProps, propValue(props))
           }
           else if (typeof customProps[propKey] === 'function') {
             Object.assign(appliedCustomProps, customProps[propKey](props))
-          }
-          else {
-            console.warn(`Invalid customProp value for ${name}: ${propKey}. Expected object or function but got ${typeof customProps[propKey]}.`)
           }
         })
       }

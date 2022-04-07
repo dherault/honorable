@@ -1,3 +1,10 @@
+import { lighten } from 'honorable'
+
+const brand = '#0099ff'
+const lightBrand = lighten(brand)
+const lighterBrand = lighten(brand, 50)
+// const darkBrand = darken(brand)
+
 export default {
   // mode: 'dark',
   font: {
@@ -8,6 +15,10 @@ export default {
     brand: {
       light: '#0099ff',
       dark: '#0099ff',
+    },
+    'brand-light': {
+      light: lightBrand,
+      dark: lightBrand,
     },
     background: {
       light: 'transparent',
@@ -42,21 +53,34 @@ export default {
   },
   a: {
     defaultProps: {
-      // color: 'brand',
+      color: 'brand',
+      textDecoration: 'none',
       '&:hover': {
-        color: 'brand',
+        textDecoration: 'underline',
       },
     },
   },
   button: {
     defaultProps: {
-      // backgroundColor: 'brand',
-      // border: 'none',
-      // cursor: 'pointer',
-      // padding: '0.5rem 1rem',
-      // ':hover': {
-      //   backgroundColor: 'red',
-      // },
+      backgroundColor: 'brand',
+      border: 'none',
+      borderRadius: 4,
+      cursor: 'pointer',
+      color: 'white',
+      padding: '0.5rem 1rem',
+      transition: 'all 150ms ease',
+      ':hover': {
+        backgroundColor: 'brand-light',
+      },
+      ':active': {
+        backgroundColor: 'brand',
+      },
+      '&:disabled': {
+        backgroundColor: 'lightgrey',
+        ':hover': {
+          backgroundColor: 'lightgrey',
+        },
+      },
     },
   },
   pre: {

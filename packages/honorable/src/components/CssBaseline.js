@@ -10,10 +10,10 @@ function CssBaseline() {
     <Global
       styles={css`
 html {
-  ${typeof theme.font?.family !== 'undefined' ? `font-family: ${theme.font.family};` : ''}
-  ${typeof theme.font?.size !== 'undefined' ? `font-size: ${theme.font.size};` : ''}
-  ${typeof theme.colors?.text !== 'undefined' ? `color: ${theme.utils.resolveColor('text')};` : ''}
-  ${typeof theme.colors?.background !== 'undefined' ? `background-color: ${theme.utils.resolveColor('background')};` : ''}
+  font-family: ${typeof theme.font?.family === 'undefined' ? 'unset' : theme.font.family};
+  font-size: ${typeof theme.font?.size === 'undefined' ? 'unset' : theme.font.size};
+  color: ${typeof theme.colors?.text === 'undefined' ? 'unset' : theme.utils.resolveColor('text')};
+  background-color: ${typeof theme.colors?.background === 'undefined' ? 'unset' : theme.utils.resolveColor('background')};
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

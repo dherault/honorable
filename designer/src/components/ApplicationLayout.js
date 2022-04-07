@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { A, CssBaseline, Div, Span, Switch, ThemeProvider } from 'honorable'
+import { A, Button, CssBaseline, Div, Span, Switch, ThemeProvider } from 'honorable'
 
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
@@ -13,6 +13,10 @@ function ApplicationLayout({ children }) {
 
   useEffect(() => setUserTheme(defaultTheme), [setUserTheme])
 
+  function handleExport() {
+    console.log('export')
+  }
+
   return (
     <ThemeProvider theme={{ ...theme, mode }}>
       <Div
@@ -20,28 +24,6 @@ function ApplicationLayout({ children }) {
         flexpad="x4"
         mp="px-2"
       >
-        <Switch
-          checkedBackground={(
-            <Span
-              paddingLeft={4}
-              paddingTop={3}
-              fontSize={18}
-            >
-              🌜
-            </Span>
-          )}
-          uncheckedBackground={(
-            <Span
-              paddingRight={4}
-              paddingTop={3}
-              fontSize={18}
-            >
-              🌞
-            </Span>
-          )}
-          checked={mode === 'dark'}
-          onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
-        />
         <Span
           mp="ml-2"
           userSelect="none"
@@ -77,6 +59,35 @@ function ApplicationLayout({ children }) {
         >
           Colors
         </A>
+        <Div flexGrow={1} />
+        <Switch
+          checkedBackground={(
+            <Span
+              paddingLeft={4}
+              paddingTop={3}
+              fontSize={18}
+            >
+              🌜
+            </Span>
+          )}
+          uncheckedBackground={(
+            <Span
+              paddingRight={4}
+              paddingTop={3}
+              fontSize={18}
+            >
+              🌞
+            </Span>
+          )}
+          checked={mode === 'dark'}
+          onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
+        />
+        <Button
+          onClick={handleExport}
+          mp="ml-2"
+        >
+          Export theme
+        </Button>
       </Div>
       <Div flexpad="x4s">
         <ThemeEditor

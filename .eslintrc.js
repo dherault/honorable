@@ -21,6 +21,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'react/jsx-no-bind': 'off',
     'react/destructuring-assignment': 'off',
     'import/no-unresolved': 'off',
     'no-unused-vars': ['warn', { varsIgnorePattern: '^React$' }],
