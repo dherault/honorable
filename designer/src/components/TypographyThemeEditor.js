@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { Button, Div, H2, H3, Hr, Pre } from 'honorable'
 import Editor from '@monaco-editor/react'
 
@@ -14,15 +14,15 @@ function TypographyThemeEditor() {
       <H2>
         Let's customize your typography
       </H2>
-      <Div mp="mt-4">
+      <Div mt={2}>
         {concernedTags.map((tag, i) => (
-          <>
-            {i > 0 && <Hr mp="mt-2" />}
+          <Fragment key={tag}>
+            {i > 0 && <Hr mt={1} />}
             <ComponentEditor
               key={tag}
               componentName={tag}
             />
-          </>
+          </Fragment>
         ))}
       </Div>
     </>
@@ -74,12 +74,12 @@ function ComponentEditor({ componentName }) {
 
   return (
     <>
-      <Div flexpad="x4">
+      <Div xflex="x4">
         <H3>
           {capitalize(componentName)}
         </H3>
         <Button
-          mp="ml-2"
+          ml={1}
           size="small"
           onClick={handleReset}
         >
@@ -87,7 +87,8 @@ function ComponentEditor({ componentName }) {
         </Button>
       </Div>
       <Pre
-        mp="mt-2 mb-0h"
+        mt={1}
+        mb={0.25}
         display="block"
       >
         defaultProps:
@@ -106,7 +107,7 @@ function ComponentEditor({ componentName }) {
           },
         }}
       />
-      <Div mp="mt-1">
+      <Div mt={0.5}>
         {Object.keys(customProps).length > 0 ? renderCustomProps() : renderNoCustomProps()}
       </Div>
     </>

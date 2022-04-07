@@ -1,5 +1,6 @@
 const selectorPrefixes = [':', '&', '>', '~', '+', '.', ',', '#']
 
+// TODO use a regex
 function isSelector(property) {
   if (typeof property !== 'string') return false
 

@@ -2,7 +2,10 @@ import { Div, H1 } from 'honorable'
 
 function Form() {
   return (
-    <Div mp="py-6 px-12">
+    <Div
+      py={3}
+      px={6}
+    >
       <H1>Form</H1>
     </Div>
   )

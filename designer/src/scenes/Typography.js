@@ -6,7 +6,10 @@ import UserThemeContext from '../contexts/UserThemeContext'
 function Typography() {
 
   return (
-    <Div mp="py-6 px-12">
+    <Div
+      py={3}
+      px={6}
+    >
       <TypographyItem Component={H1}>
         Heading H1 Lorem Ipsum
       </TypographyItem>
@@ -48,11 +51,11 @@ function TypographyItem({ Component, children }) {
 
   function renderVariant(props) {
     return (
-      <Div flexpad="x4">
+      <Div xflex="x4">
         <Div
           text="small"
           color="text-light"
-          mp="mr-6"
+          mr={3}
           minWidth={64}
         >
           {textSize}

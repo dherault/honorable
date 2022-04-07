@@ -2,16 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import fp from 'flexpad'
-import mpxx from 'mpxx'
 
 import useTheme from '../hooks/useTheme'
 
 import resolveColor from './resolveColor'
 import isSelector from './isSelector'
+import convertMp from './convertMp'
 
 const styleExclude = ['src']
 const { style } = document.body
 const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string' && !styleExclude.includes(p)))]
+const mpProperties = []
+
+;['m', 'p'].forEach(mp => {
+  ['', 'x', 'y', 't', 'b', 'r', 'l'].forEach(x => {
+    mpProperties.push(mp + x)
+  })
+})
 
 function isMap(any) {
   return typeof any === 'object' && any.constructor === Map[Symbol.species]
@@ -50,12 +57,16 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   function Honorable(props) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
-    const { mp, flexpad, extend = {}, ...nextProps } = props
+    const { mp, xflex, extend = {}, ...nextProps } = props
     const stylePropsFromProps = {}
+    const mpProps = {}
     const otherProps = {}
 
     Object.entries(nextProps).forEach(([key, value]) => {
-      if (styleProperties.includes(key) || isSelector(key)) {
+      if (mpProperties.includes(key)) {
+        mpProps[key] = value
+      }
+      else if (styleProperties.includes(key) || isSelector(key)) {
         stylePropsFromProps[key] = value
       }
       else {
@@ -73,8 +84,8 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
             getCustomProps(theme.global?.customProps, props, theme),          // Global customProps
             defaultProps,                                                     // Component defaultProps
             getCustomProps(customProps, props, theme),                        // Component customProps
-            ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : []),  // "mp" prop
-            flexpad ? fp(flexpad) : {},                                       // "flexpad" prop
+            convertMp(mpProps),                                               // "mp" prop
+            xflex ? fp(xflex) : {},                                           // "xflex" prop
             stylePropsFromProps,                                              // Actual style from props
             extend,                                                           // "extend" prop
             /* eslint-enable no-multi-spaces */

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { A, Button, CssBaseline, Div, H1, Img, Nav, Span, Switch, ThemeProvider } from 'honorable'
+import { A, Button, CssBaseline, Div, H1, Img, Nav, Span, Switch, ThemeProvider, useTheme } from 'honorable'
 
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
@@ -11,6 +11,7 @@ import ThemeEditor from './ThemeEditor'
 function ApplicationLayout({ children }) {
   const [mode, setMode] = useState('light')
   const [userTheme, setUserTheme] = useState(defaultTheme)
+  const modedTheme = useMemo(() => ({ ...theme, mode }), [mode])
   const modedUserTheme = useMemo(() => ({ ...userTheme, mode }), [userTheme, mode])
   const userThemeValue = useMemo(() => [modedUserTheme, setUserTheme, defaultTheme], [modedUserTheme])
 
@@ -22,44 +23,44 @@ function ApplicationLayout({ children }) {
 
   return (
     <UserThemeContext.Provider value={userThemeValue}>
-      <ThemeProvider theme={{ ...theme, mode }}>
+      <ThemeProvider theme={modedTheme}>
         <Div
           height="100vh"
-          flexpad="y2s"
+          xflex="y2s"
         >
           <Nav
             position="relative"
             elevation={2}
             height={64}
-            flexpad="x4"
-            mp="px-2"
+            xflex="x4"
+            px={1}
           >
             <Img
               src="/images/logo.png"
               width={32}
               marginTop={-4}
             />
-            <H1 mp="ml-2">
+            <H1 ml={1}>
               Honorable Designer
             </H1>
             <A
               as={Link}
               to="/"
-              mp="ml-4"
+              ml={2}
             >
               Dashboard
             </A>
             <A
               as={Link}
               to="/typography"
-              mp="ml-2"
+              ml={1}
             >
               Typography
             </A>
             <A
               as={Link}
               to="/colors"
-              mp="ml-2"
+              ml={1}
             >
               Colors
             </A>
@@ -87,14 +88,14 @@ function ApplicationLayout({ children }) {
               onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
             />
             <Span
-              mp="ml-2"
+              ml={1}
               userSelect="none"
               onClick={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
             >
               Reset theme
             </Span>
             <Span
-              mp="ml-2"
+              ml={1}
               userSelect="none"
               onClick={() => window.confirm('Are you sure you want to erase the theme?') && setUserTheme({})}
             >
@@ -102,14 +103,14 @@ function ApplicationLayout({ children }) {
             </Span>
             <Button
               onClick={handleExport}
-              mp="ml-2"
+              ml={1}
             >
               Export theme
             </Button>
           </Nav>
           <Div
             flexGrow={1}
-            flexpad="x4s"
+            xflex="x4s"
           >
             <ThemeEditor />
             <ThemeProvider theme={modedUserTheme}>

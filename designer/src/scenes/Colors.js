@@ -4,15 +4,18 @@ function Colors() {
   const theme = useTheme()
 
   return (
-    <Div mp="py-6 px-12">
+    <Div
+      py={3}
+      px={6}
+    >
       <H1>
         Colors
       </H1>
       {Object.keys(theme.colors || {}).map(colorName => (
         <Div
           key={colorName}
-          flexpad="x4"
-          mp="mt-6"
+          xflex="x4"
+          mt={3}
         >
           <Div
             backgroundColor={colorName}
@@ -21,7 +24,7 @@ function Colors() {
             borderRadius={4}
             elevation={6}
           />
-          <P mp="ml-6">
+          <P ml={3}>
             {colorName}
           </P>
         </Div>

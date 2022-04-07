@@ -18,7 +18,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, ...
 
   return (
     <Div
-      flexpad="y2s"
+      xflex="y2s"
       display="inline-flex"
       position="relative"
       width={50}
@@ -33,7 +33,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, ...
     >
       {checked && !!checkedBackground && (
         <Div
-          flexpad="x4"
+          xflex="x4"
           flexGrow={1}
         >
           {checkedBackground}
@@ -41,7 +41,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, ...
       )}
       {!checked && !!uncheckedBackground && (
         <Div
-          flexpad="x6"
+          xflex="x6"
           flexGrow={1}
         >
           {uncheckedBackground}

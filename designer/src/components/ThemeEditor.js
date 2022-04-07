@@ -31,7 +31,8 @@ function ThemeEditor({ theme = {}, setTheme = () => null }) {
       borderRight="1px solid border"
       backgroundColor="background-light"
       flexShrink={0}
-      mp="px-2 py-6"
+      px={1}
+      py={3}
     >
       {renderEditor()}
     </Div>
