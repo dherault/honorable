@@ -13,22 +13,35 @@ const styleExclude = ['src']
 const { style } = document.body
 const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string' && !styleExclude.includes(p)))]
 
-function extractDefaultStyle(theme, props) {
-  const globalCustomProps = theme.global?.customProps
-  const customStyle = {}
+function isMap(any) {
+  return typeof any === 'object' && any.constructor === Map[Symbol.species]
+}
 
-  if (globalCustomProps) {
-    Object.keys(props).forEach(propKey => {
-      if (globalCustomProps[propKey]?.[props[propKey]]) {
-        Object.assign(customStyle, globalCustomProps[propKey][props[propKey]])
+function isCustomProps(any) {
+  return typeof any === 'object' && Object.values(any).every(value => isMap(value))
+}
+
+function getCustomProps(customTheme, props, theme) {
+  const customStyle = {}
+  const propsKeys = Object.keys(props)
+
+  if (isCustomProps(customTheme)) {
+    Object.keys(customTheme)
+    .filter(propKey => propsKeys.includes(propKey))
+    .forEach(propKey => {
+      const propValue = props[propKey]
+      const map = customTheme[propKey]
+
+      if (map.has(propValue)) {
+        const styleObject = map.get(propValue)
+
+        if (typeof styleObject === 'object' && styleObject) Object.assign(customStyle, styleObject)
+        else if (typeof styleObject === 'function') Object.assign(customStyle, styleObject({ theme, ...props }))
       }
     })
   }
 
-  return {
-    ...(theme.global?.defaultProps || {}),
-    ...customStyle,
-  }
+  return customStyle
 }
 
 function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
@@ -37,30 +50,6 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   function Honorable(props) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
-    const appliedCustomProps = {}
-
-    if (customProps) {
-      if (typeof customProps === 'object') {
-        Object.keys(props).forEach(propKey => {
-          if (typeof customProps[propKey] === 'object') {
-            const propValue = (props[propKey] === true ? customProps[propKey] : customProps[propKey][props[propKey]]) || {}
-
-            if (typeof propValue === 'object') Object.assign(appliedCustomProps, propValue)
-            else if (typeof propValue === 'function') Object.assign(appliedCustomProps, propValue(props))
-          }
-          else if (typeof customProps[propKey] === 'function') {
-            Object.assign(appliedCustomProps, customProps[propKey](props))
-          }
-        })
-      }
-      else if (typeof customProps === 'function') {
-        Object.assign(appliedCustomProps, customProps(props))
-      }
-      else {
-        console.warn(`Invalid customProp value for ${name}. Expected object or function but got ${typeof customProps}.`)
-      }
-    }
-
     const { mp, flexpad, extend = {}, ...nextProps } = props
     const stylePropsFromProps = {}
     const otherProps = {}
@@ -79,13 +68,16 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
         honorable={resolveColor(
           null,
           Object.assign(
-            extractDefaultStyle(theme, nextProps),
-            defaultProps,
-            appliedCustomProps,
-            ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : []),
-            flexpad ? fp(flexpad) : {},
-            stylePropsFromProps,
-            extend,
+            /* eslint-disable no-multi-spaces */
+            theme.global?.defaultProps || {},                                 // Global defaultProps
+            getCustomProps(theme.global?.customProps, props, theme),          // Global customProps
+            defaultProps,                                                     // Component defaultProps
+            getCustomProps(customProps, props, theme),                        // Component customProps
+            ...(mp ? mp.split(' ').filter(x => !!x).map(x => mpxx(x)) : []),  // "mp" prop
+            flexpad ? fp(flexpad) : {},                                       // "flexpad" prop
+            stylePropsFromProps,                                              // Actual style from props
+            extend,                                                           // "extend" prop
+            /* eslint-enable no-multi-spaces */
           ),
           theme
         )}

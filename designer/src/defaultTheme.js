@@ -39,12 +39,15 @@ export default {
     //   color: 'text',
     // },
     customProps: {
-      text: {
-        small: {
-          fontSize: '0.75rem',
-        },
-      },
-      elevation: createElevation(),
+      text: new Map([
+        [
+          'small',
+          {
+            fontSize: '0.75rem',
+          },
+        ],
+      ]),
+      elevation: new Map(createElevation().entries()),
     },
   },
   a: {
@@ -78,12 +81,29 @@ export default {
         },
       },
     },
+    customProps: {
+      size: new Map([
+        [
+          'small',
+          {
+            fontSize: '0.85rem',
+            padding: '0.25rem 0.75rem',
+          },
+        ],
+      ]),
+    },
   },
   pre: {
     defaultProps: {
-      display: 'inline',
-      padding: 4,
+      display: 'inline-block',
+      padding: '4px 8px',
+      borderRadius: 4,
       backgroundColor: 'background-light',
+    },
+  },
+  hr: {
+    defaultProps: {
+      borderTop: '1px solid border',
     },
   },
 }

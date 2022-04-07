@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Div, H1, H2, H3, H4, H5, H6, P, Pre } from 'honorable'
+
+import UserThemeContext from '../contexts/UserThemeContext'
 
 function Typography() {
 
@@ -35,28 +37,40 @@ function Typography() {
 
 function TypographyItem({ Component, children }) {
   const ref = useRef()
+  const [theme] = useContext(UserThemeContext)
   const [textSize, setTextSize] = useState(null)
+
+  const { customProps = {} } = theme[Component.displayName] || {}
 
   useEffect(() => {
     setTextSize(getComputedStyle(ref.current).fontSize)
   }, [])
 
-  return (
-    <Div flexpad="x4">
-      <Div
-        text="small"
-        color="text-light"
-        mp="mr-6"
-        minWidth={64}
-      >
-        {textSize}
+  function renderVariant(props) {
+    return (
+      <Div flexpad="x4">
+        <Div
+          text="small"
+          color="text-light"
+          mp="mr-6"
+          minWidth={64}
+        >
+          {textSize}
+        </Div>
+        <Component {...props}>
+          <span ref={ref}>
+            {children}
+          </span>
+        </Component>
       </Div>
-      <Component>
-        <span ref={ref}>
-          {children}
-        </span>
-      </Component>
-    </Div>
+    )
+  }
+
+  return (
+    <>
+      {renderVariant({})}
+      {Object.keys(customProps).map(propName => null)}
+    </>
   )
 }
 
