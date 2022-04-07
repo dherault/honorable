@@ -9,8 +9,9 @@ import useTheme from '../hooks/useTheme'
 import resolveColor from './resolveColor'
 import isSelector from './isSelector'
 
+const styleExclude = ['src']
 const { style } = document.body
-const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string'))]
+const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string' && !styleExclude.includes(p)))]
 
 function extractDefaultStyle(theme, props) {
   const globalCustomProps = theme.global?.customProps

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { A, Button, CssBaseline, Div, Span, Switch, ThemeProvider } from 'honorable'
+import { A, Button, CssBaseline, Div, H1, Img, Nav, Span, Switch, ThemeProvider } from 'honorable'
 
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
@@ -19,29 +19,25 @@ function ApplicationLayout({ children }) {
 
   return (
     <ThemeProvider theme={{ ...theme, mode }}>
-      <Div
+      <Nav
+        position="relative"
+        elevation={2}
         height={64}
         flexpad="x4"
         mp="px-2"
       >
-        <Span
-          mp="ml-2"
-          userSelect="none"
-          onClick={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
-        >
-          Reset theme
-        </Span>
-        <Span
-          mp="ml-2"
-          userSelect="none"
-          onClick={() => window.confirm('Are you sure you want to erase the theme?') && setUserTheme({})}
-        >
-          Erase theme
-        </Span>
+        <Img
+          src="/images/logo.png"
+          width={32}
+          marginTop={-4}
+        />
+        <H1 mp="ml-2">
+          Honorable Designer
+        </H1>
         <A
           as={Link}
           to="/"
-          mp="ml-2"
+          mp="ml-4"
         >
           Dashboard
         </A>
@@ -82,13 +78,27 @@ function ApplicationLayout({ children }) {
           checked={mode === 'dark'}
           onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
         />
+        <Span
+          mp="ml-2"
+          userSelect="none"
+          onClick={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
+        >
+          Reset theme
+        </Span>
+        <Span
+          mp="ml-2"
+          userSelect="none"
+          onClick={() => window.confirm('Are you sure you want to erase the theme?') && setUserTheme({})}
+        >
+          Erase theme
+        </Span>
         <Button
           onClick={handleExport}
           mp="ml-2"
         >
           Export theme
         </Button>
-      </Div>
+      </Nav>
       <Div flexpad="x4s">
         <ThemeEditor
           theme={userTheme}
