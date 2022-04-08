@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import PropTypes, { InferProps } from 'prop-types'
 import styled from '@emotion/styled'
 import fp from 'flexpad'
 
@@ -51,7 +51,7 @@ function getCustomProps(customTheme, props, theme) {
 function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   const HonorableStyle = styled(ComponentOrTag)(props => props.honorable)
 
-  function Honorable(props) {
+  function Honorable(props: InferProps<typeof Honorable.propTypes>)) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { xflex, extend = {}, ...nextProps } = props

@@ -23,6 +23,7 @@ module.exports = {
   rules: {
     'react/jsx-no-bind': 'off',
     'react/destructuring-assignment': 'off',
+    'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'no-unused-vars': ['warn', { varsIgnorePattern: '^React$' }],
   },
