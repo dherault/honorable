@@ -2,17 +2,15 @@ import { Div, H2 } from 'honorable'
 
 import ComponentEditor from './ComponentEditor'
 
-const concernedTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre']
-
-function TypographyThemeEditor() {
+function TypographyThemeEditor({ tags, title }) {
 
   return (
     <>
       <H2>
-        Let's customize your typography
+        {title}
       </H2>
       <Div mt={2}>
-        {concernedTags.map(tag => (
+        {tags.map(tag => (
           <Div
             key={tag}
             mb={2}

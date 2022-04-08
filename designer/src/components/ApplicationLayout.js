@@ -32,8 +32,9 @@ function ApplicationLayout({ children }) {
             position="relative"
             elevation={2}
             height={64}
-            xflex="x4"
             px={1}
+            xflex="x4"
+            flexShrink={0}
           >
             <Img
               src="/images/logo.png"
@@ -87,20 +88,13 @@ function ApplicationLayout({ children }) {
               checked={mode === 'dark'}
               onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
             />
-            <Span
+            <Button
+              variant="outlined"
               ml={1}
-              userSelect="none"
               onClick={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
             >
               Reset theme
-            </Span>
-            <Span
-              ml={1}
-              userSelect="none"
-              onClick={() => window.confirm('Are you sure you want to erase the theme?') && setUserTheme({})}
-            >
-              Erase theme
-            </Span>
+            </Button>
             <Button
               onClick={handleExport}
               ml={1}

@@ -67,7 +67,7 @@ export default {
       cursor: 'pointer',
       color: 'white',
       padding: '0.5rem 1rem',
-      transition: 'all 150ms ease',
+      transition: 'color 150ms ease, background-color 150ms ease',
       ':hover': {
         backgroundColor: lighten(brand),
       },
@@ -87,7 +87,25 @@ export default {
           'small',
           {
             fontSize: '0.85rem',
-            padding: '0.25rem 0.75rem',
+            padding: '0.35rem 0.75rem 0.25rem 0.75rem',
+          },
+        ],
+      ]),
+      variant: new Map([
+        [
+          'outlined',
+          {
+            color: 'brand',
+            backgroundColor: 'transparent',
+            border: '1px solid brand',
+            ':hover': {
+              color: 'white',
+              backgroundColor: lighten(brand),
+            },
+            ':active': {
+              color: 'white',
+              backgroundColor: 'brand',
+            },
           },
         ],
       ]),

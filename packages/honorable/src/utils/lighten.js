@@ -1,4 +1,4 @@
-export default function lighten(col, amt = 10) {
+function lighten(col, amt = 10) {
   let usePound = false
 
   if (col[0] === '#') {
@@ -25,3 +25,5 @@ export default function lighten(col, amt = 10) {
 
   return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0')
 }
+
+export default lighten

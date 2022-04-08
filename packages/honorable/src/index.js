@@ -1,8 +1,11 @@
+// Components
 export * from './components/tags'
 export { default as ThemeProvider } from './components/ThemeProvider'
 export { default as CssBaseline } from './components/CssBaseline'
 export { default as Switch } from './components/Switch'
+// Hooks
 export { default as useTheme } from './hooks/useTheme'
+// Utils
 export { default as resolveColor } from './utils/resolveColor'
 export { default as wrapComponentWithStyle } from './utils/wrapComponentWithStyle'
 export { default as lighten } from './utils/lighten'

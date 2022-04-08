@@ -3,38 +3,34 @@ import { useLocation } from 'react-router-dom'
 
 import TypographyThemeEditor from './TypographyThemeEditor'
 
-const pathnameToComponent = {
-  typography: TypographyThemeEditor,
+const pathnameToEditorProps = {
+  '/typography': {
+    Component: TypographyThemeEditor,
+    tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre'],
+    title: "Let's customize your typography",
+  },
 }
 
-function ThemeEditor({ theme = {}, setTheme = () => null }) {
-  const pathname = useLocation().pathname.slice(1)
+function ThemeEditor() {
+  const { Component, tags, title } = pathnameToEditorProps[useLocation().pathname] || {}
 
-  function renderEditor() {
-    const Component = pathnameToComponent[pathname]
-
-    if (!Component) return null
-
-    return (
-      <Component
-        theme={theme}
-        setTheme={setTheme}
-      />
-    )
-  }
+  if (!Component) return null
 
   return (
     <Div
       width={512}
       maxHeight="calc(100vh - 64px)"
       overflowY="auto"
-      borderRight="1px solid border"
       backgroundColor="background-light"
       flexShrink={0}
       px={1}
       py={3}
+      elevation={2}
     >
-      {renderEditor()}
+      <Component
+        tags={tags}
+        title={title}
+      />
     </Div>
   )
 }
