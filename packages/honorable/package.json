@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "npm run clean:peerDependencies && npm run clean:build && nodemon --watch src --exec \"npm run build\"",
-    "build": "npx tsc",
+    "build": "npx tsc --declaration",
     "clean": "npm run clean:build && npm run clean:node-modules && npm i && npm run clean:peerDependencies",
     "clean:node-modules": "rimraf node_module package-lock.json",
     "clean:peerDependencies": "rimraf node_modules/react node_modules/react-dom node_modules/@emotion",

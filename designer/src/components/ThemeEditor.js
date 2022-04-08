@@ -15,7 +15,7 @@ const pathnameToEditorProps = {
 You're about to implement your design system into workable React components.
 Let's start simple by editing your brand color and the button.
 Click on "customize" to start editing.`,
-    infoEnd: `To see your  customProps in action, enable "Component variations".
+    infoEnd: `To see your customProps in action, enable "Component variations".
 Once done, click continue.`,
   },
   '/typography': {
