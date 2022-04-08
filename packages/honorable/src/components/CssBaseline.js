@@ -2,7 +2,6 @@ import React from 'react'
 import { Global, css } from '@emotion/react'
 
 import useTheme from '../hooks/useTheme'
-import resolveColor from '../utils/resolveColor'
 
 function CssBaseline() {
   const theme = useTheme()
@@ -11,7 +10,13 @@ function CssBaseline() {
     <>
       <Global
         styles={css`
+:root {
+${Object.keys(theme.colors).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColor(colorName)};\n`)}
+}
+
 html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-family: ${typeof theme.font?.family === 'undefined' ? 'unset' : theme.font.family};
   font-size: ${typeof theme.font?.size === 'undefined' ? 'unset' : theme.font.size};
   color: ${typeof theme.colors?.text === 'undefined' ? 'unset' : theme.utils.resolveColor('text')};
@@ -369,7 +374,7 @@ template {
 }
 `}
       />
-      <Global styles={{ '*': resolveColor(null, theme.global?.defaultProps || {}, theme) }} />
+      <Global styles={{ '*': theme.utils.resolveColor(theme.global?.defaultProps || {}) }} />
     </>
   )
 }
