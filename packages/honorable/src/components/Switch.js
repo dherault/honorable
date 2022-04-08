@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 import extractComponentThemeStyle from '../utils/extractComponentThemeStyle'
+import wrapComponentWithStyle from '../utils/wrapComponentWithStyle'
 import useTheme from '../hooks/useTheme'
 
 import { Div, Span } from './tags'
@@ -12,12 +13,13 @@ const Handle = styled(Span)`
   }
 `
 
-function Switch({ checked, onChange, checkedBackground, uncheckedBackground, ...props }) {
+function Switch({ checked, onChange, checkedBackground, uncheckedBackground, className, ...props }) {
   const theme = useTheme()
   const extendProps = { checked, checkedBackground, uncheckedBackground, ...props }
 
   return (
     <Div
+      className={className}
       xflex="y2s"
       display="inline-flex"
       position="relative"
@@ -62,4 +64,4 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, ...
   )
 }
 
-export default Switch
+export default wrapComponentWithStyle(Switch, 'switch')

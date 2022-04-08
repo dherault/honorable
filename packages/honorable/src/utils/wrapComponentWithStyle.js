@@ -6,6 +6,7 @@ import fp from 'flexpad'
 import useTheme from '../hooks/useTheme'
 
 import resolveColor from './resolveColor'
+import filterObject from './filterObject'
 import isSelector from './isSelector'
 import convertMp from './convertMp'
 
@@ -20,12 +21,8 @@ const mpProperties = []
   })
 })
 
-function isMap(any) {
-  return typeof any === 'object' && any.constructor === Map[Symbol.species]
-}
-
 function isCustomProps(any) {
-  return typeof any === 'object' && Object.values(any).every(value => isMap(value))
+  return typeof any === 'object' && Object.values(any).every(value => value instanceof Map)
 }
 
 function getCustomProps(customTheme, props, theme) {
@@ -57,7 +54,7 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
   function Honorable(props) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
-    const { mp, xflex, extend = {}, ...nextProps } = props
+    const { xflex, extend = {}, ...nextProps } = props
     const stylePropsFromProps = {}
     const mpProps = {}
     const otherProps = {}
@@ -78,18 +75,17 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
       <HonorableStyle
         honorable={resolveColor(
           null,
-          Object.assign(
+          {
             /* eslint-disable no-multi-spaces */
-            theme.global?.defaultProps || {},                                 // Global defaultProps
-            getCustomProps(theme.global?.customProps, props, theme),          // Global customProps
-            defaultProps,                                                     // Component defaultProps
-            getCustomProps(customProps, props, theme),                        // Component customProps
-            convertMp(mpProps),                                               // "mp" prop
-            xflex ? fp(xflex) : {},                                           // "xflex" prop
-            stylePropsFromProps,                                              // Actual style from props
-            extend,                                                           // "extend" prop
+            ...getCustomProps(theme.global?.customProps, props, theme),  // Global customProps
+            ...filterObject(defaultProps),                               // Component defaultProps
+            ...getCustomProps(customProps, props, theme),                // Component customProps
+            ...convertMp(mpProps),                                       // "mp" prop
+            ...(xflex ? fp(xflex) : {}),                                 // "xflex" prop
+            ...stylePropsFromProps,                                      // Actual style from props
+            ...filterObject(extend),                                     // "extend" prop
             /* eslint-enable no-multi-spaces */
-          ),
+          },
           theme
         )}
         {...otherProps}

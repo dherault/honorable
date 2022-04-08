@@ -2,13 +2,15 @@ import React from 'react'
 import { Global, css } from '@emotion/react'
 
 import useTheme from '../hooks/useTheme'
+import resolveColor from '../utils/resolveColor'
 
 function CssBaseline() {
   const theme = useTheme()
 
   return (
-    <Global
-      styles={css`
+    <>
+      <Global
+        styles={css`
 html {
   font-family: ${typeof theme.font?.family === 'undefined' ? 'unset' : theme.font.family};
   font-size: ${typeof theme.font?.size === 'undefined' ? 'unset' : theme.font.size};
@@ -366,7 +368,9 @@ template {
   display: none;
 }
 `}
-    />
+      />
+      <Global styles={{ '*': resolveColor(null, theme.global?.defaultProps || {}, theme) }} />
+    </>
   )
 }
 
