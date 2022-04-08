@@ -58,6 +58,7 @@ export default {
     defaultProps: {
       color: 'brand',
       textDecoration: 'none',
+      cursor: 'pointer',
       '&:hover': {
         textDecoration: 'underline',
       },
@@ -65,12 +66,13 @@ export default {
   },
   button: {
     defaultProps: {
+      color: 'white',
       backgroundColor: 'brand',
+      padding: '0.5rem 1rem',
       border: 'none',
       borderRadius: 4,
       cursor: 'pointer',
-      color: 'white',
-      padding: '0.5rem 1rem',
+      userSelect: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
       ':hover': {
         backgroundColor: lighten(brand),

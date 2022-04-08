@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Button, Div, H3, Input, Pre } from 'honorable'
+import { Button, Div, H3, Input, P, Pre, useTheme } from 'honorable'
 import Editor from '@monaco-editor/react'
+import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 import usePrevious from '../hooks/usePrevious'
 import UserThemeContext from '../contexts/UserThemeContext'
@@ -9,7 +10,7 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-function stringifyMapValues(object) {
+function stringifyMapValues(object = {}) {
   const nextObject = {}
 
   Object.entries(object).forEach(([key, value]) => {
@@ -53,7 +54,8 @@ const defaultEditorValue = `{
 }`
 
 function ComponentEditor({ componentName }) {
-  const [theme, setTheme, defaultTheme] = useContext(UserThemeContext)
+  const enhancedTheme = useTheme()
+  const [theme, setTheme] = useContext(UserThemeContext)
   const themeInitialValue = useRef(theme[componentName])
   const [open, setOpen] = useState(false)
   const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
@@ -107,9 +109,16 @@ function ComponentEditor({ componentName }) {
       <>
         <Div
           mb={0.25}
-          mt={0.5}
+          mt={1}
+          xflex="x5b"
         >
-          customProps:
+          <P>
+            customProps:
+          </P>
+          <AiOutlineInfoCircle
+            color={enhancedTheme.utils.resolveColor('text-light')}
+            onClick={() => window.alert('Custom props are used to create visual behaviors based on props. The first input corresponds to the prop name, the second is a map from the prop possible value to the styles.')}
+          />
         </Div>
         {Object.entries(customProps)
         .sort(([keyA], [keyB]) => keyA - keyB)
@@ -167,6 +176,7 @@ function ComponentEditor({ componentName }) {
                   >
                     <Button
                       size="small"
+                      minWidth={24}
                       padding="0.15rem 0.5rem 0.075rem 0.5rem"
                       onClick={() => setCustomProps(customProps => {
                         const nextCustomProps = { ...customProps }
@@ -189,6 +199,7 @@ function ComponentEditor({ componentName }) {
                     {i === map.size - 1 && (
                       <Button
                         ml={0.5}
+                        minWidth={24}
                         size="small"
                         padding="0.15rem 0.5rem 0.075rem 0.5rem"
                         onClick={() => setCustomProps(customProps => {
@@ -254,6 +265,7 @@ function ComponentEditor({ componentName }) {
         <H3 minWidth={32 + 16 + 8 + 4 + 2}>
           {'<'}{capitalize(componentName)}{' />'}
         </H3>
+        <Div flexGrow={1} />
         <Button
           ml={1}
           size="small"
@@ -285,8 +297,15 @@ function ComponentEditor({ componentName }) {
           <Div
             mb={0.25}
             mt={0.5}
+            xflex="x5b"
           >
-            defaultProps:
+            <P>
+              defaultProps:
+            </P>
+            <AiOutlineInfoCircle
+              color={enhancedTheme.utils.resolveColor('text-light')}
+              onClick={() => window.alert('Default props are your component\'s main styles. They apply to all instances of the component and can be overriden with customProps or locally.')}
+            />
           </Div>
           <Div
             width="100%"

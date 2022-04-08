@@ -1,4 +1,4 @@
-import { Div, P, Switch } from 'honorable'
+import { Button, Div, P, Switch } from 'honorable'
 import { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -8,12 +8,15 @@ import ComponentsThemeEditor from './ComponentsThemeEditor'
 
 const pathnameToEditorProps = {
   '/': {
+    colors: ['brand'],
     tags: ['button'],
     title: "Welcome to Honorable's theme editor",
-    info: `🙏
+    infoStart: `🙏
 You're about to implement your design system into workable React components.
 Let's start simple by editing your brand color and the button.
 Click on "customize" to start editing.`,
+    infoEnd: `To see your  customProps in action, enable "Component variations".
+Once done, click continue.`,
   },
   '/typography': {
     tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre'],
@@ -22,36 +25,52 @@ Click on "customize" to start editing.`,
 }
 
 function ThemeEditor() {
+  const { pathname } = useLocation()
   const [areVariationsDisplayed, setAreVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
-  const props = pathnameToEditorProps[useLocation().pathname]
+  const props = pathnameToEditorProps[pathname]
 
   if (!props) return null
 
   return (
     <Div
-      width={512}
+      width={512 + 64 + 8}
       maxHeight="calc(100vh - 64px)"
-      overflowY="auto"
+      xflex="y2s"
+      overflow="hidden"
       flexShrink={0}
       pt={1}
       px={2}
-      pb={3}
+      pb={1.5}
       elevation={2}
     >
       <Div
-        xflex="x6"
+        flexGrow={1}
+        overflowY="scroll"
+        pb={4}
+      >
+        <ComponentsThemeEditor {...props} />
+      </Div>
+      <Div
+        flexShrink={0}
+        xflex="x4"
         mt={0.5}
       >
-        <P color="text-light">
-          Component variations
-        </P>
+
         <Switch
-          ml={0.5}
           checked={areVariationsDisplayed}
           onChange={(event, value) => setAreVariationsDisplayed(value)}
         />
+        <P
+          color="text-light"
+          ml={0.5}
+        >
+          Component variations
+        </P>
+        <Div flexGrow={1} />
+        <Button>
+          Continue
+        </Button>
       </Div>
-      <ComponentsThemeEditor {...props} />
     </Div>
   )
 }
