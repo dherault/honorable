@@ -41,4 +41,9 @@ export default {
       ]),
     },
   },
+  p: {
+    defaultProps: {
+      margin: 0,
+    },
+  },
 }

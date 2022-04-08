@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Button, Div, H3, Input, Pre } from 'honorable'
 import Editor from '@monaco-editor/react'
 
@@ -7,6 +7,31 @@ import UserThemeContext from '../contexts/UserThemeContext'
 
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+function stringifyMapValues(object) {
+  const nextObject = {}
+
+  Object.entries(object).forEach(([key, value]) => {
+    nextObject[key] = new Map([...value.entries()].map(([k, v]) => [k, JSON.stringify(v, null, 2)]))
+  })
+
+  return nextObject
+}
+
+function unstringifyMapValues(object, defaultObject) {
+  const nextObject = {}
+
+  try {
+    Object.entries(object).forEach(([key, value]) => {
+      nextObject[key] = new Map([...value.entries()].map(([k, v]) => [k, JSON.parse(v)]))
+    })
+
+    return nextObject
+  }
+  catch (e) {
+    return defaultObject
+  }
 }
 
 const editorOptions = {
@@ -33,11 +58,12 @@ function ComponentEditor({ componentName }) {
   const [open, setOpen] = useState(false)
   const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
   const [defaultProps, setDefaultProps] = useState(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
-  const [customProps, setCustomProps] = useState(theme[componentName]?.customProps || {})
+  const [customProps, setCustomProps] = useState(stringifyMapValues(theme[componentName]?.customProps) || {})
   const previousDefaultProps = usePrevious(defaultProps)
+  const previousCustomProps = usePrevious(customProps)
 
   useEffect(() => {
-    if (defaultProps === previousDefaultProps) return
+    if (defaultProps === previousDefaultProps && customProps === previousCustomProps) return
 
     try {
       setTheme({
@@ -45,18 +71,19 @@ function ComponentEditor({ componentName }) {
         [componentName]: {
           ...theme[componentName],
           defaultProps: JSON.parse(defaultProps),
+          customProps: unstringifyMapValues(customProps, theme[componentName]?.customProps || {}),
         },
       })
     }
     catch (error) {
       //
     }
-  }, [defaultProps, previousDefaultProps, componentName, setTheme, theme])
+  }, [defaultProps, previousDefaultProps, customProps, previousCustomProps, componentName, setTheme, theme])
 
   function handleReset() {
     const json = JSON.stringify(themeInitialValue.current?.defaultProps || {}, null, 2)
     setDefaultProps(json === '{}' ? defaultEditorValue : json)
-    setCustomProps(themeInitialValue.current.customProps || {})
+    setCustomProps(stringifyMapValues(themeInitialValue.current.customProps || {}))
   }
 
   function handleClear() {
@@ -68,7 +95,7 @@ function ComponentEditor({ componentName }) {
     return (
       <Button
         size="small"
-        onClick={() => setCustomProps({ '': new Map([['', {}]]) })}
+        onClick={() => setCustomProps({ '': new Map([['', defaultEditorValue]]) })}
       >
         Add custom props
       </Button>
@@ -87,7 +114,10 @@ function ComponentEditor({ componentName }) {
         {Object.entries(customProps)
         .sort(([keyA], [keyB]) => keyA - keyB)
         .map(([key, map], i) => (
-          <Fragment key={i}>
+          <Div
+            mb={1}
+            key={i}
+          >
             <Div xflex="x4">
               <Input
                 width={84}
@@ -106,15 +136,15 @@ function ComponentEditor({ componentName }) {
                 :
               </Pre>
             </Div>
-            {[...map.entries()].map(([mapKey, mapValue], i) => {
-              const mapValueJson = JSON.stringify(mapValue, null, 2)
-
-              return (
+            {[...map.entries()].map(([mapKey, mapValue], i) => (
+              <Div
+                key={i}
+                xflex="x4s"
+                flexGrow={1}
+                mb={0.5}
+              >
                 <Div
-                  key={i}
-                  xflex="x1"
-                  mt={0.5}
-                  flexGrow={1}
+                  xflex="y1"
                 >
                   <Input
                     width={84}
@@ -131,16 +161,67 @@ function ComponentEditor({ componentName }) {
                       return nextCustomProps
                     })}
                   />
-                  <Pre mx={0.5}>
-                    →
-                  </Pre>
+                  <Div
+                    mt={0.5}
+                    xflex="x4"
+                  >
+                    <Button
+                      size="small"
+                      padding="0.15rem 0.5rem 0.075rem 0.5rem"
+                      onClick={() => setCustomProps(customProps => {
+                        const nextCustomProps = { ...customProps }
+                        const nextMap = new Map(map)
+
+                        nextMap.delete(mapKey)
+
+                        if (nextMap.size) {
+                          nextCustomProps[key] = nextMap
+                        }
+                        else {
+                          delete nextCustomProps[key]
+                        }
+
+                        return nextCustomProps
+                      })}
+                    >
+                      -
+                    </Button>
+                    {i === map.size - 1 && (
+                      <Button
+                        ml={0.5}
+                        size="small"
+                        padding="0.15rem 0.5rem 0.075rem 0.5rem"
+                        onClick={() => setCustomProps(customProps => {
+                          const nextCustomProps = { ...customProps }
+                          const nextMap = new Map(map)
+
+                          nextMap.set('', defaultEditorValue)
+
+                          nextCustomProps[key] = nextMap
+
+                          return nextCustomProps
+                        })}
+                      >
+                        +
+                      </Button>
+                    )}
+                  </Div>
+                </Div>
+                <Pre mx={0.5}>
+                  →
+                </Pre>
+                <Div
+                  width="100%"
+                  borderRadius={4}
+                  overflow="hidden"
+                >
                   <Editor
                     width="100%"
                     height="calc(1.5rem * 4)"
                     language="json"
                     theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
                     options={editorOptions}
-                    value={mapValueJson === '{}' ? defaultEditorValue : mapValueJson}
+                    value={mapValue}
                     onChange={value => setCustomProps(customProps => {
                       const nextCustomProps = { ...customProps }
                       const nextMap = new Map(map)
@@ -153,10 +234,16 @@ function ComponentEditor({ componentName }) {
                     })}
                   />
                 </Div>
-              )
-            })}
-          </Fragment>
+              </Div>
+            ))}
+          </Div>
         ))}
+        <Button
+          size="small"
+          onClick={() => setCustomProps(customProps => ({ ...customProps, '': new Map([['', defaultEditorValue]]) }))}
+        >
+          Add another custom prop
+        </Button>
       </>
     )
   }
@@ -164,12 +251,12 @@ function ComponentEditor({ componentName }) {
   return (
     <>
       <Div xflex="x4">
-        <H3 minWidth={32}>
-          {capitalize(componentName)}
+        <H3 minWidth={32 + 16 + 8 + 4 + 2}>
+          {'<'}{capitalize(componentName)}{' />'}
         </H3>
         <Button
           ml={1}
-          size={open ? 'small' : null}
+          size="small"
           onClick={() => setOpen(open => !open)}
         >
           {open ? 'Hide' : 'Customize'}
@@ -201,15 +288,22 @@ function ComponentEditor({ componentName }) {
           >
             defaultProps:
           </Div>
-          <Editor
+          <Div
             width="100%"
-            height="calc(1.5rem * 4)"
-            language="json"
-            theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
-            value={defaultProps}
-            onChange={value => setDefaultProps(value)}
-            options={editorOptions}
-          />
+            borderRadius={4}
+            overflow="hidden"
+          >
+
+            <Editor
+              width="100%"
+              height="calc(1.5rem * 4)"
+              language="json"
+              theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
+              value={defaultProps}
+              onChange={value => setDefaultProps(value)}
+              options={editorOptions}
+            />
+          </Div>
           <Div mt={0.5}>
             {Object.keys(customProps).length > 0 ? renderCustomProps() : renderNoCustomProps()}
           </Div>

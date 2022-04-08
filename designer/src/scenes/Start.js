@@ -51,7 +51,6 @@ function ComponentVariator({ Component, children }) {
   }
 
   function renderVariation(props = {}) {
-    console.log('props', props)
     const propsJson = JSON.stringify(props, null, 2)
 
     return (

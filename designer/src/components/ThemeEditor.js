@@ -13,8 +13,7 @@ const pathnameToEditorProps = {
     info: `🙏
 You're about to implement your design system into workable React components.
 Let's start simple by editing your brand color and the button.
-Click on "customize" to start editing.
-    `,
+Click on "customize" to start editing.`,
   },
   '/typography': {
     tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre'],
@@ -39,7 +38,10 @@ function ThemeEditor() {
       pb={3}
       elevation={2}
     >
-      <Div xflex="x6">
+      <Div
+        xflex="x6"
+        mt={0.5}
+      >
         <P color="text-light">
           Component variations
         </P>
