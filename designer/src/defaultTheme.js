@@ -28,6 +28,10 @@ export default {
       light: '#111',
       dark: 'white',
     },
+    'text-light': {
+      light: '#888',
+      dark: '#aaa',
+    },
     shadow: 'rgba(0, 0, 0, 0.2)',
     border: {
       light: '#ddd',
@@ -35,9 +39,9 @@ export default {
     },
   },
   global: {
-    // defaultProps: {
-    //   color: 'text',
-    // },
+    defaultProps: {
+      boxSizing: 'border-box',
+    },
     customProps: {
       text: new Map([
         [

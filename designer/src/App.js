@@ -6,6 +6,7 @@ import {
 
 import ApplicationLayout from './components/ApplicationLayout'
 
+import Start from './scenes/Start'
 import Dashboard from './scenes/Dashboard'
 import Typography from './scenes/Typography'
 import Colors from './scenes/Colors'
@@ -18,6 +19,10 @@ function App() {
         <Routes>
           <Route
             path="/"
+            element={<Start />}
+          />
+          <Route
+            path="/dashboard"
             element={<Dashboard />}
           />
           <Route

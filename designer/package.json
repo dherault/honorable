@@ -6,7 +6,7 @@
     "start:watch": "npm run link-honorable && npm start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "clean": "rimraf node_modules package-lock.json",
+    "clean": "rimraf node_modules package-lock.json && npm i --force",
     "link-honorable": "(cd ../packages/honorable && npm link) && npm link honorable"
   },
   "browserslist": {

@@ -1,14 +1,16 @@
-import { Div, H2 } from 'honorable'
+import { Div, H2, Sub } from 'honorable'
 
 import ComponentEditor from './ComponentEditor'
 
-function TypographyThemeEditor({ tags, title }) {
-
+function ComponentsThemeEditor({ tags, info, colors, title }) {
   return (
     <>
       <H2>
         {title}
       </H2>
+      <Sub>
+        {info}
+      </Sub>
       <Div mt={2}>
         {tags.map(tag => (
           <Div
@@ -23,4 +25,4 @@ function TypographyThemeEditor({ tags, title }) {
   )
 }
 
-export default TypographyThemeEditor
+export default ComponentsThemeEditor
