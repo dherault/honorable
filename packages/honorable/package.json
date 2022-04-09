@@ -39,6 +39,7 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "@types/react": "^18.0.0",
     "nodemon": "^2.0.15",
     "normalize.css": "^8.0.1",
     "rimraf": "^3.0.2",

@@ -1,4 +1,4 @@
-function lighten(col, amt = 10) {
+function lighten(col: string, amt = 10) {
   let usePound = false
 
   if (col[0] === '#') {

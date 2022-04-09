@@ -1,11 +1,12 @@
 module.exports = {
   extends: 'dherault',
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
+    parser: '@babel/eslint-parser',
     requireConfigFile: false,
     sourceType: 'module',
     babelOptions: {
-      presets: ['@babel/preset-react'],
+      presets: ['@babel/preset-env', '@babel/preset-react'],
     },
   },
   settings: {

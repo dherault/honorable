@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { FC } from 'react'
 import PropTypes, { InferProps } from 'prop-types'
 import styled from '@emotion/styled'
+// @ts-ignore
 import fp from 'flexpad'
 
 import useTheme from '../hooks/useTheme'
@@ -9,11 +10,18 @@ import resolveColor from './resolveColor'
 import filterObject from './filterObject'
 import isSelector from './isSelector'
 import convertMp from './convertMp'
+import { styleProperties, stylePropTypes } from './styleProperties'
 
-const styleExclude = ['src']
-const { style } = document.body
-const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string' && !styleExclude.includes(p)))]
-const mpProperties = []
+import {
+  HonorableStyleProps,
+  StyleProps,
+  StylePropsValue,
+  AnyProps,
+  HonorableTheme,
+} from '../types'
+
+
+const mpProperties: string[] = []
 
 ;['m', 'p'].forEach(mp => {
   ['', 'x', 'y', 't', 'b', 'r', 'l'].forEach(x => {
@@ -21,11 +29,11 @@ const mpProperties = []
   })
 })
 
-function isCustomProps(any) {
+function isCustomProps(any: any) {
   return typeof any === 'object' && Object.values(any).every(value => value instanceof Map)
 }
 
-function getCustomProps(customTheme, props, theme) {
+function getCustomProps(customTheme: any, props: AnyProps, theme: HonorableTheme) {
   const customStyle = {}
   const propsKeys = Object.keys(props)
 
@@ -48,23 +56,23 @@ function getCustomProps(customTheme, props, theme) {
   return customStyle
 }
 
-function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
-  const HonorableStyle = styled(ComponentOrTag)(props => props.honorable)
+function wrapComponentWithStyle(ComponentOrTag: FC<any>, name = 'Honorable') {
+  const HonorableStyle: FC<HonorableStyleProps> = styled(ComponentOrTag)(props => props.honorable)
 
-  function Honorable(props: InferProps<typeof Honorable.propTypes>)) {
+  function Honorable(props: InferProps<typeof Honorable.propTypes>) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { xflex, extend = {}, ...nextProps } = props
-    const stylePropsFromProps = {}
-    const mpProps = {}
-    const otherProps = {}
+    const stylePropsFromProps: StyleProps = {}
+    const mpProps: StyleProps = {}
+    const otherProps: AnyProps = {}
 
     Object.entries(nextProps).forEach(([key, value]) => {
       if (mpProperties.includes(key)) {
-        mpProps[key] = value
+        mpProps[key] = value as StylePropsValue
       }
       else if (styleProperties.includes(key) || isSelector(key)) {
-        stylePropsFromProps[key] = value
+        stylePropsFromProps[key] = value as StylePropsValue
       }
       else {
         otherProps[key] = value
@@ -97,7 +105,7 @@ function wrapComponentWithStyle(ComponentOrTag, name = 'Honorable') {
 
   Honorable.propTypes = {
     ...ComponentOrTag.propTypes,
-    ...Object.fromEntries(styleProperties.map(property => [property, PropTypes.oneOfType([PropTypes.string, PropTypes.number])])),
+    ...stylePropTypes,
   }
 
   return Honorable

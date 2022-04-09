@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "allowJs": true,
     "target": "ES6",
     "module": "ESNext",
@@ -16,7 +17,12 @@
       "*": ["node_modules/*"],
       "@assets/*": ["./assets/*"],
       "@src/*": ["./src/*"]
-    }
+    },
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "suppressImplicitAnyIndexErrors": true,
   },
   "include": ["src/**/*"]
 }
