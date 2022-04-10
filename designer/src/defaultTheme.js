@@ -5,7 +5,8 @@ export default {
     size: '16px',
   },
   colors: {
-    brand: '#0099ff',
+    primary: '#2196f3',
+    secondary: '#f50057',
     background: {
       light: 'transparent',
       dark: '#333',
@@ -22,11 +23,14 @@ export default {
       light: '#888',
       dark: '#aaa',
     },
-    shadow: 'rgba(0, 0, 0, 0.2)',
     border: {
       light: '#ddd',
       dark: '#222',
     },
+    shadow: 'rgba(0, 0, 0, 0.2)',
+    success: '#64db5c',
+    error: '#ff4d4d',
+    warning: '#ff7900',
   },
   global: {
     defaultProps: {
@@ -46,7 +50,7 @@ export default {
   },
   a: {
     defaultProps: {
-      color: 'brand',
+      color: 'primary',
       textDecoration: 'none',
       cursor: 'pointer',
       '&:hover': {
@@ -57,19 +61,19 @@ export default {
   button: {
     defaultProps: {
       color: 'white',
-      backgroundColor: 'brand',
+      backgroundColor: 'primary',
       padding: '0.5rem 1rem',
-      border: '1px solid brand',
+      border: '1px solid primary',
       borderRadius: 4,
       cursor: 'pointer',
       userSelect: 'none',
       textDecoration: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
       ':hover': {
-        backgroundColor: 'lighten(brand)',
+        backgroundColor: 'lighten(primary)',
       },
       ':active': {
-        backgroundColor: 'brand',
+        backgroundColor: 'primary',
       },
       '&:disabled': {
         backgroundColor: 'lightgrey',
@@ -94,15 +98,15 @@ export default {
         [
           'outlined',
           {
-            color: 'brand',
+            color: 'primary',
             backgroundColor: 'transparent',
             ':hover': {
               color: 'white',
-              backgroundColor: 'lighten(brand)',
+              backgroundColor: 'lighten(primary)',
             },
             ':active': {
               color: 'white',
-              backgroundColor: 'brand',
+              backgroundColor: 'primary',
             },
           },
         ],

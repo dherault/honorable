@@ -8,8 +8,8 @@ function Typography() {
 
   return (
     <Div
-      py={3}
-      px={6}
+      py={4}
+      px={8}
     >
       <ComponentVariator Component={H1}>
         Heading H1 Lorem Ipsum

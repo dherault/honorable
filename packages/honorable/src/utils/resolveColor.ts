@@ -52,7 +52,7 @@ function resolveColor(key: string | null, value: string | number | StyleProps, t
   Object.keys(theme.colors || {})
   .sort((a, b) => b.length - a.length)
   .forEach(colorName => {
-    if (resolvedValue.includes(colorName)) {
+    if (colorName && resolvedValue.includes(colorName)) {
       resolvedValue = applyColorHelpers(
         convertNamedColor(
           resolvedValue.replace(

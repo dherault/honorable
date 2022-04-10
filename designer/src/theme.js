@@ -12,15 +12,9 @@ export default {
       margin: '0.5rem 0',
     },
   },
-  pre: {
-    defaultProps: {
-      ...defaultTheme.pre,
-      margin: 0,
-      padding: 0,
-    },
-  },
   sub: {
     defaultProps: {
+      display: 'block',
       fontSize: '1rem',
       whiteSpace: 'break-spaces',
       lineHeight: '1.5rem',
@@ -35,7 +29,7 @@ export default {
         [
           true,
           ({ noBackgroundColor }) => !noBackgroundColor && {
-            backgroundColor: 'brand',
+            backgroundColor: 'primary',
           },
         ],
       ]),

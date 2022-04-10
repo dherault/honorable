@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { A, Button, Div, H3, Icon, Input, P } from 'honorable'
 import { ChromePicker } from 'react-color'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -10,26 +10,47 @@ function convertToRgbString({ r, g, b, a }) {
   return `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
+// REFACTOR : NO USELESS STATE + RENAME
+// REFACTOR : NO USELESS STATE + RENAME
+// REFACTOR : NO USELESS STATE + RENAME
 function ColorEditor({ colorName }) {
   const [open, setOpen] = useState(false)
   const [userTheme, setUserTheme] = useContext(UserThemeContext)
   const colorValue = userTheme.colors[colorName]
   const currentColorValue = colorValue[userTheme.mode] || colorValue
-  const [light, setLight] = useState(colorValue.light || colorValue)
-  const [dark, setDark] = useState(colorValue.dark || colorValue)
   const [colorPickerPlacement, setColorPickerPlacement] = useState('')
 
-  useEffect(() => {
-    setUserTheme({
-      ...userTheme,
-      colors: {
-        ...userTheme.colors,
-        [colorName]: light === dark ? light : { light, dark },
-      },
-    })
-  }, [light, dark, colorName]) // eslint-disable-line react-hooks/exhaustive-deps
+  function getColor(mode) {
+    return typeof userTheme.colors[colorName][mode] !== 'undefined'
+      ? userTheme.colors[colorName][mode]
+      : typeof userTheme.colors[colorName] === 'string'
+        ? userTheme.colors[colorName]
+        : ''
+  }
 
-  function renderColorPicker(mode, color, setColor) {
+  function setFactory(key, otherKey) {
+    return value => {
+      const workingValue = value || ''
+      const otherValue = getColor(otherKey)
+
+      setUserTheme({
+        ...userTheme,
+        colors: {
+          ...userTheme.colors,
+          [colorName]: value === otherValue ? value : {
+            [key]: workingValue,
+            [otherKey]: otherValue,
+          },
+        },
+      })
+    }
+  }
+
+  function renderColorPicker(mode, otherMode) {
+    const color = getColor(mode)
+    const otherColor = getColor(otherMode)
+    const setColor = setFactory(mode, otherMode)
+
     return (
       <Div
         mt={0.5}
@@ -55,12 +76,12 @@ function ColorEditor({ colorName }) {
               >
                 Show color picker
               </A>
-              {color !== light && (
+              {mode !== 'light' && color !== otherColor && (
                 <A
                   ml={0.5}
                   text="small"
                   userSelect="none"
-                  onClick={() => setColor(light)}
+                  onClick={() => setColor(colorValue.light)}
                 >
                   Set same as light
                 </A>
@@ -117,8 +138,8 @@ function ColorEditor({ colorName }) {
       </Div>
       {open && (
         <>
-          {renderColorPicker('light', light, setLight)}
-          {renderColorPicker('dark', dark, setDark)}
+          {renderColorPicker('light', 'dark')}
+          {renderColorPicker('dark', 'light')}
         </>
       )}
     </>
