@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { ComponentType, FC, HTMLAttributes } from 'react'
 import PropTypes, { InferProps } from 'prop-types'
 import styled from '@emotion/styled'
 // @ts-ignore
@@ -6,34 +6,27 @@ import fp from 'flexpad'
 
 import useTheme from '../hooks/useTheme'
 
+import {
+  AnyProps,
+  ExtendProps,
+  HonorableStyleProps,
+  StyleProps,
+  StylePropsValue,
+  Theme,
+} from '../types'
+
 import resolveColor from './resolveColor'
 import filterObject from './filterObject'
 import isSelector from './isSelector'
 import convertMp from './convertMp'
-import { styleProperties, stylePropTypes } from './styleProperties'
-
-import {
-  HonorableStyleProps,
-  StyleProps,
-  StylePropsValue,
-  AnyProps,
-  HonorableTheme,
-} from '../types'
-
-
-const mpProperties: string[] = []
-
-;['m', 'p'].forEach(mp => {
-  ['', 'x', 'y', 't', 'b', 'r', 'l'].forEach(x => {
-    mpProperties.push(mp + x)
-  })
-})
+import { stylePropTypes, styleProperties } from './styleProperties'
+import { mpPropTypes, mpProperties } from './mpProperties'
 
 function isCustomProps(any: any) {
   return typeof any === 'object' && Object.values(any).every(value => value instanceof Map)
 }
 
-function getCustomProps(customTheme: any, props: AnyProps, theme: HonorableTheme) {
+function getCustomProps(customTheme: any, props: AnyProps, theme: Theme) {
   const customStyle = {}
   const propsKeys = Object.keys(props)
 
@@ -56,10 +49,10 @@ function getCustomProps(customTheme: any, props: AnyProps, theme: HonorableTheme
   return customStyle
 }
 
-function wrapComponentWithStyle(ComponentOrTag: FC<any>, name = 'Honorable') {
-  const HonorableStyle: FC<HonorableStyleProps> = styled(ComponentOrTag)(props => props.honorable)
+function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = 'Honorable') {
+  const HonorableStyle: FC<HonorableStyleProps> = styled(ComponentOrTag as ComponentType)(props => props.honorable)
 
-  function Honorable(props: InferProps<typeof Honorable.propTypes>) {
+  function Honorable(props: InferProps<typeof Honorable.propTypes> & HTMLAttributes<HTMLElement> & ExtendProps) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { xflex, extend = {}, ...nextProps } = props
@@ -95,7 +88,7 @@ function wrapComponentWithStyle(ComponentOrTag: FC<any>, name = 'Honorable') {
             /* eslint-enable no-multi-spaces */
           },
           theme
-        )}
+        ) as StyleProps}
         {...otherProps}
       />
     )
@@ -104,8 +97,13 @@ function wrapComponentWithStyle(ComponentOrTag: FC<any>, name = 'Honorable') {
   Honorable.displayName = name
 
   Honorable.propTypes = {
-    ...ComponentOrTag.propTypes,
+    // TODO add standard props
+    // https://github.com/facebook/react/blob/main/packages/react-dom/src/shared/possibleStandardNames.js
+    // IN case HTMLAttributes<HTMLElement> is not enough
+    ...(typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes),
     ...stylePropTypes,
+    ...mpPropTypes,
+    xflex: PropTypes.string,
   }
 
   return Honorable

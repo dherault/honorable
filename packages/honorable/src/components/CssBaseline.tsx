@@ -3,26 +3,7 @@ import { Global, css } from '@emotion/react'
 
 import useTheme from '../hooks/useTheme'
 
-function CssBaseline() {
-  const theme = useTheme()
-
-  return (
-    <>
-      <Global
-        styles={css`
-:root {
-${Object.keys(theme.colors).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColor(colorName)};\n`)}
-}
-
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: ${typeof theme.font?.family === 'undefined' ? 'unset' : theme.font.family};
-  font-size: ${typeof theme.font?.size === 'undefined' ? 'unset' : theme.font.size};
-  color: ${typeof theme.colors?.text === 'undefined' ? 'unset' : theme.utils.resolveColor('text')};
-  background-color: ${typeof theme.colors?.background === 'undefined' ? 'unset' : theme.utils.resolveColor('background')};
-}
-
+const normalizeCss = `
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -372,7 +353,30 @@ template {
 [hidden] {
   display: none;
 }
-`}
+`
+
+function CssBaseline() {
+  const theme = useTheme()
+
+  return (
+    <>
+      <Global
+        styles={css`
+          :root {
+            ${Object.keys(theme.colors).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColor(colorName)};\n`)}
+          }
+
+          html {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-family: ${typeof theme.font?.family === 'undefined' ? 'unset' : theme.font.family};
+            font-size: ${typeof theme.font?.size === 'undefined' ? 'unset' : theme.font.size};
+            color: ${typeof theme.colors?.text === 'undefined' ? 'unset' : theme.utils.resolveColor('text')};
+            background-color: ${typeof theme.colors?.background === 'undefined' ? 'unset' : theme.utils.resolveColor('background')};
+          }
+
+          ${normalizeCss}
+        `}
       />
       <Global styles={{ '*': theme.utils.resolveColor(theme.global?.defaultProps || {}) }} />
     </>

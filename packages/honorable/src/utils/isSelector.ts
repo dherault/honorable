@@ -1,7 +1,7 @@
 const selectorPrefixes = [':', '&', '>', '~', '+', '.', ',', '#']
 
 // TODO use a regex
-function isSelector(property) {
+function isSelector(property: any) {
   if (typeof property !== 'string') return false
 
   const trimmedProperty = property.trim()

@@ -1,4 +1,4 @@
-function filterObject(any) {
+function filterObject(any: any): object {
   return any && typeof any === 'object' ? any : {}
 }
 

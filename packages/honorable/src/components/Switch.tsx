@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { MouseEvent } from 'react'
 import styled from '@emotion/styled'
+import PropTypes, { InferProps } from 'prop-types'
 
 import extractComponentThemeStyle from '../utils/extractComponentThemeStyle'
 import wrapComponentWithStyle from '../utils/wrapComponentWithStyle'
 import useTheme from '../hooks/useTheme'
 
+// @ts-ignore
 import { Div, Span } from './tags'
 
 const Handle = styled(Span)`
@@ -13,7 +15,7 @@ const Handle = styled(Span)`
   }
 `
 
-function Switch({ checked, onChange, checkedBackground, uncheckedBackground, className, ...props }) {
+function Switch({ checked, onChange, checkedBackground, uncheckedBackground, className, ...props }: InferProps<typeof Switch.propTypes>) {
   const theme = useTheme()
   const extendProps = { checked, checkedBackground, uncheckedBackground, ...props }
 
@@ -62,6 +64,22 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
       />
     </Div>
   )
+}
+
+Switch.propTypes = {
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+  checkedBackground: PropTypes.node,
+  uncheckedBackground: PropTypes.node,
+  className: PropTypes.string,
+}
+
+Switch.defaultProps = {
+  checked: false,
+  onChange: () => {},
+  checkedBackground: null,
+  uncheckedBackground: null,
+  className: '',
 }
 
 export default wrapComponentWithStyle(Switch, 'switch')

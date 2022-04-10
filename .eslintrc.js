@@ -18,11 +18,15 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  globals: {
+    JSX: true,
+  },
   plugins: [
     '@typescript-eslint',
   ],
   rules: {
     'react/jsx-no-bind': 'off',
+    'react/require-default-props': 'off',
     'react/destructuring-assignment': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',

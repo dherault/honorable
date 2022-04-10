@@ -1,3 +1,5 @@
+import { StyleProps } from '../types'
+
 const mpConversion = {
   m: 'margin',
   p: 'padding',
@@ -13,7 +15,7 @@ const xConversion = {
   r: ['Right'],
 }
 
-function convertMpValue(value) {
+function convertMpValue(value: any) {
   if (value === 'auto') return value
 
   const parsedValue = parseFloat(value)
@@ -23,7 +25,7 @@ function convertMpValue(value) {
   return `${parsedValue}rem`
 }
 
-function convertMp(mpProps) {
+function convertMp(mpProps: object): StyleProps {
   const convertedStyle = {}
 
   Object.keys(mpProps).forEach(key => {
@@ -34,8 +36,8 @@ function convertMp(mpProps) {
     const value = convertMpValue(mpProps[key])
 
     xConversion[x]
-    .map(x => property + x)
-    .forEach(property => {
+    .map((x: string) => property + x)
+    .forEach((property: string) => {
       convertedStyle[property] = value
     })
   })

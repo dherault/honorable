@@ -1,12 +1,18 @@
+import {
+  ExtendedTheme,
+  StyleProps,
+  Theme,
+} from '../types'
+
 import resolveColor from './resolveColor'
 
-function enhanceTheme(theme) {
+function enhanceTheme(theme: Theme): ExtendedTheme {
   return {
     ...theme,
     utils: {
-      resolveColor: color => resolveColor(null, color, theme),
+      resolveColor: (color: string | StyleProps) => resolveColor(null, color, theme),
     },
-  }
+  } as ExtendedTheme
 }
 
 export default enhanceTheme

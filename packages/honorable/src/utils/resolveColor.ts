@@ -1,3 +1,5 @@
+import { StyleProps, Theme } from '../types'
+
 import isSelector from './isSelector'
 
 const colorProperties = [
@@ -27,7 +29,7 @@ const colorProperties = [
   'textShadow',
 ]
 
-function resolveColor(key, value, theme = {}) {
+function resolveColor(key: string | null, value: string | number | StyleProps, theme: Theme = {}): string | number | StyleProps {
   if (!(!key || isSelector(key) || colorProperties.includes(key))) return value
 
   if (typeof value === 'object') {
@@ -58,7 +60,7 @@ function resolveColor(key, value, theme = {}) {
   return resolvedValue
 }
 
-function getColor(color, theme, previousColor, i = 0) {
+function getColor(color: string, theme: Theme, previousColor: string = '', i = 0): string {
   if (i >= 128) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }

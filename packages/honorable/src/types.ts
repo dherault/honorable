@@ -1,47 +1,67 @@
+import { ReactNode } from 'react'
 import { InferProps } from 'prop-types'
 
+import tags from './data/tags'
 import { stylePropTypes } from './utils/styleProperties'
 
-export type HonorableStyleProps = {
-  honorable: object;
+export type AnyProps = {
+  [key: string]: any
 }
 
-export type StyleProps = InferProps<typeof stylePropTypes>
+export type StyleProps = InferProps<typeof stylePropTypes> & AnyProps
 export type StylePropsValue = string | number
 
-export type AnyProps = {
-  [key: string]: any;
+export type HonorableStyleProps = {
+  honorable: StyleProps
+}
+
+export type ExtendProps = {
+  extend: StyleProps
 }
 
 export type Mode = 'light' | 'dark' | string
 
 export type FontStyle = {
-  fontFamily: string;
-  fontSize: number | string;
+  family: string
+  size: number | string
 }
 
 export type ColorValue = string
-;export type ColorStyle = string | ColorValue | {
-  [mode in Mode]: string | ColorValue;
+export type ColorStyle = string | ColorValue | {
+  [mode in Mode]: string | ColorValue
 }
 
 export type CustomProps = {
-  [key: string]: Map<any, StyleProps>;
+  [key: string]: Map<any, StyleProps>
 }
 
-export type ComponentName = string // TODO
+export type ComponentNames = typeof tags[number]
 
-export interface HonorableThemeComponenents {
-  [key: ComponentName]: {
-    defaultProps: StyleProps,
-    customProps: CustomProps,
+export type ComponentProps = {
+  defaultProps: StyleProps
+  customProps: CustomProps
+}
+
+export type ThemeComponents = {
+  [componentName in ComponentNames]: ComponentProps
+}
+
+export type Theme = ThemeComponents & {
+  mode?: Mode
+  font?: FontStyle
+  colors?: {
+    [key: ColorValue]: ColorStyle
+  }
+  global?: ComponentProps
+}
+
+export type ExtendedTheme = Theme & {
+  utils: {
+    resolveColor: (color: string | StyleProps) => string
   }
 }
 
-export type HonorableTheme = HonorableThemeComponenents & {
-  mode: Mode,
-  font: FontStyle,
-  colors: {
-    [key: ColorValue]: ColorStyle;
-  },
+export type ThemeProviderProps = {
+  theme: Theme
+  children: ReactNode
 }
