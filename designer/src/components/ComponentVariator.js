@@ -8,7 +8,7 @@ function uncapitalize(string) {
   return string.charAt(0).toLowerCase() + string.slice(1)
 }
 
-function ComponentVariator({ Component, children }) {
+function ComponentVariator({ Component, additionalVariations = {}, children }) {
   const [theme] = useContext(UserThemeContext)
   const [areVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
 
@@ -29,6 +29,10 @@ function ComponentVariator({ Component, children }) {
 
         props.push(combination)
       })
+    })
+
+    Object.entries(additionalVariations).forEach(([key, value]) => {
+      props.push({ [key]: value })
     })
   }
 

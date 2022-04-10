@@ -13,7 +13,10 @@ function Start() {
       <H1 mb={2.5}>Introduction to theming</H1>
       <ColorBox color="brand" />
       <Div mt={2}>
-        <ComponentVariator Component={Button}>
+        <ComponentVariator
+          Component={Button}
+          additionalVariations={{ disabled: true }}
+        >
           A cool button
         </ComponentVariator>
       </Div>

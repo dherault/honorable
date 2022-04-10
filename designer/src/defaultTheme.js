@@ -63,6 +63,7 @@ export default {
       borderRadius: 4,
       cursor: 'pointer',
       userSelect: 'none',
+      textDecoration: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
       ':hover': {
         backgroundColor: 'lighten(brand)',
@@ -72,6 +73,8 @@ export default {
       },
       '&:disabled': {
         backgroundColor: 'lightgrey',
+        borderColor: 'lightgrey',
+        cursor: 'not-allowed',
         ':hover': {
           backgroundColor: 'lightgrey',
         },

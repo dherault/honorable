@@ -1,6 +1,6 @@
 import { Button, Div, P, Switch } from 'honorable'
 import { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import AreVariationsDisplayedContext from '../contexts/AreVariationsDisplayedContext'
 
@@ -17,18 +17,29 @@ Let's start simple by editing your brand color and the button.
 Click on "customize" to start editing.`,
     infoEnd: `To see your customProps in action, enable "Component variations".
 Once done, click continue.`,
-  },
-  '/typography': {
-    tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'pre'],
-    title: "Let's customize your typography",
+    next: '/colors',
   },
   '/colors': {
     title: 'Time for some color theory',
     colors: ['brand', 'background', 'background-light', 'text', 'text-light', 'shadow', 'border'],
+    previous: '/',
+    next: '/typography',
+  },
+  '/typography': {
+    tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'pre'],
+    title: "Let's customize your typography",
+    previous: '/colors',
+    next: '/form',
   },
   '/form': {
     title: 'Forms are the butter and bread of UI design',
     tags: ['label', 'input', 'button'],
+    previous: '/typography',
+    next: '/dashboard',
+  },
+  '/dashboard': {
+    title: 'A dashboard, the final look and feel of your app',
+    previous: '/typography',
   },
 }
 
@@ -38,6 +49,8 @@ function ThemeEditor() {
   const props = pathnameToEditorProps[pathname]
 
   if (!props) return null
+
+  const { previous, next } = props
 
   return (
     <Div
@@ -75,9 +88,23 @@ function ThemeEditor() {
           Component variations
         </P>
         <Div flexGrow={1} />
-        <Button>
-          Continue
-        </Button>
+        {!!previous && (
+          <Button
+            as={Link}
+            to={previous}
+          >
+            Previous
+          </Button>
+        )}
+        {!!next && (
+          <Button
+            as={Link}
+            to={next}
+            ml={0.5}
+          >
+            Continue
+          </Button>
+        )}
       </Div>
     </Div>
   )
