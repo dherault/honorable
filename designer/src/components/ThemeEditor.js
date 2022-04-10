@@ -26,6 +26,10 @@ Once done, click continue.`,
     title: 'Time for some color theory',
     colors: ['brand', 'background', 'background-light', 'text', 'text-light', 'shadow', 'border'],
   },
+  '/form': {
+    title: 'Forms are the butter and bread of UI design',
+    tags: ['label', 'input', 'button'],
+  },
 }
 
 function ThemeEditor() {

@@ -53,6 +53,13 @@ function Navigation({ mode, setMode, onReset }) {
       </A>
       <A
         as={Link}
+        to="/form"
+        ml={1}
+      >
+        Form
+      </A>
+      <A
+        as={Link}
         to="/dashboard"
         ml={1}
       >

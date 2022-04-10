@@ -66,7 +66,7 @@ export default {
       color: 'white',
       backgroundColor: 'brand',
       padding: '0.5rem 1rem',
-      border: 'none',
+      border: '1px solid brand',
       borderRadius: 4,
       cursor: 'pointer',
       userSelect: 'none',
@@ -100,7 +100,6 @@ export default {
           {
             color: 'brand',
             backgroundColor: 'transparent',
-            border: '1px solid brand',
             ':hover': {
               color: 'white',
               backgroundColor: lighten(brand),
@@ -114,17 +113,24 @@ export default {
       ]),
     },
   },
+  hr: {
+    defaultProps: {
+      borderWidth: '0px',
+      borderTop: '1px solid border',
+    },
+  },
+  label: {
+    defaultProps: {
+      display: 'block',
+      marginBottom: '0.25rem',
+    },
+  },
   pre: {
     defaultProps: {
       display: 'inline-block',
       padding: '4px 8px',
       borderRadius: 4,
       backgroundColor: 'background-light',
-    },
-  },
-  hr: {
-    defaultProps: {
-      borderTop: '1px solid border',
     },
   },
 }

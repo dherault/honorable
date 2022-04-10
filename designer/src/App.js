@@ -22,20 +22,20 @@ function App() {
             element={<Start />}
           />
           <Route
-            path="/dashboard"
-            element={<Dashboard />}
+            path="/colors"
+            element={<Colors />}
           />
           <Route
             path="/typography"
             element={<Typography />}
           />
           <Route
-            path="/colors"
-            element={<Colors />}
-          />
-          <Route
             path="/form"
             element={<Form />}
+          />
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
           />
         </Routes>
       </ApplicationLayout>
