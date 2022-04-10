@@ -5,10 +5,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 import usePrevious from '../hooks/usePrevious'
 import UserThemeContext from '../contexts/UserThemeContext'
-
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
+import capitalize from '../utils/capitalize'
 
 function stringifyMapValues(object = {}) {
   const nextObject = {}

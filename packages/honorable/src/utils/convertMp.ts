@@ -31,7 +31,7 @@ function convertMp(mpProps: object): StyleProps {
   Object.keys(mpProps).forEach(key => {
     const keyArray = key.split('')
     const mp = keyArray.shift()
-    const x = keyArray.shift()
+    const x = keyArray.shift() || ''
     const property = mpConversion[mp]
     const value = convertMpValue(mpProps[key])
 

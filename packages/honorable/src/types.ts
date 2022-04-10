@@ -65,3 +65,8 @@ export type ThemeProviderProps = {
   theme: Theme
   children: ReactNode
 }
+
+export type IconProps = AnyProps & {
+  children?: ReactNode
+  className?: string
+}

@@ -1,16 +1,93 @@
-import { Button, Div, H3, useTheme } from 'honorable'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { A, Button, Div, H3, Icon, Input, P } from 'honorable'
+import { ChromePicker } from 'react-color'
+import { IoCloseOutline } from 'react-icons/io5'
 
 import UserThemeContext from '../contexts/UserThemeContext'
+import capitalize from '../utils/capitalize'
 
 function ColorEditor({ colorName }) {
-  const enhancedUserTheme = useTheme()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const [userTheme, setUserTheme] = useContext(UserThemeContext)
-  const [isModed, setIsModed] = useState(false)
-
   const colorValue = userTheme.colors[colorName]
-  const currentColorValue = enhancedUserTheme.utils.resolveColor(colorName)
+  const currentColorValue = colorValue[userTheme.mode] || colorValue
+  const [light, setLight] = useState(colorValue.light || colorValue)
+  const [dark, setDark] = useState(colorValue.dark || colorValue)
+  const [colorPickerPlacement, setColorPickerPlacement] = useState('')
+
+  useEffect(() => {
+    setUserTheme({
+      ...userTheme,
+      colors: {
+        ...userTheme.colors,
+        [colorName]: light === dark ? light : { light, dark },
+      },
+    })
+  }, [light, dark, colorName]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function renderColorPicker(mode, color, setColor) {
+    return (
+      <Div
+        mt={0.5}
+        xflex="x1"
+      >
+        <Div xflex="x4">
+          <P minWidth={64}>
+            {capitalize(mode)}:
+          </P>
+          {colorPickerPlacement !== mode && (
+            <>
+              <Input
+                ml={0.5}
+                type="text"
+                value={color}
+                onChange={e => setColor(e.target.value)}
+              />
+              <A
+                ml={1}
+                text="small"
+                userSelect="none"
+                onClick={() => setColorPickerPlacement(x => x === mode ? '' : mode)}
+              >
+                Show color picker
+              </A>
+              {color !== light && (
+                <A
+                  ml={0.5}
+                  text="small"
+                  userSelect="none"
+                  onClick={() => setColor(light)}
+                >
+                  Set same as light
+                </A>
+              )}
+            </>
+          )}
+        </Div>
+        {colorPickerPlacement === mode && (
+          <Div
+            ml={0.5}
+            xflex="x1"
+          >
+            <ChromePicker
+              elevation={0}
+              color={color}
+              onChange={color => setColor(color.hex)}
+            />
+            <Icon
+              mt={-0.5}
+              p={0.5}
+              cursor="pointer"
+              onClick={() => setColorPickerPlacement('')}
+            >
+              <IoCloseOutline />
+            </Icon>
+          </Div>
+        )}
+
+      </Div>
+    )
+  }
 
   return (
     <>
@@ -34,7 +111,10 @@ function ColorEditor({ colorName }) {
         </Button>
       </Div>
       {open && (
-        'open'
+        <>
+          {renderColorPicker('light', light, setLight)}
+          {renderColorPicker('dark', dark, setDark)}
+        </>
       )}
     </>
   )
