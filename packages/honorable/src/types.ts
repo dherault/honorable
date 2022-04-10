@@ -31,8 +31,8 @@ export type ColorStyle = string | ColorValue | {
   [mode in Mode]: string | ColorValue
 }
 
-export type CustomProps = {
-  [key: string]: Map<any, StyleProps>
+export type CustomProps = ((props: AnyProps) => StyleProps) | {
+  [key: string]: Map<any, StyleProps> | (() => StyleProps)
 }
 
 export type ComponentNames = typeof tags[number]

@@ -1,4 +1,10 @@
-function extractComponentThemeStyle(componentTheme, partKey, props) {
+import {
+  AnyProps,
+  ComponentProps,
+  StyleProps,
+} from '../types'
+
+function extractComponentThemeStyle(componentTheme: ComponentProps, partKey: string, props: AnyProps) {
   if (componentTheme === null || typeof componentTheme !== 'object') return null
 
   const { defaultProps = {}, customProps = {} } = componentTheme
@@ -10,7 +16,7 @@ function extractComponentThemeStyle(componentTheme, partKey, props) {
         Object.assign(styleProps, customProps[partKey])
       }
       else if (typeof customProps[partKey] === 'function') {
-        Object.assign(styleProps, customProps[partKey](props))
+        Object.assign(styleProps, (customProps[partKey] as (x:AnyProps) => StyleProps)(props))
       }
     }
   }

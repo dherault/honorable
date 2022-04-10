@@ -1,4 +1,6 @@
 // Components
+
+// @ts-ignore
 export * from './components/tags'
 export { default as ThemeProvider } from './components/ThemeProvider'
 export { default as CssBaseline } from './components/CssBaseline'

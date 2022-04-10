@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import merge from 'lodash.merge'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 
