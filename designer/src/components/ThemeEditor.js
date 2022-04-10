@@ -19,7 +19,7 @@ Click on "customize" to start editing.`,
 Once done, click continue.`,
   },
   '/typography': {
-    tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre'],
+    tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'pre'],
     title: "Let's customize your typography",
   },
   '/colors': {
@@ -62,7 +62,7 @@ function ThemeEditor() {
 
         <Switch
           checked={areVariationsDisplayed}
-          onChange={(event, value) => setAreVariationsDisplayed(value)}
+          onChange={value => setAreVariationsDisplayed(value)}
         />
         <P
           color="text-light"

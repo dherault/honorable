@@ -80,7 +80,7 @@ function Navigation({ mode, setMode, onReset }) {
           </Span>
         )}
         checked={mode === 'dark'}
-        onChange={(event, checked) => setMode(checked ? 'dark' : 'light')}
+        onChange={checked => setMode(checked ? 'dark' : 'light')}
       />
       <Button
         variant="outlined"

@@ -32,7 +32,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
       userSelect="none"
       cursor="pointer"
       extend={extractComponentThemeStyle(theme.switch, 'root', extendProps)}
-      onClick={(event: MouseEvent) => onChange(event, !checked)}
+      onClick={(event: MouseEvent) => onChange(!checked, event)}
       role="button"
     >
       {checked && !!checkedBackground && (
