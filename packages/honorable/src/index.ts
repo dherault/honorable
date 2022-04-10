@@ -11,4 +11,4 @@ export { default as useTheme } from './hooks/useTheme'
 // Utils
 export { default as resolveColor } from './utils/resolveColor'
 export { default as wrapComponentWithStyle } from './utils/wrapComponentWithStyle'
-export { default as lighten } from './utils/lighten'
+export { lighten, darken } from './utils/lightenAndDarken'

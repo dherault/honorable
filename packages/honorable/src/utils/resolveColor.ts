@@ -1,6 +1,9 @@
 import { StyleProps, Theme } from '../types'
 
+import namedColors from '../data/namedColors'
+
 import isSelector from './isSelector'
+import { darken, lighten } from './lightenAndDarken'
 
 const colorProperties = [
   'backgroundColor',
@@ -50,9 +53,13 @@ function resolveColor(key: string | null, value: string | number | StyleProps, t
   .sort((a, b) => b.length - a.length)
   .forEach(colorName => {
     if (resolvedValue.includes(colorName)) {
-      resolvedValue = resolvedValue.replace(
-        new RegExp(colorName, 'g'),
-        getColor(colorName, theme)
+      resolvedValue = applyColorHelpers(
+        convertNamedColor(
+          resolvedValue.replace(
+            new RegExp(colorName, 'g'),
+            getColor(colorName, theme)
+          )
+        )
       )
     }
   })
@@ -61,7 +68,7 @@ function resolveColor(key: string | null, value: string | number | StyleProps, t
 }
 
 function getColor(color: string, theme: Theme, previousColor: string = '', i = 0): string {
-  if (i >= 128) {
+  if (i >= 64) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }
 
@@ -72,6 +79,31 @@ function getColor(color: string, theme: Theme, previousColor: string = '', i = 0
       : color
 
   return foundColor === previousColor ? foundColor : getColor(foundColor, theme, foundColor, i + 1)
+}
+
+const colorHelpers = [
+  {
+    regex: /lighten\s*\(\s*([^()]*)\s*\)/g,
+    fn: (color: string) => lighten(color),
+  },
+  {
+    regex: /darken\s*\(\s*([^()]*)\s*\)/g,
+    fn: (color: string) => darken(color),
+  },
+]
+
+function applyColorHelpers(colorString: string, i = 0): string {
+  if (i >= 64) {
+    throw new Error('Could not apply color helper.')
+  }
+
+  const appliedColor = colorHelpers.reduce((color, helper) => color.replace(helper.regex, (_match, color) => helper.fn(convertNamedColor(color.trim()))), colorString)
+
+  return appliedColor === colorString ? appliedColor : applyColorHelpers(appliedColor, i + 1)
+}
+
+function convertNamedColor(namedColor: string) {
+  return namedColors[namedColor.toLowerCase()] || namedColor
 }
 
 export default resolveColor

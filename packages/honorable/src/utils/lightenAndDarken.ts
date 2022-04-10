@@ -1,12 +1,12 @@
-function lighten(col: string, amt = 10) {
+export function lighten(color: string, amt = 12) {
   let usePound = false
 
-  if (col[0] === '#') {
-    col = col.slice(1)
+  if (color[0] === '#') {
+    color = color.slice(1)
     usePound = true
   }
 
-  const num = parseInt(col, 16)
+  const num = parseInt(color, 16)
 
   let r = (num >> 16) + amt
 
@@ -26,4 +26,4 @@ function lighten(col: string, amt = 10) {
   return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0')
 }
 
-export default lighten
+export const darken = (color: string, amount = 12) => lighten(color, -amount)
