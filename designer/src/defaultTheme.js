@@ -1,10 +1,3 @@
-import { lighten } from 'honorable'
-
-const brand = '#0099ff'
-// const lightBrand = lighten(brand)
-// const lighterBrand = lighten(brand, 50)
-// const darkBrand = darken(brand)
-
 export default {
   mode: 'light',
   font: {
@@ -72,7 +65,7 @@ export default {
       userSelect: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
       ':hover': {
-        backgroundColor: lighten(brand),
+        backgroundColor: 'lighten(brand)',
       },
       ':active': {
         backgroundColor: 'brand',
@@ -102,7 +95,7 @@ export default {
             backgroundColor: 'transparent',
             ':hover': {
               color: 'white',
-              backgroundColor: lighten(brand),
+              backgroundColor: 'lighten(brand)',
             },
             ':active': {
               color: 'white',
