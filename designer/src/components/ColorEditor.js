@@ -6,8 +6,12 @@ import { IoCloseOutline } from 'react-icons/io5'
 import UserThemeContext from '../contexts/UserThemeContext'
 import capitalize from '../utils/capitalize'
 
+function convertToRgbString({ r, g, b, a }) {
+  return `rgba(${r}, ${g}, ${b}, ${a})`
+}
+
 function ColorEditor({ colorName }) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [userTheme, setUserTheme] = useContext(UserThemeContext)
   const colorValue = userTheme.colors[colorName]
   const currentColorValue = colorValue[userTheme.mode] || colorValue
@@ -72,7 +76,7 @@ function ColorEditor({ colorName }) {
             <ChromePicker
               elevation={0}
               color={color}
-              onChange={color => setColor(color.hex)}
+              onChange={color => setColor(convertToRgbString(color.rgb))}
             />
             <Icon
               mt={-0.5}
@@ -97,9 +101,10 @@ function ColorEditor({ colorName }) {
           height={32 - 8 - 2}
           borderRadius={4}
           backgroundColor={currentColorValue}
+          elevation={2}
         />
         <H3 ml={0.5}>
-          Color {colorName}
+          {colorName}
         </H3>
         <Div flexGrow={1} />
         <Button

@@ -22,6 +22,10 @@ Once done, click continue.`,
     tags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre'],
     title: "Let's customize your typography",
   },
+  '/colors': {
+    title: 'Time for some color theory',
+    colors: ['brand', 'background', 'background-light', 'text', 'text-light', 'shadow', 'border'],
+  },
 }
 
 function ThemeEditor() {

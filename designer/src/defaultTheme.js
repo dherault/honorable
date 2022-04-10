@@ -12,10 +12,7 @@ export default {
     size: '16px',
   },
   colors: {
-    brand: {
-      light: '#0099ff',
-      dark: '#0099ff',
-    },
+    brand: '#0099ff',
     background: {
       light: 'transparent',
       dark: '#333',
