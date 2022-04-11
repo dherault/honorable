@@ -1,55 +1,13 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { A, Button, Div, H1, Img, Modal, Nav, Pre, Span, Switch, useTheme } from 'honorable'
+import { A, Button, Div, H1, Img, Nav, Span, Switch, useTheme } from 'honorable'
 import { AiFillGithub } from 'react-icons/ai'
 
-import UserThemeContext from '../contexts/UserThemeContext'
-
-import stringify from '../utils/stringify'
+import ExportModal from './ExportModal'
 
 function Navigation({ mode, setMode, onReset }) {
   const theme = useTheme()
-  const [userTheme] = useContext(UserThemeContext)
   const [isExportModalOpen, setIsExportModalOpen] = useState(false)
-
-  function renderExportModal() {
-    return (
-      <Modal
-        open={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
-        xflex="y2s"
-        overflow="hidden"
-      >
-        <Div
-          p={1}
-          flexGrow={1}
-          overflowY="auto"
-        >
-          <H1>
-            Your theme:
-          </H1>
-          <Pre mt={1}>
-            {JSON.stringify(userTheme, null, 2)}
-          </Pre>
-        </Div>
-        <Div
-          flexShrink={0}
-          xflex="x6"
-          p={1}
-        >
-          <Button
-            variant="outlined"
-            onClick={() => setIsExportModalOpen(false)}
-          >
-            Close
-          </Button>
-          <Button ml={1}>
-            Copy to clipboard
-          </Button>
-        </Div>
-      </Modal>
-    )
-  }
 
   return (
     <Nav
@@ -157,7 +115,10 @@ function Navigation({ mode, setMode, onReset }) {
           color={theme.utils.resolveColor('text')}
         />
       </A>
-      {renderExportModal()}
+      <ExportModal
+        open={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+      />
     </Nav>
   )
 }
