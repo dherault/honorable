@@ -50,13 +50,13 @@ function ApplicationLayout({ children }) {
     }
   }, [])
 
-  useEffect(() => {
-    loadUserTheme()
-  }, [loadUserTheme])
+  // useEffect(() => {
+  //   loadUserTheme()
+  // }, [loadUserTheme])
 
-  useEffect(() => {
-    persistUserTheme()
-  }, [persistUserTheme])
+  // useEffect(() => {
+  //   persistUserTheme()
+  // }, [persistUserTheme])
 
   function handleReset() {
     window.confirm('Are you sure you want to reset the theme?')

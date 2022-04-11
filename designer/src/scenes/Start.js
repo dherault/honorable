@@ -15,7 +15,7 @@ function Start() {
       <Div mt={2}>
         <ComponentVariator
           Component={Button}
-          additionalVariations={{ disabled: true }}
+          additionalVariations={{ disabled: { disabled: true } }}
         >
           A cool button
         </ComponentVariator>

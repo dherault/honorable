@@ -38,13 +38,13 @@ export default {
     },
     customProps: new Map([
       [
-        ({ text }) => text === 'small',
+        assignStringValue(({ text }) => text === 'small', "({ text }) => text === 'small'"),
         {
           fontSize: '0.75rem',
         },
       ],
       ...createElevation().map((styles, i) => [
-        ({ elevation }) => elevation === i,
+        assignStringValue(({ elevation }) => elevation === i, '({ elevation }) => elevation === i'),
         styles,
       ]),
     ]),
@@ -87,14 +87,14 @@ export default {
     },
     customProps: new Map([
       [
-        ({ size }) => size === 'small',
+        assignStringValue(({ size }) => size === 'small', "({ size }) => size === 'small'"),
         {
           fontSize: '0.85rem',
           padding: '0.35rem 0.75rem 0.25rem 0.75rem',
         },
       ],
       [
-        ({ variant }) => variant === 'outlined',
+        assignStringValue(({ variant }) => variant === 'outlined', "({ variant }) => variant === 'outlined'"),
         {
           color: 'primary',
           backgroundColor: 'transparent',
@@ -226,4 +226,9 @@ function createElevation() {
   }
 
   return elevation
+}
+function assignStringValue(fn, string) {
+  fn.stringValue = string
+
+  return fn
 }

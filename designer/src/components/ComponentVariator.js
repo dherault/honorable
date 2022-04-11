@@ -12,34 +12,26 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
   const [theme] = useContext(UserThemeContext)
   const [areVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
 
-  const { customProps = {} } = theme[uncapitalize(Component.displayName)] || {}
+  const { customProps = new Map() } = theme[uncapitalize(Component.displayName)] || {}
 
-  const keys = Object.keys(customProps)
+  const variations = {
+    '': {},
+  }
 
-  const props = [{}]
+  if (areVariationsDisplayed) {
+    customProps.forEach((value, key) => {
+      variations[key.toString()] = value
+    })
 
-  // if (areVariationsDisplayed) {
-  //   keys.forEach(key => {
-  //     const styleObject = customProps[key]
+    Object.assign(variations, additionalVariations)
+  }
 
-  //     if (typeof styleObject !== 'object') return
-
-  //     props.push(key)
-  //   })
-
-  //   Object.entries(additionalVariations).forEach(([key, value]) => {
-  //     props.push({ [key]: value })
-  //   })
-  // }
-
-  function renderVariation(props = {}, noMargin = false) {
-    const propsJson = JSON.stringify(props, null, 2)
-
+  function renderVariation(fnString = '', props = {}, noMargin = false) {
     return (
       <Div
         mb={noMargin ? 0 : 2}
         xflex="x4"
-        key={propsJson}
+        key={fnString}
       >
         <Div>
           <Component
@@ -49,20 +41,20 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
             {children}
           </Component>
         </Div>
-        {propsJson !== '{}' && (
+        {!!fnString && (
           <Pre
             text="small"
             ml={1}
             my={0}
           >
-            {propsJson.split('\n').filter(x => x !== '{' && x !== '}').map(x => x.trim()).join('\n')}
+            {fnString}
           </Pre>
         )}
       </Div>
     )
   }
 
-  return props.map((props, i, a) => renderVariation(props, i === a.length - 1))
+  return Object.entries(variations).map(([key, value], i, a) => renderVariation(key, value, i === a.length - 1))
 }
 
 export default ComponentVariator

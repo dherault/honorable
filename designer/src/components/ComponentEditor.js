@@ -7,23 +7,22 @@ import usePrevious from '../hooks/usePrevious'
 import UserThemeContext from '../contexts/UserThemeContext'
 import capitalize from '../utils/capitalize'
 
-function stringifyCustomProps(customProps = {}) {
-  return customProps
-
-  return Object.fromEntries(Object.entries(customProps).map(([key, value]) => [key, JSON.stringify(value, null, 2)]))
+function stringifyCustomProps(customProps = new Map()) {
+  return `new Map([
+${Array.from(customProps.entries()).map(([key, value]) => `  [
+    ${key.stringValue || key},
+    ${JSON.stringify(value, null, 2).split('\n').join('\n    ')},
+  ]`).join(',\n')}
+])`
 }
 
-function unstringifyCustomProps(customProps = {}, defaultValue = {}) {
-  return customProps
-
-  return Object.fromEntries(Object.entries(customProps).map(([key, value]) => {
-    try {
-      return [key, JSON.parse(value)]
-    }
-    catch (e) {
-      return [key, defaultValue]
-    }
-  }))
+function unstringifyCustomProps(customProps = '', defaultValue = new Map()) {
+  try {
+    return eval(customProps)
+  }
+  catch (error) {
+    return defaultValue
+  }
 }
 
 const editorOptions = {
@@ -41,7 +40,7 @@ const editorOptions = {
 }
 
 const defaultEditorValue = `{
-\t
+
 }`
 
 function ComponentEditor({ componentName }) {
@@ -65,6 +64,7 @@ function ComponentEditor({ componentName }) {
           ...theme[componentName],
           defaultProps: JSON.parse(defaultProps),
           customProps: unstringifyCustomProps(customProps, theme[componentName]?.customProps),
+          // customProps: new Map(),
         },
       })
     }
@@ -96,7 +96,7 @@ function ComponentEditor({ componentName }) {
     return (
       <Button
         size="small"
-        onClick={() => setCustomProps({ '': new Map([['', defaultEditorValue]]) })}
+        onClick={() => setCustomProps(stringifyCustomProps(new Map([[(props, theme) => true, {}]])))}
       >
         Add custom props
       </Button>
@@ -121,8 +121,8 @@ function ComponentEditor({ componentName }) {
         </Div>
         <Editor
           width="100%"
-          height="calc(1.5rem * 4)"
-          language="js"
+          height="calc(1.75rem * 6)"
+          language="javascript"
           theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
           options={editorOptions}
           value={customProps}
@@ -195,7 +195,7 @@ function ComponentEditor({ componentName }) {
 
             <Editor
               width="100%"
-              height="calc(1.75rem * 5)"
+              height="calc(1.75rem * 6)"
               language="json"
               theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
               value={defaultProps}
@@ -204,7 +204,7 @@ function ComponentEditor({ componentName }) {
             />
           </Div>
           <Div mt={0.5}>
-            {customProps && customProps.size > 0 ? renderCustomProps() : renderNoCustomProps()}
+            {(theme[componentName]?.customProps?.size || 0) > 0 ? renderCustomProps() : renderNoCustomProps()}
           </Div>
         </>
       )}

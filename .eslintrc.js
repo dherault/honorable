@@ -25,7 +25,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
-    'no-new-func': 'off',
+    'no-eval': 'off', // Used in designer/src/components/ComponentEditor.js
     'react/jsx-no-bind': 'off',
     'react/require-default-props': 'off',
     'react/destructuring-assignment': 'off',
