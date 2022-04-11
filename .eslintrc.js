@@ -25,6 +25,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'no-new-func': 'off',
     'react/jsx-no-bind': 'off',
     'react/require-default-props': 'off',
     'react/destructuring-assignment': 'off',

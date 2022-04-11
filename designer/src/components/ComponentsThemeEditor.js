@@ -1,7 +1,4 @@
-import { useContext } from 'react'
-import { Div, H2, Sub } from 'honorable'
-
-import UserThemeContext from '../contexts/UserThemeContext'
+import { Div, H2 } from 'honorable'
 
 import ComponentEditor from './ComponentEditor'
 import ColorEditor from './ColorEditor'

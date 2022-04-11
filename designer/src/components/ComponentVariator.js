@@ -18,23 +18,19 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
 
   const props = [{}]
 
-  if (areVariationsDisplayed) {
-    keys.forEach(key => {
-      const map = customProps[key]
+  // if (areVariationsDisplayed) {
+  //   keys.forEach(key => {
+  //     const styleObject = customProps[key]
 
-      if (!(map instanceof Map && map.size)) return
+  //     if (typeof styleObject !== 'object') return
 
-      [...map.keys()].forEach(mapKey => {
-        const combination = { [key]: mapKey }
+  //     props.push(key)
+  //   })
 
-        props.push(combination)
-      })
-    })
-
-    Object.entries(additionalVariations).forEach(([key, value]) => {
-      props.push({ [key]: value })
-    })
-  }
+  //   Object.entries(additionalVariations).forEach(([key, value]) => {
+  //     props.push({ [key]: value })
+  //   })
+  // }
 
   function renderVariation(props = {}, noMargin = false) {
     const propsJson = JSON.stringify(props, null, 2)
