@@ -1,4 +1,16 @@
 function stringify(object, pad = '  ') {
+  if (object instanceof Map) {
+    let stringified = 'new Map([\n'
+
+    object.forEach((value, key) => {
+      stringified += `${pad}[\n`
+      stringified += `${pad}  ${typeof key === 'function' ? (key?.stringValue || key) : key},\n`
+      stringified += `${pad}  ${stringify(value, `${pad}    `)},\n`
+      stringified += `${pad}],\n`
+    })
+
+    return `${stringified}${pad.slice(2)}])`
+  }
   if (typeof object === 'object') {
     let stringified = '{\n'
 

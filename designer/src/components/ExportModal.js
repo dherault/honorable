@@ -6,6 +6,20 @@ import UserThemeContext from '../contexts/UserThemeContext'
 
 import stringify from '../utils/stringify'
 
+function stringifyTheme(theme) {
+  try {
+    const clonedTheme = { ...theme }
+
+    delete clonedTheme.rehydrated
+
+    return `export default ${stringify(clonedTheme)}`
+  }
+  catch (error) {
+    return 'An error occured'
+  }
+}
+
+// TODO use Monaco
 function ExportModal({ open, onClose }) {
   const [userTheme] = useContext(UserThemeContext)
 
@@ -25,7 +39,7 @@ function ExportModal({ open, onClose }) {
           Your theme:
         </H1>
         <Pre mt={1}>
-          {JSON.stringify(userTheme, null, 2)}
+          {stringifyTheme(userTheme)}
         </Pre>
       </Div>
       <Div
