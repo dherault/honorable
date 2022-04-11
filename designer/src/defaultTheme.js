@@ -8,7 +8,7 @@ export default {
     primary: '#2196f3',
     secondary: '#f50057',
     background: {
-      light: 'transparent',
+      light: 'white',
       dark: '#333',
     },
     'background-light': {
@@ -128,6 +128,13 @@ export default {
       padding: '4px 8px',
       borderRadius: 4,
       backgroundColor: 'background-light',
+    },
+  },
+  modal: {
+    partDefaultProps: {
+      root: {
+        borderRadius: 4,
+      },
     },
   },
 }

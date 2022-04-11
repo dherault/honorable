@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { Ref } from 'react'
 import { InferProps } from 'prop-types'
 
 import tags from './data/tags'
@@ -8,15 +8,20 @@ export type AnyProps = {
   [key: string]: any
 }
 
+export type RefProps ={
+  ref?: Ref<any>
+  honorableRef?: Ref<any>
+}
+
 export type StyleProps = InferProps<typeof stylePropTypes> & AnyProps
 export type StylePropsValue = string | number
 
-export type HonorableStyleProps = {
+export type HonorableStyleProps = AnyProps & {
   honorable: StyleProps
 }
 
 export type ExtendProps = {
-  extend: StyleProps
+  extend?: StyleProps
 }
 
 export type Mode = 'light' | 'dark' | string
@@ -38,7 +43,12 @@ export type ComponentNames = typeof tags[number]
 export type ComponentProps = {
   defaultProps?: StyleProps
   customProps?: CustomProps
-  partCustomProps?: CustomProps
+  partDefaultProps?: {
+    [key: string]: StyleProps
+  }
+  partCustomProps?: {
+    [key: string]: CustomProps
+  }
 }
 
 export type ThemeComponents = {
@@ -58,14 +68,4 @@ export type ExtendedTheme = Theme & {
   utils: {
     resolveColor: (color: string | StyleProps) => string
   }
-}
-
-export type ThemeProviderProps = {
-  theme: Theme
-  children: ReactNode
-}
-
-export type IconProps = AnyProps & {
-  children?: ReactNode
-  className?: string
 }

@@ -1,12 +1,22 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { A, Button, Div, H1, Img, Nav, Span, Switch, useTheme } from 'honorable'
+import { A, Button, Div, H1, Img, Modal, Nav, Span, Switch, useTheme } from 'honorable'
 import { AiFillGithub } from 'react-icons/ai'
 
 function Navigation({ mode, setMode, onReset }) {
   const theme = useTheme()
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false)
 
-  function handleExport() {
-    console.log('export')
+  function renderExportModal() {
+    return (
+      <Modal
+        open={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+        p={1}
+      >
+        foo
+      </Modal>
+    )
   }
 
   return (
@@ -97,7 +107,7 @@ function Navigation({ mode, setMode, onReset }) {
         Reset theme
       </Button>
       <Button
-        onClick={handleExport}
+        onClick={() => setIsExportModalOpen(true)}
         ml={1}
       >
         Export theme
@@ -115,6 +125,7 @@ function Navigation({ mode, setMode, onReset }) {
           color={theme.utils.resolveColor('text')}
         />
       </A>
+      {renderExportModal()}
     </Nav>
   )
 }

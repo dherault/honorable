@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react'
 import styled from '@emotion/styled'
 import PropTypes, { InferProps } from 'prop-types'
 
-import resolvePartCustomProps from '../utils/resolvePartCustomProps'
+import resolvePartProps from '../utils/resolvePartProps'
 import wrapComponentWithStyle from '../utils/wrapComponentWithStyle'
 import useTheme from '../hooks/useTheme'
 
@@ -31,9 +31,9 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
       backgroundColor="background-light"
       userSelect="none"
       cursor="pointer"
-      extend={resolvePartCustomProps('switch', 'root', extendProps, theme)}
       onClick={(event: MouseEvent) => onChange(!checked, event)}
       role="button"
+      {...props}
     >
       {checked && !!checkedBackground && (
         <Div
@@ -60,7 +60,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
         top={2}
         left={checked ? 'calc(100% - 22px)' : 2}
         transition="left 150ms ease"
-        extend={resolvePartCustomProps('switch', 'handle', extendProps, theme)}
+        extend={resolvePartProps('switch', 'handle', extendProps, theme)}
       />
     </Div>
   )

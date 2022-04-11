@@ -1,21 +1,24 @@
-import React, { ComponentType, FC, HTMLAttributes } from 'react'
+import React, { ComponentType, HTMLAttributes, Ref, forwardRef } from 'react'
 import PropTypes, { InferProps } from 'prop-types'
+import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 // @ts-ignore
 import fp from 'flexpad'
-
-import useTheme from '../hooks/useTheme'
 
 import {
   AnyProps,
   ExtendProps,
   HonorableStyleProps,
+  RefProps,
   StyleProps,
   StylePropsValue,
 } from '../types'
 
+import useTheme from '../hooks/useTheme'
+
 import resolveColor from './resolveColor'
 import filterObject from './filterObject'
+import capitalize from './capitalize'
 import isSelector from './isSelector'
 import convertMp from './convertMp'
 import resolveCustomProps from './resolveCustomProps'
@@ -23,12 +26,29 @@ import { stylePropTypes, styleProperties } from './styleProperties'
 import { mpPropTypes, mpProperties } from './mpProperties'
 
 function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = 'Honorable') {
-  const HonorableStyle: FC<HonorableStyleProps> = styled(ComponentOrTag as ComponentType)(props => props.honorable)
+  const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes
+  const propTypeKeys = Object.keys(componentPropsTypes)
+  const propTypes = {
+    // TODO add standard props
+    // https://github.com/facebook/react/blob/main/packages/react-dom/src/shared/possibleStandardNames.js
+    // IN case HTMLAttributes<HTMLElement> is not enough
+    ...componentPropsTypes,
+    ...stylePropTypes,
+    ...mpPropTypes,
+    xflex: PropTypes.string,
+  }
 
-  function Honorable(props: InferProps<typeof Honorable.propTypes> & HTMLAttributes<HTMLElement> & ExtendProps) {
+  const HonorableStyle = styled(
+    ComponentOrTag as ComponentType,
+    {
+      shouldForwardProp: prop => isPropValid(prop) || propTypeKeys.includes(prop as string),
+    }
+  )((props: HonorableStyleProps) => props.honorable)
+
+  function Honorable(props: InferProps<typeof propTypes> & HTMLAttributes<HTMLElement> & ExtendProps & RefProps) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
-    const { xflex, extend = {}, ...nextProps } = props
+    const { honorableRef, xflex, extend = {}, ...nextProps } = props
     const stylePropsFromProps: StyleProps = {}
     const mpProps: StyleProps = {}
     const otherProps: AnyProps = {}
@@ -47,6 +67,7 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
 
     return (
       <HonorableStyle
+        ref={honorableRef}
         honorable={resolveColor(
           null,
           {
@@ -67,19 +88,27 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
     )
   }
 
-  Honorable.displayName = name
+  const displayName = capitalize(name)
 
-  Honorable.propTypes = {
-    // TODO add standard props
-    // https://github.com/facebook/react/blob/main/packages/react-dom/src/shared/possibleStandardNames.js
-    // IN case HTMLAttributes<HTMLElement> is not enough
-    ...(typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes),
-    ...stylePropTypes,
-    ...mpPropTypes,
-    xflex: PropTypes.string,
-  }
+  Honorable.displayName = `Honorable(Honorable${displayName})`
 
-  return Honorable
+  Honorable.propTypes = propTypes
+
+  const forwardHonorableRef = (props: AnyProps, ref: Ref<any>) => (
+    <Honorable
+      {...props}
+      honorableRef={ref}
+    />
+  )
+
+  forwardHonorableRef.displayName = `Honorable(${displayName})`
+
+  const ForwardedHonorable = forwardRef(forwardHonorableRef)
+
+  ForwardedHonorable.displayName = forwardHonorableRef.displayName
+  ForwardedHonorable.propTypes = propTypes
+
+  return ForwardedHonorable
 }
 
 export default wrapComponentWithStyle

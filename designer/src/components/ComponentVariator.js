@@ -8,11 +8,21 @@ function uncapitalize(string) {
   return string.charAt(0).toLowerCase() + string.slice(1)
 }
 
+const honorablePrefix = 'Honorable('
+
+function removeHonorablePrefix(string) {
+  if (string.startsWith(honorablePrefix)) {
+    return string.slice(honorablePrefix.length, -1)
+  }
+
+  return string
+}
+
 function ComponentVariator({ Component, componentProps = {}, additionalVariations = {}, children }) {
   const [theme] = useContext(UserThemeContext)
   const [areVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
 
-  const { customProps = new Map() } = theme[uncapitalize(Component.displayName)] || {}
+  const { customProps = new Map() } = theme[uncapitalize(removeHonorablePrefix(Component.displayName || Component.name || 'Component'))] || {}
 
   const variations = {
     '': {},
