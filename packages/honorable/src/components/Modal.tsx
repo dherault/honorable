@@ -31,12 +31,14 @@ function Modal({ children, open = false, onClose = () => {}, className = '', ...
       zIndex="1000"
       backgroundColor="rgba(0, 0, 0, 0.5)"
       onClick={handleBackdropClick}
-      xflex="x5"
+      xflex="y5"
       extend={resolvePartProps('modal', 'backdrop', extendProps, theme)}
     >
       <Div
         className={className}
         backgroundColor="background"
+        overflowY="auto"
+        m={6}
         {...props}
       >
         {children}
