@@ -7,13 +7,13 @@ import usePrevious from '../hooks/usePrevious'
 import UserThemeContext from '../contexts/UserThemeContext'
 import capitalize from '../utils/capitalize'
 
-function stringifyValues(customProps = {}) {
+function stringifyCustomProps(customProps = {}) {
   return customProps
 
   return Object.fromEntries(Object.entries(customProps).map(([key, value]) => [key, JSON.stringify(value, null, 2)]))
 }
 
-function unstringifyValues(customProps = {}, defaultValue = {}) {
+function unstringifyCustomProps(customProps = {}, defaultValue = {}) {
   return customProps
 
   return Object.fromEntries(Object.entries(customProps).map(([key, value]) => {
@@ -51,7 +51,7 @@ function ComponentEditor({ componentName }) {
   const [open, setOpen] = useState(false)
   const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
   const [defaultProps, setDefaultProps] = useState(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
-  const [customProps, setCustomProps] = useState(theme[componentName]?.customProps || {})
+  const [customProps, setCustomProps] = useState(stringifyCustomProps(theme[componentName]?.customProps))
   const previousDefaultProps = usePrevious(defaultProps)
   const previousCustomProps = usePrevious(customProps)
 
@@ -64,7 +64,7 @@ function ComponentEditor({ componentName }) {
         [componentName]: {
           ...theme[componentName],
           defaultProps: JSON.parse(defaultProps),
-          customProps: unstringifyValues(customProps, theme[componentName]?.customProps || {}),
+          customProps: unstringifyCustomProps(customProps, theme[componentName]?.customProps),
         },
       })
     }
@@ -77,13 +77,14 @@ function ComponentEditor({ componentName }) {
     const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
 
     setDefaultProps(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
-    setCustomProps(stringifyValues(theme[componentName]?.customProps) || {})
+    setCustomProps(stringifyCustomProps(theme[componentName]?.customProps))
   }), [componentName, onThemeReset])
 
   function handleReset() {
     const json = JSON.stringify(themeInitialValue.current?.defaultProps || {}, null, 2)
+
     setDefaultProps(json === '{}' ? defaultEditorValue : json)
-    setCustomProps(stringifyValues(themeInitialValue.current.customProps || {}))
+    setCustomProps(stringifyCustomProps(themeInitialValue.current.customProps))
   }
 
   function handleClear() {
@@ -103,8 +104,6 @@ function ComponentEditor({ componentName }) {
   }
 
   function renderCustomProps() {
-    return null
-
     return (
       <>
         <Div
@@ -120,51 +119,22 @@ function ComponentEditor({ componentName }) {
             onClick={() => window.alert('Custom props are used to create visual behaviors based on props. The first input corresponds to the prop name, the second is a map from the prop possible value to the styles.')}
           />
         </Div>
-        {Object.entries(customProps)
-        .map(([key, styleProps], i) => {
-          const stylePropsJson = JSON.stringify(styleProps, null, 2)
-
-          return (
-            <Div
-              key={i}
-              mb={1}
-              xflex="x4"
-            >
-              <Input
-                width={84}
-                value={key}
-                onChange={event => setCustomProps(customProps => {
-                  const nextCustomProps = { ...customProps }
-
-                  delete nextCustomProps[key]
-
-                  nextCustomProps[event.target.value] = styleProps
-
-                  return nextCustomProps
-                })}
-              />
-              <Pre ml={0.5}>
-                :
-              </Pre>
-              <Editor
-                width="100%"
-                height="calc(1.5rem * 4)"
-                language="json"
-                theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
-                options={editorOptions}
-                value={stylePropsJson === '{}' ? defaultEditorValue : stylePropsJson}
-                onChange={value => setCustomProps(customProps => ({ ...customProps, [key]: value }))}
-              />
-            </Div>
-          )
-        })}
-        <Button
+        <Editor
+          width="100%"
+          height="calc(1.5rem * 4)"
+          language="js"
+          theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
+          options={editorOptions}
+          value={customProps}
+          onChange={value => setCustomProps(value)}
+        />
+        {/* <Button
           size="small"
           disabled={Object.keys(customProps).includes('')}
           onClick={() => setCustomProps(customProps => ({ ...customProps, '': defaultEditorValue }))}
         >
           Add another custom prop
-        </Button>
+        </Button> */}
       </>
     )
   }
