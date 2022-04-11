@@ -11,8 +11,13 @@ function resolveCustomProps(customProps: CustomProps, props: AnyProps = {}, them
   if (!(customProps && customProps instanceof Map)) return resolvedStyles
 
   customProps.forEach((styles, fn) => {
-    if (typeof fn === 'function' && fn(props, theme)) {
-      Object.assign(resolvedStyles, styles)
+    try {
+      if (typeof fn === 'function' && fn(props, theme)) {
+        Object.assign(resolvedStyles, styles)
+      }
+    }
+    catch (error) {
+      //
     }
   })
 
