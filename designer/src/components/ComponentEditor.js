@@ -18,7 +18,7 @@ function stringify(object, pad = '  ') {
       stringified += `${pad}${wrappedKey}: ${stringify(value, `${pad}  `)},\n`
     })
 
-    return `${stringified}}`
+    return `${stringified}${pad.slice(2)}}`
   }
   if (typeof object === 'string') {
     return `'${object.replaceAll("'", "\\'")}'`

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { CssBaseline, Div, ThemeProvider } from 'honorable'
+import useKeys from 'react-piano-keys'
 
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
@@ -34,6 +35,9 @@ function ApplicationLayout({ children }) {
   const modedUserTheme = useMemo(() => ({ ...userTheme, mode }), [userTheme, mode])
   const userThemeValue = useMemo(() => [modedUserTheme, setUserTheme, defaultTheme, addThemeResetListener], [modedUserTheme])
   const areVariationsDisplayedValue = useMemo(() => [areVariationsDisplayed, setAreVariationsDisplayed], [areVariationsDisplayed])
+
+  useKeys(window, 'cmd+s', event => event.preventDefault())
+  useKeys(window, 'ctrl+s', event => event.preventDefault())
 
   const persistUserTheme = useCallback(() => {
     localStorage.setItem(localStorageUserThemeKey, serializeTheme(userTheme))

@@ -30,6 +30,7 @@
     "react-color": "^2.19.3",
     "react-dom": "^18.0.0",
     "react-icons": "^4.3.1",
+    "react-piano-keys": "^1.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0"
   },
