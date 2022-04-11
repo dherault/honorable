@@ -8,62 +8,53 @@ function uncapitalize(string) {
   return string.charAt(0).toLowerCase() + string.slice(1)
 }
 
-function ComponentVariator({ Component, additionalVariations = {}, children }) {
+function ComponentVariator({ Component, componentProps = {}, additionalVariations = {}, children }) {
   const [theme] = useContext(UserThemeContext)
   const [areVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
 
-  const { customProps = {} } = theme[uncapitalize(Component.displayName)] || {}
+  const { customProps = new Map() } = theme[uncapitalize(Component.displayName)] || {}
 
-  const keys = Object.keys(customProps)
-
-  const props = [{}]
-
-  if (areVariationsDisplayed) {
-    keys.forEach(key => {
-      const map = customProps[key]
-
-      if (!(map instanceof Map && map.size)) return
-
-      [...map.keys()].forEach(mapKey => {
-        const combination = { [key]: mapKey }
-
-        props.push(combination)
-      })
-    })
-
-    Object.entries(additionalVariations).forEach(([key, value]) => {
-      props.push({ [key]: value })
-    })
+  const variations = {
+    '': {},
   }
 
-  function renderVariation(props = {}) {
-    const propsJson = JSON.stringify(props, null, 2)
+  if (areVariationsDisplayed) {
+    customProps.forEach((value, key) => {
+      variations[key.toString()] = value
+    })
 
+    Object.assign(variations, additionalVariations)
+  }
+
+  function renderVariation(fnString = '', props = {}, noMargin = false) {
     return (
       <Div
-        mb={2}
+        mb={noMargin ? 0 : 2}
         xflex="x4"
-        key={propsJson}
+        key={fnString}
       >
         <Div>
-          <Component {...props}>
+          <Component
+            {...componentProps}
+            {...props}
+          >
             {children}
           </Component>
         </Div>
-        {propsJson !== '{}' && (
+        {!!fnString && (
           <Pre
             text="small"
             ml={1}
             my={0}
           >
-            {propsJson.split('\n').filter(x => x !== '{' && x !== '}').map(x => x.trim()).join('\n')}
+            {fnString}
           </Pre>
         )}
       </Div>
     )
   }
 
-  return props.map(props => renderVariation(props))
+  return Object.entries(variations).map(([key, value], i, a) => renderVariation(key, value, i === a.length - 1))
 }
 
 export default ComponentVariator

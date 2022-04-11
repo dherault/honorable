@@ -36,17 +36,18 @@ export default {
     defaultProps: {
       boxSizing: 'border-box',
     },
-    customProps: {
-      text: new Map([
-        [
-          'small',
-          {
-            fontSize: '0.75rem',
-          },
-        ],
+    customProps: new Map([
+      [
+        assignStringValue(({ text }) => text === 'small', "({ text }) => text === 'small'"),
+        {
+          fontSize: '0.75rem',
+        },
+      ],
+      ...createElevation().map((styles, i) => [
+        assignStringValue(({ elevation }) => elevation === i, '({ elevation }) => elevation === i'),
+        styles,
       ]),
-      elevation: new Map(createElevation().entries()),
-    },
+    ]),
   },
   a: {
     defaultProps: {
@@ -84,34 +85,30 @@ export default {
         },
       },
     },
-    customProps: {
-      size: new Map([
-        [
-          'small',
-          {
-            fontSize: '0.85rem',
-            padding: '0.35rem 0.75rem 0.25rem 0.75rem',
+    customProps: new Map([
+      [
+        assignStringValue(({ size }) => size === 'small', "({ size }) => size === 'small'"),
+        {
+          fontSize: '0.85rem',
+          padding: '0.35rem 0.75rem 0.25rem 0.75rem',
+        },
+      ],
+      [
+        assignStringValue(({ variant }) => variant === 'outlined', "({ variant }) => variant === 'outlined'"),
+        {
+          color: 'primary',
+          backgroundColor: 'transparent',
+          ':hover': {
+            color: 'white',
+            backgroundColor: 'lighten(primary)',
           },
-        ],
-      ]),
-      variant: new Map([
-        [
-          'outlined',
-          {
-            color: 'primary',
-            backgroundColor: 'transparent',
-            ':hover': {
-              color: 'white',
-              backgroundColor: 'lighten(primary)',
-            },
-            ':active': {
-              color: 'white',
-              backgroundColor: 'primary',
-            },
+          ':active': {
+            color: 'white',
+            backgroundColor: 'primary',
           },
-        ],
-      ]),
-    },
+        },
+      ],
+    ]),
   },
   hr: {
     defaultProps: {
@@ -229,4 +226,9 @@ function createElevation() {
   }
 
   return elevation
+}
+function assignStringValue(fn, string) {
+  fn.stringValue = string
+
+  return fn
 }

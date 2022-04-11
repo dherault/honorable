@@ -31,15 +31,14 @@ export type ColorStyle = string | ColorValue | {
   [mode in Mode]: string | ColorValue
 }
 
-export type CustomProps = ((props: AnyProps) => StyleProps) | {
-  [key: string]: Map<any, StyleProps> | (() => StyleProps)
-}
+export type CustomProps = Map<(props: AnyProps, theme: Theme) => boolean, StyleProps>
 
 export type ComponentNames = typeof tags[number]
 
 export type ComponentProps = {
-  defaultProps: StyleProps
-  customProps: CustomProps
+  defaultProps?: StyleProps
+  customProps?: CustomProps
+  partCustomProps?: CustomProps
 }
 
 export type ThemeComponents = {

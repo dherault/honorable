@@ -12,13 +12,27 @@ import ThemeEditor from './ThemeEditor'
 
 const localStorageUserThemeKey = 'honorable-userTheme'
 
+const themeResetListeners = []
+
+function addThemeResetListener(listener) {
+  themeResetListeners.push(listener)
+
+  return () => {
+    const index = themeResetListeners.indexOf(listener)
+
+    if (index > -1) {
+      themeResetListeners.splice(index, 1)
+    }
+  }
+}
+
 function ApplicationLayout({ children }) {
   const [mode, setMode] = useState('light')
   const [userTheme, setUserTheme] = useState(defaultTheme)
   const [areVariationsDisplayed, setAreVariationsDisplayed] = useState(false)
   const modedTheme = useMemo(() => ({ ...theme, mode }), [mode])
   const modedUserTheme = useMemo(() => ({ ...userTheme, mode }), [userTheme, mode])
-  const userThemeValue = useMemo(() => [modedUserTheme, setUserTheme, defaultTheme], [modedUserTheme])
+  const userThemeValue = useMemo(() => [modedUserTheme, setUserTheme, defaultTheme, addThemeResetListener], [modedUserTheme])
   const areVariationsDisplayedValue = useMemo(() => [areVariationsDisplayed, setAreVariationsDisplayed], [areVariationsDisplayed])
 
   const persistUserTheme = useCallback(() => {
@@ -36,13 +50,21 @@ function ApplicationLayout({ children }) {
     }
   }, [])
 
-  useEffect(() => {
-    loadUserTheme()
-  }, [loadUserTheme])
+  // useEffect(() => {
+  //   loadUserTheme()
+  // }, [loadUserTheme])
 
-  useEffect(() => {
-    persistUserTheme()
-  }, [persistUserTheme])
+  // useEffect(() => {
+  //   persistUserTheme()
+  // }, [persistUserTheme])
+
+  function handleReset() {
+    window.confirm('Are you sure you want to reset the theme?')
+
+    setUserTheme(defaultTheme)
+
+    themeResetListeners.forEach(listener => listener(defaultTheme))
+  }
 
   return (
     <UserThemeContext.Provider value={userThemeValue}>
@@ -55,7 +77,7 @@ function ApplicationLayout({ children }) {
             <Navigation
               mode={mode}
               setMode={setMode}
-              onReset={() => window.confirm('Are you sure you want to reset the theme?') && setUserTheme(defaultTheme)}
+              onReset={handleReset}
             />
             <Div
               flexGrow={1}

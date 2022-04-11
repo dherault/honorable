@@ -7,28 +7,21 @@ import usePrevious from '../hooks/usePrevious'
 import UserThemeContext from '../contexts/UserThemeContext'
 import capitalize from '../utils/capitalize'
 
-function stringifyMapValues(object = {}) {
-  const nextObject = {}
-
-  Object.entries(object).forEach(([key, value]) => {
-    nextObject[key] = new Map([...value.entries()].map(([k, v]) => [k, JSON.stringify(v, null, 2)]))
-  })
-
-  return nextObject
+function stringifyCustomProps(customProps = new Map()) {
+  return `new Map([
+${Array.from(customProps.entries()).map(([key, value]) => `  [
+    ${key.stringValue || key},
+    ${JSON.stringify(value, null, 2).split('\n').join('\n    ')},
+  ]`).join(',\n')}
+])`
 }
 
-function unstringifyMapValues(object, defaultObject) {
-  const nextObject = {}
-
+function unstringifyCustomProps(customProps = '', defaultValue = new Map()) {
   try {
-    Object.entries(object).forEach(([key, value]) => {
-      nextObject[key] = new Map([...value.entries()].map(([k, v]) => [k, JSON.parse(v)]))
-    })
-
-    return nextObject
+    return eval(customProps)
   }
-  catch (e) {
-    return defaultObject
+  catch (error) {
+    return defaultValue
   }
 }
 
@@ -47,17 +40,17 @@ const editorOptions = {
 }
 
 const defaultEditorValue = `{
-\t
+
 }`
 
 function ComponentEditor({ componentName }) {
   const enhancedTheme = useTheme()
-  const [theme, setTheme] = useContext(UserThemeContext)
+  const [theme, setTheme,, onThemeReset] = useContext(UserThemeContext)
   const themeInitialValue = useRef(theme[componentName])
   const [open, setOpen] = useState(false)
   const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
   const [defaultProps, setDefaultProps] = useState(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
-  const [customProps, setCustomProps] = useState(stringifyMapValues(theme[componentName]?.customProps) || {})
+  const [customProps, setCustomProps] = useState(stringifyCustomProps(theme[componentName]?.customProps))
   const previousDefaultProps = usePrevious(defaultProps)
   const previousCustomProps = usePrevious(customProps)
 
@@ -70,7 +63,8 @@ function ComponentEditor({ componentName }) {
         [componentName]: {
           ...theme[componentName],
           defaultProps: JSON.parse(defaultProps),
-          customProps: unstringifyMapValues(customProps, theme[componentName]?.customProps || {}),
+          customProps: unstringifyCustomProps(customProps, theme[componentName]?.customProps),
+          // customProps: new Map(),
         },
       })
     }
@@ -79,10 +73,18 @@ function ComponentEditor({ componentName }) {
     }
   }, [defaultProps, previousDefaultProps, customProps, previousCustomProps, componentName, setTheme, theme])
 
+  useEffect(() => onThemeReset(theme => {
+    const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
+
+    setDefaultProps(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
+    setCustomProps(stringifyCustomProps(theme[componentName]?.customProps))
+  }), [componentName, onThemeReset])
+
   function handleReset() {
     const json = JSON.stringify(themeInitialValue.current?.defaultProps || {}, null, 2)
+
     setDefaultProps(json === '{}' ? defaultEditorValue : json)
-    setCustomProps(stringifyMapValues(themeInitialValue.current.customProps || {}))
+    setCustomProps(stringifyCustomProps(themeInitialValue.current.customProps))
   }
 
   function handleClear() {
@@ -94,7 +96,7 @@ function ComponentEditor({ componentName }) {
     return (
       <Button
         size="small"
-        onClick={() => setCustomProps({ '': new Map([['', defaultEditorValue]]) })}
+        onClick={() => setCustomProps(stringifyCustomProps(new Map([[(props, theme) => true, {}]])))}
       >
         Add custom props
       </Button>
@@ -117,141 +119,22 @@ function ComponentEditor({ componentName }) {
             onClick={() => window.alert('Custom props are used to create visual behaviors based on props. The first input corresponds to the prop name, the second is a map from the prop possible value to the styles.')}
           />
         </Div>
-        {Object.entries(customProps)
-        .sort(([keyA], [keyB]) => keyA - keyB)
-        .map(([key, map], i) => (
-          <Div
-            mb={1}
-            key={i}
-          >
-            <Div xflex="x4">
-              <Input
-                width={84}
-                value={key}
-                onChange={event => setCustomProps(customProps => {
-                  const nextCustomProps = { ...customProps }
-
-                  delete nextCustomProps[key]
-
-                  nextCustomProps[event.target.value] = map
-
-                  return nextCustomProps
-                })}
-              />
-              <Pre ml={0.5}>
-                :
-              </Pre>
-            </Div>
-            {[...map.entries()].map(([mapKey, mapValue], i) => (
-              <Div
-                key={i}
-                xflex="x4s"
-                flexGrow={1}
-                mb={0.5}
-              >
-                <Div
-                  xflex="y1"
-                >
-                  <Input
-                    width={84}
-                    value={mapKey}
-                    onChange={event => setCustomProps(customProps => {
-                      const nextCustomProps = { ...customProps }
-                      const nextMap = new Map(map)
-
-                      nextMap.delete(mapKey)
-                      nextMap.set(event.target.value, mapValue)
-
-                      nextCustomProps[key] = nextMap
-
-                      return nextCustomProps
-                    })}
-                  />
-                  <Div
-                    mt={0.5}
-                    xflex="x4"
-                  >
-                    <Button
-                      size="small"
-                      minWidth={24}
-                      padding="0.15rem 0.5rem 0.075rem 0.5rem"
-                      onClick={() => setCustomProps(customProps => {
-                        const nextCustomProps = { ...customProps }
-                        const nextMap = new Map(map)
-
-                        nextMap.delete(mapKey)
-
-                        if (nextMap.size) {
-                          nextCustomProps[key] = nextMap
-                        }
-                        else {
-                          delete nextCustomProps[key]
-                        }
-
-                        return nextCustomProps
-                      })}
-                    >
-                      -
-                    </Button>
-                    {i === map.size - 1 && (
-                      <Button
-                        ml={0.5}
-                        minWidth={24}
-                        size="small"
-                        padding="0.15rem 0.5rem 0.075rem 0.5rem"
-                        onClick={() => setCustomProps(customProps => {
-                          const nextCustomProps = { ...customProps }
-                          const nextMap = new Map(map)
-
-                          nextMap.set('', defaultEditorValue)
-
-                          nextCustomProps[key] = nextMap
-
-                          return nextCustomProps
-                        })}
-                      >
-                        +
-                      </Button>
-                    )}
-                  </Div>
-                </Div>
-                <Pre mx={0.5}>
-                  →
-                </Pre>
-                <Div
-                  width="100%"
-                  borderRadius={4}
-                  overflow="hidden"
-                >
-                  <Editor
-                    width="100%"
-                    height="calc(1.5rem * 4)"
-                    language="json"
-                    theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
-                    options={editorOptions}
-                    value={mapValue}
-                    onChange={value => setCustomProps(customProps => {
-                      const nextCustomProps = { ...customProps }
-                      const nextMap = new Map(map)
-
-                      nextMap.set(mapKey, value)
-
-                      nextCustomProps[key] = nextMap
-
-                      return nextCustomProps
-                    })}
-                  />
-                </Div>
-              </Div>
-            ))}
-          </Div>
-        ))}
-        <Button
+        <Editor
+          width="100%"
+          height="calc(1.75rem * 6)"
+          language="javascript"
+          theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
+          options={editorOptions}
+          value={customProps}
+          onChange={value => setCustomProps(value)}
+        />
+        {/* <Button
           size="small"
-          onClick={() => setCustomProps(customProps => ({ ...customProps, '': new Map([['', defaultEditorValue]]) }))}
+          disabled={Object.keys(customProps).includes('')}
+          onClick={() => setCustomProps(customProps => ({ ...customProps, '': defaultEditorValue }))}
         >
           Add another custom prop
-        </Button>
+        </Button> */}
       </>
     )
   }
@@ -312,7 +195,7 @@ function ComponentEditor({ componentName }) {
 
             <Editor
               width="100%"
-              height="calc(1.5rem * 4)"
+              height="calc(1.75rem * 6)"
               language="json"
               theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
               value={defaultProps}
@@ -321,7 +204,7 @@ function ComponentEditor({ componentName }) {
             />
           </Div>
           <Div mt={0.5}>
-            {Object.keys(customProps).length > 0 ? renderCustomProps() : renderNoCustomProps()}
+            {(theme[componentName]?.customProps?.size || 0) > 0 ? renderCustomProps() : renderNoCustomProps()}
           </Div>
         </>
       )}

@@ -24,11 +24,11 @@ export default {
     defaultProps: {
       transition: 'background-color 150ms ease',
     },
-    customProps: {
-      checked: new Map([
+    partCustomProps: {
+      root: new Map([
         [
-          true,
-          ({ noBackgroundColor }) => !noBackgroundColor && {
+          ({ checked, noBackgroundColor }) => checked && !noBackgroundColor,
+          {
             backgroundColor: 'primary',
           },
         ],
