@@ -50,7 +50,7 @@ Once done, click continue.`}
         >
           <Button
             onClick={handleAddColor}
-            disabled={colorNames.includes('')}
+            disabled={colorNames.includes('unnamed-color')}
           >
             Add new color
           </Button>
@@ -82,7 +82,7 @@ Once done, click continue.`}
       ...userTheme,
       colors: {
         ...userTheme.colors,
-        '': '#ffffff',
+        'unnamed-color': '#ffffff',
       },
     })
   }

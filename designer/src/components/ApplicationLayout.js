@@ -1,13 +1,16 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { CssBaseline, Div, ThemeProvider } from 'honorable'
 
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
 import UserThemeContext from '../contexts/UserThemeContext'
 import AreVariationsDisplayedContext from '../contexts/AreVariationsDisplayedContext'
+import { deserializeTheme, serializeTheme } from '../utils/themeSerializer'
 
 import Navigation from './Navigation'
 import ThemeEditor from './ThemeEditor'
+
+const localStorageUserThemeKey = 'honorable-userTheme'
 
 function ApplicationLayout({ children }) {
   const [mode, setMode] = useState('light')
@@ -18,7 +21,28 @@ function ApplicationLayout({ children }) {
   const userThemeValue = useMemo(() => [modedUserTheme, setUserTheme, defaultTheme], [modedUserTheme])
   const areVariationsDisplayedValue = useMemo(() => [areVariationsDisplayed, setAreVariationsDisplayed], [areVariationsDisplayed])
 
-  useEffect(() => setUserTheme(defaultTheme), [setUserTheme])
+  const persistUserTheme = useCallback(() => {
+    localStorage.setItem(localStorageUserThemeKey, serializeTheme(userTheme))
+  }, [userTheme])
+
+  const loadUserTheme = useCallback(() => {
+    try {
+      const userThemeString = localStorage.getItem(localStorageUserThemeKey)
+
+      setUserTheme(userThemeString ? deserializeTheme(userThemeString) : defaultTheme)
+    }
+    catch (error) {
+      //
+    }
+  }, [])
+
+  useEffect(() => {
+    loadUserTheme()
+  }, [loadUserTheme])
+
+  useEffect(() => {
+    persistUserTheme()
+  }, [persistUserTheme])
 
   return (
     <UserThemeContext.Provider value={userThemeValue}>

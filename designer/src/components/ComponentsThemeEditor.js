@@ -1,4 +1,7 @@
+import { useContext } from 'react'
 import { Div, H2, Sub } from 'honorable'
+
+import UserThemeContext from '../contexts/UserThemeContext'
 
 import ComponentEditor from './ComponentEditor'
 import ColorEditor from './ColorEditor'
@@ -11,9 +14,9 @@ function ComponentsThemeEditor({ tags = [], colors = [], title, infoStart, infoE
       </H2>
       {infoStart}
       <Div mt={4}>
-        {colors.map(colorName => (
+        {colors.map((colorName, i) => (
           <Div
-            key={colorName}
+            key={i}
             mt={2}
           >
             <ColorEditor colorName={colorName} />

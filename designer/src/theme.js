@@ -40,4 +40,11 @@ export default {
       margin: 0,
     },
   },
+  pre: {
+    defaultProps: {
+      margin: 0,
+      padding: 0,
+      backgroundColor: 'transparent',
+    },
+  },
 }

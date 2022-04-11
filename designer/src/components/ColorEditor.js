@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { A, Button, Div, H3, Icon, Input, P } from 'honorable'
 import { ChromePicker } from 'react-color'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -10,15 +10,17 @@ function convertToRgbString({ r, g, b, a }) {
   return `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
-// REFACTOR : NO USELESS STATE + RENAME
-// REFACTOR : NO USELESS STATE + RENAME
-// REFACTOR : NO USELESS STATE + RENAME
 function ColorEditor({ colorName }) {
   const [open, setOpen] = useState(false)
   const [userTheme, setUserTheme] = useContext(UserThemeContext)
   const colorValue = userTheme.colors[colorName]
   const currentColorValue = colorValue[userTheme.mode] || colorValue
   const [colorPickerPlacement, setColorPickerPlacement] = useState('')
+  const [isRenaming, setIsRenaming] = useState(false)
+
+  useEffect(() => {
+    setIsRenaming(false)
+  }, [open])
 
   function getColor(mode) {
     return typeof userTheme.colors[colorName][mode] !== 'undefined'
@@ -114,6 +116,24 @@ function ColorEditor({ colorName }) {
     )
   }
 
+  function handleNameChange(event) {
+    const keys = Object.keys(userTheme.colors)
+    const index = keys.indexOf(colorName)
+    const newName = event.target.value
+
+    keys.splice(index, 1, newName)
+
+    const nextColors = keys.reduce((acc, key) => ({
+      ...acc,
+      [key]: key === newName ? colorValue : userTheme.colors[key],
+    }), {})
+
+    setUserTheme({
+      ...userTheme,
+      colors: nextColors,
+    })
+  }
+
   return (
     <>
       <Div xflex="x4">
@@ -125,8 +145,28 @@ function ColorEditor({ colorName }) {
           elevation={2}
         />
         <H3 ml={0.5}>
-          {colorName}
+          {!isRenaming && colorName}
+          {isRenaming && (
+            <Input
+              fontWeight="bold"
+              marginLeft={-4}
+              marginTop={-4}
+              marginBottom={-4}
+              value={colorName}
+              onChange={handleNameChange}
+            />
+          )}
         </H3>
+        {open && (
+          <A
+            text="small"
+            userSelect="none"
+            ml={0.5}
+            onClick={() => setIsRenaming(x => !x)}
+          >
+            {isRenaming ? 'Done' : 'Rename'}
+          </A>
+        )}
         <Div flexGrow={1} />
         <Button
           ml={1}

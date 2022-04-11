@@ -10,8 +10,8 @@ function Form() {
 
   return (
     <Div
-      py={3}
-      px={6}
+      py={4}
+      px={8}
     >
       <H1>Form</H1>
       <HonorableForm
