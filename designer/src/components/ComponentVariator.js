@@ -8,7 +8,7 @@ function uncapitalize(string) {
   return string.charAt(0).toLowerCase() + string.slice(1)
 }
 
-function ComponentVariator({ Component, additionalVariations = {}, children }) {
+function ComponentVariator({ Component, componentProps = {}, additionalVariations = {}, children }) {
   const [theme] = useContext(UserThemeContext)
   const [areVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
 
@@ -36,17 +36,20 @@ function ComponentVariator({ Component, additionalVariations = {}, children }) {
     })
   }
 
-  function renderVariation(props = {}) {
+  function renderVariation(props = {}, noMargin = false) {
     const propsJson = JSON.stringify(props, null, 2)
 
     return (
       <Div
-        mb={2}
+        mb={noMargin ? 0 : 2}
         xflex="x4"
         key={propsJson}
       >
         <Div>
-          <Component {...props}>
+          <Component
+            {...componentProps}
+            {...props}
+          >
             {children}
           </Component>
         </Div>
@@ -63,7 +66,7 @@ function ComponentVariator({ Component, additionalVariations = {}, children }) {
     )
   }
 
-  return props.map(props => renderVariation(props))
+  return props.map((props, i, a) => renderVariation(props, i === a.length - 1))
 }
 
 export default ComponentVariator

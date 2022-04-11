@@ -52,7 +52,7 @@ const defaultEditorValue = `{
 
 function ComponentEditor({ componentName }) {
   const enhancedTheme = useTheme()
-  const [theme, setTheme] = useContext(UserThemeContext)
+  const [theme, setTheme,, onThemeReset] = useContext(UserThemeContext)
   const themeInitialValue = useRef(theme[componentName])
   const [open, setOpen] = useState(false)
   const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
@@ -78,6 +78,13 @@ function ComponentEditor({ componentName }) {
       //
     }
   }, [defaultProps, previousDefaultProps, customProps, previousCustomProps, componentName, setTheme, theme])
+
+  useEffect(() => onThemeReset(theme => {
+    const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
+
+    setDefaultProps(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
+    setCustomProps(stringifyMapValues(theme[componentName]?.customProps) || {})
+  }), [componentName, onThemeReset])
 
   function handleReset() {
     const json = JSON.stringify(themeInitialValue.current?.defaultProps || {}, null, 2)
