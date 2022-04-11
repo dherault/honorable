@@ -56,7 +56,8 @@ function unstringifyCustomProps(customProps = '', defaultValue = new Map()) {
 function stringifyDefaultProps(defaultProps) {
   if (!(defaultProps && typeof defaultProps === 'object')) {
     return `({
-\t
+\t// Write some javascript styles here:
+\t// color: 'blue',
 })`
   }
 
