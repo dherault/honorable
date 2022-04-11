@@ -12,42 +12,15 @@ import {
   HonorableStyleProps,
   StyleProps,
   StylePropsValue,
-  Theme,
 } from '../types'
 
 import resolveColor from './resolveColor'
 import filterObject from './filterObject'
 import isSelector from './isSelector'
 import convertMp from './convertMp'
+import resolveCustomProps from './resolveCustomProps'
 import { stylePropTypes, styleProperties } from './styleProperties'
 import { mpPropTypes, mpProperties } from './mpProperties'
-
-function isCustomProps(any: any) {
-  return typeof any === 'object' && Object.values(any).every(value => value instanceof Map)
-}
-
-function getCustomProps(customTheme: any, props: AnyProps, theme: Theme) {
-  const customStyle = {}
-  const propsKeys = Object.keys(props)
-
-  if (isCustomProps(customTheme)) {
-    Object.keys(customTheme)
-    .filter(propKey => propsKeys.includes(propKey))
-    .forEach(propKey => {
-      const propValue = props[propKey]
-      const map = customTheme[propKey]
-
-      if (map.has(propValue)) {
-        const styleObject = map.get(propValue)
-
-        if (typeof styleObject === 'object' && styleObject) Object.assign(customStyle, styleObject)
-        else if (typeof styleObject === 'function') Object.assign(customStyle, styleObject({ theme, ...props }))
-      }
-    })
-  }
-
-  return customStyle
-}
 
 function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = 'Honorable') {
   const HonorableStyle: FC<HonorableStyleProps> = styled(ComponentOrTag as ComponentType)(props => props.honorable)
@@ -78,13 +51,13 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
           null,
           {
             /* eslint-disable no-multi-spaces */
-            ...getCustomProps(theme.global?.customProps, props, theme),  // Global customProps
-            ...filterObject(defaultProps),                               // Component defaultProps
-            ...getCustomProps(customProps, props, theme),                // Component customProps
-            ...convertMp(mpProps),                                       // "mp" prop
-            ...(xflex ? fp(xflex) : {}),                                 // "xflex" prop
-            ...stylePropsFromProps,                                      // Actual style from props
-            ...filterObject(extend),                                     // "extend" prop
+            ...resolveCustomProps(theme.global?.customProps, props, theme),   // Global customProps
+            ...filterObject(defaultProps),                                    // Component defaultProps
+            ...resolveCustomProps(customProps, props, theme),                 // Component customProps
+            ...convertMp(mpProps),                                            // "mp" prop
+            ...(xflex ? fp(xflex) : {}),                                      // "xflex" prop
+            ...stylePropsFromProps,                                           // Actual style from props
+            ...filterObject(extend),                                          // "extend" prop
             /* eslint-enable no-multi-spaces */
           },
           theme

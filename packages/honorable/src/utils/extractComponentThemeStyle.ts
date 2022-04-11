@@ -2,36 +2,21 @@ import {
   AnyProps,
   ComponentProps,
   StyleProps,
+  Theme,
 } from '../types'
 
-function extractComponentThemeStyle(componentTheme: ComponentProps, partKey: string, props: AnyProps) {
-  if (componentTheme === null || typeof componentTheme !== 'object') return null
+import resolveCustomProps from './resolveCustomProps'
 
-  const { defaultProps = {}, customProps = {} } = componentTheme
-  const styleProps = { ...(defaultProps[partKey] || {}) }
+// TODO might be flawed
+// resolveCustomProps(componentTheme.customProps, props, theme),
+// --> resolveCustomProps(componentTheme.customProps?.[partKey], props, theme),
+function extractComponentThemeStyle(componentTheme: ComponentProps, partKey: string, props: AnyProps, theme: Theme): StyleProps {
+  if (!(componentTheme && typeof componentTheme === 'object')) return null
 
-  if (typeof customProps === 'object') {
-    if (customProps[partKey]) {
-      if (typeof customProps[partKey] === 'object') {
-        Object.assign(styleProps, customProps[partKey])
-      }
-      else if (typeof customProps[partKey] === 'function') {
-        Object.assign(styleProps, (customProps[partKey] as (x:AnyProps) => StyleProps)(props))
-      }
-    }
+  return {
+    ...(componentTheme.defaultProps?.[partKey] || {}),
+    ...resolveCustomProps(componentTheme.customProps, props, theme),
   }
-  else if (typeof customProps === 'function') {
-    const customPropsObject = customProps(props)
-
-    if (typeof customPropsObject === 'object') {
-      Object.assign(styleProps, customPropsObject[partKey])
-    }
-    else {
-      console.warn(`Invalid customProps return value. Expected object  but got ${typeof customPropsObject}.`)
-    }
-  }
-
-  return styleProps
 }
 
 export default extractComponentThemeStyle
