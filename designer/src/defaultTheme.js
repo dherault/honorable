@@ -44,7 +44,7 @@ export default {
         },
       ],
       ...createElevation().map((styles, i) => [
-        assignStringValue(({ elevation }) => elevation === i, '({ elevation }) => elevation === i'),
+        assignStringValue((z => ({ elevation }) => elevation === z)(i), `({ elevation }) => elevation === ${i}`),
         styles,
       ]),
     ]),
