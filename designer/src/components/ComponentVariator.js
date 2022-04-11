@@ -20,7 +20,7 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
 
   if (areVariationsDisplayed) {
     customProps.forEach((value, key) => {
-      variations[key.toString()] = value
+      if (key && value) variations[key.toString()] = value
     })
 
     Object.assign(variations, additionalVariations)

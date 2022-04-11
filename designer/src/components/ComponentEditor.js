@@ -1,22 +1,50 @@
-import { useContext, useEffect, useRef, useState } from 'react'
-import { Button, Div, H3, Input, P, Pre, useTheme } from 'honorable'
+import { useContext, useEffect, useState } from 'react'
+import { Button, Div, H3, P, useTheme } from 'honorable'
 import Editor from '@monaco-editor/react'
 import { AiOutlineInfoCircle } from 'react-icons/ai'
 
+import defaultTheme from '../defaultTheme'
 import usePrevious from '../hooks/usePrevious'
 import UserThemeContext from '../contexts/UserThemeContext'
 import capitalize from '../utils/capitalize'
 
-function stringifyCustomProps(customProps = new Map()) {
+function stringify(object, pad = '  ') {
+  if (typeof object === 'object') {
+    let stringified = '{\n'
+
+    Object.entries(object).forEach(([key, value]) => {
+      const wrappedKey = key.match(/^[a-zA-Z][a-zA-Z0-9]*$/) ? key : `'${key.replaceAll("'", "\\'")}'`
+
+      stringified += `${pad}${wrappedKey}: ${stringify(value, `${pad}  `)},\n`
+    })
+
+    return `${stringified}}`
+  }
+  if (typeof object === 'string') {
+    return `'${object.replaceAll("'", "\\'")}'`
+  }
+
+  return JSON.stringify(object, null, 2)
+}
+
+function stringifyCustomProps(customProps) {
+  if (!(customProps && customProps instanceof Map)) {
+    return ''
+  }
+
   return `new Map([
-${Array.from(customProps.entries()).map(([key, value]) => `  [
-    ${key.stringValue || key},
-    ${JSON.stringify(value, null, 2).split('\n').join('\n    ')},
-  ]`).join(',\n')}
+${Array.from(customProps.entries()).map(([key, value = '']) => `\t[
+\t\t${typeof key === 'function' ? (key?.stringValue || key) : ''},
+\t\t${stringify(value).split('\n').join('\n\t\t')},
+\t]`).join(',\n')}
 ])`
 }
 
 function unstringifyCustomProps(customProps = '', defaultValue = new Map()) {
+  if (!(customProps && typeof customProps === 'string')) {
+    return {}
+  }
+
   try {
     return eval(customProps)
   }
@@ -25,46 +53,74 @@ function unstringifyCustomProps(customProps = '', defaultValue = new Map()) {
   }
 }
 
+function stringifyDefaultProps(defaultProps) {
+  if (!(defaultProps && typeof defaultProps === 'object')) {
+    return `({
+\t
+})`
+  }
+
+  return `({
+${stringify(defaultProps).split('\n').filter((_, i, a) => !(i === 0 || i === a.length - 1)).join('\n')}
+})`
+}
+
+function unstringifyDefaultProps(defaultProps = '', defaultValue = {}) {
+  if (!(defaultProps && typeof defaultProps === 'string')) {
+    return {}
+  }
+
+  try {
+    return eval(defaultProps)
+  }
+  catch (error) {
+    return defaultValue
+  }
+}
+
+const defaultNewCustomProps = new Map([[(props, theme) => true, {}]])
+
 const editorOptions = {
   scrollBeyondLastLine: false,
   minimap: {
     enabled: false,
   },
-  // renderLineHighlight: 'none',
   lineNumbers: 'off',
   glyphMargin: false,
   folding: false,
   // Undocumented see https://github.com/Microsoft/vscode/issues/30795#issuecomment-410998882
   lineDecorationsWidth: 0,
   lineNumbersMinChars: 0,
+  renderLineHighlight: 'none',
+  lightbulb: {
+    enabled: false,
+  },
+  quickSuggestions: false,
 }
-
-const defaultEditorValue = `{
-
-}`
 
 function ComponentEditor({ componentName }) {
   const enhancedTheme = useTheme()
   const [theme, setTheme,, onThemeReset] = useContext(UserThemeContext)
-  const themeInitialValue = useRef(theme[componentName])
   const [open, setOpen] = useState(false)
-  const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
-  const [defaultProps, setDefaultProps] = useState(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
+  const [defaultProps, setDefaultProps] = useState(stringifyDefaultProps(theme[componentName]?.defaultProps))
   const [customProps, setCustomProps] = useState(stringifyCustomProps(theme[componentName]?.customProps))
   const previousDefaultProps = usePrevious(defaultProps)
   const previousCustomProps = usePrevious(customProps)
+  const [isThemeRehydrated, setIsThemeRehydrated] = useState(false)
 
   useEffect(() => {
     if (defaultProps === previousDefaultProps && customProps === previousCustomProps) return
 
     try {
+      const resolvedDefaultProps = unstringifyDefaultProps(defaultProps, theme[componentName]?.defaultProps)
+      const resolvedCustomProps = unstringifyCustomProps(customProps, theme[componentName]?.customProps)
+
       setTheme({
         ...theme,
         [componentName]: {
           ...theme[componentName],
-          defaultProps: JSON.parse(defaultProps),
-          customProps: unstringifyCustomProps(customProps, theme[componentName]?.customProps),
-          // customProps: new Map(),
+          defaultProps: resolvedDefaultProps && typeof resolvedDefaultProps === 'object' && Object.keys(resolvedDefaultProps).length ? resolvedDefaultProps : undefined,
+          customProps: resolvedCustomProps instanceof Map && resolvedCustomProps.size ? resolvedCustomProps : undefined,
         },
       })
     }
@@ -73,30 +129,40 @@ function ComponentEditor({ componentName }) {
     }
   }, [defaultProps, previousDefaultProps, customProps, previousCustomProps, componentName, setTheme, theme])
 
-  useEffect(() => onThemeReset(theme => {
-    const defaultPropsJson = JSON.stringify(theme[componentName]?.defaultProps || {}, null, 2)
+  useEffect(() => {
+    if (theme.rehydrated && !isThemeRehydrated) {
+      setDefaultProps(stringifyDefaultProps(theme[componentName]?.defaultProps))
+      setCustomProps(stringifyCustomProps(theme[componentName]?.customProps))
+      setIsThemeRehydrated(true)
+    }
+  }, [componentName, theme, isThemeRehydrated])
 
-    setDefaultProps(defaultPropsJson === '{}' ? defaultEditorValue : defaultPropsJson)
+  useEffect(() => onThemeReset(theme => {
+    setDefaultProps(stringifyDefaultProps(theme[componentName]?.defaultProps))
     setCustomProps(stringifyCustomProps(theme[componentName]?.customProps))
   }), [componentName, onThemeReset])
 
   function handleReset() {
-    const json = JSON.stringify(themeInitialValue.current?.defaultProps || {}, null, 2)
-
-    setDefaultProps(json === '{}' ? defaultEditorValue : json)
-    setCustomProps(stringifyCustomProps(themeInitialValue.current.customProps))
+    setDefaultProps(stringifyDefaultProps(defaultTheme[componentName]?.defaultProps))
+    setCustomProps(stringifyCustomProps(defaultTheme[componentName]?.customProps))
   }
 
   function handleClear() {
-    setDefaultProps(defaultEditorValue)
-    setCustomProps({})
+    setDefaultProps(stringifyDefaultProps())
+    setCustomProps(stringifyCustomProps())
+  }
+
+  function handleEditorWillMount(monaco) {
+    monaco.languages.javascript.setDiagnosticsOptions({
+      diagnosticCodesToIgnore: [1109],
+    })
   }
 
   function renderNoCustomProps() {
     return (
       <Button
         size="small"
-        onClick={() => setCustomProps(stringifyCustomProps(new Map([[(props, theme) => true, {}]])))}
+        onClick={() => setCustomProps(stringifyCustomProps(defaultNewCustomProps))}
       >
         Add custom props
       </Button>
@@ -119,15 +185,23 @@ function ComponentEditor({ componentName }) {
             onClick={() => window.alert('Custom props are used to create visual behaviors based on props. The first input corresponds to the prop name, the second is a map from the prop possible value to the styles.')}
           />
         </Div>
-        <Editor
+        <Div
           width="100%"
-          height="calc(1.75rem * 6)"
-          language="javascript"
-          theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
-          options={editorOptions}
-          value={customProps}
-          onChange={value => setCustomProps(value)}
-        />
+          borderRadius={4}
+          border="1px solid border"
+          overflow="hidden"
+        >
+          <Editor
+            width="100%"
+            height="calc(1.75rem * 6)"
+            language="javascript"
+            theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
+            options={editorOptions}
+            value={customProps}
+            onChange={value => setCustomProps(value)}
+            handleEditorWillMount={handleEditorWillMount}
+          />
+        </Div>
         {/* <Button
           size="small"
           disabled={Object.keys(customProps).includes('')}
@@ -190,17 +264,19 @@ function ComponentEditor({ componentName }) {
           <Div
             width="100%"
             borderRadius={4}
+            border="1px solid border"
             overflow="hidden"
           >
 
             <Editor
               width="100%"
               height="calc(1.75rem * 6)"
-              language="json"
+              language="javascript"
               theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
               value={defaultProps}
               onChange={value => setDefaultProps(value)}
               options={editorOptions}
+              handleEditorWillMount={handleEditorWillMount}
             />
           </Div>
           <Div mt={0.5}>

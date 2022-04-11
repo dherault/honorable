@@ -42,21 +42,22 @@ function ApplicationLayout({ children }) {
   const loadUserTheme = useCallback(() => {
     try {
       const userThemeString = localStorage.getItem(localStorageUserThemeKey)
+      const rehydratedTheme = userThemeString ? deserializeTheme(userThemeString) : defaultTheme
 
-      setUserTheme(userThemeString ? deserializeTheme(userThemeString) : defaultTheme)
+      setUserTheme({ ...rehydratedTheme, rehydrated: true })
     }
     catch (error) {
       //
     }
   }, [])
 
-  // useEffect(() => {
-  //   loadUserTheme()
-  // }, [loadUserTheme])
+  useEffect(() => {
+    loadUserTheme()
+  }, [loadUserTheme])
 
-  // useEffect(() => {
-  //   persistUserTheme()
-  // }, [persistUserTheme])
+  useEffect(() => {
+    persistUserTheme()
+  }, [persistUserTheme])
 
   function handleReset() {
     window.confirm('Are you sure you want to reset the theme?')

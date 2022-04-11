@@ -1,21 +1,20 @@
-const customPropsSerializationPrefix = '@@@CUSTOM@@@'
+const functionPrefix = '_@@@HONORABLE@@@FUNCTION@@@_'
 
-function applyPrefix(object) {
-  if (typeof object !== 'object') return
-
-  return Object.fromEntries(Object.entries(object).map(([key, value]) => [customPropsSerializationPrefix + key, value]))
+function convertToFunction(fnString) {
+  try {
+    return eval(fnString)
+  }
+  catch (error) {
+    return `ERROR: ${fnString}`
+  }
 }
 
 function themeReplacer(key, value) {
-  if (key === 'customProps') {
-    return applyPrefix(value)
-  }
-
   if (value instanceof Map) {
     const mapLikeObject = {}
 
     value.forEach((value, key) => {
-      mapLikeObject[JSON.stringify(key)] = value
+      mapLikeObject[functionPrefix + (key.stringValue || key).toString()] = value
     })
 
     return mapLikeObject
@@ -25,35 +24,17 @@ function themeReplacer(key, value) {
 }
 
 function themeReviver(key, value) {
-  if (key.startsWith(customPropsSerializationPrefix)) {
-    const mapValue = new Map()
-
-    Object.entries(value).forEach(([key, value]) => {
-      mapValue.set(JSON.parse(key), value)
-    })
-
-    return mapValue
+  if (typeof value === 'object' && Object.keys(value).some(x => x.startsWith(functionPrefix))) {
+    return new Map(Object.entries(value).map(([key, value]) => [convertToFunction(key.replace(functionPrefix, '')), value]))
   }
 
   return value
 }
 
-function removePrefixes(theme) {
-  if (typeof theme !== 'object' || theme instanceof Map) return theme
-
-  const nextTheme = {}
-
-  Object.entries(theme).forEach(([key, value]) => {
-    nextTheme[key.startsWith(customPropsSerializationPrefix) ? key.slice(customPropsSerializationPrefix.length) : key] = removePrefixes(value)
-  })
-
-  return nextTheme
-}
-
 export function serializeTheme(theme) {
-  return JSON.stringify(theme, themeReplacer)
+  return JSON.stringify(theme, themeReplacer, 2)
 }
 
 export function deserializeTheme(themeJson) {
-  return removePrefixes(JSON.parse(themeJson, themeReviver))
+  return JSON.parse(themeJson, themeReviver)
 }
