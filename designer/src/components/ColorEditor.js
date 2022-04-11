@@ -134,6 +134,19 @@ function ColorEditor({ colorName }) {
     })
   }
 
+  function handleDelete() {
+    if (window.confirm(`Are you certain you want to delete the color "${colorName}"?`)) {
+      const nextColors = { ...userTheme.colors }
+
+      delete nextColors[colorName]
+
+      setUserTheme({
+        ...userTheme,
+        colors: nextColors,
+      })
+    }
+  }
+
   return (
     <>
       <Div xflex="x4">
@@ -158,14 +171,26 @@ function ColorEditor({ colorName }) {
           )}
         </H3>
         {open && (
-          <A
-            text="small"
-            userSelect="none"
-            ml={0.5}
-            onClick={() => setIsRenaming(x => !x)}
-          >
-            {isRenaming ? 'Done' : 'Rename'}
-          </A>
+          <>
+            <A
+              text="small"
+              userSelect="none"
+              ml={0.5}
+              onClick={() => setIsRenaming(x => !x)}
+            >
+              {isRenaming ? 'Done' : 'Rename'}
+            </A>
+            {!isRenaming && (
+              <A
+                text="small"
+                userSelect="none"
+                ml={0.5}
+                onClick={handleDelete}
+              >
+                Delete
+              </A>
+            )}
+          </>
         )}
         <Div flexGrow={1} />
         <Button

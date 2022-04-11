@@ -21,8 +21,7 @@ function ThemeEditor() {
       title: "Welcome to Honorable's theme editor",
       infoStart: (
         <Sub>
-          {`🙏
-You're about to implement your design system into workable React components.
+          {`You're about to implement your design system into workable React components.
 Let's start simple by editing your primary color and the button.
 Click on "customize" to start editing.`}
         </Sub>

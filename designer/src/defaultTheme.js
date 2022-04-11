@@ -131,11 +131,14 @@ export default {
     },
   },
   modal: {
-    partDefaultProps: {
-      root: {
-        borderRadius: 4,
-      },
+    defaultProps: {
+      borderRadius: 4,
     },
+    // partDefaultProps: {
+    //   backdrop: {
+    //     backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    //   },
+    // },
   },
 }
 

@@ -17,8 +17,7 @@ function Modal({ children, open = false, onClose = () => {}, className = '', ...
   const extendProps = { children, open, onClose, ...props }
 
   function handleBackdropClick(event: MouseEvent) {
-    console.log('backdropRef.current', backdropRef.current)
-    console.log('event', event)
+    if (event.target === backdropRef.current && typeof onClose === 'function') onClose()
   }
 
   return (
@@ -35,7 +34,6 @@ function Modal({ children, open = false, onClose = () => {}, className = '', ...
       xflex="x5"
       extend={resolvePartProps('modal', 'backdrop', extendProps, theme)}
     >
-
       <Div
         className={className}
         backgroundColor="background"
@@ -49,15 +47,14 @@ function Modal({ children, open = false, onClose = () => {}, className = '', ...
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  className: PropTypes.string,
 }
 
 Modal.defaultProps = {
   open: false,
   onClose: () => {},
-  className: '',
 }
 
 export default wrapComponentWithStyle(Modal, 'modal')
