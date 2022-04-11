@@ -225,7 +225,7 @@ function ComponentEditor({ componentName }) {
 
             <Editor
               width="100%"
-              height="calc(1.5rem * 4)"
+              height="calc(1.75rem * 5)"
               language="json"
               theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
               value={defaultProps}

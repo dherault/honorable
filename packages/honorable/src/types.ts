@@ -36,8 +36,9 @@ export type CustomProps = Map<(props: AnyProps, theme: Theme) => boolean, StyleP
 export type ComponentNames = typeof tags[number]
 
 export type ComponentProps = {
-  defaultProps: StyleProps
-  customProps: CustomProps
+  defaultProps?: StyleProps
+  customProps?: CustomProps
+  partCustomProps?: CustomProps
 }
 
 export type ThemeComponents = {
