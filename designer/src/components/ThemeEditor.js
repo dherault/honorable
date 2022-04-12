@@ -137,7 +137,7 @@ Once done, click continue.`}
 
         <Switch
           checked={areVariationsDisplayed}
-          onChange={value => setAreVariationsDisplayed(value)}
+          onChange={event => setAreVariationsDisplayed(event.target.checked)}
         />
         <P
           color="text-light"

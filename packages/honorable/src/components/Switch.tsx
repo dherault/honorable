@@ -4,6 +4,7 @@ import PropTypes, { InferProps } from 'prop-types'
 
 import resolvePartProps from '../utils/resolvePartProps'
 import wrapComponentWithStyle from '../utils/wrapComponentWithStyle'
+import enhanceTarget from '../utils/enhanceTarget'
 import useTheme from '../hooks/useTheme'
 
 // @ts-ignore
@@ -31,7 +32,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
       backgroundColor="background-light"
       userSelect="none"
       cursor="pointer"
-      onClick={(event: MouseEvent) => onChange(!checked, event)}
+      onClick={(event: MouseEvent) => onChange(enhanceTarget(event, { checked: !checked }))}
       role="button"
       {...props}
     >
