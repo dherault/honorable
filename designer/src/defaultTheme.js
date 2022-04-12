@@ -124,6 +124,34 @@ export default {
         outline: 'none',
         borderColor: 'primary',
       },
+      '&[type="checkbox"]': {
+        appearance: 'none',
+        margin: 0,
+        padding: 0,
+        backgroundColor: 'background',
+        border: '1px solid border',
+        borderRadius: 4,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '1rem',
+        height: '1rem',
+        '&::before': {
+          content: '""',
+          width: '0.75rem',
+          height: '0.75rem',
+          transform: 'scale(0)',
+          boxShadow: 'inset 1em 1em primary',
+          transformUrigin: 'bottom left',
+          clipPath: 'polygon(28% 38%, 41% 53%, 75% 24%, 86% 38%, 40% 78%, 15% 50%)',
+        },
+        '&:checked::before': {
+          transform: 'scale(1.35)',
+        },
+        '&:checked, &:hover': {
+          borderColor: 'primary',
+        },
+      },
     },
     customProps: new Map([
       [

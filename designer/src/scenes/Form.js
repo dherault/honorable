@@ -5,6 +5,7 @@ import ComponentVariator from '../components/ComponentVariator'
 
 function Form() {
   const [radio, setRadio] = useState('')
+  const [checked, setChecked] = useState(false)
 
   function handleSumbit(event) {
     event.preventDefault()
@@ -59,12 +60,15 @@ function Form() {
         <Div
           xflex="x4"
           mt={2}
+          cursor="pointer"
+          onClick={() => setChecked(x => !x)}
         >
           <Div>
             <ComponentVariator
               Component={Input}
               componentProps={{
                 type: 'checkbox',
+                checked,
               }}
             />
           </Div>
