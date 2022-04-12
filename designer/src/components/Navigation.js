@@ -108,12 +108,19 @@ function Navigation({ mode, setMode, onReset }) {
         rel="noopener noreferrer"
         xflex="x5"
         ml={1}
-        cursor="pointer"
       >
         <AiFillGithub
           size={24}
           color={theme.utils.resolveColor('text')}
         />
+      </A>
+      <A
+        ml={1}
+        href="https://docs.honorable.design"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Docs
       </A>
       <ExportModal
         open={isExportModalOpen}
