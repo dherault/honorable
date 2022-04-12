@@ -9,26 +9,24 @@ function ComponentsThemeEditor({ tags = [], colors = [], title, infoStart, infoE
       <H2>
         {title}
       </H2>
-      {infoStart}
-      <Div mt={4}>
-        {colors.map((colorName, i) => (
-          <Div
-            key={i}
-            mt={2}
-          >
-            <ColorEditor colorName={colorName} />
-          </Div>
-        ))}
-        {tags.map(tag => (
-          <Div
-            key={tag}
-            mt={2}
-          >
-            <ComponentEditor componentName={tag} />
-          </Div>
-        ))}
-      </Div>
-      {infoEnd}
+      {infoStart || <Div mb={4} />}
+      {colors.map((colorName, i) => (
+        <Div
+          key={i}
+          mt={2}
+        >
+          <ColorEditor colorName={colorName} />
+        </Div>
+      ))}
+      {tags.map(tag => (
+        <Div
+          key={tag}
+          mt={2}
+        >
+          <ComponentEditor componentName={tag} />
+        </Div>
+      ))}
+      {infoEnd || <Div mt={4} />}
     </>
   )
 }

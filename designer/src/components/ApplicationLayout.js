@@ -5,11 +5,13 @@ import useKeys from 'react-piano-keys'
 import theme from '../theme'
 import defaultTheme from '../defaultTheme'
 import UserThemeContext from '../contexts/UserThemeContext'
+import FontsContext from '../contexts/FontsContext'
 import AreVariationsDisplayedContext from '../contexts/AreVariationsDisplayedContext'
 import { deserializeTheme, serializeTheme } from '../utils/themeSerializer'
 
 import Navigation from './Navigation'
 import ThemeEditor from './ThemeEditor'
+import TypographyFont from './TypographyFont'
 
 const localStorageUserThemeKey = 'honorable-userTheme'
 
@@ -31,10 +33,12 @@ function ApplicationLayout({ children }) {
   const [mode, setMode] = useState('light')
   const [userTheme, setUserTheme] = useState(defaultTheme)
   const [areVariationsDisplayed, setAreVariationsDisplayed] = useState(false)
+  const [fonts, setFonts] = useState([''])
   const modedTheme = useMemo(() => ({ ...theme, mode }), [mode])
   const modedUserTheme = useMemo(() => ({ ...userTheme, mode }), [userTheme, mode])
   const userThemeValue = useMemo(() => [modedUserTheme, setUserTheme, defaultTheme, addThemeResetListener], [modedUserTheme])
   const areVariationsDisplayedValue = useMemo(() => [areVariationsDisplayed, setAreVariationsDisplayed], [areVariationsDisplayed])
+  const fontsValue = useMemo(() => [fonts, setFonts], [fonts])
 
   useKeys(window, 'cmd+s', event => event.preventDefault())
   useKeys(window, 'ctrl+s', event => event.preventDefault())
@@ -73,38 +77,41 @@ function ApplicationLayout({ children }) {
 
   return (
     <UserThemeContext.Provider value={userThemeValue}>
-      <AreVariationsDisplayedContext.Provider value={areVariationsDisplayedValue}>
-        <ThemeProvider theme={modedTheme}>
-          <Div
-            height="100vh"
-            xflex="y2s"
-          >
-            <Navigation
-              mode={mode}
-              setMode={setMode}
-              onReset={handleReset}
-            />
+      <FontsContext.Provider value={fontsValue}>
+        <AreVariationsDisplayedContext.Provider value={areVariationsDisplayedValue}>
+          <ThemeProvider theme={modedTheme}>
+            <TypographyFont />
             <Div
-              flexGrow={1}
-              xflex="x4s"
-              maxWidth="100vw"
-              overflow="hidden"
+              height="100vh"
+              xflex="y2s"
             >
-              <ThemeEditor />
+              <Navigation
+                mode={mode}
+                setMode={setMode}
+                onReset={handleReset}
+              />
               <Div
                 flexGrow={1}
-                overflowX="hidden"
-                overflowY="scroll"
+                xflex="x4s"
+                maxWidth="100vw"
+                overflow="hidden"
               >
-                <ThemeProvider theme={modedUserTheme}>
-                  <CssBaseline />
-                  {children}
-                </ThemeProvider>
+                <ThemeEditor />
+                <Div
+                  flexGrow={1}
+                  overflowX="hidden"
+                  overflowY="scroll"
+                >
+                  <ThemeProvider theme={modedUserTheme}>
+                    <CssBaseline />
+                    {children}
+                  </ThemeProvider>
+                </Div>
               </Div>
             </Div>
-          </Div>
-        </ThemeProvider>
-      </AreVariationsDisplayedContext.Provider>
+          </ThemeProvider>
+        </AreVariationsDisplayedContext.Provider>
+      </FontsContext.Provider>
     </UserThemeContext.Provider>
   )
 }

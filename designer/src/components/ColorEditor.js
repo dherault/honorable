@@ -161,10 +161,11 @@ function ColorEditor({ colorName }) {
           {!isRenaming && colorName}
           {isRenaming && (
             <Input
+              variant="underlined"
               fontWeight="bold"
-              marginLeft={-4}
-              marginTop={-4}
-              marginBottom={-4}
+              marginLeft="-0.5rem"
+              marginTop="-0.5rem"
+              marginBottom="-0.5rem"
               value={colorName}
               onChange={handleNameChange}
             />

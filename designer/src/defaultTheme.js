@@ -1,7 +1,6 @@
 export default {
   mode: 'light',
   font: {
-    family: '"Roboto", sans-serif',
     size: '16px',
   },
   colors: {
@@ -116,6 +115,28 @@ export default {
       borderTop: '1px solid border',
     },
   },
+  input: {
+    defaultProps: {
+      padding: '0.5rem',
+      border: '1px solid border',
+      borderRadius: 4,
+      '&:focus': {
+        outline: 'none',
+        borderColor: 'primary',
+      },
+    },
+    customProps: new Map([
+      [
+        assignStringValue(({ variant }) => variant === 'underlined', "({ variant }) => variant === 'underlined'"),
+        {
+          borderWidth: 0,
+          borderRadius: 0,
+          borderBottom: '1px solid border',
+          backgroundColor: 'transparent',
+        },
+      ],
+    ]),
+  },
   label: {
     defaultProps: {
       display: 'block',
@@ -134,11 +155,6 @@ export default {
     defaultProps: {
       borderRadius: 4,
     },
-    // partDefaultProps: {
-    //   backdrop: {
-    //     backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    //   },
-    // },
   },
 }
 

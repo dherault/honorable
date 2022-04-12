@@ -1,5 +1,5 @@
+import { useContext, useState } from 'react'
 import { Div, Pre } from 'honorable'
-import { useContext } from 'react'
 
 import UserThemeContext from '../contexts/UserThemeContext'
 import AreVariationsDisplayedContext from '../contexts/AreVariationsDisplayedContext'
@@ -19,6 +19,7 @@ function removeHonorablePrefix(string) {
 }
 
 function ComponentVariator({ Component, componentProps = {}, additionalVariations = {}, children }) {
+  const [minWidth, setMinWidth] = useState(0)
   const [theme] = useContext(UserThemeContext)
   const [areVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
 
@@ -36,6 +37,12 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
     Object.assign(variations, additionalVariations)
   }
 
+  function handleRef(ref) {
+    if (ref) {
+      setMinWidth(minWidth => Math.max(minWidth, ref.clientWidth))
+    }
+  }
+
   function renderVariation(fnString = '', props = {}, noMargin = false) {
     return (
       <Div
@@ -43,7 +50,10 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
         xflex="x4"
         key={fnString}
       >
-        <Div>
+        <Div
+          ref={handleRef}
+          minWidth={minWidth}
+        >
           <Component
             {...componentProps}
             {...props}
@@ -54,7 +64,7 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
         {!!fnString && (
           <Pre
             text="small"
-            ml={1}
+            ml={2}
             my={0}
           >
             {fnString}

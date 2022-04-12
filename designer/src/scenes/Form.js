@@ -12,13 +12,12 @@ function Form() {
 
   return (
     <Div
-      py={4}
-      px={8}
+      pt={4}
+      pl={8}
     >
       <H1>Form</H1>
       <HonorableForm
         onSubmit={handleSumbit}
-        maxWidth={256 + 64 + 32 + 16 + 8 + 4 + 2}
       >
         <ComponentVariator
           Component={Label}
@@ -32,7 +31,7 @@ function Form() {
             placeholder: 'jane.smith@abc.com',
           }}
         />
-        <Div mt={1}>
+        <Div mt={2}>
           <Div xflex="x4">
             <Input
               type="radio"
@@ -59,7 +58,7 @@ function Form() {
         </Div>
         <Div
           xflex="x4"
-          mt={1}
+          mt={2}
         >
           <Div>
             <ComponentVariator
@@ -75,7 +74,7 @@ function Form() {
         </Div>
         <Div
           xflex="x4"
-          mt={1}
+          mt={2}
         >
           <Button
             type="submit"

@@ -8,7 +8,7 @@ function Colors() {
   return (
     <Div
       py={4}
-      px={8}
+      pl={8}
     >
       <H1>
         Colors

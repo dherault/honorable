@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { Button, Div, H3, P, useTheme } from 'honorable'
 import Editor from '@monaco-editor/react'
-import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 import defaultTheme from '../defaultTheme'
 import usePrevious from '../hooks/usePrevious'
@@ -14,7 +13,9 @@ function stringifyCustomProps(customProps) {
     return ''
   }
 
-  return `new Map([
+  return `// customProps are maps from functions on props to styles,
+// If the function returns truthy, the styles apply.
+new Map([
 ${Array.from(customProps.entries()).map(([key, value = '']) => `\t[
 \t\t${typeof key === 'function' ? (key?.stringValue || key) : ''},
 \t\t${stringify(value).split('\n').join('\n\t\t')},
@@ -130,11 +131,6 @@ function ComponentEditor({ componentName }) {
     setCustomProps(stringifyCustomProps(defaultTheme[componentName]?.customProps))
   }
 
-  function handleClear() {
-    setDefaultProps(stringifyDefaultProps())
-    setCustomProps(stringifyCustomProps())
-  }
-
   function renderNoCustomProps() {
     return (
       <Button
@@ -149,19 +145,12 @@ function ComponentEditor({ componentName }) {
   function renderCustomProps() {
     return (
       <>
-        <Div
+        <P
           mb={0.25}
           mt={1}
-          xflex="x5b"
         >
-          <P>
-            customProps:
-          </P>
-          <AiOutlineInfoCircle
-            color={enhancedTheme.utils.resolveColor('text-light')}
-            onClick={() => window.alert('Custom props are used to create visual behaviors based on props. The first input corresponds to the prop name, the second is a map from the prop possible value to the styles.')}
-          />
-        </Div>
+          customProps:
+        </P>
         <Div
           width="100%"
           borderRadius={4}
@@ -196,46 +185,33 @@ function ComponentEditor({ componentName }) {
           {'<'}{capitalize(componentName)}{' />'}
         </H3>
         <Div flexGrow={1} />
+        {open && (
+          <Button
+            ml={1}
+            size="small"
+            onClick={handleReset}
+            variant="outlined"
+          >
+            Reset
+          </Button>
+        )}
         <Button
-          ml={1}
+          ml={open ? 0.5 : 1}
           size="small"
           onClick={() => setOpen(open => !open)}
         >
           {open ? 'Hide' : 'Customize'}
         </Button>
-        {open && (
-          <>
-            <Button
-              ml={0.5}
-              size="small"
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-            <Button
-              ml={0.5}
-              size="small"
-              onClick={handleClear}
-            >
-              Clear
-            </Button>
-          </>
-        )}
       </Div>
       {open && (
         <>
           <Div
             mb={0.25}
             mt={0.5}
-            xflex="x5b"
           >
             <P>
               defaultProps:
             </P>
-            <AiOutlineInfoCircle
-              color={enhancedTheme.utils.resolveColor('text-light')}
-              onClick={() => window.alert('Default props are your component\'s main styles. They apply to all instances of the component and can be overriden with customProps or locally.')}
-            />
           </Div>
           <Div
             width="100%"

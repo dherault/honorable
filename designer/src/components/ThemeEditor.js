@@ -6,6 +6,7 @@ import UserThemeContext from '../contexts/UserThemeContext'
 import AreVariationsDisplayedContext from '../contexts/AreVariationsDisplayedContext'
 
 import ComponentsThemeEditor from './ComponentsThemeEditor'
+import TypographyFontSelector from './TypographyFontSelector'
 
 function ThemeEditor() {
   const { pathname } = useLocation()
@@ -20,7 +21,10 @@ function ThemeEditor() {
       tags: ['button'],
       title: "Welcome to Honorable's theme editor",
       infoStart: (
-        <Sub>
+        <Sub
+          mt={1}
+          mb={4}
+        >
           {`You're about to implement your design system into workable React components.
 Let's start simple by editing your primary color and the button.
 Click on "customize" to start editing.`}
@@ -37,7 +41,10 @@ Once done, click continue.`}
     '/colors': {
       title: 'Time for some color theory',
       infoStart: (
-        <Sub>
+        <Sub
+          mt={1}
+          mb={4}
+        >
           Pick your colors wisely.
         </Sub>
       ),
@@ -45,7 +52,7 @@ Once done, click continue.`}
       infoEnd: (
         <Div
           xflex="x6"
-          mt={2.25}
+          mt={1}
         >
           <Button
             onClick={handleAddColor}
@@ -63,6 +70,17 @@ Once done, click continue.`}
       title: "Let's customize your typography",
       previous: '/colors',
       next: '/form',
+      infoStart: (
+        <>
+          <Sub
+            mt={1}
+            mb={4}
+          >
+            Choose your typeface, then customize your components.
+          </Sub>
+          <TypographyFontSelector />
+        </>
+      ),
     },
     '/form': {
       title: 'Forms are the butter and bread of UI design',
@@ -99,15 +117,13 @@ Once done, click continue.`}
       background="background-extra-light"
       overflow="hidden"
       flexShrink={0}
-      pt={2}
-      pl={2}
-      pb={1.5}
       elevation={2}
     >
       <Div
         flexGrow={1}
         overflowY="scroll"
-        pb={4}
+        pt={2}
+        pl={2}
         pr={2}
       >
         <ComponentsThemeEditor {...props} />
@@ -115,8 +131,8 @@ Once done, click continue.`}
       <Div
         flexShrink={0}
         xflex="x4"
-        mt={0.5}
-        pr={2}
+        py={1}
+        px={2}
       >
 
         <Switch
