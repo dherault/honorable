@@ -159,7 +159,7 @@ function ComponentEditor({ componentName }) {
         >
           <Editor
             width="100%"
-            height="calc(1.75rem * 6)"
+            height="calc(2rem * 6)"
             language="javascript"
             theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
             options={editorOptions}
@@ -221,7 +221,7 @@ function ComponentEditor({ componentName }) {
           >
             <Editor
               width="100%"
-              height="calc(1.75rem * 6)"
+              height="calc(2rem * 6)"
               language="javascript"
               theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
               value={defaultProps}

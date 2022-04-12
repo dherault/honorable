@@ -14,7 +14,7 @@ function themeReplacer(key, value) {
     const mapLikeObject = {}
 
     value.forEach((value, key) => {
-      mapLikeObject[functionPrefix + (key.stringValue || key).toString()] = value
+      mapLikeObject[functionPrefix + (key?.stringValue || key || '')] = value
     })
 
     return mapLikeObject
