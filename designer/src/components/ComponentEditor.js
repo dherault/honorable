@@ -167,13 +167,6 @@ function ComponentEditor({ componentName }) {
             onChange={value => setCustomProps(value)}
           />
         </Div>
-        {/* <Button
-          size="small"
-          disabled={Object.keys(customProps).includes('')}
-          onClick={() => setCustomProps(customProps => ({ ...customProps, '': defaultEditorValue }))}
-        >
-          Add another custom prop
-        </Button> */}
       </>
     )
   }

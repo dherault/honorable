@@ -165,7 +165,7 @@ function ColorEditor({ colorName }) {
               fontWeight="bold"
               marginLeft="-0.5rem"
               marginTop="-0.5rem"
-              marginBottom="-0.5rem"
+              marginBottom="calc(-0.5rem - 1px)"
               value={colorName}
               onChange={handleNameChange}
             />

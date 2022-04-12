@@ -161,6 +161,7 @@ export default {
           borderRadius: 0,
           borderBottom: '1px solid border',
           backgroundColor: 'transparent',
+          color: 'text',
         },
       ],
     ]),
