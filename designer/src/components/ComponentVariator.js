@@ -31,7 +31,7 @@ function ComponentVariator({ Component, componentProps = {}, additionalVariation
 
   if (areVariationsDisplayed) {
     customProps.forEach((value, key) => {
-      if (key && value) variations[key.toString()] = value
+      if (typeof key === 'function' && typeof value === 'object') variations[key?.stringValue || key] = value
     })
 
     Object.assign(variations, additionalVariations)
