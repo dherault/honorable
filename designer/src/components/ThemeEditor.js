@@ -83,7 +83,7 @@ Once done, click continue.`}
       ),
     },
     '/form': {
-      title: 'Forms are the butter and bread of UI design',
+      title: 'Forms are the bread and butter of UI design',
       tags: ['label', 'input', 'button'],
       previous: '/typography',
       next: '/dashboard',
