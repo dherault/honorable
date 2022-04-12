@@ -70,10 +70,12 @@ export default {
       textDecoration: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
       ':hover': {
-        backgroundColor: 'lighten(primary)',
+        backgroundColor: 'lighten(primary, 12)',
+        borderColor: 'lighten(primary, 12)',
       },
       ':active': {
         backgroundColor: 'primary',
+        borderColor: 'primary',
       },
       '&:disabled': {
         backgroundColor: 'lightgrey',
@@ -98,12 +100,10 @@ export default {
           color: 'primary',
           backgroundColor: 'transparent',
           ':hover': {
-            color: 'white',
-            backgroundColor: 'lighten(primary)',
+            backgroundColor: 'transparencify(primary, 90)',
           },
           ':active': {
-            color: 'white',
-            backgroundColor: 'primary',
+            backgroundColor: 'transparencify(primary, 75)',
           },
         },
       ],
