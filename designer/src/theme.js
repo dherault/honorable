@@ -2,8 +2,22 @@ import defaultTheme from './defaultTheme'
 
 export default {
   ...defaultTheme,
+  colors: {
+    ...defaultTheme.colors,
+    'background-extra-light': {
+      light: '#f7f7f7',
+      dark: '#2e2e2e',
+    },
+  },
   h1: {
     defaultProps: {
+      margin: 0,
+      fontSize: '1.5rem',
+    },
+  },
+  h2: {
+    defaultProps: {
+      margin: 0,
       fontSize: '1.5rem',
     },
   },

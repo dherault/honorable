@@ -95,11 +95,11 @@ Once done, click continue.`}
   return (
     <Div
       width={512 + 64 + 8}
-      maxHeight="calc(100vh - 64px)"
       xflex="y2s"
+      background="background-extra-light"
       overflow="hidden"
       flexShrink={0}
-      pt={1}
+      pt={2}
       pl={2}
       pb={1.5}
       elevation={2}

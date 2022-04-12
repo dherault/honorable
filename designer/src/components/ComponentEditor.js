@@ -18,7 +18,7 @@ function stringifyCustomProps(customProps) {
 ${Array.from(customProps.entries()).map(([key, value = '']) => `\t[
 \t\t${typeof key === 'function' ? (key?.stringValue || key) : ''},
 \t\t${stringify(value).split('\n').join('\n\t\t')},
-\t]`).join(',\n')}
+\t],`).join('\n')}
 ])`
 }
 
@@ -135,12 +135,6 @@ function ComponentEditor({ componentName }) {
     setCustomProps(stringifyCustomProps())
   }
 
-  function handleEditorWillMount(monaco) {
-    monaco.languages.javascript.setDiagnosticsOptions({
-      diagnosticCodesToIgnore: [1109],
-    })
-  }
-
   function renderNoCustomProps() {
     return (
       <Button
@@ -182,7 +176,6 @@ function ComponentEditor({ componentName }) {
             options={editorOptions}
             value={customProps}
             onChange={value => setCustomProps(value)}
-            handleEditorWillMount={handleEditorWillMount}
           />
         </Div>
         {/* <Button
@@ -250,7 +243,6 @@ function ComponentEditor({ componentName }) {
             border="1px solid border"
             overflow="hidden"
           >
-
             <Editor
               width="100%"
               height="calc(1.75rem * 6)"
@@ -259,7 +251,6 @@ function ComponentEditor({ componentName }) {
               value={defaultProps}
               onChange={value => setDefaultProps(value)}
               options={editorOptions}
-              handleEditorWillMount={handleEditorWillMount}
             />
           </Div>
           <Div mt={0.5}>

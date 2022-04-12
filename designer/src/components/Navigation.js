@@ -13,8 +13,8 @@ function Navigation({ mode, setMode, onReset }) {
     <Nav
       position="relative"
       elevation={2}
-      height={64}
-      px={1}
+      px={2}
+      py={1}
       xflex="x4"
       flexShrink={0}
     >
