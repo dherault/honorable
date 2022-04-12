@@ -6,6 +6,7 @@ import {
 
 import resolveColor from './resolveColor'
 
+// Add utils to the theme
 function enhanceTheme(theme: Theme): ExtendedTheme {
   return {
     ...theme,

@@ -1,3 +1,4 @@
+// Add transparency to a hex color by a given amount
 function transparencify(colorHex: string, value: number = 50) {
   if (!(typeof colorHex === 'string' && typeof value === 'number' && colorHex.startsWith('#'))) return colorHex
 

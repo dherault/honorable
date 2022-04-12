@@ -6,6 +6,7 @@ import {
 
 import resolveCustomProps from './resolveCustomProps'
 
+// Return the style object of applied partProps
 function resolvePartProps(componentKey: string, partKey: string, props: AnyProps, theme: Theme): StyleProps {
   const componentTheme = theme[componentKey]
 

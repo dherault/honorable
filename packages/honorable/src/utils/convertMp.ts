@@ -25,6 +25,7 @@ function convertMpValue(value: any) {
   return `${parsedValue}rem`
 }
 
+// Convert a series of mp props (whose keys are m, p, mx, ...) into a style object
 function convertMp(mpProps: object): StyleProps {
   const convertedStyle = {}
 

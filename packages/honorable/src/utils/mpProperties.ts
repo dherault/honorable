@@ -12,5 +12,7 @@ function createMpProperties() {
   return mpProperties
 }
 
+// The list of all available mp properties
 export const mpProperties = createMpProperties()
+// The propTypes corresponding to that list
 export const mpPropTypes = Object.fromEntries(mpProperties.map(prop => [prop, PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])])]))

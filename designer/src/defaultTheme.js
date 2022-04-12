@@ -70,8 +70,8 @@ export default {
       textDecoration: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
       ':hover': {
-        backgroundColor: 'lighten(primary, 12)',
-        borderColor: 'lighten(primary, 12)',
+        backgroundColor: 'lighten(primary, 10)',
+        borderColor: 'lighten(primary, 10)',
       },
       ':active': {
         backgroundColor: 'primary',

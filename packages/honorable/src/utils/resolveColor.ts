@@ -6,6 +6,13 @@ import isSelector from './isSelector'
 import { darken, lighten } from './lightenAndDarken'
 import transparencify from './transparencify'
 
+/*
+  resolveColor
+  ------------
+  Convert a css string containing color names and helper function to hex values.
+  Works recursively on objects values.
+*/
+
 const colorProperties = [
   'backgroundColor',
   'background',
@@ -48,8 +55,15 @@ function resolveColor(key: string | null, value: string | number | StyleProps, t
 
   if (typeof value !== 'string') return value
 
-  return applyColorHelpers(convertNamedColor(convertThemeColors(value, theme)))
+  return applyColorHelpers(convertThemeColors(value, theme))
 }
+
+/*
+  convertThemeColors
+  ------------
+  Convert a named theme color to its hex value according to mode.
+  eg: "primary" => "#0070f3"
+*/
 
 function convertThemeColors(value: string, theme: Theme) {
   let converted = value
@@ -82,36 +96,27 @@ function resolveThemeColor(color: string, theme: Theme, previousColor: string = 
   return foundColor === previousColor ? foundColor : resolveThemeColor(foundColor, theme, foundColor, i + 1)
 }
 
-const namedColorReplacers = Object.entries(namedColors).map(([colorName, colorHex]) => ({
-  colorName,
-  colorHex,
-  regex: new RegExp(colorName, 'g'),
-  replacer: (value: string, regex: RegExp) => value.replace(regex, colorHex),
-}))
-.sort((a, b) => b.colorName.length - a.colorName.length)
-
-function convertNamedColor(value: string) {
-  let converted = value
-
-  namedColorReplacers.forEach(({ regex, replacer, colorName }) => {
-    if (converted.includes(colorName)) {
-      converted = replacer(converted, regex)
-    }
-  })
-
-  return converted
-}
+/*
+  applyColorHelpers
+  ------------
+  Apply color helpers to a CSS string value.
+  eg: "lighten(primary, 33)" => "#0070f3"
+  Do it recursively to support nested color helpers.
+*/
 
 const colorHelpers = [
   {
+    name: 'lighten',
     regex: /lighten\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
     fn: (color: string, intensity: number) => lighten(color, intensity),
   },
   {
+    name: 'darken',
     regex: /darken\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
     fn: (color: string, intensity: number) => darken(color, intensity),
   },
   {
+    name: 'transparencify',
     regex: /transparencify\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
     fn: (color: string, intensity: number) => transparencify(color, intensity),
   },
@@ -122,20 +127,36 @@ function applyColorHelpers(colorString: string, i = 0): string {
     throw new Error('Could not apply color helper.')
   }
 
-  const appliedColor = colorHelpers.reduce((color, helper) => (
-    color.replace(
-      helper.regex,
-      (_match, color, intensityString) => {
-        let intensity = intensityString ? parseInt(intensityString) : undefined
+  const appliedColor = colorHelpers.reduce((colorString, { regex, fn, name }) => {
+    if (colorString.includes(name)) {
+      return colorString.replace(
+        regex,
+        (_match, color, intensityString) => {
+          let intensity = intensityString ? parseInt(intensityString) : undefined
 
-        if (intensity !== intensity) intensity = undefined
+          if (intensity !== intensity) intensity = undefined
 
-        return helper.fn(color.trim(), intensity)
-      }
-    )
-  ), colorString)
+          return fn(convertNamedColor(color.trim()), intensity)
+        }
+      )
+    }
+
+    return colorString
+  }, colorString)
 
   return appliedColor === colorString ? appliedColor : applyColorHelpers(appliedColor, i + 1)
+}
+
+/*
+  convertNamedColors
+  ------------
+  Convert a named CSS color to its hex value.
+  eg: "red" => "#ff0000"
+  Needed for applying helper functions on CSS colors
+*/
+
+function convertNamedColor(value: string) {
+  return namedColors[value] || value
 }
 
 export default resolveColor

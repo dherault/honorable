@@ -5,6 +5,7 @@ import {
   Theme,
 } from '../types'
 
+// Return the style object of applied customProps
 function resolveCustomProps(customProps: CustomProps, props: AnyProps = {}, theme: Theme = {}): StyleProps {
   const resolvedStyles = {}
 

@@ -25,6 +25,7 @@ import resolveCustomProps from './resolveCustomProps'
 import { stylePropTypes, styleProperties } from './styleProperties'
 import { mpPropTypes, mpProperties } from './mpProperties'
 
+// React HOC to support style props
 function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = 'Honorable') {
   const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes
   const propTypeKeys = Object.keys(componentPropsTypes)

@@ -1,3 +1,4 @@
+// Lighten a hex color by a given amount
 export function lighten(colorHex: string, value = 25) {
   if (!(typeof colorHex === 'string' && typeof value === 'number' && colorHex.startsWith('#'))) return colorHex
 
