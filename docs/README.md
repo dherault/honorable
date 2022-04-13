@@ -41,14 +41,10 @@ If you find any bug or want to improve something, please open an issue or a pull
 
 ## Where to start?
 
-Follow the guides:
+Follow the guide:
 
 {% content-ref url="quick-start.md" %}
 [quick-start.md](quick-start.md)
-{% endcontent-ref %}
-
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
 {% endcontent-ref %}
 
 ## License
