@@ -3,6 +3,8 @@
 * [Honorable](README.md)
 * [Quick Start](quick-start.md)
 * [Theming](theming.md)
+* [xflex Property](xflex-property.md)
+* [mp Properties](mp-properties.md)
 * [Motivation](motivation.md)
 
 ## Reference
