@@ -1,13 +1,10 @@
 import React from 'react'
 import { Global, css } from '@emotion/react'
 
+import { StyleProps } from '../types'
+
 import useTheme from '../hooks/useTheme'
-
-function pixelize(x: any) {
-  if (typeof x === 'number') return `${x}px`
-
-  return x
-}
+import resolveColor from '../utils/resolveColor'
 
 const normalizeCss = `
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -361,8 +358,6 @@ template {
 }
 `
 
-const defaultFont = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
-
 function CssBaseline() {
   const theme = useTheme()
 
@@ -378,15 +373,21 @@ function CssBaseline() {
           html {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            font-family: ${typeof theme.font?.family === 'string' && theme.font?.family ? `${theme.font.family}, ${defaultFont}` : defaultFont};
-            font-size: ${typeof theme.font?.size === 'undefined' ? 'unset' : pixelize(theme.font.size)};
-            color: ${typeof theme.colors?.text === 'undefined' ? 'unset' : theme.utils.resolveColor('text')};
-            background-color: ${typeof theme.colors?.background === 'undefined' ? 'unset' : theme.utils.resolveColor('background')};
+            text-rendering: optimizelegibility;
+            ${typeof theme.colors?.text !== 'undefined' && `color: ${theme.utils.resolveColor('text')}`}
+            ${typeof theme.colors?.background !== 'undefined' && `background-color: ${theme.utils.resolveColor('background')}`}
           }
         `}
       />
       {!!theme.global?.defaultProps && (
-        <Global styles={{ '*': theme.utils.resolveColor(theme.global?.defaultProps || {}) }} />
+        <Global
+          styles={{
+            '*': {
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+              ...(resolveColor(null, theme.global?.defaultProps || {}, theme) as StyleProps),
+            },
+          }}
+        />
       )}
     </>
   )

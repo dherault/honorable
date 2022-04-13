@@ -1,5 +1,4 @@
 // Components
-
 // @ts-ignore
 export * from './components/tags'
 export { default as ThemeProvider } from './components/ThemeProvider'
@@ -10,8 +9,8 @@ export { default as Modal } from './components/Modal'
 // Hooks
 export { default as useTheme } from './hooks/useTheme'
 // Utils
+export { default as wrapComponentWithStyle } from './utils/wrapComponentWithStyle'
 export { default as mergeTheme } from './utils/mergeTheme'
 export { default as resolveColor } from './utils/resolveColor'
-export { default as wrapComponentWithStyle } from './utils/wrapComponentWithStyle'
 export { default as transparencify } from './utils/transparencify'
 export { lighten, darken } from './utils/lightenAndDarken'

@@ -4,8 +4,8 @@ export default {
     size: '16px',
   },
   colors: {
-    primary: '#2196f3',
-    secondary: '#f50057',
+    primary: '#3e73dd',
+    secondary: '#FFC547',
     background: {
       light: 'white',
       dark: '#333',
@@ -15,7 +15,7 @@ export default {
       dark: '#444',
     },
     text: {
-      light: '#111',
+      light: '#3b454e',
       dark: 'white',
     },
     'text-light': {
