@@ -60,9 +60,22 @@ They can then be added CSS properties, directly to them
 />
 ```
 
+## Customize your theme
+
+Give a look and feel to your application by editing your theme.
+
+{% content-ref url="theming.md" %}
+[theming.md](theming.md)
+{% endcontent-ref %}
+
 ## Learn about the `xflex` and `mp` props
 
-They compose the opinionated part of honorable, and are super useful to build application event faster.
+They compose the opinionated part of honorable, and are super useful to build application even faster.
 
-* `xflex` documentation
-* `mp` documentation
+{% content-ref url="xflex-property.md" %}
+[xflex-property.md](xflex-property.md)
+{% endcontent-ref %}
+
+{% content-ref url="mp-properties.md" %}
+[mp-properties.md](mp-properties.md)
+{% endcontent-ref %}
