@@ -32,10 +32,10 @@ function main() {
     for (const tag of tags) {
       const componentName = capitalize(tag)
 
-      summaryEntries.push(`  * [${componentName}](components/html-tags/${componentName}.md)`)
+      summaryEntries.push(`  * [${componentName}](components/html-tags/${tag}.md)`)
 
       fs.writeFileSync(
-        path.join(tagsDocsLocation, `${componentName}.md`),
+        path.join(tagsDocsLocation, `${tag}.md`),
         createDocFile(componentName),
         'utf8'
       )
