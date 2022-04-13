@@ -203,7 +203,7 @@ export default {
     defaultProps: {
       textAlign: 'left',
       borderTop: '1px solid border',
-      '&:first-child': {
+      '&:first-of-type': {
         border: 'none',
       },
     },

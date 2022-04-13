@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { A, Button, Div, Footer, H1, H2, Modal, Nav, P, Table, Td, Th, Tr } from 'honorable'
+import { A, Button, Div, Footer, H1, H2, Modal, Nav, P, Table, Tbody, Td, Th, Thead, Tr } from 'honorable'
 
 const cards = [
   {
@@ -121,36 +121,40 @@ function Dashboard() {
           overflow="hidden"
         >
           <Table>
-            <Tr>
-              <Th>
-                Company
-              </Th>
-              <Th>
-                Contact name
-              </Th>
-              <Th>
-                Contract size
-              </Th>
-              <Th>
-                Country
-              </Th>
-            </Tr>
-            {tableRows.map(({ company, contactName, contractSize, country }, index) => (
-              <Tr key={index}>
-                <Td>
-                  {company}
-                </Td>
-                <Td>
-                  {contactName}
-                </Td>
-                <Td>
-                  {contractSize}
-                </Td>
-                <Td>
-                  {country}
-                </Td>
+            <Thead>
+              <Tr>
+                <Th>
+                  Company
+                </Th>
+                <Th>
+                  Contact name
+                </Th>
+                <Th>
+                  Contract size
+                </Th>
+                <Th>
+                  Country
+                </Th>
               </Tr>
-            ))}
+            </Thead>
+            <Tbody>
+              {tableRows.map(({ company, contactName, contractSize, country }, index) => (
+                <Tr key={index}>
+                  <Td>
+                    {company}
+                  </Td>
+                  <Td>
+                    {contactName}
+                  </Td>
+                  <Td>
+                    {contractSize}
+                  </Td>
+                  <Td>
+                    {country}
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
           </Table>
         </Div>
         <Div flexGrow={1} />

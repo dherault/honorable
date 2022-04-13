@@ -368,10 +368,11 @@ function CssBaseline() {
 
   return (
     <>
+      <Global styles={css`${normalizeCss}`} />
       <Global
         styles={css`
           :root {
-            ${Object.keys(theme.colors).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColor(colorName)};\n`)}
+            ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColor(colorName)};\n`)}
           }
 
           html {
@@ -382,11 +383,11 @@ function CssBaseline() {
             color: ${typeof theme.colors?.text === 'undefined' ? 'unset' : theme.utils.resolveColor('text')};
             background-color: ${typeof theme.colors?.background === 'undefined' ? 'unset' : theme.utils.resolveColor('background')};
           }
-
-          ${normalizeCss}
         `}
       />
-      <Global styles={{ '*': theme.utils.resolveColor(theme.global?.defaultProps || {}) }} />
+      {!!theme.global?.defaultProps && (
+        <Global styles={{ '*': theme.utils.resolveColor(theme.global?.defaultProps || {}) }} />
+      )}
     </>
   )
 }
