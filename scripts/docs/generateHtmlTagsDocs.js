@@ -4,14 +4,18 @@ const path = require('path')
 const rimraf = require('rimraf') // eslint-disable-line
 
 const {
-  docsLocation,
+  docsLocation: _docsLocation,
   honorableLocation,
   htmlTagsDocsRelativeLocation,
   htmlTagsHonorableRelativeLocation,
+  summaryRelativeLocation,
+  summarySplitLinePrefix,
+  summaryContentLinePrefix,
 } = require('./config.json')
 
 function main() {
-  const tagsDocsLocation = path.resolve(__dirname, docsLocation, htmlTagsDocsRelativeLocation)
+  const docsLocation = path.join(__dirname, _docsLocation)
+  const tagsDocsLocation = path.join(docsLocation, htmlTagsDocsRelativeLocation)
   const readmeLocation = path.join(tagsDocsLocation, 'README.md')
 
   const readmeFile = fs.readFileSync(readmeLocation, 'utf8')
@@ -22,10 +26,13 @@ function main() {
       process.exit(1)
     }
 
-    const tags = require(path.resolve(__dirname, honorableLocation, htmlTagsHonorableRelativeLocation)).default
+    const tags = require(path.join(__dirname, honorableLocation, htmlTagsHonorableRelativeLocation)).default
+    const summaryEntries = []
 
     for (const tag of tags) {
       const componentName = capitalize(tag)
+
+      summaryEntries.push(`  * [${componentName}](components/html-tags/${componentName}.md)`)
 
       fs.writeFileSync(
         path.join(tagsDocsLocation, `${componentName}.md`),
@@ -39,8 +46,38 @@ function main() {
       readmeFile,
       'utf8'
     )
-  })
 
+    const summaryFileLocation = path.join(docsLocation, summaryRelativeLocation)
+    const summaryFile = fs.readFileSync(summaryFileLocation, 'utf8')
+    const summaryArray = summaryFile.split('\n')
+
+    let index = Infinity
+    const indexesToRemove = []
+
+    for (let i = 0; i < summaryArray.length; i++) {
+      const line = summaryArray[i]
+
+      if (line.startsWith(summarySplitLinePrefix)) {
+        index = i
+      }
+
+      if (i > index && line.startsWith(summaryContentLinePrefix)) {
+        indexesToRemove.push(i)
+      }
+
+      if (i > index && !line) index = Infinity
+    }
+
+    summaryArray.splice(indexesToRemove[0], indexesToRemove.length, ...summaryEntries.sort())
+
+    fs.writeFileSync(
+      summaryFileLocation,
+      summaryArray.join('\n'),
+      'utf8'
+    )
+
+    console.log('Generated', summaryEntries.length, 'entries.')
+  })
 }
 
 function createDocFile(componentName) {

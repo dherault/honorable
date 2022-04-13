@@ -2,5 +2,8 @@
   "docsLocation": "../../docs",
   "honorableLocation": "../../packages/honorable",
   "htmlTagsDocsRelativeLocation": "components/html-tags",
-  "htmlTagsHonorableRelativeLocation": "src/data/tags.ts"
+  "htmlTagsHonorableRelativeLocation": "src/data/tags.ts",
+  "summaryRelativeLocation": "SUMMARY.md",
+  "summarySplitLinePrefix": "* [HTML tags](components/html-tags/README.md)",
+  "summaryContentLinePrefix": "  * "
 }
