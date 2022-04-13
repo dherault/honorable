@@ -3,14 +3,19 @@
 * [Honorable](README.md)
 * [Quick Start](quick-start.md)
 * [Theming](theming.md)
-* [Color helpers](color-helpers.md)
 * [xflex Property](xflex-property.md)
 * [mp Properties](mp-properties.md)
 * [Motivation](motivation.md)
 
-## Reference
+## Components
 
-* [API Reference](reference/api-reference/README.md)
-  * [mergeTheme](reference/api-reference/mergetheme.md)
-  * [serializeTheme](reference/api-reference/serializetheme.md)
-  * [deserializeTheme](reference/api-reference/deserializetheme.md)
+* [HTML tags](components/html-tags/README.md)
+  * [Div](components/html-tags/div.md)
+
+## API Reference
+
+* [Color helpers](api-reference/color-helpers.md)
+* [Theme helpers](api-reference/theme-helpers/README.md)
+  * [mergeTheme](api-reference/theme-helpers/mergetheme.md)
+  * [serializeTheme](api-reference/theme-helpers/serializetheme.md)
+  * [deserializeTheme](api-reference/theme-helpers/deserializetheme.md)

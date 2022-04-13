@@ -127,8 +127,8 @@ If you use the `CssBaseline` component in your app, your colors will be added as
 
 See also:
 
-{% content-ref url="color-helpers.md" %}
-[color-helpers.md](color-helpers.md)
+{% content-ref url="api-reference/color-helpers.md" %}
+[color-helpers.md](api-reference/color-helpers.md)
 {% endcontent-ref %}
 
 ### `global`
@@ -147,8 +147,8 @@ const theme = mergeTheme(theme1, theme2, ...)
 
 See the following documentation for more:
 
-{% content-ref url="reference/api-reference/mergetheme.md" %}
-[mergetheme.md](reference/api-reference/mergetheme.md)
+{% content-ref url="api-reference/theme-helpers/mergetheme.md" %}
+[mergetheme.md](api-reference/theme-helpers/mergetheme.md)
 {% endcontent-ref %}
 
 ## Theme serialization
@@ -164,11 +164,11 @@ const deserializedTheme = deserializeTheme(serializedTheme) // type: Theme
 
 See the following documentation for more:
 
-{% content-ref url="reference/api-reference/serializetheme.md" %}
-[serializetheme.md](reference/api-reference/serializetheme.md)
+{% content-ref url="api-reference/theme-helpers/serializetheme.md" %}
+[serializetheme.md](api-reference/theme-helpers/serializetheme.md)
 {% endcontent-ref %}
 
-{% content-ref url="reference/api-reference/deserializetheme.md" %}
-[deserializetheme.md](reference/api-reference/deserializetheme.md)
+{% content-ref url="api-reference/theme-helpers/deserializetheme.md" %}
+[deserializetheme.md](api-reference/theme-helpers/deserializetheme.md)
 {% endcontent-ref %}
 

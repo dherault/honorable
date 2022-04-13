@@ -47,8 +47,8 @@ Follow the guides:
 [quick-start.md](quick-start.md)
 {% endcontent-ref %}
 
-{% content-ref url="reference/api-reference/" %}
-[api-reference](reference/api-reference/)
+{% content-ref url="broken-reference" %}
+[Broken link](broken-reference)
 {% endcontent-ref %}
 
 ## License
