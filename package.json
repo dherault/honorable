@@ -5,13 +5,18 @@
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "index.js",
   "scripts": {
+    "dev:packages": "npm run dev:honorable & npm run dev:honorable-theme-default & npm run dev:honorable-theme-honorable",
     "dev:honorable": "(cd packages/honorable && npm run dev)",
     "dev:honorable-theme-default": "(cd packages/honorable-theme-default && npm run dev)",
+    "dev:honorable-theme-honorable": "(cd packages/honorable-theme-honorable && npm run dev)",
     "dev:designer": "npm run link:all && (cd designer && npm run start:watch)",
-    "link:all": "npm run link:honorable && npm run link:honorable-theme-default && npm run link:designer",
+    "dev:landing": "npm run link:packages && npm run link:designer && (cd designer && npm run start:watch)",
+    "link:packages": "npm run link:honorable && npm run link:honorable-theme-defaul",
     "link:honorable": "(cd packages/honorable && npm link)",
     "link:honorable-theme-default": "(cd packages/honorable-theme-default && npm link)",
-    "link:designer": "(cd designer && npm link honorable && npm link honorable-theme-default)",
+    "link:honorable-theme-honorable": "(cd packages/honorable-theme-honorable && npm link)",
+    "link:designer": "(cd designer && npm link honorable && npm link honorable-theme-default && npm link honorable-theme-honorable)",
+    "link:landing": "(cd landing && npm link honorable && npm link honorable-theme-default && npm link honorable-theme-honorable)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
