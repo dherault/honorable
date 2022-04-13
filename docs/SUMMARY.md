@@ -19,3 +19,5 @@
   * [mergeTheme](api-reference/theme-helpers/mergetheme.md)
   * [serializeTheme](api-reference/theme-helpers/serializetheme.md)
   * [deserializeTheme](api-reference/theme-helpers/deserializetheme.md)
+* [Theme utils](api-reference/theme-utils/README.md)
+  * [resolveColor](api-reference/theme-utils/resolvecolor.md)
