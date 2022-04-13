@@ -16,7 +16,7 @@ In Honorable, any component can be extended with a clean extension API. You can 
 
 ## (almost) No obscure props
 
-The library was design with almost zero learning curve required for the developer.
+The library was designed with almost zero learning curve required for the developer.
 
 This means no obscure `margin={{ left: 'small' }}` or `weight="bold"` props is needed where you have to remember what a margin object is, what small stands for, and that `weight` is the alias for `fontWeight`.
 
