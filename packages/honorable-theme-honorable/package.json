@@ -4,7 +4,7 @@
   "description": "The honorable theme for the Honorable project",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "npm run clean:build && nodemon --watch src --ext ts,tsx --exec \"npm run build\"",
+    "dev": "npm run clean:build && nodemon --watch src --exec \"npm run build\"",
     "build": "npx tsc --declaration",
     "clean": "npm run clean:build",
     "clean:build": "rimraf dist",

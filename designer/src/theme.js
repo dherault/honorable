@@ -4,8 +4,8 @@ import defaultTheme from 'honorable-theme-default'
 export default mergeTheme(defaultTheme, {
   colors: {
     'background-extra-light': {
-      light: '#f7f7f7',
-      dark: '#2e2e2e',
+      light: '#f5f7f9',
+      dark: '#3a3a3a',
     },
   },
   h1: {

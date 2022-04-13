@@ -1,5 +1,5 @@
 import { Button, Div, P, Sub, Switch } from 'honorable'
-import { useContext } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import UserThemeContext from '../contexts/UserThemeContext'
@@ -9,9 +9,14 @@ import ComponentsThemeEditor from './ComponentsThemeEditor'
 import TypographyFontSelector from './TypographyFontSelector'
 
 function ThemeEditor() {
+  const scrollRef = useRef()
   const { pathname } = useLocation()
   const [userTheme, setUserTheme] = useContext(UserThemeContext)
   const [areVariationsDisplayed, setAreVariationsDisplayed] = useContext(AreVariationsDisplayedContext)
+
+  useEffect(() => {
+    scrollRef.current.scrollTop = 0
+  }, [pathname])
 
   const colorNames = Object.keys(userTheme.colors || {})
 
@@ -121,6 +126,7 @@ Once done, click continue.`}
       position="relative"
     >
       <Div
+        ref={scrollRef}
         flexGrow={1}
         overflowY="scroll"
         pt={2}

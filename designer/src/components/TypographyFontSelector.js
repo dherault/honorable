@@ -17,6 +17,7 @@ function TypographyFontSelector() {
   function renderFont(font, i) {
     return (
       <Input
+        key={i}
         mt={0.5}
         placeholder="eg: Roboto"
         value={font}
