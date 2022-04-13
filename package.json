@@ -5,6 +5,13 @@
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "index.js",
   "scripts": {
+    "dev:honorable": "(cd packages/honorable && npm run dev)",
+    "dev:honorable-theme-default": "(cd packages/honorable-theme-default && npm run dev)",
+    "dev:designer": "npm run link:all && (cd designer && npm run start:watch)",
+    "link:all": "npm run link:honorable && npm run link:honorable-theme-default && npm run link:designer",
+    "link:honorable": "(cd packages/honorable && npm link)",
+    "link:honorable-theme-default": "(cd packages/honorable-theme-default && npm link)",
+    "link:designer": "(cd designer && npm link honorable && npm link honorable-theme-default)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
