@@ -29,7 +29,7 @@ Take a look a the [motivation](motivation.md) or the [theming](theming.md) secti
 
 ### Features
 
-* Any HTML tag is an extensible component
+* Any HTML tag is an extensible component + other components such as Modal
 * end-to-end theming solution
 * Nothing to very little to learn and remember, great for team work
 * Made for design systems creators
