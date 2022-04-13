@@ -11,6 +11,7 @@ const {
   summaryRelativeLocation,
   summarySplitLinePrefix,
   summaryContentLinePrefix,
+  summaryOtherLinePrefix,
 } = require('./config.json')
 
 function main() {
@@ -65,7 +66,7 @@ function main() {
         indexesToRemove.push(i)
       }
 
-      if (i > index && !line) index = Infinity
+      if (i > index && (!line || line.startsWith(summaryOtherLinePrefix))) index = Infinity
     }
 
     summaryArray.splice(indexesToRemove[0], indexesToRemove.length, ...summaryEntries.sort())
