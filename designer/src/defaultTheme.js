@@ -39,7 +39,7 @@ export default {
       [
         assignStringValue(({ text }) => text === 'small', "({ text }) => text === 'small'"),
         {
-          fontSize: '0.75rem',
+          fontSize: '0.875rem',
         },
       ],
       ...createElevation().map((styles, i) => [
@@ -178,6 +178,34 @@ export default {
       padding: '4px 8px',
       borderRadius: 4,
       backgroundColor: 'background-light',
+    },
+  },
+  table: {
+    defaultProps: {
+      width: '100%',
+      backgroundColor: 'background',
+      border: '1px solid border',
+      borderRadius: 4,
+      borderCollapse: 'collapse',
+    },
+  },
+  td: {
+    defaultProps: {
+      padding: '1rem',
+    },
+  },
+  th: {
+    defaultProps: {
+      padding: '1rem',
+    },
+  },
+  tr: {
+    defaultProps: {
+      textAlign: 'left',
+      borderTop: '1px solid border',
+      '&:first-child': {
+        border: 'none',
+      },
     },
   },
   modal: {

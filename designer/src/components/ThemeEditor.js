@@ -118,6 +118,7 @@ Once done, click continue.`}
       overflow="hidden"
       flexShrink={0}
       elevation={2}
+      position="relative"
     >
       <Div
         flexGrow={1}

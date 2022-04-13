@@ -101,6 +101,7 @@ function ApplicationLayout({ children }) {
                   flexGrow={1}
                   overflowX="hidden"
                   overflowY="scroll"
+                  xflex="y2s"
                 >
                   <ThemeProvider theme={modedUserTheme}>
                     <CssBaseline />

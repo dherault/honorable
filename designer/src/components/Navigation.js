@@ -17,6 +17,7 @@ function Navigation({ mode, setMode, onReset }) {
       py={1}
       xflex="x4"
       flexShrink={0}
+      zIndex={100}
     >
       <Img
         src="/images/logo.png"
