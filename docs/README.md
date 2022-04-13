@@ -27,22 +27,25 @@ function App() {
 Intrigued by the simplicity? Asking yourself why not just use the `style` prop?\
 Take a look a the [motivation](motivation.md) or the [theming](theming.md) sections.
 
+### Features
+
+* Any HTML tag is an extensible component
+* end-to-end theming solution
+* Nothing to very little to learn and remember, great for team work
+* Made for design systems creators
+
 {% hint style="info" %}
 Honorable just released its v1 :tada:\
 If you find any bug or want to improve something, please open an issue or a pull request.
 {% endhint %}
 
-## Want to jump right in?
+## Where to start?
 
-Follow the guide:
+Follow the guides:
 
 {% content-ref url="quick-start.md" %}
 [quick-start.md](quick-start.md)
 {% endcontent-ref %}
-
-## Want to deep dive?
-
-Dive a little deeper and start exploring our API reference to get an idea of everything that's possible with Honorable
 
 {% content-ref url="reference/api-reference/" %}
 [api-reference](reference/api-reference/)

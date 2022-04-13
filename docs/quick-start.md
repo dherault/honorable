@@ -92,9 +92,9 @@ They compose the opinionated part of honorable, and are super useful to build ap
 
 ```jsx
 <Div 
-  xflex="x5"
-  mt={1}
-  p={2}
+  xflex="x5"  // All centered
+  mt={1}      // margin-top: 1rem
+  p={2}       // padding: 2rem
 />
 ```
 
