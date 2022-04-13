@@ -1,9 +1,8 @@
-import defaultTheme from './defaultTheme'
+import { mergeTheme } from 'honorable'
+import defaultTheme from 'honorable-theme-default'
 
-export default {
-  ...defaultTheme,
+export default mergeTheme(defaultTheme, {
   colors: {
-    ...defaultTheme.colors,
     'background-extra-light': {
       light: '#f7f7f7',
       dark: '#2e2e2e',
@@ -59,4 +58,4 @@ export default {
       backgroundColor: 'transparent',
     },
   },
-}
+})

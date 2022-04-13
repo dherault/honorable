@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { Button, Div, H3, P, useTheme } from 'honorable'
+import defaultTheme from 'honorable-theme-default'
 import Editor from '@monaco-editor/react'
 
-import defaultTheme from '../defaultTheme'
 import usePrevious from '../hooks/usePrevious'
 import UserThemeContext from '../contexts/UserThemeContext'
 import capitalize from '../utils/capitalize'

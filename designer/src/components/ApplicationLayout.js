@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { CssBaseline, Div, ThemeProvider } from 'honorable'
 import useKeys from 'react-piano-keys'
+import defaultTheme from 'honorable-theme-default'
 
 import theme from '../theme'
-import defaultTheme from '../defaultTheme'
 import UserThemeContext from '../contexts/UserThemeContext'
 import FontsContext from '../contexts/FontsContext'
 import AreVariationsDisplayedContext from '../contexts/AreVariationsDisplayedContext'
