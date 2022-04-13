@@ -1,4 +1,4 @@
-# Honorable Theme Honorable
+# Honorable
 
 A react UI library for 2022 and beyond.
 
