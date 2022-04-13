@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:watch": "npm run link-honorable && npm start",
+    "start:watch": "npm start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "clean": "rimraf node_modules package-lock.json && npm i --force",
-    "link-honorable": "(cd ../packages/honorable && npm link) && npm link honorable"
+    "clean": "rimraf node_modules package-lock.json && npm i --force"
   },
   "browserslist": {
     "production": [
