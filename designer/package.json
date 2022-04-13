@@ -23,7 +23,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@monaco-editor/react": "^4.4.1",
+    "@monaco-editor/react": "^4.4.2",
     "honorable": "latest",
     "honorable-theme-default": "latest",
     "honorable-theme-honorable": "latest",
@@ -34,7 +34,7 @@
     "react-icons": "^4.3.1",
     "react-piano-keys": "^1.1.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.0"
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
