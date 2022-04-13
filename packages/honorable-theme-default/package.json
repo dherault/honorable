@@ -14,16 +14,16 @@
     "type": "git",
     "url": "git+https://github.com/dherault/honorable.git"
   },
+  "bugs": {
+    "url": "https://github.com/dherault/honorable/issues"
+  },
+  "homepage": "https://github.com/dherault/honorable#readme",
   "keywords": [
     "Honorable",
     "theme"
   ],
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dherault/honorable/issues"
-  },
-  "homepage": "https://github.com/dherault/honorable#readme",
   "devDependencies": {
     "nodemon": "^2.0.15",
     "rimraf": "^3.0.2"
