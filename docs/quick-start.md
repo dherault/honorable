@@ -86,6 +86,10 @@ For more info, see:
 
 They compose the opinionated part of honorable, and are super useful to build application even faster.
 
+`xflex` allow for super quick flexbox layouts.
+
+`mp` props set margins and paddings.
+
 ```jsx
 <Div 
   xflex="x5"
