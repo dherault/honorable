@@ -1,15 +1,15 @@
-# Div
+# Colgroup
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Colgroup } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Colgroup>
       Hello world
-    </Div>
+    </Colgroup>
   )
 }
 ```

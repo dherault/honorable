@@ -1,15 +1,15 @@
-# Div
+# Fieldset
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Fieldset } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Fieldset>
       Hello world
-    </Div>
+    </Fieldset>
   )
 }
 ```

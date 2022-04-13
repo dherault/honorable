@@ -1,15 +1,15 @@
-# Div
+# Noembed
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Noembed } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Noembed>
       Hello world
-    </Div>
+    </Noembed>
   )
 }
 ```

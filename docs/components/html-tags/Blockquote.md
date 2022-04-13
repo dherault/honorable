@@ -1,15 +1,15 @@
-# Div
+# Blockquote
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Blockquote } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Blockquote>
       Hello world
-    </Div>
+    </Blockquote>
   )
 }
 ```

@@ -1,15 +1,15 @@
-# Div
+# Keygen
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Keygen } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Keygen>
       Hello world
-    </Div>
+    </Keygen>
   )
 }
 ```

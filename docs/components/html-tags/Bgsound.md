@@ -1,15 +1,15 @@
-# Div
+# Bgsound
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Bgsound } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Bgsound>
       Hello world
-    </Div>
+    </Bgsound>
   )
 }
 ```

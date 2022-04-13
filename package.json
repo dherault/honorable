@@ -17,7 +17,8 @@
     "link:honorable-theme-honorable": "(cd packages/honorable-theme-honorable && npm link)",
     "link:designer": "(cd designer && npm link honorable && npm link honorable-theme-default && npm link honorable-theme-honorable)",
     "link:landing": "(cd landing && npm link honorable && npm link honorable-theme-default && npm link honorable-theme-honorable)",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "docs": "npm run docs:generateHtmlTags",
+    "docs:generateHtmlTags": "npx ts-node scripts/docs/generateHtmlTagsDocs.js"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "eslint": "^8.13.0",
     "eslint-config-dherault": "^1.7.3",
     "eslint-scope": "^7.1.1",
+    "rimraf": "^3.0.2",
     "typescript": "^4.6.3"
   }
 }

@@ -1,15 +1,15 @@
-# Div
+# Textarea
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Textarea } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Textarea>
       Hello world
-    </Div>
+    </Textarea>
   )
 }
 ```

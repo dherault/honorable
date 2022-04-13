@@ -1,15 +1,15 @@
-# Div
+# Frameset
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Frameset } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Frameset>
       Hello world
-    </Div>
+    </Frameset>
   )
 }
 ```

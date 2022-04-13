@@ -1,15 +1,15 @@
-# Div
+# Track
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Track } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Track>
       Hello world
-    </Div>
+    </Track>
   )
 }
 ```

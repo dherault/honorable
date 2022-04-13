@@ -1,15 +1,15 @@
-# Div
+# Image
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Image } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Image>
       Hello world
-    </Div>
+    </Image>
   )
 }
 ```

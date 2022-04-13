@@ -1,15 +1,15 @@
-# Div
+# Noscript
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Noscript } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Noscript>
       Hello world
-    </Div>
+    </Noscript>
   )
 }
 ```

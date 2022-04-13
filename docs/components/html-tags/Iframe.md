@@ -1,15 +1,15 @@
-# Div
+# Iframe
 
 ## Usage
 
 ```jsx
-import { Div } from 'honorable'
+import { Iframe } from 'honorable'
 
 function MyComponent() {
   return (
-    <Div>
+    <Iframe>
       Hello world
-    </Div>
+    </Iframe>
   )
 }
 ```

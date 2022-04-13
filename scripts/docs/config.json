@@ -1,0 +1,6 @@
+{
+  "docsLocation": "../../docs",
+  "honorableLocation": "../../packages/honorable",
+  "htmlTagsDocsRelativeLocation": "components/html-tags",
+  "htmlTagsHonorableRelativeLocation": "src/data/tags.ts"
+}
