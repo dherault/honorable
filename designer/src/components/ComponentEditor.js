@@ -17,7 +17,7 @@ function stringifyCustomProps(customProps) {
 // If the function returns truthy, the styles apply.
 new Map([
 ${Array.from(customProps.entries()).map(([key, value = '']) => `\t[
-\t\t${typeof key === 'function' ? (key?.stringValue || key) : ''},
+\t\t${key},
 \t\t${stringify(value).split('\n').join('\n\t\t')},
 \t],`).join('\n')}
 ])`
