@@ -20,6 +20,8 @@ yarn honorable
 
 ## Usage
 
+In your main `App` file:
+
 ```jsx
 import { ThemeProvider, CssBaseline } from 'honorable'
 
@@ -64,6 +66,18 @@ They can then be added CSS properties, directly to them
 
 Give a look and feel to your application by editing your theme.
 
+```jsx
+const theme = {
+  mode: 'light',
+  colors: {
+    primary: '#0070f3', 
+  },
+  // ...
+}
+```
+
+For more info, see:
+
 {% content-ref url="theming.md" %}
 [theming.md](theming.md)
 {% endcontent-ref %}
@@ -71,6 +85,16 @@ Give a look and feel to your application by editing your theme.
 ## Learn about the `xflex` and `mp` props
 
 They compose the opinionated part of honorable, and are super useful to build application even faster.
+
+```jsx
+<Div 
+  xflex="x5"
+  mt={1}
+  p={2}
+/>
+```
+
+For more info, see:
 
 {% content-ref url="xflex-property.md" %}
 [xflex-property.md](xflex-property.md)
