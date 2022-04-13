@@ -76,7 +76,7 @@ Once done, click continue.`}
             mt={1}
             mb={4}
           >
-            Choose your typeface, then customize your components.
+            Choose your typeface, then edit your text components.
           </Sub>
           <TypographyFontSelector />
         </>
