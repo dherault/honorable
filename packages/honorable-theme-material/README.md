@@ -1,6 +1,6 @@
-# Honorable Theme Honorable
+# Honorable Theme Material
 
-The Honorable theme for its web apps.
+A material design honorable theme.
 
 - [Honorable](https://honorable.design)
 - [Documentation](https://docs.honorable.design)

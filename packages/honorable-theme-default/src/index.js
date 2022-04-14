@@ -1,4 +1,5 @@
 export default {
+  name: 'Theme',
   mode: 'light',
   colors: {
     primary: '#3e73dd',
@@ -39,6 +40,10 @@ export default {
   global: {
     defaultProps: {
       boxSizing: 'border-box',
+      // '::selection': {
+      //   color: 'white',
+      //   backgroundColor: 'primary',
+      // },
     },
     customProps: new Map([
       [

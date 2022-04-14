@@ -56,6 +56,7 @@ export type ThemeComponents = {
 }
 
 export type Theme = ThemeComponents & {
+  name?: string
   mode?: Mode
   colors?: {
     [key: ColorValue]: ColorStyle
