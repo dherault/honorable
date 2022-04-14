@@ -12,7 +12,7 @@ jobs:
       designer: ${{ steps.filter.outputs.designer }}
     steps:
       - uses: actions/checkout@v2
-      - uses: dorny/paths-filter@v2.2.0
+      - uses: dorny/paths-filter@v2
         id: filter
         with:
           filters: |
@@ -23,7 +23,7 @@ jobs:
 
   build_and_preview_landing:
     needs: changes_detector
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.landing == 'true'}}'
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.landing == 'true' }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -37,7 +37,7 @@ jobs:
 
   build_and_preview_designer:
     needs: changes_detector
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.designer == 'true'}}'
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.designer == 'true' }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
