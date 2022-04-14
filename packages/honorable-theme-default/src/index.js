@@ -8,8 +8,8 @@ export default {
       dark: '#333',
     },
     'background-light': {
-      light: '#eee',
-      dark: '#444',
+      light: '#f5f7f9',
+      dark: '#3a3a3a',
     },
     text: {
       light: '#3b454e',
@@ -83,8 +83,8 @@ export default {
       transition: 'color 150ms ease, background-color 150ms ease',
       flexShrink: 0,
       ':hover': {
-        backgroundColor: 'lighten(primary, 10)',
-        borderColor: 'lighten(primary, 10)',
+        backgroundColor: 'darken(primary, 10)',
+        borderColor: 'darken(primary, 10)',
       },
       ':active': {
         backgroundColor: 'primary',
@@ -237,6 +237,7 @@ export default {
   pre: {
     defaultProps: {
       display: 'inline-block',
+      margin: 0,
       padding: '4px 8px',
       borderRadius: 4,
       backgroundColor: 'background-light',
