@@ -1,6 +1,6 @@
 {
-  "name": "landing",
-  "version": "0.1.0",
+  "name": "honorable-landing",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start:watch": "npm start",
