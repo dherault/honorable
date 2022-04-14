@@ -17,16 +17,6 @@ function assignDefaultFontFamily(object: any) {
   return object
 }
 
-function deleteNil(object: object) {
-  return Object.entries(object).reduce((acc, [key, value]) => {
-    if (value) {
-      acc[key] = value
-    }
-
-    return acc
-  }, {})
-}
-
 const normalizeCss = `
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -403,7 +393,7 @@ function CssBaseline() {
       {!!theme.global?.defaultProps && (
         <Global
           styles={{
-            '*': resolveColor(null, assignDefaultFontFamily(deleteNil(theme.global?.defaultProps || {})), theme),
+            '*': resolveColor(null, assignDefaultFontFamily(theme.global?.defaultProps || {}), theme),
           }}
         />
       )}
