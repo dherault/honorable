@@ -382,8 +382,6 @@ template {
 function CssBaseline() {
   const theme = useTheme()
 
-  console.log('CssBaseline', theme)
-
   return (
     <>
       <Global styles={css`${normalizeCss}`} />
