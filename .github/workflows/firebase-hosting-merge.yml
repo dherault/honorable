@@ -14,7 +14,8 @@ jobs:
       landing: ${{ steps.filter.outputs.landing }}
       designer: ${{ steps.filter.outputs.designer }}
     steps:
-      - uses: dorny/paths-filter@v2
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2.2.0
         id: filter
         with:
           filters: |
