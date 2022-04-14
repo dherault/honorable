@@ -7,3 +7,5 @@ const { style } = document.body
 export const styleProperties = [...new Set(Object.getOwnPropertyNames(style).filter(p => typeof style[p] === 'string' && !styleExclude.includes(p)))]
 // The propTypes corresponding to that list
 export const stylePropTypes = Object.fromEntries(styleProperties.map(property => [property, PropTypes.oneOfType([PropTypes.string, PropTypes.number])]))
+
+console.log('styleProperties', styleProperties.filter(x => x.toLowerCase().includes('fill')))

@@ -16,14 +16,16 @@ import {
 
 import useTheme from '../hooks/useTheme'
 
+import { stylePropTypes, styleProperties } from '../data/styleProperties'
+import { mpPropTypes, mpProperties } from '../data/mpProperties'
+
 import resolveColor from './resolveColor'
 import filterObject from './filterObject'
 import capitalize from './capitalize'
 import isSelector from './isSelector'
 import convertMp from './convertMp'
 import resolveCustomProps from './resolveCustomProps'
-import { stylePropTypes, styleProperties } from './styleProperties'
-import { mpPropTypes, mpProperties } from './mpProperties'
+import resolveWebkitProperties from './resolveWebkitProperties'
 
 // React HOC to support style props
 function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = 'Honorable') {
@@ -71,7 +73,7 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
         ref={honorableRef}
         honorable={resolveColor(
           null,
-          {
+          resolveWebkitProperties({
             /* eslint-disable no-multi-spaces */
             ...resolveCustomProps(theme.global?.customProps, props, theme),   // Global customProps
             ...filterObject(defaultProps),                                    // Component defaultProps
@@ -81,7 +83,7 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
             ...stylePropsFromProps,                                           // Actual style from props
             ...filterObject(extend),                                          // "extend" prop
             /* eslint-enable no-multi-spaces */
-          },
+          }),
           theme
         ) as StyleProps}
         {...otherProps}

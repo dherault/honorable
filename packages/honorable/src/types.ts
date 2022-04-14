@@ -2,7 +2,7 @@ import { Ref } from 'react'
 import { InferProps } from 'prop-types'
 
 import tags from './data/tags'
-import { stylePropTypes } from './utils/styleProperties'
+import { stylePropTypes } from './data/styleProperties'
 
 export type AnyProps = {
   [key: string]: any
@@ -57,10 +57,10 @@ export type ThemeComponents = {
 
 export type Theme = ThemeComponents & {
   mode?: Mode
-  font?: FontStyle
   colors?: {
     [key: ColorValue]: ColorStyle
   }
+  html?: StyleProps
   global?: ComponentProps
 }
 

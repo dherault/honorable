@@ -28,9 +28,16 @@ export default {
     error: '#ff4d4d',
     warning: '#ff7900',
   },
+  html: {
+    fontSize: 16,
+    color: 'text',
+    backgroundColor: 'background',
+    webkitFontSmoothing: 'antialiased',
+    mozOsxFontSmoothing: 'grayscale',
+    textRendering: 'optimizeLegibility',
+  },
   global: {
     defaultProps: {
-      fontSize: 16,
       boxSizing: 'border-box',
     },
     customProps: new Map([
@@ -54,6 +61,7 @@ export default {
   },
   a: {
     defaultProps: {
+      display: 'inline-block',
       color: 'primary',
       textDecoration: 'none',
       cursor: 'pointer',
@@ -104,6 +112,16 @@ export default {
       ],
       [
         assignToString(
+          ({ size }) => size === 'large',
+          "({ size }) => size === 'large'"
+        ),
+        {
+          fontSize: '1.35rem',
+          padding: '0.85rem 1.25rem',
+        },
+      ],
+      [
+        assignToString(
           ({ variant }) => variant === 'outlined',
           "({ variant }) => variant === 'outlined'"
         ),
@@ -119,6 +137,36 @@ export default {
         },
       ],
     ]),
+  },
+  h1: {
+    defaultProps: {
+      margin: 0,
+    },
+  },
+  h2: {
+    defaultProps: {
+      margin: 0,
+    },
+  },
+  h3: {
+    defaultProps: {
+      margin: 0,
+    },
+  },
+  h4: {
+    defaultProps: {
+      margin: 0,
+    },
+  },
+  h5: {
+    defaultProps: {
+      margin: 0,
+    },
+  },
+  h6: {
+    defaultProps: {
+      margin: 0,
+    },
   },
   hr: {
     defaultProps: {

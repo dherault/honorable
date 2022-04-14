@@ -3,6 +3,7 @@ import { Global, css } from '@emotion/react'
 
 import useTheme from '../hooks/useTheme'
 import resolveColor from '../utils/resolveColor'
+import resolveWebkitProperties from '../utils/resolveWebkitProperties'
 
 const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
@@ -380,20 +381,19 @@ function CssBaseline() {
           :root {
             ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColor(colorName)};\n`)}
           }
-
-          html {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizelegibility;
-            ${typeof theme.colors?.text !== 'undefined' && `color: ${theme.utils.resolveColor('text')}`}
-            ${typeof theme.colors?.background !== 'undefined' && `background-color: ${theme.utils.resolveColor('background')}`}
-          }
         `}
       />
+      {typeof theme.html === 'object' && theme.html && (
+        <Global
+          styles={{
+            html: resolveColor(null, assignDefaultFontFamily(resolveWebkitProperties(theme.html)), theme),
+          }}
+        />
+      )}
       {!!theme.global?.defaultProps && (
         <Global
           styles={{
-            '*': resolveColor(null, assignDefaultFontFamily(theme.global?.defaultProps || {}), theme),
+            '*': resolveColor(null, resolveWebkitProperties(theme.global?.defaultProps || {}), theme),
           }}
         />
       )}
