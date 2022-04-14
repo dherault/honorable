@@ -4,8 +4,25 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
+  # https://github.com/dorny/paths-filter#examples
+  changes_detector:
+    runs-on: ubuntu-latest
+    outputs:
+      landing: ${{ steps.filter.outputs.landing }}
+      designer: ${{ steps.filter.outputs.designer }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            landing:
+              - 'landing/**'
+            designer:
+              - 'designer/**'
+
   build_and_preview_landing:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    needs: changes_detector
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.landing == 'true'}}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,8 +33,10 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HONORABLE_LANDING }}'
           projectId: honorable-landing
           entryPoint: landing
+
   build_and_preview_designer:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    needs: changes_detector
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.designer == 'true'}}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

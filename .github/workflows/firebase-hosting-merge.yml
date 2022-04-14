@@ -7,7 +7,25 @@ name: Deploy to Firebase Hosting on merge
     branches:
       - main
 jobs:
+  # https://github.com/dorny/paths-filter#examples
+  changes_detector:
+    runs-on: ubuntu-latest
+    outputs:
+      landing: ${{ steps.filter.outputs.landing }}
+      designer: ${{ steps.filter.outputs.designer }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            landing:
+              - 'landing/**'
+            designer:
+              - 'designer/**'
+
   build_and_deploy_landing:
+    needs: changes_detector
+    if: ${{ needs.changes_detector.outputs.landing == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +37,10 @@ jobs:
           channelId: live
           projectId: honorable-landing
           entryPoint: landing
+
   build_and_deploy_designer:
+    needs: changes_detector
+    if: ${{ needs.changes_detector.outputs.designer == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
