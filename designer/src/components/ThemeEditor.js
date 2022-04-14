@@ -95,7 +95,7 @@ Once done, click continue.`}
     },
     '/dashboard': {
       title: 'A dashboard, the final look and feel of your app',
-      previous: '/typography',
+      previous: '/form',
     },
   }
 
@@ -107,6 +107,16 @@ Once done, click continue.`}
         'unnamed-color': '#ffffff',
       },
     })
+  }
+
+  function wrapLink(url, node) {
+    if (!url) return node
+
+    return (
+      <Link to={url}>
+        {node}
+      </Link>
+    )
   }
 
   const props = pathnameToEditorProps[pathname]
@@ -154,22 +164,19 @@ Once done, click continue.`}
         </P>
         <Div flexGrow={1} />
         {!!previous && (
-          <Button
-            as={Link}
-            to={previous}
-          >
-            Previous
-          </Button>
+          wrapLink(previous, (
+            <Button>
+              Previous
+            </Button>
+          ))
         )}
-        {!!next && (
-          <Button
-            as={Link}
-            to={next}
-            ml={0.5}
-          >
-            Continue
-          </Button>
-        )}
+        <Div ml={0.5}>
+          {wrapLink(next, (
+            <Button disabled={!next}>
+              Continue
+            </Button>
+          ))}
+        </Div>
       </Div>
     </Div>
   )
