@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import GoogleFontLoader from 'react-google-font-loader'
+import GoogleFontLoader from 'react-google-font'
 
 import FontsContext from '../contexts/FontsContext'
 
