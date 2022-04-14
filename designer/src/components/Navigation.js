@@ -112,7 +112,7 @@ function Navigation({ mode, setMode, onReset }) {
       >
         <AiFillGithub
           size={24}
-          color={theme.utils.resolveColor('text')}
+          color={theme.utils.resolveColor('text-light')}
         />
       </A>
       <A

@@ -19,8 +19,8 @@ export default {
       dark: 'white',
     },
     'text-light': {
-      light: '#888',
-      dark: '#aaa',
+      light: 'lighten(text, 15)',
+      dark: 'darken(text, 15)',
     },
     border: {
       light: '#ddd',

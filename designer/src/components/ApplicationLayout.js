@@ -15,6 +15,7 @@ import TypographyFont from './TypographyFont'
 
 const localStorageUserThemeKey = 'honorable-userTheme'
 
+console.log('defaultTheme', defaultTheme.colors['text-light'])
 const themeResetListeners = []
 
 function addThemeResetListener(listener) {
