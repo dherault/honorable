@@ -35,16 +35,13 @@ function TypographyFontSelector() {
   useEffect(() => {
     const fontFamily = fonts[0] ? quote(fonts[0]) : null
 
-    if ((userTheme.global?.defaultProps?.fontFamily || null) === fontFamily) return
+    if ((userTheme.html?.fontFamily || null) === fontFamily) return
 
     setUserTheme({
       ...userTheme,
-      global: {
-        ...userTheme.global,
-        defaultProps: {
-          ...userTheme.global?.defaultProps,
-          fontFamily,
-        },
+      html: {
+        ...userTheme.html,
+        fontFamily,
       },
     })
   }, [fonts, userTheme, setUserTheme])
