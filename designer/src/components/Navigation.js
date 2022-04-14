@@ -73,7 +73,7 @@ function Navigation({ mode, setMode, onReset }) {
         checkedBackground={(
           <Span
             paddingLeft={4}
-            paddingTop={3}
+            paddingTop={1}
             fontSize={18}
           >
             🌜
@@ -82,7 +82,7 @@ function Navigation({ mode, setMode, onReset }) {
         uncheckedBackground={(
           <Span
             paddingRight={4}
-            paddingTop={3}
+            paddingTop={1}
             fontSize={18}
           >
             🌞
