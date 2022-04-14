@@ -1,6 +1,6 @@
 {
   "name": "honorable-theme-honorable",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The honorable theme for the Honorable project",
   "main": "dist/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "honorable-theme-default": "^0.1.0"
+    "honorable-theme-default": "latest"
   },
   "peerDependencies": {
     "honorable": "*"
