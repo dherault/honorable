@@ -17,9 +17,9 @@ jobs:
         with:
           filters: |
             landing:
-              - 'landing/**'
+              - 'landing/**/*'
             designer:
-              - 'designer/**'
+              - 'designer/**/*'
 
   build_and_preview_landing:
     needs: changes_detector

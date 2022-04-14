@@ -20,9 +20,9 @@ jobs:
         with:
           filters: |
             landing:
-              - 'landing/**'
+              - 'landing/**/*'
             designer:
-              - 'designer/**'
+              - 'designer/**/*'
 
   build_and_deploy_landing:
     needs: changes_detector
