@@ -4,7 +4,7 @@ function stringify(object, pad = '  ') {
 
     object.forEach((value, key) => {
       stringified += `${pad}[\n`
-      stringified += `${pad}  ${stringify(key, `${pad}    `)},\n`
+      stringified += `${pad}  ${typeof key === 'function' ? key : stringify(key, `${pad}    `)},\n`
       stringified += `${pad}  ${stringify(value, `${pad}    `)},\n`
       stringified += `${pad}],\n`
     })

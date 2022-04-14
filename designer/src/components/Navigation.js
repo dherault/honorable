@@ -68,6 +68,7 @@ function Navigation({ mode, setMode, onReset }) {
       </A>
       <Div flexGrow={1} />
       <Switch
+        ml={1}
         noBackgroundColor
         checkedBackground={(
           <Span

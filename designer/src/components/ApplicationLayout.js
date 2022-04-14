@@ -15,7 +15,6 @@ import TypographyFont from './TypographyFont'
 
 const localStorageUserThemeKey = 'honorable-userTheme'
 
-console.log('defaultTheme', defaultTheme.colors['text-light'])
 const themeResetListeners = []
 
 function addThemeResetListener(listener) {
@@ -36,21 +35,7 @@ function ApplicationLayout({ children }) {
   const [areVariationsDisplayed, setAreVariationsDisplayed] = useState(false)
   const [fonts, setFonts] = useState([''])
   const modedTheme = useMemo(() => ({ ...theme, mode }), [mode])
-  const modedUserTheme = useMemo(() => ({ ...userTheme,
-    mode,
-    colors: {
-      primary: '#0070f3', // Direct color strings
-      text: {
-        light: '#000', // Color object are resolved against the mode
-        dark: '#fff',
-      },
-      focus: {
-        light: 'primary', // References to other colors
-        dark: 'chartreuse', // CSS named colors
-      },
-    // You can use color helpers, see the corresponding section in the docs
-      'primary-light': 'lighten(primary)',
-    } }), [userTheme, mode])
+  const modedUserTheme = useMemo(() => ({ ...userTheme, mode }), [userTheme, mode])
   const userThemeValue = useMemo(() => [modedUserTheme, setUserTheme, defaultTheme, addThemeResetListener], [modedUserTheme])
   const areVariationsDisplayedValue = useMemo(() => [areVariationsDisplayed, setAreVariationsDisplayed], [areVariationsDisplayed])
   const fontsValue = useMemo(() => [fonts, setFonts], [fonts])

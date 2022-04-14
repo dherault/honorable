@@ -1,8 +1,5 @@
 export default {
   mode: 'light',
-  font: {
-    size: '16px',
-  },
   colors: {
     primary: '#3e73dd',
     secondary: '#FFC547',
@@ -33,6 +30,7 @@ export default {
   },
   global: {
     defaultProps: {
+      fontSize: 16,
       boxSizing: 'border-box',
     },
     customProps: new Map([
@@ -75,6 +73,7 @@ export default {
       userSelect: 'none',
       textDecoration: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
+      flexShrink: 0,
       ':hover': {
         backgroundColor: 'lighten(primary, 10)',
         borderColor: 'lighten(primary, 10)',

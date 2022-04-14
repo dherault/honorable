@@ -24,6 +24,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
     <Div
       className={className}
       xflex="y2s"
+      flexShrink={0}
       display="inline-flex"
       position="relative"
       width={50}

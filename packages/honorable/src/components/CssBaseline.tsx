@@ -1,10 +1,31 @@
 import React from 'react'
 import { Global, css } from '@emotion/react'
 
-import { StyleProps } from '../types'
-
 import useTheme from '../hooks/useTheme'
 import resolveColor from '../utils/resolveColor'
+
+const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+
+function assignDefaultFontFamily(object: any) {
+  if (!object.fontFamily) {
+    object.fontFamily = defaultFontFamily
+  }
+  else {
+    object.fontFamily = `${object.fontFamily}, ${defaultFontFamily}`
+  }
+
+  return object
+}
+
+function deleteNil(object: object) {
+  return Object.entries(object).reduce((acc, [key, value]) => {
+    if (value) {
+      acc[key] = value
+    }
+
+    return acc
+  }, {})
+}
 
 const normalizeCss = `
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -361,6 +382,8 @@ template {
 function CssBaseline() {
   const theme = useTheme()
 
+  console.log('CssBaseline', theme)
+
   return (
     <>
       <Global styles={css`${normalizeCss}`} />
@@ -382,10 +405,7 @@ function CssBaseline() {
       {!!theme.global?.defaultProps && (
         <Global
           styles={{
-            '*': {
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-              ...(resolveColor(null, theme.global?.defaultProps || {}, theme) as StyleProps),
-            },
+            '*': resolveColor(null, assignDefaultFontFamily(deleteNil(theme.global?.defaultProps || {})), theme),
           }}
         />
       )}
