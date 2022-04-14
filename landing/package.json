@@ -24,6 +24,8 @@
     "honorable": "latest",
     "honorable-theme-default": "latest",
     "honorable-theme-honorable": "latest",
+    "honorable-theme-material": "latest",
+    "honorable-theme-wireframe": "latest",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-icons": "^4.3.1",

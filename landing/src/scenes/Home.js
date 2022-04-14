@@ -1,5 +1,8 @@
-import { useState } from 'react'
-import { A, Button, Div, H1, Icon, Pre, Span } from 'honorable'
+import { useEffect, useState } from 'react'
+import { A, Button, Div, H1, Icon, Input, Pre, Span, ThemeProvider } from 'honorable'
+import defaultTheme from 'honorable-theme-default'
+import materialTheme from 'honorable-theme-material'
+import wireframeTheme from 'honorable-theme-wireframe'
 
 function Home() {
   return (
@@ -91,7 +94,7 @@ function NpmInstallPre() {
       ml={2}
       px={1}
     >
-      {copied ? 'copied!'.padEnd(text.length, ' ') : text}
+      {copied ? 'copied!' : text}
       <Span flexGrow={1} />
       <Icon
         ml={0.5}
@@ -120,11 +123,54 @@ function NpmInstallPre() {
   )
 }
 
+const themes = [
+  { ...defaultTheme, name: 'Default' },
+  materialTheme,
+  wireframeTheme,
+]
+const themeTransitionPeriod = 3300
+
 // First a display of moult comps just like mui.com
 // Then theme switching
 // Then depending on scrolling or not, show a different comp
 function ComponentsDisplay() {
-  return null
+  const [currentTheme, setCurrentTheme] = useState(themes[2])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setCurrentTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length])
+    }, themeTransitionPeriod)
+
+    return () => clearTimeout(timeoutId)
+  }, [currentTheme])
+
+  return (
+    <Div p={2}>
+      <ThemeProvider theme={currentTheme}>
+        <A onClick={() => setCurrentTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length])}>
+          Theme: {currentTheme.name}
+        </A>
+        <Div mt={2}>
+          <Div xflex="x4">
+            <Button>
+              Submit
+            </Button>
+            <Button
+              ml={1}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+          </Div>
+          <Input
+            mt={2}
+            display="block"
+            placeholder="What's on your mind?"
+          />
+        </Div>
+      </ThemeProvider>
+    </Div>
+  )
 }
 
 export default Home
