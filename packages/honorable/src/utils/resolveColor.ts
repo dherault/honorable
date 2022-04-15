@@ -1,4 +1,4 @@
-import { StyleProps, Theme } from '../types'
+import { Theme } from '../types'
 
 import namedColors from '../data/namedColors'
 
@@ -40,14 +40,19 @@ const colorProperties = [
   'textShadow',
 ]
 
-function resolveColor(key: string | null, value: string | number | StyleProps, theme: Theme = {}): string | number | StyleProps {
-  if (!(!key || isSelector(key) || colorProperties.includes(key))) return value
+// TODO test that
+function resolveColor<T>(value: T, theme: Theme = {}): T {
+  return resolveColorEntry(null, value, theme)
+}
+
+function resolveColorEntry<T>(key: string | null, value: T, theme: Theme = {}): T {
+  if (key && !(isSelector(key) || colorProperties.includes(key))) return value
 
   if (typeof value === 'object') {
-    const resolvedObject = {}
+    const resolvedObject = {} as T
 
     Object.keys(value).forEach(key => {
-      resolvedObject[key] = resolveColor(key, value[key], theme)
+      resolvedObject[key] = resolveColorEntry(key, value[key], theme)
     })
 
     return resolvedObject
@@ -55,7 +60,7 @@ function resolveColor(key: string | null, value: string | number | StyleProps, t
 
   if (typeof value !== 'string') return value
 
-  return applyColorHelpers(convertThemeColors(value, theme))
+  return applyColorHelpers(convertThemeColors(value, theme)) as any as T
 }
 
 /*
@@ -82,7 +87,7 @@ function convertThemeColors(value: string, theme: Theme) {
   return converted
 }
 
-function resolveThemeColor(color: string, theme: Theme, previousColor: string = '', i = 0): string {
+function resolveThemeColor(color: string, theme: Theme, previousColor = '', i = 0): string {
   if (i >= 64) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }

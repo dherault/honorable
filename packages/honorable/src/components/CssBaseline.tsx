@@ -2,8 +2,7 @@ import React from 'react'
 import { Global, css } from '@emotion/react'
 
 import useTheme from '../hooks/useTheme'
-import resolveColor from '../utils/resolveColor'
-import resolveWebkitProperties from '../utils/resolveWebkitProperties'
+import resolveAll from '../utils/resolveAll'
 
 const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
@@ -376,6 +375,20 @@ function CssBaseline() {
   return (
     <>
       <Global styles={css`${normalizeCss}`} />
+      {typeof theme.html === 'object' && theme.html && (
+        <Global
+          styles={{
+            html: assignDefaultFontFamily(resolveAll(theme.html, theme)),
+          }}
+        />
+      )}
+      {typeof theme.global?.defaultProps === 'object' && theme.global?.defaultProps && (
+        <Global
+          styles={{
+            '*': resolveAll(theme.global.defaultProps, theme),
+          }}
+        />
+      )}
       <Global
         styles={css`
           :root {
@@ -383,20 +396,6 @@ function CssBaseline() {
           }
         `}
       />
-      {typeof theme.html === 'object' && theme.html && (
-        <Global
-          styles={{
-            html: resolveColor(null, assignDefaultFontFamily(resolveWebkitProperties(theme.html)), theme),
-          }}
-        />
-      )}
-      {!!theme.global?.defaultProps && (
-        <Global
-          styles={{
-            '*': resolveColor(null, resolveWebkitProperties(theme.global?.defaultProps || {}), theme),
-          }}
-        />
-      )}
     </>
   )
 }

@@ -61,6 +61,9 @@ export type Theme = ThemeComponents & {
   colors?: {
     [key: ColorValue]: ColorStyle
   }
+  aliases?: {
+    [key: string]: string
+  }
   html?: StyleProps
   global?: ComponentProps
 }

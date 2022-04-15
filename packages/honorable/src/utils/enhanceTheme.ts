@@ -11,7 +11,7 @@ function enhanceTheme(theme: Theme): ExtendedTheme {
   return {
     ...theme,
     utils: {
-      resolveColor: (color: string | StyleProps) => resolveColor(null, color, theme),
+      resolveColor: (color: string | StyleProps) => resolveColor(color, theme),
     },
   } as ExtendedTheme
 }

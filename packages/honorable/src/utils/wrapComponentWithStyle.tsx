@@ -11,7 +11,6 @@ import {
   HonorableStyleProps,
   RefProps,
   StyleProps,
-  StylePropsValue,
 } from '../types'
 
 import useTheme from '../hooks/useTheme'
@@ -19,13 +18,13 @@ import useTheme from '../hooks/useTheme'
 import { stylePropTypes, styleProperties } from '../data/styleProperties'
 import { mpPropTypes, mpProperties } from '../data/mpProperties'
 
-import resolveColor from './resolveColor'
 import filterObject from './filterObject'
 import capitalize from './capitalize'
 import isSelector from './isSelector'
 import convertMp from './convertMp'
+import resolveAll from './resolveAll'
+import resolveAliases from './resolveAliases'
 import resolveCustomProps from './resolveCustomProps'
-import resolveWebkitProperties from './resolveWebkitProperties'
 
 // React HOC to support style props
 function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = 'Honorable') {
@@ -52,18 +51,20 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { honorableRef, xflex, extend = {}, ...nextProps } = props
-    const stylePropsFromProps: StyleProps = {}
+    const styleProps: StyleProps = {}
     const mpProps: StyleProps = {}
     const otherProps: AnyProps = {}
-    const workingProps = { ...filterObject(defaultProps), ...props }
-    const resolvedCustomProps = resolveCustomProps(customProps, workingProps, theme)
+    const resolvedProps = resolveAliases(nextProps as StyleProps, theme)
+    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps), theme)
+    const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps }
+    const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
-    Object.entries(nextProps).forEach(([key, value]) => {
+    Object.entries(resolvedProps).forEach(([key, value]) => {
       if (mpProperties.includes(key)) {
-        mpProps[key] = value as StylePropsValue
+        mpProps[key] = value
       }
       else if (styleProperties.includes(key) || isSelector(key)) {
-        stylePropsFromProps[key] = value as StylePropsValue
+        styleProps[key] = value
       }
       else {
         otherProps[key] = value
@@ -73,21 +74,26 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
     return (
       <HonorableStyle
         ref={honorableRef}
-        honorable={resolveColor(
-          null,
-          resolveWebkitProperties({
-            /* eslint-disable no-multi-spaces */
-            ...resolveCustomProps(theme.global?.customProps, { ...workingProps, ...resolvedCustomProps }, theme),  // Global customProps
-            ...filterObject(defaultProps),                                      // Component defaultProps
-            ...resolvedCustomProps,                // Component customProps
-            ...convertMp(mpProps),                                              // "mp" prop
-            ...(xflex ? fp(xflex) : {}),                                        // "xflex" prop
-            ...stylePropsFromProps,                                             // Actual style from props
-            ...filterObject(extend),                                            // "extend" prop
-            /* eslint-enable no-multi-spaces */
-          }),
-          theme
-        ) as StyleProps}
+        honorable={(
+          resolveAll(
+            {
+              /* eslint-disable no-multi-spaces */
+              ...resolveCustomProps(                  // Global customProps
+                theme.global?.customProps,
+                { ...resolvedWorkingProps, ...resolvedCustomProps },
+                theme
+              ),
+              ...filterObject(resolvedDefaultProps),  // Component defaultProps
+              ...resolvedCustomProps,                 // Component customProps
+              ...convertMp(mpProps),                  // "mp" prop
+              ...(xflex ? fp(xflex) : {}),            // "xflex" prop
+              ...styleProps,                          // Actual style from props
+              ...filterObject(extend),                // "extend" prop
+              /* eslint-enable no-multi-spaces */
+            },
+            theme
+          )
+        )}
         {...otherProps}
       />
     )
