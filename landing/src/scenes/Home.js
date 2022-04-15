@@ -1,75 +1,98 @@
-import { useEffect, useState } from 'react'
-import { A, Button, Div, H1, Icon, Input, Pre, Span, ThemeProvider } from 'honorable'
+import { useContext, useEffect, useMemo, useState } from 'react'
+import { A, Button, Div, H1, H2, Icon, Input, Pre, Span, ThemeProvider } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
-import materialTheme from 'honorable-theme-material'
+// import materialTheme from 'honorable-theme-material'
 import wireframeTheme from 'honorable-theme-wireframe'
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx'
+import highlighterStyleLight from 'react-syntax-highlighter/dist/esm/styles/prism/material-light'
+import highlighterStyleDark from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark'
+
+import ThemeSwitch from '../components/ThemeSwitch'
+import ThemeModeContext from '../contexts/ThemeModeContext'
+
+SyntaxHighlighter.registerLanguage('jsx', jsx)
 
 function Home() {
-  return (
-    <HeroSection />
-  )
-}
-
-function HeroSection() {
   return (
     <Div
       xflex="x4s"
       height="100vh"
     >
       <Div
-        position="relative"
         flexGrow={1}
-        xflex="y5"
-        p={2}
         elevation={1}
+        height="100vh"
+        overflowY="auto"
+        position="relative"
+        zIndex={10}
       >
-        <Div mt={-8}>
-          <H1>
-            <Span
-              xflex="x5"
-              display="inline-flex"
-              borderRadius={24}
-              overflow="hidden"
-              mb={1}
-            >
-              🙏
-            </Span>
-            <br />
-            Implement any
-            <br />
-            <Span
-              background="linear-gradient(45deg, primary, lighten(primary, 10))"
-              backgroundClip="text"
-              webkitTextFillColor="transparent"
-            >
-              Design System
-            </Span>
-            <br />
-            in React
-          </H1>
-          <Div
-            xflex="x4s"
-            mt={2}
-          >
-            <A
-              href="https://docs.honorable.design/quick-start"
-              target="_blank"
-              rel="noreferer noopener"
-            >
-              <Button size="large">
-                Get Started
-              </Button>
-            </A>
-            <NpmInstallPre />
-          </Div>
-        </Div>
+        <HeroSection />
+        <DemoSection />
       </Div>
       <Div
+        position="relative"
+        flexShrink={0}
         width="calc(100vh * 3 / 4)"
         backgroundColor="background-light"
-        flexShrink={0}
       >
         <ComponentsDisplay />
+        <ThemeSwitch
+          position="absolute"
+          right="2rem"
+          top="2rem"
+        />
+      </Div>
+    </Div>
+  )
+}
+
+function HeroSection() {
+  return (
+    <Div
+      height="100vh"
+      p={2}
+      xflex="y5"
+    >
+      <Div mt={-8}>
+        <H1>
+          <Span
+            xflex="x5"
+            display="inline-flex"
+            borderRadius={24}
+            overflow="hidden"
+            mb={1}
+          >
+            🙏
+          </Span>
+          <br />
+          Implement any
+          <br />
+          <Span
+            background="linear-gradient(45deg, primary, lighten(primary, 10))"
+            backgroundClip="text"
+            webkitTextFillColor="transparent"
+          >
+            Design System
+          </Span>
+          <br />
+          in React
+        </H1>
+        <Div
+          xflex="x4s"
+          mt={2}
+        >
+          <A
+            href="https://docs.honorable.design/quick-start"
+            target="_blank"
+            rel="noreferer noopener"
+          >
+            <Button size="large">
+              Get Started
+            </Button>
+          </A>
+          <NpmInstallPre />
+        </Div>
       </Div>
     </Div>
   )
@@ -123,9 +146,150 @@ function NpmInstallPre() {
   )
 }
 
+const codeText = `import { Button, Div, H3, Img, Span } from 'honorable'
+
+function UserCard({ user = {} }) {
+  return (
+    <Div
+      padding="2rem"
+      elevation={1}
+    >
+      <Div display="flex">
+        <Img
+          src={user.imageUrl}
+          width="64px"
+          height="64px"
+          alt="user profile"
+        />
+        <H3 marginLeft="1rem">
+          {user.name}
+        </H3>
+      </Div>
+      <Div marginTop="1rem">
+        {user.bio}
+      </Div>
+      <Div
+        marginTop="1rem"
+        display="flex"
+        justifyContent="flex-end"
+      >
+        <Button>
+          Contact
+        </Button>
+      </Div>
+    </Div>
+  )
+}`
+
+const codeTextShorthands = `import { Button, Div, H3, Img, Span } from 'honorable'
+
+function UserCard({ user = {} }) {
+  return (
+    <Div
+      p={2}
+      elevation={1}
+    >
+      <Div xflex="x4">
+        <Img
+          src={user.imageUrl}
+          width="64px"
+          height="64px"
+          alt="user profile"
+        />
+        <H3 ml={1}>
+          {user.name}
+        </H3>
+      </Div>
+      <Div mt={1}>
+        {user.bio}
+      </Div>
+      <Div
+        mt={1}
+        xflex="x6"
+      >
+        <Button>
+          Contact
+        </Button>
+      </Div>
+    </Div>
+  )
+}`
+
+function DemoSection() {
+  const [themeMode] = useContext(ThemeModeContext)
+  const [isShorthands, setIsShorthands] = useState(false)
+
+  const highlighterStyle = themeMode === 'dark' ? highlighterStyleDark : highlighterStyleLight
+  const customHighlighterStyle = {
+    ...highlighterStyle,
+    'code[class*="language-"]': {
+      ...highlighterStyle['code[class*="language-"]'],
+      background: 'transparent',
+    },
+    'pre[class*="language-"]': {
+      ...highlighterStyle['pre[class*="language-"]'],
+      background: 'transparent',
+    },
+  }
+
+  return (
+    <Div
+      height="100vh"
+      py={2}
+      px={4}
+      xflex="y5s"
+    >
+      <Div flexShrink={0}>
+        <H2
+          pt={2}
+          textAlign="center"
+        >
+          HTML tags as base components, CSS as props
+        </H2>
+      </Div>
+      <Div
+        mt={2}
+        p={1}
+        width="100%"
+        flexGrow={1}
+        overflowY="scroll"
+        border="1px solid border"
+        backgroundColor="background-light"
+        borderRadius={4}
+        xflex="x1"
+      >
+        <SyntaxHighlighter
+          language="jsx"
+          style={customHighlighterStyle}
+          customStyle={{
+            fontSize: '14px',
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          {isShorthands ? codeTextShorthands : codeText}
+        </SyntaxHighlighter>
+      </Div>
+      <Div
+        mt={0.5}
+        pb={2}
+        xflex="x6"
+        flexShrink={0}
+      >
+        <A
+          onClick={() => setIsShorthands(x => !x)}
+          userSelect="none"
+        >
+          {isShorthands ? 'Use pure CSS syntax' : 'Use shorthands!'}
+        </A>
+      </Div>
+    </Div>
+  )
+}
+
 const themes = [
   { ...defaultTheme, name: 'Default' },
-  materialTheme,
+  // materialTheme,
   wireframeTheme,
 ]
 const themeTransitionPeriod = 3300
@@ -134,20 +298,37 @@ const themeTransitionPeriod = 3300
 // Then theme switching
 // Then depending on scrolling or not, show a different comp
 function ComponentsDisplay() {
-  const [currentTheme, setCurrentTheme] = useState(themes[2])
+  const [mode] = useContext(ThemeModeContext)
+  const [currentTheme, setCurrentTheme] = useState(themes[0])
+  const nextTheme = useMemo(() => themes[(themes.indexOf(currentTheme) + 1) % themes.length], [currentTheme])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setCurrentTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length])
+      setCurrentTheme(nextTheme)
     }, themeTransitionPeriod)
 
     return () => clearTimeout(timeoutId)
-  }, [currentTheme])
+  }, [nextTheme])
+
+  const enhancedTheme = {
+    ...currentTheme,
+    mode,
+    global: {
+      ...currentTheme.global,
+      defaultProps: {
+        ...currentTheme.global?.defaultProps,
+        transition: 'all 330ms ease',
+      },
+    },
+  }
 
   return (
     <Div p={2}>
-      <ThemeProvider theme={currentTheme}>
-        <A onClick={() => setCurrentTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length])}>
+      <ThemeProvider theme={enhancedTheme}>
+        <A
+          userSelect="none"
+          onClick={() => setCurrentTheme(nextTheme)}
+        >
           Theme: {currentTheme.name}
         </A>
         <Div mt={2}>
