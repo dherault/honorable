@@ -55,6 +55,7 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
     const stylePropsFromProps: StyleProps = {}
     const mpProps: StyleProps = {}
     const otherProps: AnyProps = {}
+    const allProps = filterObject({ ...defaultProps, ...props })
 
     Object.entries(nextProps).forEach(([key, value]) => {
       if (mpProperties.includes(key)) {
@@ -75,13 +76,13 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
           null,
           resolveWebkitProperties({
             /* eslint-disable no-multi-spaces */
-            ...resolveCustomProps(theme.global?.customProps, props, theme),   // Global customProps
-            ...filterObject(defaultProps),                                    // Component defaultProps
-            ...resolveCustomProps(customProps, props, theme),                 // Component customProps
-            ...convertMp(mpProps),                                            // "mp" prop
-            ...(xflex ? fp(xflex) : {}),                                      // "xflex" prop
-            ...stylePropsFromProps,                                           // Actual style from props
-            ...filterObject(extend),                                          // "extend" prop
+            ...resolveCustomProps(theme.global?.customProps, allProps, theme),  // Global customProps
+            ...filterObject(defaultProps),                                      // Component defaultProps
+            ...resolveCustomProps(customProps, allProps, theme),                // Component customProps
+            ...convertMp(mpProps),                                              // "mp" prop
+            ...(xflex ? fp(xflex) : {}),                                        // "xflex" prop
+            ...stylePropsFromProps,                                             // Actual style from props
+            ...filterObject(extend),                                            // "extend" prop
             /* eslint-enable no-multi-spaces */
           }),
           theme

@@ -10,6 +10,7 @@ function Icon({ children, className, ...props }: InferProps<typeof Icon.propType
     <Span
       className={className}
       xflex="x5"
+      display="inline-flex"
       {...props}
     >
       {children}
