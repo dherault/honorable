@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { A, Button, Div, H1, H2, Icon, Input, Pre, Span, ThemeProvider } from 'honorable'
+import { A, Button, Div, Footer, H1, H2, Icon, Input, P, Pre, Section, Span, ThemeProvider } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 // import materialTheme from 'honorable-theme-material'
 import wireframeTheme from 'honorable-theme-wireframe'
@@ -7,6 +7,7 @@ import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx'
 import highlighterStyleLight from 'react-syntax-highlighter/dist/esm/styles/prism/material-light'
 import highlighterStyleDark from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark'
+import { AiFillGithub } from 'react-icons/ai'
 
 import ThemeSwitch from '../components/ThemeSwitch'
 import ThemeModeContext from '../contexts/ThemeModeContext'
@@ -29,6 +30,7 @@ function Home() {
       >
         <HeroSection />
         <DemoSection />
+        <FooterSection />
       </Div>
       <Div
         position="relative"
@@ -42,6 +44,35 @@ function Home() {
           right="2rem"
           top="2rem"
         />
+        <Div
+          xflex="x6"
+          position="absolute"
+          bottom="2rem"
+          right="2rem"
+        >
+          <A
+            href="https://docs.honorable.design"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Docs
+          </A>
+          <Icon
+            as="a"
+            display="flex"
+            color="text-light"
+            ml={1}
+            cursor="pointer"
+            href="https://github.com/dherault/honorable"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AiFillGithub
+              color="inherit"
+              size={24}
+            />
+          </Icon>
+        </Div>
       </Div>
     </Div>
   )
@@ -49,7 +80,7 @@ function Home() {
 
 function HeroSection() {
   return (
-    <Div
+    <Section
       height="100vh"
       p={2}
       xflex="y5"
@@ -94,7 +125,7 @@ function HeroSection() {
           <NpmInstallPre />
         </Div>
       </Div>
-    </Div>
+    </Section>
   )
 }
 
@@ -146,10 +177,14 @@ function NpmInstallPre() {
   )
 }
 
-const codeText = `import { Button, Div, H3, Img, Span } from 'honorable'
+const createCode = code => `import { Button, Div, H3, Img, Span } from 'honorable'
 
 function UserCard({ user = {} }) {
-  return (
+  return (${code}
+  )
+}`
+
+const codeText = `
     <Div
       padding="2rem"
       elevation={1}
@@ -177,14 +212,9 @@ function UserCard({ user = {} }) {
           Contact
         </Button>
       </Div>
-    </Div>
-  )
-}`
+    </Div>`
 
-const codeTextShorthands = `import { Button, Div, H3, Img, Span } from 'honorable'
-
-function UserCard({ user = {} }) {
-  return (
+const codeTextShorthands = `
     <Div
       p={2}
       elevation={1}
@@ -211,9 +241,7 @@ function UserCard({ user = {} }) {
           Contact
         </Button>
       </Div>
-    </Div>
-  )
-}`
+    </Div>`
 
 function DemoSection() {
   const [themeMode] = useContext(ThemeModeContext)
@@ -233,7 +261,7 @@ function DemoSection() {
   }
 
   return (
-    <Div
+    <Section
       height="100vh"
       py={2}
       px={4}
@@ -267,7 +295,7 @@ function DemoSection() {
             padding: 0,
           }}
         >
-          {isShorthands ? codeTextShorthands : codeText}
+          {createCode(isShorthands ? codeTextShorthands : codeText)}
         </SyntaxHighlighter>
       </Div>
       <Div
@@ -283,7 +311,33 @@ function DemoSection() {
           {isShorthands ? 'Use pure CSS syntax' : 'Use shorthands!'}
         </A>
       </Div>
-    </Div>
+    </Section>
+  )
+}
+
+function FooterSection() {
+  return (
+    <Footer
+      py={2}
+      px={4}
+      xflex="x4"
+    >
+      <P>
+        MIT License
+      </P>
+      <Span flexGrow={1} />
+      <P>
+        Made with ❤️ in 🇫🇮 by{' '}
+        <A
+          href="https://github.com/dherault"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          David Hérault
+        </A>
+
+      </P>
+    </Footer>
   )
 }
 

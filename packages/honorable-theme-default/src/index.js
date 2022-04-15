@@ -242,6 +242,9 @@ export default {
       marginBottom: '0.25rem',
     },
   },
+  p: {
+    margin: 0,
+  },
   pre: {
     defaultProps: {
       display: 'inline-block',
