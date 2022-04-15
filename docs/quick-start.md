@@ -7,13 +7,13 @@ In your current React app:
 {% tabs %}
 {% tab title="NPM" %}
 ```
-npm install --save honorable
+npm install --save honorable @emotion/react @emotion/styled
 ```
 {% endtab %}
 
 {% tab title="Yarn" %}
 ```
-yarn honorable
+yarn honorable @emotion/react @emotion/styled
 ```
 {% endtab %}
 {% endtabs %}
