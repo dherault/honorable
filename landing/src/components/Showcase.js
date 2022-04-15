@@ -30,7 +30,7 @@ const themeTransitionPeriod = 3300
 // Then depending on scrolling or not, show a different comp
 function Showcase() {
   const [showcase] = useContext(ShowcaseContext)
-  const debouncedShowcase = useDebounce(showcase, 500)
+  const debouncedShowcase = useDebounce(showcase, 250)
 
   const showcaseToComponent = useMemo(() => ({
     default: (
