@@ -9,6 +9,7 @@ export default mergeTheme(defaultTheme, {
       dark: 'white',
     },
     text: 'primary',
+    background: 'transparent',
   },
   button: {
     defaultProps: {
@@ -25,6 +26,13 @@ export default mergeTheme(defaultTheme, {
       color: 'text',
       backgroundColor: 'transparent',
       borderColor: 'primary',
+    },
+  },
+  iconButton: {
+    defaultProps: {
+      elevation: 0,
+      border: '1px solid primary',
+      padding: 'calc(0.5rem - 1px)',
     },
   },
 })

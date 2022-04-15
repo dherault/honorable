@@ -282,6 +282,22 @@ export default {
       },
     },
   },
+  // Other components
+  iconButton: {
+    defaultProps: {
+      padding: '0.5rem',
+      borderRadius: '50%',
+      background: 'background',
+      elevation: 1,
+      transition: 'background-color 200ms ease, color 200ms ease',
+      '&:hover': {
+        backgroundColor: 'transparencify(primary, 85)',
+      },
+      '&:active': {
+        backgroundColor: 'transparencify(primary, 65)',
+      },
+    },
+  },
   modal: {
     defaultProps: {
       borderRadius: 4,

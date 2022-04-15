@@ -8,4 +8,20 @@ export default mergeTheme(defaultTheme, {
       fontSize: '5rem',
     },
   },
+  iconButton: {
+    customProps: new Map([
+      [
+        ({ variant }) => variant === 'ghost',
+        {
+          '&:hover': {
+            backgroundColor: 'background',
+          },
+          '&:active': {
+            color: 'white',
+            backgroundColor: 'primary',
+          },
+        },
+      ],
+    ]),
+  },
 })
