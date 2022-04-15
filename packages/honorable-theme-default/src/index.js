@@ -6,11 +6,11 @@ export default {
     secondary: '#FFC547',
     background: {
       light: 'white',
-      dark: '#333',
+      dark: '#171923',
     },
     'background-light': {
       light: '#f5f7f9',
-      dark: '#3a3a3a',
+      dark: '#1A202C',
     },
     text: {
       light: '#3b454e',
@@ -22,9 +22,12 @@ export default {
     },
     border: {
       light: '#ddd',
-      dark: '#222',
+      dark: '#444',
     },
-    shadow: 'rgba(0, 0, 0, 0.2)',
+    shadow: {
+      light: 'rgba(0, 0, 0, 0.2)',
+      dark: 'rgba(64, 64, 64, 0.2)',
+    },
     success: '#64db5c',
     error: '#ff4d4d',
     warning: '#ff7900',
