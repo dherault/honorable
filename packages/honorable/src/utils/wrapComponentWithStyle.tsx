@@ -55,7 +55,8 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
     const stylePropsFromProps: StyleProps = {}
     const mpProps: StyleProps = {}
     const otherProps: AnyProps = {}
-    const allProps = filterObject({ ...defaultProps, ...props })
+    const workingProps = { ...filterObject(defaultProps), ...props }
+    const resolvedCustomProps = resolveCustomProps(customProps, workingProps, theme)
 
     Object.entries(nextProps).forEach(([key, value]) => {
       if (mpProperties.includes(key)) {
@@ -76,9 +77,9 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
           null,
           resolveWebkitProperties({
             /* eslint-disable no-multi-spaces */
-            ...resolveCustomProps(theme.global?.customProps, allProps, theme),  // Global customProps
+            ...resolveCustomProps(theme.global?.customProps, { ...workingProps, ...resolvedCustomProps }, theme),  // Global customProps
             ...filterObject(defaultProps),                                      // Component defaultProps
-            ...resolveCustomProps(customProps, allProps, theme),                // Component customProps
+            ...resolvedCustomProps,                // Component customProps
             ...convertMp(mpProps),                                              // "mp" prop
             ...(xflex ? fp(xflex) : {}),                                        // "xflex" prop
             ...stylePropsFromProps,                                             // Actual style from props

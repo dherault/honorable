@@ -49,15 +49,6 @@ export default {
       // },
     },
     customProps: new Map([
-      [
-        assignToString(
-          ({ text }) => text === 'small',
-          "({ text }) => text === 'small'"
-        ),
-        {
-          fontSize: '0.875rem',
-        },
-      ],
       ...createElevation().map((styles, i) => [
         assignToString(
           (z => ({ elevation }) => elevation === z)(i),
@@ -243,7 +234,9 @@ export default {
     },
   },
   p: {
-    margin: 0,
+    defaultProps: {
+      margin: 0,
+    },
   },
   pre: {
     defaultProps: {

@@ -30,6 +30,7 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react/require-default-props': 'off',
     'react/destructuring-assignment': 'off',
+    'react/forbid-foreign-prop-types': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'no-unused-vars': ['warn', { varsIgnorePattern: '^React$' }],

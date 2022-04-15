@@ -6,11 +6,9 @@ import {
   Footer,
   H1,
   H2,
-  Icon,
   IconButton,
   Input,
   P,
-  Pre,
   Section,
   Span,
   ThemeProvider,
@@ -25,6 +23,7 @@ import highlighterStyleDark from 'react-syntax-highlighter/dist/esm/styles/prism
 import { AiFillGithub } from 'react-icons/ai'
 
 import ThemeSwitch from '../components/ThemeSwitch'
+import CommandLinePre from '../components/CommandLinePre'
 import ThemeModeContext from '../contexts/ThemeModeContext'
 
 SyntaxHighlighter.registerLanguage('jsx', jsx)
@@ -45,6 +44,8 @@ function Home() {
       >
         <HeroSection />
         <DemoSection />
+        <DesignSection />
+        <ThemeDocsSection />
         <FooterSection />
       </Div>
       <Div
@@ -103,7 +104,10 @@ function HeroSection() {
       p={2}
       xflex="y5"
     >
-      <Div mt={-8}>
+      <Div
+        mt={-8}
+        xflex="y2s"
+      >
         <H1>
           <Span
             xflex="x5"
@@ -140,57 +144,16 @@ function HeroSection() {
               Get Started
             </Button>
           </A>
-          <NpmInstallPre />
+          <CommandLinePre
+            ml={2}
+            flexGrow={1}
+            maxWidth={360}
+          >
+            npm i --save honorable @emotion/react @emotion/styled
+          </CommandLinePre>
         </Div>
       </Div>
     </Section>
-  )
-}
-
-function NpmInstallPre() {
-  const text = 'npm i --save honorable'
-  const [copied, setCopied] = useState(false)
-
-  function handleCopy() {
-    window.navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1000)
-  }
-
-  return (
-    <Pre
-      xflex="x4"
-      flexGrow={1}
-      border="1px solid border"
-      borderRadius={4}
-      ml={2}
-      px={1}
-    >
-      {copied ? 'copied!' : text}
-      <Span flexGrow={1} />
-      <IconButton
-        variant="ghost"
-        ml={0.5}
-        color="text-light"
-        onClick={handleCopy}
-      >
-        {/* from https://icons.modulz.app/ */}
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 15 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 9.50006C1 10.3285 1.67157 11.0001 2.5 11.0001H4L4 10.0001H2.5C2.22386 10.0001 2 9.7762 2 9.50006L2 2.50006C2 2.22392 2.22386 2.00006 2.5 2.00006L9.5 2.00006C9.77614 2.00006 10 2.22392 10 2.50006V4.00002H5.5C4.67158 4.00002 4 4.67159 4 5.50002V12.5C4 13.3284 4.67158 14 5.5 14H12.5C13.3284 14 14 13.3284 14 12.5V5.50002C14 4.67159 13.3284 4.00002 12.5 4.00002H11V2.50006C11 1.67163 10.3284 1.00006 9.5 1.00006H2.5C1.67157 1.00006 1 1.67163 1 2.50006V9.50006ZM5 5.50002C5 5.22388 5.22386 5.00002 5.5 5.00002H12.5C12.7761 5.00002 13 5.22388 13 5.50002V12.5C13 12.7762 12.7761 13 12.5 13H5.5C5.22386 13 5 12.7762 5 12.5V5.50002Z"
-            fill="currentColor"
-            fillRule="evenodd"
-            clipRule="evenodd"
-          />
-        </svg>
-      </IconButton>
-    </Pre>
   )
 }
 
@@ -293,7 +256,7 @@ function DemoSection() {
         </H2>
       </Div>
       <Div
-        mt={2}
+        mt={3}
         p={1}
         width="100%"
         flexGrow={1}
@@ -332,9 +295,117 @@ function DemoSection() {
   )
 }
 
+function DesignSection() {
+  return (
+    <Section
+      py={8}
+      px={4}
+    >
+      <H2
+        pt={2}
+        textAlign="center"
+      >
+        Designed to create fast, accessible React apps
+      </H2>
+      <DesignSectionItem
+        icon="0️⃣"
+        action={(
+          <A userSelect="none">
+            Show me a Div component in action!
+          </A>
+        )}
+        mt={3}
+      >
+        Honorable's props are convention-free by default, <br />which means a 0 learning curve for developers that already know CSS.
+      </DesignSectionItem>
+      <DesignSectionItem
+        icon="🔧"
+        action={(
+          <A userSelect="none">
+            Display what a cool theme looks like!
+          </A>
+        )}
+        mt={3}
+      >
+        The theming API is simple, composable and inheritable.
+      </DesignSectionItem>
+      <DesignSectionItem
+        icon="🫡"
+        action={(
+          <A userSelect="none">
+            Amaze me with a fully keyboard accessible dropdown!
+          </A>
+        )}
+        mt={3}
+      >
+        Full keyboard navigation, managed focus, WAI-ARIA compliant.
+      </DesignSectionItem>
+    </Section>
+  )
+}
+
+function DesignSectionItem({ children, icon = '👉', action = '', ...props }) {
+  return (
+    <Div
+      {...props}
+      xflex="x1s"
+      text="large"
+    >
+      <Span>
+        {icon}
+      </Span>
+      <P ml={1}>
+        {children}
+        <Span
+          text="normal"
+          display="block"
+          mt={1.5}
+        >
+          {action}
+        </Span>
+      </P>
+    </Div>
+  )
+}
+
+function ThemeDocsSection() {
+  return (
+    <Section
+      py={8}
+      px={4}
+    >
+      <H2
+        pt={2}
+        textAlign="center"
+      >
+        Document your design system easily
+      </H2>
+      <P
+        mt={3}
+        text="large"
+      >
+        Honorable has a utility to convert your theme into usable documentation.
+      </P>
+      <P
+        text="large"
+        mt={0.5}
+      >
+        Perfect for teams. 👌
+      </P>
+      <CommandLinePre
+        mt={3}
+        width={666}
+      >
+        npx honorable-documentation ./theme.js --out ./DesignSystem.md
+      </CommandLinePre>
+    </Section>
+  )
+}
+
 function FooterSection() {
   return (
     <Footer
+      mt={6}
       py={2}
       px={4}
       xflex="x4"
