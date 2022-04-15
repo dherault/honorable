@@ -1,4 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   A,
   Button,
@@ -249,7 +250,6 @@ function DemoSection() {
     >
       <Div flexShrink={0}>
         <H2
-          pt={2}
           textAlign="center"
         >
           HTML tags as base components, CSS as props
@@ -259,7 +259,7 @@ function DemoSection() {
         mt={3}
         p={1}
         width="100%"
-        flexGrow={1}
+        flexShrink={1}
         overflowY="scroll"
         border="1px solid border"
         backgroundColor="background-light"
@@ -280,13 +280,22 @@ function DemoSection() {
       </Div>
       <Div
         mt={0.5}
-        pb={2}
         xflex="x6"
         flexShrink={0}
       >
+        {isShorthands && (
+          <A
+            as={Link}
+            to="/xflex"
+            userSelect="none"
+          >
+            How does xflex work?
+          </A>
+        )}
         <A
-          onClick={() => setIsShorthands(x => !x)}
+          ml={1}
           userSelect="none"
+          onClick={() => setIsShorthands(x => !x)}
         >
           {isShorthands ? 'Use pure CSS syntax' : 'Use shorthands!'}
         </A>
@@ -339,6 +348,17 @@ function DesignSection() {
         mt={3}
       >
         Full keyboard navigation, managed focus, WAI-ARIA compliant.
+      </DesignSectionItem>
+      <DesignSectionItem
+        icon="📱"
+        action={(
+          <A userSelect="none">
+            Pop out some small-screens code!
+          </A>
+        )}
+        mt={3}
+      >
+        Mobile-ready and responsive by nature.
       </DesignSectionItem>
     </Section>
   )
@@ -394,9 +414,9 @@ function ThemeDocsSection() {
       </P>
       <CommandLinePre
         mt={3}
-        width={666}
+        width={712}
       >
-        npx honorable-documentation ./theme.js --out ./DesignSystem.md
+        npx honorable-documentation ./src/theme.js --out ./DesignSystem.md
       </CommandLinePre>
     </Section>
   )

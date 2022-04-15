@@ -17,17 +17,18 @@ function CommandLinePre({ children, ...props }) {
 
   return (
     <Pre
+      p={0}
       xflex="x4"
       display="inline-flex"
       border="1px solid border"
       borderRadius={4}
-      p={1}
       position="relative"
       {...props}
     >
       <Span
+        p={1}
         xflex="x4"
-        width="calc(100% - 2rem)"
+        width="calc(100% - 2.5rem)"
         height="100%"
         overflowX="scroll"
       >

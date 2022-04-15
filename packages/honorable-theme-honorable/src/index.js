@@ -25,6 +25,18 @@ export default mergeTheme(defaultTheme, {
       ],
     ]),
   },
+  div: {
+    customProps: new Map([
+      [
+        ({ container }) => container,
+        {
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          maxWidth: 'calc(1080px * 3 / 4)',
+        },
+      ],
+    ]),
+  },
   h1: {
     defaultProps: {
       fontSize: '5rem',
