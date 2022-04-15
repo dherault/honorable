@@ -23,7 +23,6 @@ jobs:
               - 'landing/**/*'
             designer:
               - 'designer/**/*'
-
   build_and_deploy_landing:
     needs: changes_detector
     if: ${{ needs.changes_detector.outputs.landing == 'true' }}
@@ -38,7 +37,6 @@ jobs:
           channelId: live
           projectId: honorable-landing
           entryPoint: landing
-
   build_and_deploy_designer:
     needs: changes_detector
     if: ${{ needs.changes_detector.outputs.designer == 'true' }}
