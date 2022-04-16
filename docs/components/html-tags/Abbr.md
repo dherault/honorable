@@ -16,4 +16,4 @@ function MyComponent() {
 
 ## Props
 
-TODO
+For style props see the section's root.

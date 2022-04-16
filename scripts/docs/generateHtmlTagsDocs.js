@@ -5,7 +5,7 @@ const rimraf = require('rimraf') // eslint-disable-line
 
 const {
   docsLocation: _docsLocation,
-  honorableLocation,
+  honorableLocation: _honorableLocation,
   htmlTagsDocsRelativeLocation,
   htmlTagsHonorableRelativeLocation,
   summaryRelativeLocation,
@@ -16,6 +16,7 @@ const {
 
 function main() {
   const docsLocation = path.join(__dirname, _docsLocation)
+  const honorableLocation = path.join(__dirname, _honorableLocation)
   const tagsDocsLocation = path.join(docsLocation, htmlTagsDocsRelativeLocation)
   const readmeLocation = path.join(tagsDocsLocation, 'README.md')
 
@@ -27,7 +28,8 @@ function main() {
       process.exit(1)
     }
 
-    const tags = require(path.join(__dirname, honorableLocation, htmlTagsHonorableRelativeLocation)).default
+    const tags = require(path.join(honorableLocation, htmlTagsHonorableRelativeLocation)).default
+
     const summaryEntries = []
 
     for (const tag of tags) {
@@ -100,7 +102,7 @@ function MyComponent() {
 
 ## Props
 
-TODO
+For style props see the section's root.
 `
 }
 

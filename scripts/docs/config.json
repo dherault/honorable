@@ -3,6 +3,7 @@
   "honorableLocation": "../../packages/honorable",
   "htmlTagsDocsRelativeLocation": "components/html-tags",
   "htmlTagsHonorableRelativeLocation": "src/data/tags.ts",
+  "stylePropertiesRelativeLocation": "src/data/styleProperties.ts",
   "summaryRelativeLocation": "SUMMARY.md",
   "summarySplitLinePrefix": "* [HTML tags](components/html-tags/README.md)",
   "summaryContentLinePrefix": "  * ",
