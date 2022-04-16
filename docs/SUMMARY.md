@@ -151,6 +151,7 @@
   * [Video](components/html-tags/Video.md)
   * [Wbr](components/html-tags/Wbr.md)
   * [Xmp](components/html-tags/Xmp.md)
+* [Checkbox](components/checkbox.md)
 
 ## API Reference
 
