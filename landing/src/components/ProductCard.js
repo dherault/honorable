@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-spaces */
-import { Article, Button, Div, H3, H4, Img, P } from 'honorable'
+import { Article, Button, Div, H2, H3, Img, P } from 'honorable'
 
 const defaultProduct = {
   name: 'Basic T-Shirt',
@@ -13,24 +13,33 @@ export default function ProductCard({ product = defaultProduct }) {
   return (
     <Article
       padding="2rem"
+      borderRadius={4}
+      maxWidth={320}
       backgroundColor="background"  // This is a color variable
       elevation={1}                 // This is a global customProps
     >
-      <H4>{product.title}</H4>
+      <H2 textAlign="center">
+        {product.name}
+      </H2>
       <Img
+        marginTop="1rem"
         src={product.imageUrl}
-        width={128}
+        width="100%"
         alt="product"
       />
       <P marginTop="1rem">
-        {product.bio}
+        {product.description}
       </P>
       <Div
         marginTop="1rem"
         display="flex"
+        alignItems="center"
         justifyContent="flex-end"
       >
-        <Button>
+        <P fontWeight="bold">
+          {product.price}
+        </P>
+        <Button marginLeft="1rem">
           Buy
         </Button>
       </Div>

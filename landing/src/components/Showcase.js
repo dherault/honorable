@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import {
   A,
   Button,
+  Checkbox,
   Div,
   IconButton,
   Input,
@@ -40,13 +41,22 @@ function Showcase() {
     ),
     productCard: (
       <WithTheme theme={defaultTheme}>
-        <ProductCard />
+        <Div
+          flexGrow={1}
+          xflex="y5"
+        >
+          <ProductCard />
+        </Div>
       </WithTheme>
     ),
   }), [])
 
   return (
-    <Div p={2}>
+    <Div
+      p={2}
+      xflex="y2s"
+      height="100%"
+    >
       {showcaseToComponent[debouncedShowcase] || showcaseToComponent.default}
     </Div>
   )
@@ -131,6 +141,9 @@ function ComponentsShowcase() {
             />
           </svg>
         </IconButton>
+      </Div>
+      <Div mt={2}>
+        <Checkbox />
       </Div>
     </Div>
   )

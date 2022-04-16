@@ -323,8 +323,8 @@ function DemoSection({ scrollRef }) {
       <Div
         mt={3}
         p={1}
-        xflex="x1"
-        flexShrink={1}
+        height={727}
+        flexShrink={0}
         backgroundColor="background-light"
         border="1px solid border"
         borderRadius={4}
