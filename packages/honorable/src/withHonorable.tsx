@@ -6,8 +6,6 @@ import styled from '@emotion/styled'
 import fp from 'flexpad'
 
 import {
-  AnyProps,
-  ExtendProps,
   HonorableStyleProps,
   RefProps,
   StyleProps,
@@ -38,6 +36,7 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
     ...stylePropTypes,
     ...mpPropTypes,
     xflex: PropTypes.string,
+    extend: PropTypes.object,
   }
 
   const HonorableStyle = styled(
@@ -47,13 +46,13 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
     }
   )((props: HonorableStyleProps) => props.honorable)
 
-  function Honorable(props: InferProps<typeof propTypes> & HTMLAttributes<HTMLElement> & ExtendProps & RefProps) {
+  function Honorable(props: InferProps<typeof propTypes> & HTMLAttributes<HTMLElement> & RefProps) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { honorableRef, xflex, extend = {}, ...nextProps } = props
     const styleProps: StyleProps = {}
     const mpProps: StyleProps = {}
-    const otherProps: AnyProps = {}
+    const otherProps = {}
     const resolvedProps = resolveAliases(nextProps as StyleProps, theme)
     const resolvedDefaultProps = resolveAliases(filterObject(defaultProps), theme)
     const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps }
@@ -105,7 +104,7 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
 
   Honorable.propTypes = propTypes
 
-  const forwardHonorableRef = (props: AnyProps, ref: Ref<any>) => (
+  const forwardHonorableRef = (props: InferProps<typeof propTypes> & HTMLAttributes<HTMLElement>, ref: Ref<any>) => (
     <Honorable
       {...props}
       honorableRef={ref}

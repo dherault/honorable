@@ -1,5 +1,4 @@
 import {
-  AnyProps,
   StyleProps,
   Theme,
 } from '../types'
@@ -7,7 +6,7 @@ import {
 import resolveCustomProps from './resolveCustomProps'
 
 // Return the style object of applied partProps
-function resolvePartProps(componentKey: string, partKey: string, props: AnyProps, theme: Theme): StyleProps {
+function resolvePartProps(componentKey: string, partKey: string, props: object, theme: Theme): StyleProps {
   const componentTheme = theme[componentKey]
 
   if (!(componentTheme && typeof componentTheme === 'object')) return {}

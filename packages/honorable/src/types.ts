@@ -4,24 +4,17 @@ import { InferProps } from 'prop-types'
 import tags from './data/tags'
 import { stylePropTypes } from './data/styleProperties'
 
-export type AnyProps = {
-  [key: string]: any
-}
-
 export type RefProps ={
   ref?: Ref<any>
   honorableRef?: Ref<any>
 }
 
-export type StyleProps = InferProps<typeof stylePropTypes> & AnyProps
+export type StyleProps = InferProps<typeof stylePropTypes>
 export type StylePropsValue = string | number
 
-export type HonorableStyleProps = AnyProps & {
-  honorable: StyleProps
-}
-
-export type ExtendProps = {
-  extend?: StyleProps
+export type HonorableStyleProps = {
+  ref?: Ref<any>
+  honorable?: StyleProps
 }
 
 export type Mode = 'light' | 'dark' | string
@@ -36,7 +29,7 @@ export type ColorStyle = string | ColorValue | {
   [mode in Mode]: string | ColorValue
 }
 
-export type CustomProps = Map<(props: AnyProps, theme: Theme) => boolean, StyleProps>
+export type CustomProps = Map<(props: object, theme: Theme) => boolean, StyleProps>
 
 export type ComponentNames = typeof tags[number]
 

@@ -1,5 +1,5 @@
-const { default: tags } = require('../data/tags')
-const { default: withHonorable } = require('../withHonorable')
-const { default: capitalize } = require('../utils/capitalize')
+import tags from '../data/tags'
+import withHonorable from '../withHonorable'
+import capitalize from '../utils/capitalize'
 
-module.exports = Object.fromEntries(tags.map((tag: string) => [capitalize(tag), withHonorable(tag, tag)]))
+export default Object.fromEntries(tags.map((tag: string) => [capitalize(tag), withHonorable(tag, tag)]))
