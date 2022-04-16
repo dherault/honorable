@@ -91,7 +91,7 @@ export interface HonorableThemeBase{
 }
 
 export type HonorableTheme = HonorableThemeBase & {
-  [componentNameKey in ComponentNames]: ComponentProps
+  [componentNameKey in ComponentNames]?: ComponentProps
 }
 
 export type ThemeProviderProps = PropsWithChildren<ThemeProps>
