@@ -39,6 +39,7 @@
   * [Details](components/html-tags/Details.md)
   * [Dfn](components/html-tags/Dfn.md)
   * [Dialog](components/html-tags/Dialog.md)
+  * [Div](components/html-tags/Div.md)
   * [Dl](components/html-tags/Dl.md)
   * [Dt](components/html-tags/Dt.md)
   * [Em](components/html-tags/Em.md)
