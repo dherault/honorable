@@ -7,11 +7,11 @@ export default {
     primary: '#3e73dd',
     background: {
       light: 'white',
-      dark: '#171923',
+      dark: '#1c1f2b',
     },
     'background-light': {
       light: '#f5f7f9',
-      dark: '#1A202C',
+      dark: '#1d2333',
     },
     text: {
       light: '#3b454e',
