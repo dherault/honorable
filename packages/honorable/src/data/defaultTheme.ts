@@ -1,3 +1,5 @@
 import { Theme } from '../types'
 
-export default {} as Theme
+export default {
+  name: '__Default__',
+} as Theme

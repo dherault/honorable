@@ -1,30 +1,20 @@
-import PropTypes, { InferProps } from 'prop-types'
+import { InferProps } from 'prop-types'
 
-import wrapComponentWithStyle from '../utils/wrapComponentWithStyle'
+import withHonorable from '../withHonorable'
 
 // @ts-ignore
 import { Span } from './tags'
 
-function Icon({ children, className, ...props }: InferProps<typeof Icon.propTypes>) {
+function Icon(props: InferProps<typeof Icon.propTypes>) {
   return (
     <Span
-      className={className}
       xflex="x5"
       display="inline-flex"
       {...props}
-    >
-      {children}
-    </Span>
+    />
   )
 }
 
-Icon.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-}
+Icon.propTypes = Span.propTypes
 
-Icon.defaultProps = {
-  className: '',
-}
-
-export default wrapComponentWithStyle(Icon, 'icon')
+export default withHonorable(Icon, 'icon')

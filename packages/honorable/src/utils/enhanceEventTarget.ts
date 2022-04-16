@@ -1,7 +1,7 @@
-import { SyntheticEvent } from 'react'
+import { MouseEvent } from 'react'
 
 // Add value, checked, etc... to event.target and event.currentTarget
-function enhanceTarget(event: SyntheticEvent, object: object) {
+function enhanceEventTarget(event: MouseEvent, object: object) {
   return {
     ...event,
     target: {
@@ -15,4 +15,4 @@ function enhanceTarget(event: SyntheticEvent, object: object) {
   }
 }
 
-export default enhanceTarget
+export default enhanceEventTarget

@@ -3,8 +3,8 @@ import styled from '@emotion/styled'
 import PropTypes, { InferProps } from 'prop-types'
 
 import resolvePartProps from '../utils/resolvePartProps'
-import wrapComponentWithStyle from '../utils/wrapComponentWithStyle'
-import enhanceTarget from '../utils/enhanceTarget'
+import withHonorable from '../withHonorable'
+import enhanceEventTarget from '../utils/enhanceEventTarget'
 import useTheme from '../hooks/useTheme'
 
 // @ts-ignore
@@ -16,13 +16,18 @@ const Handle = styled(Span)`
   }
 `
 
-function Switch({ checked, onChange, checkedBackground, uncheckedBackground, className, ...props }: InferProps<typeof Switch.propTypes>) {
+function Switch({
+  checked = false,
+  onChange = (event: MouseEvent) => {},
+  checkedBackground = null,
+  uncheckedBackground = null,
+  ...props
+}: InferProps<typeof Switch.propTypes>) {
   const theme = useTheme()
   const extendProps = { checked, checkedBackground, uncheckedBackground, ...props }
 
   return (
     <Div
-      className={className}
       xflex="y2s"
       flexShrink={0}
       display="inline-flex"
@@ -33,7 +38,7 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
       backgroundColor="background-light"
       userSelect="none"
       cursor="pointer"
-      onClick={(event: MouseEvent) => onChange(enhanceTarget(event, { checked: !checked }))}
+      onClick={(event: MouseEvent) => onChange(enhanceEventTarget(event, { checked: !checked }))}
       role="button"
       {...props}
     >
@@ -69,19 +74,11 @@ function Switch({ checked, onChange, checkedBackground, uncheckedBackground, cla
 }
 
 Switch.propTypes = {
+  ...Div.propTypes,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
   checkedBackground: PropTypes.node,
   uncheckedBackground: PropTypes.node,
-  className: PropTypes.string,
 }
 
-Switch.defaultProps = {
-  checked: false,
-  onChange: () => {},
-  checkedBackground: null,
-  uncheckedBackground: null,
-  className: '',
-}
-
-export default wrapComponentWithStyle(Switch, 'switch')
+export default withHonorable(Switch, 'switch')

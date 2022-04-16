@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+import { InferProps } from 'prop-types'
 
-import wrapComponentWithStyle from '../utils/wrapComponentWithStyle'
+import withHonorable from '../withHonorable'
 
 // @ts-ignore
 import { Span } from './tags'
 
-function IconButton({ children, className, ...props }: InferProps<typeof IconButton.propTypes>) {
+function IconButton(props: InferProps<typeof IconButton.propTypes>) {
   const rootRef = useRef<any>()
   const [height, setHeight] = useState('auto')
 
@@ -19,25 +19,16 @@ function IconButton({ children, className, ...props }: InferProps<typeof IconBut
   return (
     <Span
       ref={rootRef}
-      className={className}
+      height={height}
       xflex="x5"
       display="inline-flex"
       cursor="pointer"
       role="button"
       {...props}
-    >
-      {children}
-    </Span>
+    />
   )
 }
 
-IconButton.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-}
+IconButton.propTypes = Span.propTypes
 
-IconButton.defaultProps = {
-  className: '',
-}
-
-export default wrapComponentWithStyle(IconButton, 'iconButton')
+export default withHonorable(IconButton, 'iconButton')

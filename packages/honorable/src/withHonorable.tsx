@@ -11,23 +11,23 @@ import {
   HonorableStyleProps,
   RefProps,
   StyleProps,
-} from '../types'
+} from './types'
 
-import useTheme from '../hooks/useTheme'
+import useTheme from './hooks/useTheme'
 
-import { stylePropTypes, styleProperties } from '../data/styleProperties'
-import { mpPropTypes, mpProperties } from '../data/mpProperties'
+import { stylePropTypes, styleProperties } from './data/styleProperties'
+import { mpPropTypes, mpProperties } from './data/mpProperties'
 
-import filterObject from './filterObject'
-import capitalize from './capitalize'
-import isSelector from './isSelector'
-import convertMp from './convertMp'
-import resolveAll from './resolveAll'
-import resolveAliases from './resolveAliases'
-import resolveCustomProps from './resolveCustomProps'
+import filterObject from './utils/filterObject'
+import capitalize from './utils/capitalize'
+import isSelector from './utils/isSelector'
+import convertMp from './utils/convertMp'
+import resolveAll from './utils/resolveAll'
+import resolveAliases from './utils/resolveAliases'
+import resolveCustomProps from './utils/resolveCustomProps'
 
 // React HOC to support style props
-function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = 'Honorable') {
+function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable') {
   const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes
   const propTypeKeys = Object.keys(componentPropsTypes)
   const propTypes = {
@@ -122,4 +122,4 @@ function wrapComponentWithStyle(ComponentOrTag: string | ComponentType, name = '
   return ForwardedHonorable
 }
 
-export default wrapComponentWithStyle
+export default withHonorable

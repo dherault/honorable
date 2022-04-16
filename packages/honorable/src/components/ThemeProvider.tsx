@@ -4,7 +4,6 @@ import { ThemeProvider as EmotionProvider } from '@emotion/react'
 import PropTypes, { InferProps } from 'prop-types'
 
 import ThemeContext from '../contexts/ThemeContext'
-
 import defaultTheme from '../data/defaultTheme'
 import enhanceTheme from '../utils/enhanceTheme'
 
@@ -21,8 +20,8 @@ function ThemeProvider({ theme = {}, children }: InferProps<typeof ThemeProvider
 }
 
 ThemeProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-  theme: PropTypes.object.isRequired,
+  children: PropTypes.node,
+  theme: PropTypes.object,
 }
 
 export default ThemeProvider
