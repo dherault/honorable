@@ -72,7 +72,7 @@ export default [
   'video',
   'embed',
   'iframe',
-  'object',
+  // 'object',
   'param',
   'picture',
   'portal',

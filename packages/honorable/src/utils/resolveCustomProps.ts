@@ -1,11 +1,11 @@
 import {
   CustomProps,
+  HonorableTheme,
   StyleProps,
-  Theme,
 } from '../types'
 
 // Return the style object of applied customProps
-function resolveCustomProps(customProps: CustomProps, props: object = {}, theme: Theme = {}): StyleProps {
+function resolveCustomProps(customProps: CustomProps, props: object = {}, theme: HonorableTheme = {}): StyleProps {
   const resolvedStyles = {}
 
   if (!(customProps && customProps instanceof Map)) return resolvedStyles

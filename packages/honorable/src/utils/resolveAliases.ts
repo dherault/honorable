@@ -1,6 +1,6 @@
-import { StyleProps, Theme } from '../types'
+import { HonorableTheme, StyleProps } from '../types'
 
-function resolveAliases(styleProps: StyleProps, theme: Theme): StyleProps {
+function resolveAliases(styleProps: StyleProps, theme: HonorableTheme): StyleProps {
   const { aliases } = theme
 
   if (!(aliases && typeof aliases === 'object')) return styleProps

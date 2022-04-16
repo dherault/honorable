@@ -1,20 +1,50 @@
-import { Ref } from 'react'
-import { InferProps } from 'prop-types'
+/* eslint-disable no-unused-vars */
+import '@emotion/react'
+import React, { HTMLAttributes, PropsWithChildren, Ref } from 'react'
 
 import tags from './data/tags'
-import { stylePropTypes } from './data/styleProperties'
+import { styleProperties } from './data/styleProperties'
+import { mpProperties } from './data/mpProperties'
 
-export type RefProps ={
-  ref?: Ref<any>
-  honorableRef?: Ref<any>
+export type AnyProps = {
+  [key: string]: any
 }
 
-export type StyleProps = InferProps<typeof stylePropTypes>
-export type StylePropsValue = string | number
+export type StyleProperties = typeof styleProperties[number]
+export type StyleProps = {
+  [styleKey in StyleProperties]?: any
+}
 
-export type HonorableStyleProps = {
-  ref?: Ref<any>
-  honorable?: StyleProps
+export type MpProperties = typeof mpProperties[number]
+export type MpProps = {
+  [mpKey in MpProperties]?: number | 'auto'
+}
+
+export type XflexProps = {
+  xflex?: string
+}
+
+export type ExtendProps = {
+  extend?: object
+}
+
+export type HonorableRefProps = {
+  honorableRef: Ref<any>
+}
+
+export type ThemeProps = {
+  theme: HonorableTheme
+}
+
+// V1 see https://fettblog.eu/typescript-react-component-patterns/#spread-attributes-to-html-elements
+export type HonorableProps = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & HTMLAttributes<HTMLElement>>
+
+export type InnerHonorableProps = HonorableProps & HonorableRefProps
+
+export type StyledHonorableProps = {
+  ref: Ref<any>
+  theme: HonorableTheme
+  honorable: StyleProps
 }
 
 export type Mode = 'light' | 'dark' | string
@@ -26,10 +56,10 @@ export type FontStyle = {
 
 export type ColorValue = string
 export type ColorStyle = string | ColorValue | {
-  [mode in Mode]: string | ColorValue
+  [modeKey in Mode]: string | ColorValue
 }
 
-export type CustomProps = Map<(props: object, theme: Theme) => boolean, StyleProps>
+export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StyleProps>
 
 export type ComponentNames = typeof tags[number]
 
@@ -44,11 +74,7 @@ export type ComponentProps = {
   }
 }
 
-export type ThemeComponents = {
-  [componentName in ComponentNames]: ComponentProps
-}
-
-export type Theme = ThemeComponents & {
+export interface HonorableThemeBase{
   name?: string
   mode?: Mode
   colors?: {
@@ -59,10 +85,27 @@ export type Theme = ThemeComponents & {
   }
   html?: StyleProps
   global?: ComponentProps
+  utils?: {
+    resolveColor: (color: string | StyleProps) => string | StyleProps
+  }
 }
 
-export type ExtendedTheme = Theme & {
-  utils: {
-    resolveColor: (color: string | StyleProps) => string
+export type HonorableTheme = HonorableThemeBase & {
+  [componentNameKey in ComponentNames]: ComponentProps
+}
+
+export type ThemeProviderProps = PropsWithChildren<ThemeProps>
+
+// Redecalare forwardRef
+// https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forward_and_create_ref/
+declare module 'react' {
+  function forwardRef<T, P = {}>(
+    render: (props: P, ref: React.Ref<T>) => React.ReactElement | null
+  ): React.ComponentType<P & React.RefAttributes<T>>
+}
+
+declare module '@emotion/react' {
+  export interface Theme extends HonorableThemeBase {
+
   }
 }

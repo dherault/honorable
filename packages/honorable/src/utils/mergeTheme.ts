@@ -1,6 +1,6 @@
 import mergeWith from 'lodash.mergewith'
 
-import { Theme } from '../types'
+import { HonorableTheme } from '../types'
 
 function customizer(target: any, source: any) {
   if (target instanceof Map && source instanceof Map) {
@@ -8,7 +8,7 @@ function customizer(target: any, source: any) {
   }
 }
 
-function mergeTheme(...themes: Theme[]): Theme {
+function mergeTheme(...themes: HonorableTheme[]): HonorableTheme {
   return mergeWith({}, ...themes, customizer)
 }
 

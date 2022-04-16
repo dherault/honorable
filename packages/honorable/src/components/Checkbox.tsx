@@ -41,8 +41,6 @@ function Checkbox({
   const [uncontrolledChecked, setUncontrolledChecked] = useState(false)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
 
-  console.log('actualChecked', actualChecked)
-
   return (
     <Root
       xflex="x5"
@@ -72,6 +70,7 @@ Checkbox.propTypes = {
   ...Span.propTypes,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
+  onClick: PropTypes.func,
   icon: PropTypes.node,
 }
 

@@ -1,4 +1,4 @@
-import { Theme } from '../types'
+import { HonorableTheme } from '../types'
 
 import namedColors from '../data/namedColors'
 
@@ -41,11 +41,11 @@ const colorProperties = [
 ]
 
 // TODO test that
-function resolveColor<T>(value: T, theme: Theme = {}): T {
+function resolveColor<T>(value: T, theme: HonorableTheme = {}): T {
   return resolveColorEntry(null, value, theme)
 }
 
-function resolveColorEntry<T>(key: string | null, value: T, theme: Theme = {}): T {
+function resolveColorEntry<T>(key: string | null, value: T, theme: HonorableTheme = {}): T {
   if (key && !(isSelector(key) || colorProperties.includes(key))) return value
 
   if (typeof value === 'object') {
@@ -70,7 +70,7 @@ function resolveColorEntry<T>(key: string | null, value: T, theme: Theme = {}): 
   eg: "primary" => "#0070f3"
 */
 
-function convertThemeColors(value: string, theme: Theme) {
+function convertThemeColors(value: string, theme: HonorableTheme) {
   let converted = value
 
   Object.keys(theme.colors || {})
@@ -87,7 +87,7 @@ function convertThemeColors(value: string, theme: Theme) {
   return converted
 }
 
-function resolveThemeColor(color: string, theme: Theme, previousColor = '', i = 0): string {
+function resolveThemeColor(color: string, theme: HonorableTheme, previousColor = '', i = 0): string {
   if (i >= 64) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }

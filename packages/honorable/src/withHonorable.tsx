@@ -1,14 +1,17 @@
-import React, { ComponentType, HTMLAttributes, Ref, forwardRef } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+import React, { ComponentType, FC, Ref, forwardRef } from 'react'
+import PropTypes from 'prop-types'
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 // @ts-ignore
 import fp from 'flexpad'
 
 import {
-  HonorableStyleProps,
-  RefProps,
+  HonorableProps,
+  InnerHonorableProps,
+  MpProperties,
+  StyleProperties,
   StyleProps,
+  StyledHonorableProps,
 } from './types'
 
 import useTheme from './hooks/useTheme'
@@ -29,24 +32,21 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
   const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes
   const propTypeKeys = Object.keys(componentPropsTypes)
   const propTypes = {
-    // TODO add standard props
-    // https://github.com/facebook/react/blob/main/packages/react-dom/src/shared/possibleStandardNames.js
-    // IN case HTMLAttributes<HTMLElement> is not enough
-    ...componentPropsTypes,
     ...stylePropTypes,
+    ...componentPropsTypes,
     ...mpPropTypes,
     xflex: PropTypes.string,
     extend: PropTypes.object,
   }
 
   const HonorableStyle = styled(
-    ComponentOrTag as ComponentType,
+    ComponentOrTag as ComponentType<StyledHonorableProps>,
     {
-      shouldForwardProp: prop => isPropValid(prop) || propTypeKeys.includes(prop as string),
+      shouldForwardProp: prop => isPropValid(prop) || propTypeKeys.includes(prop as string), // V1 Is this needed?
     }
-  )((props: HonorableStyleProps) => props.honorable)
+  )(props => props.honorable)
 
-  function Honorable(props: InferProps<typeof propTypes> & HTMLAttributes<HTMLElement> & RefProps) {
+  function Honorable(props: InnerHonorableProps) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { honorableRef, xflex, extend = {}, ...nextProps } = props
@@ -54,15 +54,15 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
     const mpProps: StyleProps = {}
     const otherProps = {}
     const resolvedProps = resolveAliases(nextProps as StyleProps, theme)
-    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps), theme)
+    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StyleProps, theme)
     const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps }
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
     Object.entries(resolvedProps).forEach(([key, value]) => {
-      if (mpProperties.includes(key)) {
+      if (mpProperties.includes(key as MpProperties)) {
         mpProps[key] = value
       }
-      else if (styleProperties.includes(key) || isSelector(key)) {
+      else if (styleProperties.includes(key as StyleProperties) || isSelector(key)) {
         styleProps[key] = value
       }
       else {
@@ -73,6 +73,7 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
     return (
       <HonorableStyle
         ref={honorableRef}
+        theme={theme}
         honorable={(
           resolveAll(
             {
@@ -104,7 +105,7 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
 
   Honorable.propTypes = propTypes
 
-  const forwardHonorableRef = (props: InferProps<typeof propTypes> & HTMLAttributes<HTMLElement>, ref: Ref<any>) => (
+  const forwardHonorableRef = (props: HonorableProps, ref: Ref<any>) => (
     <Honorable
       {...props}
       honorableRef={ref}
@@ -113,7 +114,7 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
 
   forwardHonorableRef.displayName = `Honorable(${displayName})`
 
-  const ForwardedHonorable = forwardRef(forwardHonorableRef)
+  const ForwardedHonorable = forwardRef<any, HonorableProps>(forwardHonorableRef)
 
   ForwardedHonorable.displayName = forwardHonorableRef.displayName
   ForwardedHonorable.propTypes = propTypes
