@@ -16,4 +16,9 @@ function MyComponent() {
 
 ## Props
 
-For style props see the [section's root](/components/html-tags).
+This component inherits the shared props. See:
+
+{% content-ref url="components/shared-props.md" %}
+[components/shared-props.md](components/shared-props.md)
+{% endcontent-ref %}
+

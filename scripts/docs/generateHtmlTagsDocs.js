@@ -35,10 +35,10 @@ function main() {
     for (const tag of tags) {
       const componentName = capitalize(tag)
 
-      summaryEntries.push(`  * [${componentName}](components/html-tags/${tag}.md)`)
+      summaryEntries.push(`  * [${componentName}](components/html-tags/${componentName}.md)`)
 
       fs.writeFileSync(
-        path.join(tagsDocsLocation, `${tag}.md`),
+        path.join(tagsDocsLocation, `${componentName}.md`),
         createDocFile(componentName),
         'utf8'
       )
@@ -102,7 +102,12 @@ function MyComponent() {
 
 ## Props
 
-For style props see the [section's root](/components/html-tags).
+This component inherits the shared props. See:
+
+{% content-ref url="components/shared-props.md" %}
+[components/shared-props.md](components/shared-props.md)
+{% endcontent-ref %}
+
 `
 }
 

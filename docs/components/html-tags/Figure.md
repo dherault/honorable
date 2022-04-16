@@ -16,4 +16,9 @@ function MyComponent() {
 
 ## Props
 
-TODO
+This component inherits the shared props. See:
+
+{% content-ref url="components/shared-props.md" %}
+[components/shared-props.md](components/shared-props.md)
+{% endcontent-ref %}
+
