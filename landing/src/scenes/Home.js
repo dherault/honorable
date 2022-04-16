@@ -27,56 +27,65 @@ import ThemeModeContext from '../contexts/ThemeModeContext'
 SyntaxHighlighter.registerLanguage('jsx', jsx)
 
 function Home() {
-  const scrollRef = useRef()
   const [showcase, setShowcase] = useState('default')
   const showcaseValue = useMemo(() => [showcase, setShowcase], [showcase])
 
   return (
     <ShowcaseContext.Provider value={showcaseValue}>
+      <ShowcaseView>
+        {({ scrollRef }) => (
+          <>
+            <ScrollListener
+              scrollRef={scrollRef}
+              showcase="default"
+            >
+              <HeroSection />
+            </ScrollListener>
+            <ScrollListener
+              scrollRef={scrollRef}
+              showcase="productCard"
+            >
+              <DemoSection scrollRef={scrollRef} />
+            </ScrollListener>
+          </>
+        )}
+      </ShowcaseView>
+      <DesignSection />
+      <ThemeDocsSection />
+      <FooterSection />
+    </ShowcaseContext.Provider>
+  )
+}
+
+function ShowcaseView({ children }) {
+  const scrollRef = useRef()
+
+  return (
+    <Div
+      xflex="x4s"
+    >
       <Div
-        xflex="x4s"
-        height="100vh"
+        ref={scrollRef}
+        flexGrow={1}
+        elevation={1}
+        overflowY="auto"
+        position="relative"
+        zIndex={10}
+      >
+        {children({ scrollRef })}
+      </Div>
+      <Div
+        position="relative"
+        flexShrink={0}
+        width="calc(100vh * 3 / 4)"
+        backgroundColor="background-light"
       >
         <Div
-          ref={scrollRef}
-          flexGrow={1}
-          elevation={1}
+          position="sticky"
+          top={0}
+          right={0}
+          width="100%"
           height="100vh"
-          overflowY="auto"
-          position="relative"
-          zIndex={10}
-        >
-          <ScrollListener
-            scrollRef={scrollRef}
-            showcase="default"
-          >
-            <HeroSection />
-          </ScrollListener>
-          <ScrollListener
-            scrollRef={scrollRef}
-            showcase="productCard"
-          >
-            <DemoSection scrollRef={scrollRef} />
-          </ScrollListener>
-          <ScrollListener
-            scrollRef={scrollRef}
-            showcase="design"
-          >
-            <DesignSection />
-          </ScrollListener>
-          <ScrollListener
-            scrollRef={scrollRef}
-            showcase="doc"
-          >
-            <ThemeDocsSection />
-          </ScrollListener>
-          <FooterSection />
-        </Div>
-        <Div
-          position="relative"
-          flexShrink={0}
-          width="calc(100vh * 3 / 4)"
-          backgroundColor="background-light"
         >
           <Showcase />
           <ThemeSwitch
@@ -117,8 +126,9 @@ function Home() {
             </IconButton>
           </Div>
         </Div>
+
       </Div>
-    </ShowcaseContext.Provider>
+    </Div>
   )
 }
 
