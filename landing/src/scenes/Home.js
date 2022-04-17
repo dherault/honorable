@@ -216,71 +216,124 @@ function HeroSection() {
   )
 }
 
-const createCode = code => `import { Button, Div, H3, Img, Span } from 'honorable'
+const createCode = code => `import { Article, Button, Div, H2, Img, P, Span } from 'honorable'
 
-function UserCard({ user = {} }) {
+function ProductCard({ product = {} }) {
   return (${code}
   )
 }`
 
 const codeText = `
-    <Div
+    <Article
       padding="2rem"
-      elevation={1}
+      borderRadius={4}
+      maxWidth={512}
+      display="flex"
+      backgroundColor="background"  // This is a color variable
+      elevation={1}                 // This is a global customProps
     >
-      <Div display="flex">
-        <Img
-          src={user.imageUrl}
-          width="64px"
-          height="64px"
-          alt="user profile"
-        />
-        <H3 marginLeft="1rem">
-          {user.name}
-        </H3>
-      </Div>
-      <Div marginTop="1rem">
-        {user.bio}
-      </Div>
-      <Div
+      <Img
         marginTop="1rem"
+        src={product.imageUrl}
+        width="45%"
+        alt="product"
+      />
+      <Div
+        marginLeft="2rem"
         display="flex"
-        justifyContent="flex-end"
+        flexDirection="column"
       >
-        <Button>
-          Contact
-        </Button>
+        <H2 textAlign="center">
+          {product.name}
+        </H2>
+        <P marginTop="1rem">
+          {product.description}
+        </P>
+        <P
+          marginTop="0.5rem"
+          display="flex"
+          alignItems="center"
+        >
+          Color:
+          <Span
+            display="inline-block"
+            width={16}
+            height={16}
+            borderRadius={2}
+            marginLeft="0.5rem"
+            backgroundColor={product.color}
+          />
+        </P>
+        <Div flexGrow={1} />
+        <Div
+          marginTop="1rem"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <P fontWeight="bold">
+            {product.price}
+          </P>
+          <Button marginLeft="1rem">
+            Buy
+          </Button>
+        </Div>
       </Div>
-    </Div>`
+    </Article>`
 
 const codeTextShorthands = `
-    <Div
+    <Article
       p={2}
-      elevation={1}
-    >
-      <Div xflex="x4">
-        <Img
-          src={user.imageUrl}
-          width="64px"
-          height="64px"
-          alt="user profile"
-        />
-        <H3 ml={1}>
-          {user.name}
-        </H3>
-      </Div>
-      <Div mt={1}>
-        {user.bio}
-      </Div>
-      <Div
-        mt={1}
-        xflex="x6"
+      borderRadius={4}
+      maxWidth={512}
+      xflex="x4s"
+      backgroundColor="background"  // This is a color variable
+      elevation={1}                 // This is a global customProps
       >
-        <Button>
-          Contact
-        </Button>
+      <Img
+        mt={1}
+        src={product.imageUrl}
+        width="45%"
+        alt="product"
+      />
+      <Div
+        ml={1}
+        xflex="y2s"
+      >
+        <H2 textAlign="center">
+          {product.name}
+        </H2>
+        <P mt={1}>
+          {product.description}
+        </P>
+        <P
+          mt={0.5}
+          xflex="x4"
+        >
+          Color:
+          <Span
+            display="inline-block"
+            width={16}
+            height={16}
+            borderRadius={2}
+            ml={0.5}
+            backgroundColor={product.color}
+          />
+        </P>
+        <Div flexGrow={1} />
+        <Div
+          mt={1}
+          xflex="x6"
+        >
+          <P fontWeight="bold">
+            {product.price}
+          </P>
+          <Button ml={1}>
+            Buy
+          </Button>
+        </Div>
       </Div>
-    </Div>`
+    </Article>`
 
 function DemoSection() {
   const [themeMode] = useContext(ThemeModeContext)
