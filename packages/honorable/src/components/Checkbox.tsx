@@ -5,7 +5,6 @@ import styled from '@emotion/styled'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import withHonorable from '../withHonorable'
 
-// @ts-ignore
 import { Span } from './tags'
 
 const Root = styled(Span)`
@@ -74,4 +73,4 @@ Checkbox.propTypes = {
   icon: PropTypes.node,
 }
 
-export default withHonorable(Checkbox)
+export default withHonorable(Checkbox, 'checkbox')

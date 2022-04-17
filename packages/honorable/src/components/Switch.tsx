@@ -7,7 +7,6 @@ import withHonorable from '../withHonorable'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import useTheme from '../hooks/useTheme'
 
-// @ts-ignore
 import { Div, Span } from './tags'
 
 const Handle = styled(Span)`

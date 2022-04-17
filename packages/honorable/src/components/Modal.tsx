@@ -5,7 +5,6 @@ import useTheme from '../hooks/useTheme'
 import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
 
-// @ts-ignore
 import { Div } from './tags'
 
 function Modal({

@@ -2,7 +2,6 @@ import { InferProps } from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
-// @ts-ignore
 import { Span } from './tags'
 
 function Icon(props: InferProps<typeof Icon.propTypes>) {

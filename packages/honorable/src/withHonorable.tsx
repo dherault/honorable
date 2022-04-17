@@ -29,7 +29,7 @@ import resolveCustomProps from './utils/resolveCustomProps'
 
 // React HOC to support style props
 function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable') {
-  const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes
+  const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes || {}
   const propTypeKeys = Object.keys(componentPropsTypes)
   const propTypes = {
     ...stylePropTypes,

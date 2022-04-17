@@ -278,6 +278,18 @@ export default {
     },
   },
   // Other components
+  buttonGroup: {
+    defaultProps: {
+      '& > button': {
+        border: 'none',
+        borderRadius: 0,
+        borderLeft: '1px solid darken(primary)',
+        '&:first-of-type': {
+          borderLeft: 'none',
+        },
+      },
+    },
+  },
   iconButton: {
     defaultProps: {
       padding: '0.5rem',

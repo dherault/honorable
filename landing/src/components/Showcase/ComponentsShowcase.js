@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Checkbox,
   Div,
   IconButton,
@@ -46,6 +47,17 @@ function ComponentsShowcase() {
       <Div mt={2}>
         <Checkbox />
       </Div>
+      <ButtonGroup mt={2}>
+        <Button>
+          One
+        </Button>
+        <Button>
+          Two
+        </Button>
+        <Button>
+          Three
+        </Button>
+      </ButtonGroup>
     </Div>
   )
 }
