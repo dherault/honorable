@@ -32,103 +32,86 @@ function Home() {
 
   return (
     <ShowcaseContext.Provider value={showcaseValue}>
-      <ShowcaseView>
-        {({ scrollRef }) => (
-          <>
-            <ScrollListener
-              scrollRef={scrollRef}
-              showcase="default"
-            >
-              <HeroSection />
-            </ScrollListener>
-            <ScrollListener
-              scrollRef={scrollRef}
-              showcase="productCard"
-            >
-              <DemoSection scrollRef={scrollRef} />
-            </ScrollListener>
-          </>
-        )}
-      </ShowcaseView>
-      <DesignSection />
-      <ThemeDocsSection />
-      <FooterSection />
-    </ShowcaseContext.Provider>
-  )
-}
-
-function ShowcaseView({ children }) {
-  const scrollRef = useRef()
-
-  return (
-    <Div
-      xflex="x4s"
-    >
       <Div
-        ref={scrollRef}
-        flexGrow={1}
-        elevation={1}
-        overflowY="auto"
-        position="relative"
-        zIndex={10}
-      >
-        {children({ scrollRef })}
-      </Div>
-      <Div
-        position="relative"
-        flexShrink={0}
-        width="calc(100vh * 3 / 4)"
-        backgroundColor="background-light"
+        xflex="x4s"
+        maxWidth="100vw"
       >
         <Div
-          position="sticky"
-          top={0}
-          right={0}
-          width="100%"
-          height="100vh"
+          elevation={1}
+          flexGrow={1}
+          flexShrink={1}
+          zIndex={10}
+          position="relative"
         >
-          <Showcase />
-          <ThemeSwitch
-            position="absolute"
-            right="2rem"
-            top="2rem"
-          />
+          <ScrollListener showcase="default">
+            <HeroSection />
+          </ScrollListener>
+          <ScrollListener showcase="productCard">
+            <DemoSection />
+          </ScrollListener>
+          <ScrollListener showcase="design">
+            <DesignSection />
+          </ScrollListener>
+          <ScrollListener showcase="docs">
+            <ThemeDocsSection />
+          </ScrollListener>
+          <FooterSection />
+        </Div>
+        <Div
+          position="relative"
+          flexBasis="calc(100vh * 3 / 4)"
+          flexShrink={1}
+          backgroundColor="background-light"
+        >
           <Div
-            xflex="x6"
-            position="absolute"
-            bottom="2rem"
-            right="2rem"
+            position="sticky"
+            top={0}
+            right={0}
+            width="100%"
+            height="100vh"
           >
-            <A
-              href="https://docs.honorable.design"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Showcase />
+            <ThemeSwitch
+              position="absolute"
+              right="2rem"
+              top="2rem"
+            />
+            <Div
+              xflex="x6"
+              position="absolute"
+              bottom="2rem"
+              right="2rem"
             >
-              Docs
-            </A>
-            <IconButton
-              variant="ghost"
-              as="a"
-              display="flex"
-              color="text-light"
-              ml={1}
-              mr={-0.5}
-              my={-0.5}
-              cursor="pointer"
-              href="https://github.com/dherault/honorable"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiFillGithub
-                color="inherit"
-                size={24}
-              />
-            </IconButton>
+              <A
+                href="https://docs.honorable.design"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Docs
+              </A>
+              <IconButton
+                variant="ghost"
+                as="a"
+                display="flex"
+                color="text-light"
+                ml={1}
+                mr={-0.5}
+                my={-0.5}
+                cursor="pointer"
+                href="https://github.com/dherault/honorable"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <AiFillGithub
+                  color="inherit"
+                  size={24}
+                />
+              </IconButton>
+            </Div>
           </Div>
         </Div>
-
       </Div>
-    </Div>
+    </ShowcaseContext.Provider>
   )
 }
 
@@ -141,27 +124,27 @@ function isScrolledIntoView(element) {
   return elementTop >= 0 && elementBottom <= window.innerHeight
 }
 
-function ScrollListener({ scrollRef, showcase, children }) {
+function ScrollListener({ showcase, children }) {
   const scrolledRef = useRef()
   const [, setShowcase] = useContext(ShowcaseContext)
 
   useEffect(() => {
     function handleScroll() {
       if (isScrolledIntoView(scrolledRef.current)) {
-        console.log('scrolled', showcase)
         setShowcase(showcase)
       }
     }
 
-    const scrollElement = scrollRef.current
+    document.addEventListener('scroll', handleScroll)
 
-    scrollElement.addEventListener('scroll', handleScroll)
-
-    return () => scrollElement.removeEventListener('scroll', handleScroll)
-  }, [scrollRef, showcase, setShowcase])
+    return () => document.removeEventListener('scroll', handleScroll)
+  }, [showcase, setShowcase])
 
   return (
-    <Div position="relative">
+    <Div
+      position="relative"
+      flexShrink={1}
+    >
       {children}
       <Div
         ref={scrolledRef}
@@ -176,9 +159,9 @@ function ScrollListener({ scrollRef, showcase, children }) {
 function HeroSection() {
   return (
     <Section
-      height="100vh"
       p={2}
       xflex="y5"
+      height="100vh"
     >
       <Div
         mt={-8}
@@ -299,7 +282,7 @@ const codeTextShorthands = `
       </Div>
     </Div>`
 
-function DemoSection({ scrollRef }) {
+function DemoSection() {
   const [themeMode] = useContext(ThemeModeContext)
   const [isShorthands, setIsShorthands] = useState(false)
 
@@ -318,10 +301,10 @@ function DemoSection({ scrollRef }) {
 
   return (
     <Section
-      height="100vh"
       py={2}
       px={4}
       xflex="y5s"
+      height="100vh"
     >
       <Div flexShrink={0}>
         <H2
@@ -441,9 +424,9 @@ function DesignSection() {
 function DesignSectionItem({ children, icon = '👉', action = '', ...props }) {
   return (
     <Div
-      {...props}
       xflex="x1s"
       text="large"
+      {...props}
     >
       <Span>
         {icon}
@@ -467,6 +450,8 @@ function ThemeDocsSection() {
     <Section
       py={8}
       px={4}
+      height="100vh"
+      xflex="y1s"
     >
       <H2
         pt={2}
@@ -486,10 +471,7 @@ function ThemeDocsSection() {
       >
         Perfect for teams. 👌
       </P>
-      <CommandLinePre
-        mt={3}
-        width={712}
-      >
+      <CommandLinePre mt={3}>
         npx honorable-documentation ./src/theme.js --out ./DesignSystem.md
       </CommandLinePre>
     </Section>
@@ -517,7 +499,6 @@ function FooterSection() {
         >
           David Hérault
         </A>
-
       </P>
     </Footer>
   )

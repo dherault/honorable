@@ -62,6 +62,17 @@ function Showcase() {
   )
 }
 
+function prepareTheme(theme, mode) {
+  return mergeTheme(theme, {
+    mode,
+    global: {
+      defaultProps: {
+        transition: 'all 330ms ease',
+      },
+    },
+  })
+}
+
 function WithRotatingTheme({ children }) {
   const [mode] = useContext(ThemeModeContext)
   const [currentTheme, setCurrentTheme] = useState(themes[0])
@@ -75,17 +86,8 @@ function WithRotatingTheme({ children }) {
     return () => clearTimeout(timeoutId)
   }, [nextTheme])
 
-  const enhancedTheme = mergeTheme(currentTheme, {
-    mode,
-    global: {
-      defaultProps: {
-        transition: 'all 330ms ease',
-      },
-    },
-  })
-
   return (
-    <ThemeProvider theme={enhancedTheme}>
+    <ThemeProvider theme={prepareTheme(currentTheme, mode)}>
       <A
         userSelect="none"
         onClick={() => setCurrentTheme(nextTheme)}
@@ -98,8 +100,10 @@ function WithRotatingTheme({ children }) {
 }
 
 function WithTheme({ children, theme }) {
+  const [mode] = useContext(ThemeModeContext)
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={prepareTheme(theme, mode)}>
       {children}
     </ThemeProvider>
   )
