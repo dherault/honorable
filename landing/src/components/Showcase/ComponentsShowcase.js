@@ -46,6 +46,19 @@ function ComponentsShowcase() {
       </Div>
       <Div mt={2}>
         <Checkbox />
+        <Checkbox
+          ml={1}
+          defaultChecked
+        />
+        <Checkbox
+          ml={1}
+          disabled
+        />
+        <Checkbox
+          ml={1}
+          defaultChecked
+          disabled
+        />
       </Div>
       <ButtonGroup mt={2}>
         <Button>
