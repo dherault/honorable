@@ -1,10 +1,19 @@
-import { PropsWithChildren } from 'react'
+import { ReactNode } from 'react'
+import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
 import { Div } from './tags'
 
-function ButtonGroup(props: PropsWithChildren<{}>) {
+type ButtonGroupProps = {
+  children: ReactNode
+}
+
+const propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+function ButtonGroup(props: ButtonGroupProps) {
   return (
     <Div
       display="inline-flex"
@@ -16,4 +25,6 @@ function ButtonGroup(props: PropsWithChildren<{}>) {
   )
 }
 
-export default withHonorable(ButtonGroup, 'buttonGroup')
+ButtonGroup.propTypes = propTypes
+
+export default withHonorable<ButtonGroupProps>(ButtonGroup)

@@ -37,9 +37,9 @@ export type ThemeProps = {
 }
 
 // V1 see https://fettblog.eu/typescript-react-component-patterns/#spread-attributes-to-html-elements
-export type HonorableProps = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & HTMLAttributes<HTMLElement>>
+export type HonorableProps<P> = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & HTMLAttributes<HTMLElement> & P>
 
-export type InnerHonorableProps = HonorableProps & HonorableRefProps
+export type InnerHonorableProps<P> = HonorableProps<P> & HonorableRefProps
 
 export type StyledHonorableProps = {
   ref: Ref<any>
@@ -74,7 +74,7 @@ export type ComponentProps = {
   }
 }
 
-export interface HonorableThemeBase{
+export interface HonorableThemeBase {
   name?: string
   mode?: Mode
   colors?: {

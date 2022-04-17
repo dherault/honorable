@@ -1,11 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
-import { InferProps } from 'prop-types'
+import { ReactNode, useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-function IconButton(props: InferProps<typeof IconButton.propTypes>) {
+type IconButtonProps = {
+  children: ReactNode
+}
+
+const propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+function IconButton(props: IconButtonProps) {
   const rootRef = useRef<any>()
   const [height, setHeight] = useState('auto')
 
@@ -28,6 +36,6 @@ function IconButton(props: InferProps<typeof IconButton.propTypes>) {
   )
 }
 
-IconButton.propTypes = Span.propTypes
+IconButton.propTypes = propTypes
 
-export default withHonorable(IconButton, 'iconButton')
+export default withHonorable<IconButtonProps>(IconButton)

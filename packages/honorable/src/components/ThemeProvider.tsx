@@ -1,4 +1,3 @@
-import React from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 
 import { ThemeProviderProps } from '../types'

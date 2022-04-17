@@ -116,4 +116,4 @@ export const {
   Summary,
   Slot,
   Template,
-} = Object.fromEntries(tags.map((tag: string) => [capitalize(tag), withHonorable(tag, tag)]))
+} = Object.fromEntries(tags.map((tag: string) => [capitalize(tag), withHonorable(tag)]))

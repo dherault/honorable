@@ -1,18 +1,29 @@
-import { MouseEvent, useState } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
-import styled from '@emotion/styled'
+import { MouseEvent, ReactNode, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-const Root = styled(Span)`
-  &:hover {
-    border: 1px solid ${({ theme }) => theme.utils.resolveColor('primary')};
-  }
-`
-// https://icons.modulz.app/
+type CheckboxProps = {
+  defaultChecked?: boolean
+  checked?: boolean
+  disabled?: boolean
+  icon?: ReactNode
+  onChange?: (event: MouseEvent) => void
+  onClick?: (event: MouseEvent) => void
+}
+
+const propTypes = {
+  defaultChecked: PropTypes.bool,
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  icon: PropTypes.node,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+}
+
 const defaultIcon = (
   <svg
     width="24px"
@@ -31,46 +42,50 @@ const defaultIcon = (
 )
 
 function Checkbox({
-  checked = null as boolean | null,
+  defaultChecked,
+  checked,
+  disabled = false,
   icon = defaultIcon,
-  onChange = (event: MouseEvent) => {},
-  onClick = (event: MouseEvent) => {},
+  onChange,
+  onClick,
   ...props
-}: InferProps<typeof Checkbox.propTypes>) {
-  const [uncontrolledChecked, setUncontrolledChecked] = useState(false)
+}: CheckboxProps) {
+  const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
 
+  const style = {
+    '&:hover': {
+      border: `1px solid ${disabled ? 'border' : 'primary'}`,
+    },
+  }
+
   return (
-    <Root
+    <Span
       xflex="x5"
       display="inline-flex"
       color="white"
-      backgroundColor={actualChecked ? 'primary' : 'transparent'}
+      backgroundColor={actualChecked ? disabled ? 'border' : 'primary' : 'transparent'}
       borderStyle="solid"
       borderWidth={1}
       borderRadius={2}
-      borderColor={actualChecked ? 'primary' : 'border'}
-      cursor="pointer"
+      borderColor={actualChecked && !disabled ? 'primary' : 'border'}
+      cursor={disabled ? 'not-allowed' : 'pointer'}
       width={24}
       height={24}
+      {...style}
       {...props}
-      onClick={(event: MouseEvent) => {
+      onClick={event => {
         if (typeof onClick === 'function') onClick(event)
-        if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !checked }))
+        if (disabled) return
+        if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
         setUncontrolledChecked(!actualChecked)
       }}
     >
       {actualChecked && icon}
-    </Root>
+    </Span>
   )
 }
 
-Checkbox.propTypes = {
-  ...Span.propTypes,
-  checked: PropTypes.bool,
-  onChange: PropTypes.func,
-  onClick: PropTypes.func,
-  icon: PropTypes.node,
-}
+Checkbox.propTypes = propTypes
 
-export default withHonorable(Checkbox, 'checkbox')
+export default withHonorable<CheckboxProps>(Checkbox)

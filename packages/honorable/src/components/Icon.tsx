@@ -1,10 +1,19 @@
-import { InferProps } from 'prop-types'
+import { ReactNode } from 'react'
+import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-function Icon(props: InferProps<typeof Icon.propTypes>) {
+type IconProps = {
+  children: ReactNode
+}
+
+const propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+function Icon(props: IconProps) {
   return (
     <Span
       xflex="x5"
@@ -14,6 +23,6 @@ function Icon(props: InferProps<typeof Icon.propTypes>) {
   )
 }
 
-Icon.propTypes = Span.propTypes
+Icon.propTypes = propTypes
 
-export default withHonorable(Icon, 'icon')
+export default withHonorable<IconProps>(Icon)

@@ -1,5 +1,5 @@
-import React, { MouseEvent, useRef } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+import { MouseEvent, ReactNode, useRef } from 'react'
+import PropTypes from 'prop-types'
 
 import useTheme from '../hooks/useTheme'
 import resolvePartProps from '../utils/resolvePartProps'
@@ -7,11 +7,23 @@ import withHonorable from '../withHonorable'
 
 import { Div } from './tags'
 
+type ModalProps = {
+  open?: boolean
+  onClose?: (event: MouseEvent) => void
+  children: ReactNode
+}
+
+const propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  children: PropTypes.node.isRequired,
+}
+
 function Modal({
   open = false,
-  onClose = (event: MouseEvent) => {},
+  onClose,
   ...props
-}: InferProps<typeof Modal.propTypes>) {
+}: ModalProps) {
   const theme = useTheme()
   const backdropRef = useRef()
 
@@ -45,10 +57,6 @@ function Modal({
   )
 }
 
-Modal.propTypes = {
-  ...Div.propTypes,
-  open: PropTypes.bool,
-  onClose: PropTypes.func,
-}
+Modal.propTypes = propTypes
 
-export default withHonorable(Modal, 'modal')
+export default withHonorable<ModalProps>(Modal)

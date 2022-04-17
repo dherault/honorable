@@ -1,5 +1,4 @@
-import React, { ComponentType, FC, Ref, forwardRef } from 'react'
-import PropTypes from 'prop-types'
+import { ComponentType, Ref, forwardRef } from 'react'
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 // @ts-ignore
@@ -16,11 +15,14 @@ import {
 
 import useTheme from './hooks/useTheme'
 
-import { stylePropTypes, styleProperties } from './data/styleProperties'
-import { mpPropTypes, mpProperties } from './data/mpProperties'
+// import { stylePropTypes, styleProperties } from './data/styleProperties'
+// import { mpPropTypes, mpProperties } from './data/mpProperties'
+import { styleProperties } from './data/styleProperties'
+import { mpProperties } from './data/mpProperties'
 
 import filterObject from './utils/filterObject'
 import capitalize from './utils/capitalize'
+import uncapitalize from './utils/uncapitalize'
 import isSelector from './utils/isSelector'
 import convertMp from './utils/convertMp'
 import resolveAll from './utils/resolveAll'
@@ -28,31 +30,34 @@ import resolveAliases from './utils/resolveAliases'
 import resolveCustomProps from './utils/resolveCustomProps'
 
 // React HOC to support style props
-function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable') {
+function withHonorable<P>(ComponentOrTag: string | ComponentType) {
+  const name = uncapitalize(typeof ComponentOrTag === 'string' ? ComponentOrTag : ComponentOrTag.displayName || ComponentOrTag.name || 'honorable')
   const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes || {}
   const propTypeKeys = Object.keys(componentPropsTypes)
-  const propTypes = {
-    ...stylePropTypes,
-    ...componentPropsTypes,
-    ...mpPropTypes,
-    xflex: PropTypes.string,
-    extend: PropTypes.object,
-  }
+  // const propTypes = {
+  //   ...componentPropsTypes,
+  //   ...stylePropTypes,
+  //   ...mpPropTypes,
+  //   xflex: PropTypes.string,
+  //   extend: PropTypes.object,
+  // }
+
+  console.log('name', name)
 
   const HonorableStyle = styled(
-    ComponentOrTag as ComponentType<StyledHonorableProps>,
+    ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
-      shouldForwardProp: prop => isPropValid(prop) || propTypeKeys.includes(prop as string), // V1 Is this needed?
+      shouldForwardProp: prop => isPropValid(prop) || propTypeKeys.includes(prop as string),
     }
   )(props => props.honorable)
 
-  function Honorable(props: InnerHonorableProps) {
+  function Honorable(props: InnerHonorableProps<P>) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { honorableRef, xflex, extend = {}, ...nextProps } = props
     const styleProps: StyleProps = {}
     const mpProps: StyleProps = {}
-    const otherProps = {}
+    const otherProps = {} as P
     const resolvedProps = resolveAliases(nextProps as StyleProps, theme)
     const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StyleProps, theme)
     const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps }
@@ -103,9 +108,9 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
 
   Honorable.displayName = `Honorable(Honorable${displayName})`
 
-  Honorable.propTypes = propTypes
+  // Honorable.propTypes = propTypes
 
-  const forwardHonorableRef = (props: HonorableProps, ref: Ref<any>) => (
+  const forwardHonorableRef = (props: HonorableProps<P>, ref: Ref<any>) => (
     <Honorable
       {...props}
       honorableRef={ref}
@@ -114,10 +119,10 @@ function withHonorable(ComponentOrTag: string | ComponentType, name = 'Honorable
 
   forwardHonorableRef.displayName = `Honorable(${displayName})`
 
-  const ForwardedHonorable = forwardRef<any, HonorableProps>(forwardHonorableRef)
+  const ForwardedHonorable = forwardRef<any, HonorableProps<P>>(forwardHonorableRef)
 
   ForwardedHonorable.displayName = forwardHonorableRef.displayName
-  ForwardedHonorable.propTypes = propTypes
+  // ForwardedHonorable.propTypes = propTypes
 
   return ForwardedHonorable
 }

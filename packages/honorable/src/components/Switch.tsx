@@ -1,6 +1,5 @@
-import React, { MouseEvent } from 'react'
-import styled from '@emotion/styled'
-import PropTypes, { InferProps } from 'prop-types'
+import { MouseEvent, ReactNode, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
@@ -9,21 +8,46 @@ import useTheme from '../hooks/useTheme'
 
 import { Div, Span } from './tags'
 
-const Handle = styled(Span)`
-  &:hover {
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.utils.resolveColor('shadow')};
-  }
-`
+type SwitchProps = {
+  defaultChecked?: boolean
+  checked?: boolean
+  disabled?: boolean
+  onChange?: (event: MouseEvent) => void
+  onClick?: (event: MouseEvent) => void
+  checkedBackground?: ReactNode
+  uncheckedBackground?: ReactNode
+}
 
-function Switch({
-  checked = false,
-  onChange = (event: MouseEvent) => {},
-  checkedBackground = null,
-  uncheckedBackground = null,
-  ...props
-}: InferProps<typeof Switch.propTypes>) {
+const propTypes = {
+  defaultChecked: PropTypes.bool,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  checkedBackground: PropTypes.node,
+  uncheckedBackground: PropTypes.node,
+}
+
+function Switch(props: SwitchProps) {
+  const {
+    defaultChecked,
+    checked,
+    disabled,
+    onChange,
+    onClick,
+    checkedBackground = null,
+    uncheckedBackground = null,
+    ...otherProps
+  } = props
+
   const theme = useTheme()
-  const extendProps = { checked, checkedBackground, uncheckedBackground, ...props }
+  const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
+  const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
+
+  const style = {
+    '&:hover': {
+      boxShadow: `0 0 0 2px ${theme.utils.resolveColor('shadow')}`,
+    },
+  }
 
   return (
     <Div
@@ -37,11 +61,17 @@ function Switch({
       backgroundColor="background-light"
       userSelect="none"
       cursor="pointer"
-      onClick={(event: MouseEvent) => onChange(enhanceEventTarget(event, { checked: !checked }))}
+      onClick={event => {
+        if (typeof onClick === 'function') onClick(event)
+        if (disabled) return
+        if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
+        setUncontrolledChecked(!actualChecked)
+      }}
       role="button"
-      {...props}
+      {...style}
+      {...otherProps}
     >
-      {checked && !!checkedBackground && (
+      {actualChecked && !!checkedBackground && (
         <Div
           xflex="x4"
           flexGrow={1}
@@ -49,7 +79,7 @@ function Switch({
           {checkedBackground}
         </Div>
       )}
-      {!checked && !!uncheckedBackground && (
+      {!actualChecked && !!uncheckedBackground && (
         <Div
           xflex="x6"
           flexGrow={1}
@@ -57,27 +87,21 @@ function Switch({
           {uncheckedBackground}
         </Div>
       )}
-      <Handle
+      <Span
         position="absolute"
         width={20}
         height={20}
         borderRadius={20 / 2}
         backgroundColor="white"
         top={2}
-        left={checked ? 'calc(100% - 22px)' : 2}
+        left={actualChecked ? 'calc(100% - 22px)' : 2}
         transition="left 150ms ease"
-        extend={resolvePartProps('switch', 'handle', extendProps, theme)}
+        extend={resolvePartProps('switch', 'handle', props, theme)}
       />
     </Div>
   )
 }
 
-Switch.propTypes = {
-  ...Div.propTypes,
-  checked: PropTypes.bool,
-  onChange: PropTypes.func,
-  checkedBackground: PropTypes.node,
-  uncheckedBackground: PropTypes.node,
-}
+Switch.propTypes = propTypes
 
-export default withHonorable(Switch, 'switch')
+export default withHonorable<SwitchProps>(Switch)
