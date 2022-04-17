@@ -72,6 +72,7 @@ function Checkbox({
       cursor={disabled ? 'not-allowed' : 'pointer'}
       width={24}
       height={24}
+      userSelect="none"
       {...style}
       {...props}
       onClick={event => {

@@ -42,8 +42,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType) {
   //   extend: PropTypes.object,
   // }
 
-  console.log('name', name)
-
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {

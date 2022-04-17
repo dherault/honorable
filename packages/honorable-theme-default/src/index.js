@@ -177,6 +177,8 @@ export default {
   input: {
     defaultProps: {
       padding: '0.5rem',
+      color: 'text',
+      backgroundColor: 'background',
       border: '1px solid border',
       borderRadius: 4,
       '&:focus': {
