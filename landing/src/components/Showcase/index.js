@@ -13,7 +13,7 @@ import useDebounce from '../../hooks/useDebounce'
 import ShowcaseContext from '../../contexts/ShowcaseContext'
 import ThemeModeContext from '../../contexts/ThemeModeContext'
 
-import ProductCard from './ProductCard'
+import UserCard from './UserCard'
 import ComponentsShowcase from './ComponentsShowcase'
 
 const themes = [
@@ -94,7 +94,7 @@ function Showcase() {
           flexGrow={1}
           xflex="y5"
         >
-          <ProductCard />
+          <UserCard />
         </Div>
       </WithTheme>
     ),

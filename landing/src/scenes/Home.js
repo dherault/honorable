@@ -210,105 +210,96 @@ function HeroSection() {
   )
 }
 
-const createCode = code => `import { Article, Button, Div, H2, Img, P, Span } from 'honorable'
+const createCode = code => `import { A, Article, Button, Div, H3, Icon, Img, P } from 'honorable'
 
-function ProductCard({ product = {} }) {
+function UserCard({ user = {}, ...props }) {
   return (${code}
   )
 }`
 
 const codeText = `
     <Article
-      padding="2rem"
+      padding="1rem"
+      border="1px solid border"
       borderRadius={4}
-      maxWidth={512}
-      display="flex"
-      backgroundColor="background"  // This is a color variable
-      elevation={1}                 // This is a global customProps
+      backgroundColor="background"
+      {...props}
     >
-      <Img
-        marginTop="1rem"
-        src={product.imageUrl}
-        width="45%"
-        alt="product"
-      />
-      <Div marginLeft="2rem" display="flex" flexDirection="column">
-        <H2 textAlign="center">
-          {product.name}
-        </H2>
-        <P marginTop="1rem">
-          {product.description}
-        </P>
-        <P marginTop="0.5rem" display="flex" alignItems="center">
-          Color:
-          <Span
-            display="inline-block"
-            width={16}
-            height={16}
-            borderRadius={2}
-            marginLeft="0.5rem"
-            backgroundColor={product.color}
-          />
-        </P>
-        <Div flexGrow={1} />
-        <Div
-          marginTop="1rem"
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-end"
-        >
-          <P fontWeight="bold">
-            {product.price}
+      <Div display="flex">
+        <Img
+          src="/images/user.jpeg"
+          width={64}
+          borderRadius={4}
+        />
+        <Div marginLeft="1rem">
+          <H3>
+            {user.name}
+          </H3>
+          <P
+            marginTop="0.25rem"
+            color="text-light"
+          >
+            {user.email}
           </P>
-          <Button marginLeft="1rem">
-            Buy
-          </Button>
         </Div>
+      </Div>
+      <Div
+        marginTop="1rem"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <A>
+          <Icon mr={0.5}>
+            <MessageIcon />
+          </Icon>
+          Message
+        </A>
+        <Button ml={1}>
+          Hire
+        </Button>
       </Div>
     </Article>`
 
 const codeTextShorthands = `
     <Article
-      p={2}
+      p={1}
+      border="1px solid border"
       borderRadius={4}
-      maxWidth={512}
-      xflex="x4s"
-      backgroundColor="background"  // This is a color variable
-      elevation={1}                 // This is a global customProps
-      >
-      <Img
-        mt={1}
-        src={product.imageUrl}
-        width="45%"
-        alt="product"
-      />
-      <Div ml={1} xflex="y2s">
-        <H2 textAlign="center">
-          {product.name}
-        </H2>
-        <P mt={1}>
-          {product.description}
-        </P>
-        <P mt={0.5} xflex="x4">
-          Color:
-          <Span
-            display="inline-block"
-            width={16}
-            height={16}
-            borderRadius={2}
-            ml={0.5}
-            backgroundColor={product.color}
-          />
-        </P>
-        <Div flexGrow={1} />
-        <Div mt={1} xflex="x6">
-          <P fontWeight="bold">
-            {product.price}
+      backgroundColor="background"
+      {...props}
+    >
+      <Div xflex="x4">
+        <Img
+          src="/images/user.jpeg"
+          width={64}
+          borderRadius={4}
+        />
+        <Div ml={1}>
+          <H3>
+            {user.name}
+          </H3>
+          <P
+            mt={0.25}
+            color="text-light"
+          >
+            {user.email}
           </P>
-          <Button ml={1}>
-            Buy
-          </Button>
         </Div>
+      </Div>
+      <Div
+        mt={1}
+        xflex="x5b"
+      >
+        <A>
+          <Icon mr={0.5}>
+            <MessageIcon />
+          </Icon>
+          Message
+        </A>
+        <Button ml={1}>
+          Hire
+        </Button>
       </Div>
     </Article>`
 
