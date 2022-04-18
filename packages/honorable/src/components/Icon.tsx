@@ -5,7 +5,7 @@ import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-type IconProps = {
+type IconProps = typeof Span & {
   children: ReactNode
 }
 
@@ -25,4 +25,4 @@ function Icon(props: IconProps) {
 
 Icon.propTypes = propTypes
 
-export default withHonorable<IconProps>(Icon)
+export default withHonorable<IconProps>(Icon, 'icon')

@@ -282,6 +282,8 @@ export default {
   // Other components
   buttonGroup: {
     defaultProps: {
+      border: '1px solid primary',
+      borderRadius: 4,
       '& > button': {
         border: 'none',
         borderRadius: 0,

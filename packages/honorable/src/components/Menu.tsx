@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
-import MenuContext, { MenuContextType, MenuValueType } from '../contexts/MenuContext'
+import MenuContext, { MenuContextType, MenuValueDispatcherType, MenuValueType } from '../contexts/MenuContext'
 
 import { Div } from './tags'
 
 type MenuProps = {
   children: ReactNode
   selected?: MenuValueType
-  setSelected?: (value: MenuValueType) => void
+  setSelected?: MenuValueDispatcherType
 }
 
 const propTypes = {
@@ -39,4 +39,4 @@ function Menu({ selected, setSelected, ...props }: MenuProps) {
 
 Menu.propTypes = propTypes
 
-export default withHonorable<MenuProps>(Menu)
+export default withHonorable<MenuProps>(Menu, 'menu')

@@ -6,7 +6,7 @@ import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-type IconButtonProps = {
+type IconButtonProps = typeof Span & {
   children: ReactNode
 }
 
@@ -40,4 +40,4 @@ function IconButton(props: IconButtonProps) {
 
 IconButton.propTypes = propTypes
 
-export default withHonorable<IconButtonProps>(IconButton)
+export default withHonorable<IconButtonProps>(IconButton, 'iconButton')

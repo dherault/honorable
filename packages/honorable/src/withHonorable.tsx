@@ -15,14 +15,11 @@ import {
 
 import useTheme from './hooks/useTheme'
 
-// import { stylePropTypes, styleProperties } from './data/styleProperties'
-// import { mpPropTypes, mpProperties } from './data/mpProperties'
 import { styleProperties } from './data/styleProperties'
 import { mpProperties } from './data/mpProperties'
 
 import filterObject from './utils/filterObject'
 import capitalize from './utils/capitalize'
-import uncapitalize from './utils/uncapitalize'
 import isSelector from './utils/isSelector'
 import convertMp from './utils/convertMp'
 import resolveAll from './utils/resolveAll'
@@ -30,17 +27,9 @@ import resolveAliases from './utils/resolveAliases'
 import resolveCustomProps from './utils/resolveCustomProps'
 
 // React HOC to support style props
-function withHonorable<P>(ComponentOrTag: string | ComponentType) {
-  const name = uncapitalize(typeof ComponentOrTag === 'string' ? ComponentOrTag : ComponentOrTag.displayName || ComponentOrTag.name || 'honorable')
+function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) {
   const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes || {}
   const propTypeKeys = Object.keys(componentPropsTypes)
-  // const propTypes = {
-  //   ...componentPropsTypes,
-  //   ...stylePropTypes,
-  //   ...mpPropTypes,
-  //   xflex: PropTypes.string,
-  //   extend: PropTypes.object,
-  // }
 
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
@@ -106,8 +95,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType) {
 
   Honorable.displayName = `Honorable(Honorable${displayName})`
 
-  // Honorable.propTypes = propTypes
-
   const forwardHonorableRef = (props: HonorableProps<P>, ref: Ref<any>) => (
     <Honorable
       {...props}
@@ -120,7 +107,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType) {
   const ForwardedHonorable = forwardRef<any, HonorableProps<P>>(forwardHonorableRef)
 
   ForwardedHonorable.displayName = forwardHonorableRef.displayName
-  // ForwardedHonorable.propTypes = propTypes
 
   return ForwardedHonorable
 }

@@ -1,13 +1,22 @@
 /* eslint-disable no-unused-vars */
 import '@emotion/react'
-import React, { HTMLAttributes, PropsWithChildren, Ref } from 'react'
+import React, { PropsWithChildren, Ref } from 'react'
 
 import tags from './data/tags'
 import { styleProperties } from './data/styleProperties'
 import { mpProperties } from './data/mpProperties'
 
+export type ElementProps<Tag> =
+  Tag extends keyof JSX.IntrinsicElements
+  ? JSX.IntrinsicElements[Tag]
+  : never
+
 export type AnyProps = {
   [key: string]: any
+}
+
+export type RefProps = {
+  ref?: Ref<any>
 }
 
 export type StyleProperties = typeof styleProperties[number]
@@ -36,8 +45,7 @@ export type ThemeProps = {
   theme: HonorableTheme
 }
 
-// V1 see https://fettblog.eu/typescript-react-component-patterns/#spread-attributes-to-html-elements
-export type HonorableProps<P> = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & HTMLAttributes<HTMLElement> & P & AnyProps>
+export type HonorableProps<P> = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & P & AnyProps>
 
 export type InnerHonorableProps<P> = HonorableProps<P> & HonorableRefProps
 
@@ -99,13 +107,12 @@ export type ThemeProviderProps = PropsWithChildren<ThemeProps>
 // Redecalare forwardRef
 // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forward_and_create_ref/
 declare module 'react' {
-  function forwardRef<T, P = {}>(
+  function forwardRef<T, P = unknown>(
     render: (props: P, ref: React.Ref<T>) => React.ReactElement | null
   ): React.ComponentType<P & React.RefAttributes<T>>
 }
 
 declare module '@emotion/react' {
-  export interface Theme extends HonorableThemeBase {
-
-  }
+  // @ts-ignore
+  export type Theme = HonorableThemeBase
 }

@@ -7,7 +7,7 @@ import withHonorable from '../withHonorable'
 
 import { Div } from './tags'
 
-type ModalProps = {
+type ModalProps = typeof Div & {
   open?: boolean
   onClose?: (event: MouseEvent) => void
   children: ReactNode
@@ -59,4 +59,4 @@ function Modal({
 
 Modal.propTypes = propTypes
 
-export default withHonorable<ModalProps>(Modal)
+export default withHonorable<ModalProps>(Modal, 'modal')

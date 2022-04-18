@@ -6,7 +6,7 @@ import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-type CheckboxProps = {
+type CheckboxProps = typeof Span & {
   defaultChecked?: boolean
   checked?: boolean
   disabled?: boolean
@@ -89,4 +89,4 @@ function Checkbox({
 
 Checkbox.propTypes = propTypes
 
-export default withHonorable<CheckboxProps>(Checkbox)
+export default withHonorable<CheckboxProps>(Checkbox, 'checkbox')

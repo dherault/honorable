@@ -8,7 +8,7 @@ import useTheme from '../hooks/useTheme'
 
 import { Div, Span } from './tags'
 
-type SwitchProps = {
+type SwitchProps = typeof Div & {
   defaultChecked?: boolean
   checked?: boolean
   disabled?: boolean
@@ -104,4 +104,4 @@ function Switch(props: SwitchProps) {
 
 Switch.propTypes = propTypes
 
-export default withHonorable<SwitchProps>(Switch)
+export default withHonorable<SwitchProps>(Switch, 'switch')

@@ -8,7 +8,7 @@ import enhanceEventTarget from '../utils/enhanceEventTarget'
 
 import { Div } from './tags'
 
-type MenuItemProps = {
+type MenuItemProps = typeof Div & {
   value?: any
   onClick?: (event: MouseEvent) => void
   children?: ReactNode
@@ -47,4 +47,4 @@ function MenuItem({ value, onClick, children, ...props }: MenuItemProps) {
 
 MenuItem.propTypes = propTypes
 
-export default withHonorable<MenuItemProps>(MenuItem)
+export default withHonorable<MenuItemProps>(MenuItem, 'menuItem')

@@ -5,7 +5,7 @@ import withHonorable from '../withHonorable'
 
 import { Div } from './tags'
 
-type ButtonGroupProps = {
+type ButtonGroupProps = typeof Div & {
   children: ReactNode
 }
 
@@ -17,8 +17,6 @@ function ButtonGroup(props: ButtonGroupProps) {
   return (
     <Div
       display="inline-flex"
-      border="1px solid primary"
-      borderRadius={4}
       xflex="x4"
       {...props}
     />
@@ -27,4 +25,4 @@ function ButtonGroup(props: ButtonGroupProps) {
 
 ButtonGroup.propTypes = propTypes
 
-export default withHonorable<ButtonGroupProps>(ButtonGroup)
+export default withHonorable<ButtonGroupProps>(ButtonGroup, 'buttonGroup')

@@ -1,119 +1,117 @@
-import tags from '../data/tags'
-import withHonorable from '../withHonorable'
-import capitalize from '../utils/capitalize'
+import { ElementProps } from '../types'
 
-export const {
-  Html,
-  Base,
-  Head,
-  Link,
-  Meta,
-  Style,
-  Title,
-  Body,
-  Address,
-  Article,
-  Aside,
-  Footer,
-  Header,
-  H1,
-  H2,
-  H3,
-  H4,
-  H5,
-  H6,
-  Main,
-  Nav,
-  Section,
-  Blockquote,
-  Dd,
-  Div,
-  Dl,
-  Dt,
-  Figcaption,
-  Figure,
-  Hr,
-  Li,
-  Menu,
-  Ol,
-  P,
-  Pre,
-  Ul,
-  A,
-  Abbr,
-  B,
-  Bdi,
-  Bdo,
-  Br,
-  Cite,
-  Code,
-  Data,
-  Dfn,
-  Em,
-  I,
-  Kbd,
-  Mark,
-  Q,
-  Rp,
-  Rt,
-  Ruby,
-  S,
-  Samp,
-  Small,
-  Span,
-  Strong,
-  Sub,
-  Sup,
-  Time,
-  U,
-  Var,
-  Wbr,
-  Area,
-  Audio,
-  Img,
-  Map,
-  Track,
-  Video,
-  Embed,
-  Iframe,
-  // Object,
-  Param,
-  Picture,
-  Portal,
-  Source,
-  Svg,
-  Canvas,
-  Noscript,
-  Script,
-  Del,
-  Ins,
-  Caption,
-  Col,
-  Colgroup,
-  Table,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-  Button,
-  Datalist,
-  Fieldset,
-  Form,
-  Input,
-  Label,
-  Legend,
-  Meter,
-  Optgroup,
-  Option,
-  Output,
-  Progress,
-  Select,
-  Textarea,
-  Details,
-  Dialog,
-  Summary,
-  Slot,
-  Template,
-} = Object.fromEntries(tags.map((tag: string) => [capitalize(tag), withHonorable(tag)]))
+import withHonorable from '../withHonorable'
+
+export const A = withHonorable<ElementProps<'a'>>('a', 'a')
+export const Abbr = withHonorable<ElementProps<'abbr'>>('abbr', 'abbr')
+export const Address = withHonorable<ElementProps<'address'>>('address', 'address')
+export const Area = withHonorable<ElementProps<'area'>>('area', 'area')
+export const Article = withHonorable<ElementProps<'article'>>('article', 'article')
+export const Aside = withHonorable<ElementProps<'aside'>>('aside', 'aside')
+export const Audio = withHonorable<ElementProps<'audio'>>('audio', 'audio')
+export const B = withHonorable<ElementProps<'b'>>('b', 'b')
+export const Base = withHonorable<ElementProps<'base'>>('base', 'base')
+export const Bdi = withHonorable<ElementProps<'bdi'>>('bdi', 'bdi')
+export const Bdo = withHonorable<ElementProps<'bdo'>>('bdo', 'bdo')
+export const Blockquote = withHonorable<ElementProps<'blockquote'>>('blockquote', 'blockquote')
+export const Body = withHonorable<ElementProps<'body'>>('body', 'body')
+export const Br = withHonorable<ElementProps<'br'>>('br', 'br')
+export const Button = withHonorable<ElementProps<'button'>>('button', 'button')
+export const Canvas = withHonorable<ElementProps<'canvas'>>('canvas', 'canvas')
+export const Caption = withHonorable<ElementProps<'caption'>>('caption', 'caption')
+export const Cite = withHonorable<ElementProps<'cite'>>('cite', 'cite')
+export const Code = withHonorable<ElementProps<'code'>>('code', 'code')
+export const Col = withHonorable<ElementProps<'col'>>('col', 'col')
+export const Colgroup = withHonorable<ElementProps<'colgroup'>>('colgroup', 'colgroup')
+export const Data = withHonorable<ElementProps<'data'>>('data', 'data')
+export const Datalist = withHonorable<ElementProps<'datalist'>>('datalist', 'datalist')
+export const Dd = withHonorable<ElementProps<'dd'>>('dd', 'dd')
+export const Del = withHonorable<ElementProps<'del'>>('del', 'del')
+export const Details = withHonorable<ElementProps<'details'>>('details', 'details')
+export const Dfn = withHonorable<ElementProps<'dfn'>>('dfn', 'dfn')
+export const Dialog = withHonorable<ElementProps<'dialog'>>('dialog', 'dialog')
+export const Div = withHonorable<ElementProps<'div'>>('div', 'div')
+export const Dl = withHonorable<ElementProps<'dl'>>('dl', 'dl')
+export const Dt = withHonorable<ElementProps<'dt'>>('dt', 'dt')
+export const Em = withHonorable<ElementProps<'em'>>('em', 'em')
+export const Embed = withHonorable<ElementProps<'embed'>>('embed', 'embed')
+export const Fieldset = withHonorable<ElementProps<'fieldset'>>('fieldset', 'fieldset')
+export const Figcaption = withHonorable<ElementProps<'figcaption'>>('figcaption', 'figcaption')
+export const Figure = withHonorable<ElementProps<'figure'>>('figure', 'figure')
+export const Footer = withHonorable<ElementProps<'footer'>>('footer', 'footer')
+export const Form = withHonorable<ElementProps<'form'>>('form', 'form')
+export const H1 = withHonorable<ElementProps<'h1'>>('h1', 'h1')
+export const H2 = withHonorable<ElementProps<'h2'>>('h2', 'h2')
+export const H3 = withHonorable<ElementProps<'h3'>>('h3', 'h3')
+export const H4 = withHonorable<ElementProps<'h4'>>('h4', 'h4')
+export const H5 = withHonorable<ElementProps<'h5'>>('h5', 'h5')
+export const H6 = withHonorable<ElementProps<'h6'>>('h6', 'h6')
+export const Head = withHonorable<ElementProps<'head'>>('head', 'head')
+export const Header = withHonorable<ElementProps<'header'>>('header', 'header')
+export const Hr = withHonorable<ElementProps<'hr'>>('hr', 'hr')
+// export const Html = withHonorable<ElementProps<'html'>>('html', 'html')
+export const I = withHonorable<ElementProps<'i'>>('i', 'i')
+export const Iframe = withHonorable<ElementProps<'iframe'>>('iframe', 'iframe')
+export const Img = withHonorable<ElementProps<'img'>>('img', 'img')
+export const Input = withHonorable<ElementProps<'input'>>('input', 'input')
+export const Ins = withHonorable<ElementProps<'ins'>>('ins', 'ins')
+export const Kbd = withHonorable<ElementProps<'kbd'>>('kbd', 'kbd')
+export const Label = withHonorable<ElementProps<'label'>>('label', 'label')
+export const Legend = withHonorable<ElementProps<'legend'>>('legend', 'legend')
+export const Li = withHonorable<ElementProps<'li'>>('li', 'li')
+export const Link = withHonorable<ElementProps<'link'>>('link', 'link')
+export const Main = withHonorable<ElementProps<'main'>>('main', 'main')
+export const Map = withHonorable<ElementProps<'map'>>('map', 'map')
+export const Mark = withHonorable<ElementProps<'mark'>>('mark', 'mark')
+// export const Menu = withHonorable<ElementProps<'menu'>>('menu', 'menu')
+export const Meta = withHonorable<ElementProps<'meta'>>('meta', 'meta')
+export const Meter = withHonorable<ElementProps<'meter'>>('meter', 'meter')
+export const Nav = withHonorable<ElementProps<'nav'>>('nav', 'nav')
+export const Noscript = withHonorable<ElementProps<'noscript'>>('noscript', 'noscript')
+// export const Object = withHonorable<ElementProps<'object'>>('object', 'object')
+export const Ol = withHonorable<ElementProps<'ol'>>('ol', 'ol')
+export const Optgroup = withHonorable<ElementProps<'optgroup'>>('optgroup', 'optgroup')
+export const Option = withHonorable<ElementProps<'option'>>('option', 'option')
+export const Output = withHonorable<ElementProps<'output'>>('output', 'output')
+export const P = withHonorable<ElementProps<'p'>>('p', 'p')
+export const Param = withHonorable<ElementProps<'param'>>('param', 'param')
+export const Picture = withHonorable<ElementProps<'picture'>>('picture', 'picture')
+export const Portal = withHonorable<ElementProps<'portal'>>('portal', 'portal')
+export const Pre = withHonorable<ElementProps<'pre'>>('pre', 'pre')
+export const Progress = withHonorable<ElementProps<'progress'>>('progress', 'progress')
+export const Q = withHonorable<ElementProps<'q'>>('q', 'q')
+export const Rp = withHonorable<ElementProps<'rp'>>('rp', 'rp')
+export const Rt = withHonorable<ElementProps<'rt'>>('rt', 'rt')
+export const Ruby = withHonorable<ElementProps<'ruby'>>('ruby', 'ruby')
+export const S = withHonorable<ElementProps<'s'>>('s', 's')
+export const Samp = withHonorable<ElementProps<'samp'>>('samp', 'samp')
+export const Script = withHonorable<ElementProps<'script'>>('script', 'script')
+export const Section = withHonorable<ElementProps<'section'>>('section', 'section')
+// export const Select = withHonorable<ElementProps<'select'>>('select', 'select')
+export const Slot = withHonorable<ElementProps<'slot'>>('slot', 'slot')
+export const Small = withHonorable<ElementProps<'small'>>('small', 'small')
+export const Source = withHonorable<ElementProps<'source'>>('source', 'source')
+export const Span = withHonorable<ElementProps<'span'>>('span', 'span')
+export const Strong = withHonorable<ElementProps<'strong'>>('strong', 'strong')
+export const Style = withHonorable<ElementProps<'style'>>('style', 'style')
+export const Sub = withHonorable<ElementProps<'sub'>>('sub', 'sub')
+export const Summary = withHonorable<ElementProps<'summary'>>('summary', 'summary')
+export const Sup = withHonorable<ElementProps<'sup'>>('sup', 'sup')
+export const Svg = withHonorable<ElementProps<'svg'>>('svg', 'svg')
+export const Table = withHonorable<ElementProps<'table'>>('table', 'table')
+export const Tbody = withHonorable<ElementProps<'tbody'>>('tbody', 'tbody')
+export const Td = withHonorable<ElementProps<'td'>>('td', 'td')
+export const Template = withHonorable<ElementProps<'template'>>('template', 'template')
+export const Textarea = withHonorable<ElementProps<'textarea'>>('textarea', 'textarea')
+export const Tfoot = withHonorable<ElementProps<'tfoot'>>('tfoot', 'tfoot')
+export const Th = withHonorable<ElementProps<'th'>>('th', 'th')
+export const Thead = withHonorable<ElementProps<'thead'>>('thead', 'thead')
+export const Time = withHonorable<ElementProps<'time'>>('time', 'time')
+export const Title = withHonorable<ElementProps<'title'>>('title', 'title')
+export const Tr = withHonorable<ElementProps<'tr'>>('tr', 'tr')
+export const Track = withHonorable<ElementProps<'track'>>('track', 'track')
+export const U = withHonorable<ElementProps<'u'>>('u', 'u')
+export const Ul = withHonorable<ElementProps<'ul'>>('ul', 'ul')
+export const Var = withHonorable<ElementProps<'var'>>('var', 'var')
+export const Video = withHonorable<ElementProps<'video'>>('video', 'video')
+export const Wbr = withHonorable<ElementProps<'wbr'>>('wbr', 'wbr')

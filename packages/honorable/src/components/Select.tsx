@@ -9,7 +9,7 @@ import withHonorable from '../withHonorable'
 import { Div } from './tags'
 import Menu from './Menu'
 
-type SelectProps = {
+type SelectProps = typeof Div & {
   children: ReactNode
   value?: any
   onChange?: (event: MouseEvent) => void
@@ -47,4 +47,4 @@ function Select({ children, onChange, value, ...props }: SelectProps) {
 
 Select.propTypes = propTypes
 
-export default withHonorable<SelectProps>(Select)
+export default withHonorable<SelectProps>(Select, 'select')
