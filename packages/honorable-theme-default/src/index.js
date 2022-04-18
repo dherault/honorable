@@ -307,6 +307,22 @@ export default {
       },
     },
   },
+  menu: {
+    defaultProps: {
+      elevation: 1,
+      backgroundColor: 'background',
+      borderRadius: 4,
+      overflow: 'hidden',
+    },
+  },
+  menuItem: {
+    defaultProps: {
+      padding: '0.5rem 1rem',
+      '&:hover': {
+        backgroundColor: 'transparencify(primary, 90)',
+      },
+    },
+  },
   modal: {
     defaultProps: {
       borderRadius: 4,

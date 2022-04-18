@@ -40,11 +40,11 @@ function WithRotatingTheme({ children }) {
   const nextTheme = useMemo(() => themes[(themes.indexOf(currentTheme) + 1) % themes.length], [currentTheme])
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setCurrentTheme(nextTheme)
-    }, themeTransitionPeriod)
+    // const timeoutId = setTimeout(() => {
+    //   setCurrentTheme(nextTheme)
+    // }, themeTransitionPeriod)
 
-    return () => clearTimeout(timeoutId)
+    // return () => clearTimeout(timeoutId)
   }, [nextTheme])
 
   return (

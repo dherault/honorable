@@ -5,7 +5,11 @@ import {
   Div,
   IconButton,
   Input,
+  Menu,
+  MenuItem,
+  Select,
 } from 'honorable'
+import { useState } from 'react'
 
 function ComponentsShowcase() {
   return (
@@ -71,7 +75,56 @@ function ComponentsShowcase() {
           Three
         </Button>
       </ButtonGroup>
+      {/* <Div mt={2}>
+        <Menu>
+          <MenuItem>
+            Item 1
+          </MenuItem>
+          <MenuItem>
+            Item 2
+          </MenuItem>
+          <MenuItem>
+            Item 3
+          </MenuItem>
+        </Menu>
+      </Div> */}
+      {/* <Select mt={2}>
+        <MenuItem>
+          Item 1
+        </MenuItem>
+        <MenuItem>
+          Item 2
+        </MenuItem>
+        <MenuItem>
+          Item 3
+        </MenuItem>
+      </Select> */}
+      <ControlledSelect mt={2} />
     </Div>
+  )
+}
+
+function ControlledSelect(props) {
+  const [value, setValue] = useState(null)
+
+  console.log('value', value)
+
+  return (
+    <Select
+      value={value}
+      onChange={event => setValue(event.target.value)}
+      {...props}
+    >
+      <MenuItem value={1}>
+        Item 1
+      </MenuItem>
+      <MenuItem value={2}>
+        Item 2
+      </MenuItem>
+      <MenuItem value={3}>
+        Item 3
+      </MenuItem>
+    </Select>
   )
 }
 
