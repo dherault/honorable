@@ -8,7 +8,10 @@ export { default as Checkbox } from './components/Checkbox'
 export { default as Switch } from './components/Switch'
 export { default as Icon } from './components/Icon'
 export { default as IconButton } from './components/IconButton'
+export { default as Menu } from './components/Menu'
+export { default as MenuItem } from './components/MenuItem'
 export { default as Modal } from './components/Modal'
+export { default as Select } from './components/Select'
 // Hooks
 export { default as useTheme } from './hooks/useTheme'
 // Utils
