@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import useTheme from '../hooks/useTheme'
 import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
@@ -14,14 +15,15 @@ const propTypes = {
 }
 
 function IconButton(props: IconButtonProps) {
+  const theme = useTheme()
   const rootRef = useRef<any>()
-  const [height, setHeight] = useState('auto')
+  const [height, setHeight] = useState<number | 'auto'>('auto')
 
   useEffect(() => {
     if (rootRef.current) {
-      setHeight(rootRef.current.clientWidth)
+      setHeight(rootRef.current.offsetWidth)
     }
-  }, [])
+  }, [theme])
 
   return (
     <Span
