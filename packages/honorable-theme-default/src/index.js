@@ -11,7 +11,7 @@ export default {
     },
     'background-light': {
       light: '#f5f7f9',
-      dark: '#1d2333',
+      dark: '#22293b',
     },
     text: {
       light: '#3b454e',

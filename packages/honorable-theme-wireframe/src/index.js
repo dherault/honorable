@@ -9,7 +9,23 @@ export default mergeTheme(defaultTheme, {
       dark: 'white',
     },
     text: 'primary',
-    background: 'transparent',
+    background: {
+      light: 'white',
+      dark: 'black',
+    },
+    border: 'primary',
+  },
+  global: {
+    customProps: new Map([
+      [
+        ({ elevation }) => elevation > 0,
+        {
+          boxShadow: 'none',
+          border: '1px solid border',
+          margin: -1,
+        },
+      ],
+    ]),
   },
   button: {
     defaultProps: {
@@ -26,13 +42,6 @@ export default mergeTheme(defaultTheme, {
       color: 'text',
       backgroundColor: 'transparent',
       borderColor: 'primary',
-    },
-  },
-  iconButton: {
-    defaultProps: {
-      elevation: 0,
-      border: '1px solid primary',
-      padding: 'calc(0.5rem - 1px)',
     },
   },
 })
