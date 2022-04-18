@@ -1,5 +1,9 @@
 module.exports = {
-  extends: 'dherault',
+  extends: [
+    'dherault',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     parser: '@babel/eslint-parser',
@@ -34,5 +38,7 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'no-unused-vars': ['warn', { varsIgnorePattern: '^React$' }],
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
   },
 }

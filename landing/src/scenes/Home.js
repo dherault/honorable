@@ -12,19 +12,13 @@ import {
   Section,
   Span,
 } from 'honorable'
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
-import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx'
-import highlighterStyleLight from 'react-syntax-highlighter/dist/esm/styles/prism/material-light'
-import highlighterStyleDark from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark'
 import { AiFillGithub } from 'react-icons/ai'
 
 import Showcase from '../components/Showcase'
+import CodeBlock from '../components/CodeBlock'
 import ThemeSwitch from '../components/ThemeSwitch'
 import CommandLinePre from '../components/CommandLinePre'
 import ShowcaseContext from '../contexts/ShowcaseContext'
-import ThemeModeContext from '../contexts/ThemeModeContext'
-
-SyntaxHighlighter.registerLanguage('jsx', jsx)
 
 function Home() {
   const [showcase, setShowcase] = useState('default')
@@ -238,22 +232,14 @@ const codeText = `
         width="45%"
         alt="product"
       />
-      <Div
-        marginLeft="2rem"
-        display="flex"
-        flexDirection="column"
-      >
+      <Div marginLeft="2rem" display="flex" flexDirection="column">
         <H2 textAlign="center">
           {product.name}
         </H2>
         <P marginTop="1rem">
           {product.description}
         </P>
-        <P
-          marginTop="0.5rem"
-          display="flex"
-          alignItems="center"
-        >
+        <P marginTop="0.5rem" display="flex" alignItems="center">
           Color:
           <Span
             display="inline-block"
@@ -296,20 +282,14 @@ const codeTextShorthands = `
         width="45%"
         alt="product"
       />
-      <Div
-        ml={1}
-        xflex="y2s"
-      >
+      <Div ml={1} xflex="y2s">
         <H2 textAlign="center">
           {product.name}
         </H2>
         <P mt={1}>
           {product.description}
         </P>
-        <P
-          mt={0.5}
-          xflex="x4"
-        >
+        <P mt={0.5} xflex="x4">
           Color:
           <Span
             display="inline-block"
@@ -321,10 +301,7 @@ const codeTextShorthands = `
           />
         </P>
         <Div flexGrow={1} />
-        <Div
-          mt={1}
-          xflex="x6"
-        >
+        <Div mt={1} xflex="x6">
           <P fontWeight="bold">
             {product.price}
           </P>
@@ -336,21 +313,7 @@ const codeTextShorthands = `
     </Article>`
 
 function DemoSection() {
-  const [themeMode] = useContext(ThemeModeContext)
   const [isShorthands, setIsShorthands] = useState(false)
-
-  const highlighterStyle = themeMode === 'dark' ? highlighterStyleDark : highlighterStyleLight
-  const customHighlighterStyle = {
-    ...highlighterStyle,
-    'code[class*="language-"]': {
-      ...highlighterStyle['code[class*="language-"]'],
-      background: 'transparent',
-    },
-    'pre[class*="language-"]': {
-      ...highlighterStyle['pre[class*="language-"]'],
-      background: 'transparent',
-    },
-  }
 
   return (
     <Section
@@ -366,28 +329,14 @@ function DemoSection() {
           HTML tags as base components, CSS as props
         </H2>
       </Div>
-      <Div
+      <CodeBlock
         mt={3}
         p={1}
         height={727}
         flexShrink={0}
-        backgroundColor="background-light"
-        border="1px solid border"
-        borderRadius={4}
-        overflowY="scroll"
       >
-        <SyntaxHighlighter
-          language="jsx"
-          style={customHighlighterStyle}
-          customStyle={{
-            fontSize: '14px',
-            margin: 0,
-            padding: 0,
-          }}
-        >
-          {createCode(isShorthands ? codeTextShorthands : codeText)}
-        </SyntaxHighlighter>
-      </Div>
+        {createCode(isShorthands ? codeTextShorthands : codeText)}
+      </CodeBlock>
       <Div
         mt={0.5}
         xflex="x6"

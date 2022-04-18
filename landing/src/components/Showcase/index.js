@@ -6,7 +6,7 @@ import {
   mergeTheme,
 } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
-// import materialTheme from 'honorable-theme-material'
+import materialTheme from 'honorable-theme-material'
 import wireframeTheme from 'honorable-theme-wireframe'
 
 import useDebounce from '../../hooks/useDebounce'
@@ -18,7 +18,12 @@ import ComponentsShowcase from './ComponentsShowcase'
 
 const themes = [
   defaultTheme,
-  // materialTheme,
+  materialTheme,
+  {
+    ...defaultTheme,
+    name: 'Unicorn lovers',
+    colors: { ...defaultTheme.colors, primary: '#FF1493' },
+  },
   wireframeTheme,
 ]
 const themeTransitionPeriod = 3300
@@ -40,11 +45,11 @@ function WithRotatingTheme({ children }) {
   const nextTheme = useMemo(() => themes[(themes.indexOf(currentTheme) + 1) % themes.length], [currentTheme])
 
   useEffect(() => {
-    // const timeoutId = setTimeout(() => {
-    //   setCurrentTheme(nextTheme)
-    // }, themeTransitionPeriod)
+    const timeoutId = setTimeout(() => {
+      setCurrentTheme(nextTheme)
+    }, themeTransitionPeriod)
 
-    // return () => clearTimeout(timeoutId)
+    return () => clearTimeout(timeoutId)
   }, [nextTheme])
 
   return (
@@ -101,7 +106,7 @@ function Showcase() {
       xflex="y2s"
       height="100%"
     >
-      {showcaseToComponent[debouncedShowcase] || showcaseToComponent.default}
+      {showcaseToComponent[debouncedShowcase] || null}
     </Div>
   )
 }
