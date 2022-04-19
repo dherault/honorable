@@ -26,6 +26,8 @@ function Home() {
   const showcaseValue = useMemo(() => [showcase, setShowcase], [showcase])
   const isMobile = useMediaQuery('down', 'mobile')
 
+  console.log('isMobile', isMobile)
+
   return (
     <ShowcaseContext.Provider value={showcaseValue}>
       <Div
@@ -60,7 +62,7 @@ function Home() {
           flexBasis="calc(100vh * 3 / 4)"
           flexShrink={1}
           backgroundColor="background-light"
-          display={isMobile ? 'none' : 'block'}
+          display-tablet="none"
         >
           <Div
             position="sticky"
