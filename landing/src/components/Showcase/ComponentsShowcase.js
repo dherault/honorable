@@ -10,9 +10,9 @@ import {
   IconButton,
   Img,
   Input,
-  Menu,
   MenuItem,
   P,
+  ProgressBar,
   Select,
   Span,
 } from 'honorable'
@@ -112,6 +112,10 @@ function ComponentsShowcase() {
       <Div xflex="x4">
         <UserCard mt={2} />
       </Div>
+      <ProgressBar
+        value={0.5}
+        mt={2}
+      />
     </Div>
   )
 }

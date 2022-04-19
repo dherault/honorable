@@ -330,6 +330,20 @@ export default {
       borderRadius: 4,
     },
   },
+  progressBar: {
+    defaultProps: {
+      borderRadius: 4,
+      overflow: 'hidden',
+    },
+    partProps: {
+      inner: {
+        defaultProps: {
+          backgroundColor: 'primary',
+          transition: 'width 150ms ease',
+        },
+      },
+    },
+  },
 }
 
 // Utility for the desgner to display the correct variation fn in production

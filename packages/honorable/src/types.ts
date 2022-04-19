@@ -71,11 +71,11 @@ export type ComponentNames = typeof tags[number]
 export type ComponentProps = {
   defaultProps?: StyleProps
   customProps?: CustomProps
-  partDefaultProps?: {
-    [key: string]: StyleProps
-  }
-  partCustomProps?: {
-    [key: string]: CustomProps
+  partProps?: {
+    [key: string]: {
+      defaultProps?: StyleProps
+      customProps?: CustomProps
+    }
   }
 }
 
