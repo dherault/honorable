@@ -3,6 +3,11 @@ import createElevation from './createElevation'
 export default {
   name: 'Default',
   mode: 'light',
+  breakpoints: {
+    mobile: 600,
+    tablet: 900,
+    desktop: 1200,
+  },
   colors: {
     primary: '#3e73dd',
     background: {

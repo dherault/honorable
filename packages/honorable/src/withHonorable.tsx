@@ -8,15 +8,16 @@ import {
   HonorableProps,
   InnerHonorableProps,
   MpProperties,
+  MpProps,
   StyleProperties,
   StyleProps,
   StyledHonorableProps,
 } from './types'
 
-import useTheme from './hooks/useTheme'
+import styleProperties from './data/styleProperties'
+import mpProperties from './data/mpProperties'
 
-import { styleProperties } from './data/styleProperties'
-import { mpProperties } from './data/mpProperties'
+import useTheme from './hooks/useTheme'
 
 import filterObject from './utils/filterObject'
 import capitalize from './utils/capitalize'
@@ -43,7 +44,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const { customProps, defaultProps = {} } = theme[name] || {}
     const { honorableRef, xflex, extend = {}, ...nextProps } = props
     const styleProps: StyleProps = {}
-    const mpProps: StyleProps = {}
+    const mpProps: MpProps = {}
     const otherProps = {} as P
     const resolvedProps = resolveAliases(nextProps as StyleProps, theme)
     const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StyleProps, theme)
@@ -77,7 +78,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
               ),
               ...filterObject(resolvedDefaultProps),  // Component defaultProps
               ...resolvedCustomProps,                 // Component customProps
-              ...convertMp(mpProps),                  // "mp" prop
+              ...convertMp(mpProps, theme),                  // "mp" prop
               ...(xflex ? fp(xflex) : {}),            // "xflex" prop
               ...styleProps,                          // Actual style from props
               ...filterObject(extend),                // "extend" prop

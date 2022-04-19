@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types'
-
 // Might need to comment out some of these
-export const styleProperties = [
+export default [
   'accentColor',
   'additiveSymbols',
   'alignContent',
@@ -636,6 +634,3 @@ export const styleProperties = [
   'zIndex',
   'zoom',
 ] as const
-
-// The propTypes corresponding to that list
-export const stylePropTypes = Object.fromEntries(styleProperties.map(property => [property, PropTypes.oneOfType([PropTypes.string, PropTypes.number])]))

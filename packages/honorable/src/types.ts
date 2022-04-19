@@ -3,8 +3,8 @@ import '@emotion/react'
 import React, { PropsWithChildren, PropsWithRef, Ref } from 'react'
 
 import tags from './data/tags'
-import { styleProperties } from './data/styleProperties'
-import { mpProperties } from './data/mpProperties'
+import styleProperties from './data/styleProperties'
+import mpProperties from './data/mpProperties'
 
 export type ElementProps<Tag> = PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
@@ -23,7 +23,7 @@ export type StyleProps = {
 
 export type MpProperties = typeof mpProperties[number]
 export type MpProps = {
-  [mpKey in MpProperties]?: number | 'auto'
+  [mpKey in MpProperties]?: number | string | 'auto'
 }
 
 export type XflexProps = {
@@ -82,6 +82,11 @@ export type ComponentProps = {
 export interface HonorableThemeBase {
   name?: string
   mode?: Mode
+  breakpoints?: {
+    mobile?: number
+    tablet?: number
+    desktop?: number
+  }
   colors?: {
     [key: ColorValue]: ColorStyle
   }

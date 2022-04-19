@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
-
 // The list of all available mp properties
-export const mpProperties = [
+export default [
+  // default
   'm',
   'mx',
   'my',
@@ -16,6 +15,49 @@ export const mpProperties = [
   'pb',
   'pr',
   'pl',
+  // mobile
+  'm-mobile',
+  'mx-mobile',
+  'my-mobile',
+  'mt-mobile',
+  'mb-mobile',
+  'mr-mobile',
+  'ml-mobile',
+  'p-mobile',
+  'px-mobile',
+  'py-mobile',
+  'pt-mobile',
+  'pb-mobile',
+  'pr-mobile',
+  'pl-mobile',
+  // tablet
+  'm-tablet',
+  'mx-tablet',
+  'my-tablet',
+  'mt-tablet',
+  'mb-tablet',
+  'mr-tablet',
+  'ml-tablet',
+  'p-tablet',
+  'px-tablet',
+  'py-tablet',
+  'pt-tablet',
+  'pb-tablet',
+  'pr-tablet',
+  'pl-tablet',
+  // desktop
+  'm-desktop',
+  'mx-desktop',
+  'my-desktop',
+  'mt-desktop',
+  'mb-desktop',
+  'mr-desktop',
+  'ml-desktop',
+  'p-desktop',
+  'px-desktop',
+  'py-desktop',
+  'pt-desktop',
+  'pb-desktop',
+  'pr-desktop',
+  'pl-desktop',
 ] as const
-// The propTypes corresponding to that list
-export const mpPropTypes = Object.fromEntries(mpProperties.map(prop => [prop, PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])])]))

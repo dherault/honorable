@@ -14,6 +14,7 @@ export { default as ProgressBar } from './components/ProgressBar'
 export { default as Select } from './components/Select'
 export { default as Switch } from './components/Switch'
 // Hooks
+export { default as useMediaQuery } from './hooks/useMediaQuery'
 export { default as useTheme } from './hooks/useTheme'
 // Utils
 export { default as withHonorable } from './withHonorable'

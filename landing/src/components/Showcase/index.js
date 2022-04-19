@@ -103,6 +103,7 @@ function Showcase() {
   return (
     <Div
       p={2}
+      p-mobile={0}
       xflex="y2s"
       height="100%"
     >
