@@ -11,6 +11,7 @@ import {
   P,
   Section,
   Span,
+  useMediaQuery,
 } from 'honorable'
 import { AiFillGithub } from 'react-icons/ai'
 
@@ -23,12 +24,14 @@ import ShowcaseContext from '../contexts/ShowcaseContext'
 function Home() {
   const [showcase, setShowcase] = useState('default')
   const showcaseValue = useMemo(() => [showcase, setShowcase], [showcase])
+  const isMobile = useMediaQuery('down', 'mobile')
 
   return (
     <ShowcaseContext.Provider value={showcaseValue}>
       <Div
         xflex="x4s"
         maxWidth="100vw"
+        position="relative"
       >
         <Div
           elevation={1}
@@ -36,6 +39,7 @@ function Home() {
           flexShrink={1}
           zIndex={10}
           position="relative"
+          maxWidth="100%"
         >
           <ScrollListener showcase="default">
             <HeroSection />
@@ -56,6 +60,7 @@ function Home() {
           flexBasis="calc(100vh * 3 / 4)"
           flexShrink={1}
           backgroundColor="background-light"
+          display={isMobile ? 'none' : 'block'}
         >
           <Div
             position="sticky"
@@ -65,44 +70,46 @@ function Home() {
             height="100vh"
           >
             <Showcase />
-            <ThemeSwitch
-              position="absolute"
-              right="2rem"
-              top="2rem"
-            />
-            <Div
-              xflex="x6"
-              position="absolute"
-              bottom="2rem"
-              right="2rem"
-            >
-              <A
-                href="https://docs.honorable.design"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Docs
-              </A>
-              <IconButton
-                variant="ghost"
-                as="a"
-                display="flex"
-                color="text-light"
-                ml={1}
-                mr={-0.5}
-                my={-0.5}
-                cursor="pointer"
-                href="https://github.com/dherault/honorable"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <AiFillGithub
-                  color="inherit"
-                  size={24}
-                />
-              </IconButton>
-            </Div>
           </Div>
+        </Div>
+        <ThemeSwitch
+          position="fixed"
+          right="2rem"
+          top="2rem"
+          zIndex={1000}
+        />
+        <Div
+          xflex="x6"
+          position="fixed"
+          bottom="2rem"
+          right="2rem"
+          zIndex={1000}
+        >
+          <A
+            href="https://docs.honorable.design"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Docs
+          </A>
+          <IconButton
+            variant="ghost"
+            as="a"
+            display="flex"
+            color="text-light"
+            ml={1}
+            mr={-0.5}
+            my={-0.5}
+            cursor="pointer"
+            href="https://github.com/dherault/honorable"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AiFillGithub
+              color="inherit"
+              size={24}
+            />
+          </IconButton>
         </Div>
       </Div>
     </ShowcaseContext.Provider>
@@ -154,12 +161,14 @@ function HeroSection() {
   return (
     <Section
       p={2}
+      px-mobile={1}
       xflex="y5"
       height="100vh"
     >
       <Div
         mt={-8}
         xflex="y2s"
+        maxWidth="100%"
       >
         <H1>
           <Span
@@ -186,6 +195,7 @@ function HeroSection() {
         </H1>
         <Div
           xflex="x4s"
+          xflex-mobile="y1"
           mt={2}
         >
           <A
@@ -199,6 +209,8 @@ function HeroSection() {
           </A>
           <CommandLinePre
             ml={2}
+            ml-mobile={0}
+            mt-mobile={1}
             flexGrow={1}
             maxWidth={360}
           >
@@ -310,6 +322,7 @@ function DemoSection() {
     <Section
       py={2}
       px={4}
+      px-mobile={1}
       xflex="y5s"
       height="100vh"
     >
@@ -359,6 +372,7 @@ function DesignSection() {
     <Section
       py={8}
       px={4}
+      px-mobile={1}
     >
       <H2
         pt={2}
@@ -443,6 +457,7 @@ function ThemeDocsSection() {
     <Section
       py={8}
       px={4}
+      px-mobile={1}
       height="100vh"
       xflex="y1s"
     >
@@ -477,13 +492,14 @@ function FooterSection() {
       mt={6}
       py={2}
       px={4}
+      px-mobile={1}
       xflex="x4"
     >
       <P>
         MIT License
       </P>
       <Span flexGrow={1} />
-      <P>
+      <P mr-mobile={3}>
         Made with ❤️ in 🇫🇮 by{' '}
         <A
           href="https://github.com/dherault"

@@ -1,8 +1,6 @@
 import { ComponentType, Ref, forwardRef } from 'react'
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
-// @ts-ignore
-import fp from 'flexpad'
 
 import {
   HonorableProps,
@@ -23,6 +21,7 @@ import filterObject from './utils/filterObject'
 import capitalize from './utils/capitalize'
 import isSelector from './utils/isSelector'
 import convertMp from './utils/convertMp'
+import convertXflex from './utils/convertXflex'
 import resolveAll from './utils/resolveAll'
 import resolveAliases from './utils/resolveAliases'
 import resolveCustomProps from './utils/resolveCustomProps'
@@ -42,7 +41,15 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   function Honorable(props: InnerHonorableProps<P>) {
     const theme = useTheme()
     const { customProps, defaultProps = {} } = theme[name] || {}
-    const { honorableRef, xflex, extend = {}, ...nextProps } = props
+    const {
+      honorableRef,
+      extend = {},
+      xflex,
+      'xflex-mobile': xflexMobile,
+      'xflex-tablet': xflexTablet,
+      'xflex-desktop': xflexDesktop,
+      ...nextProps
+    } = props
     const styleProps: StyleProps = {}
     const mpProps: MpProps = {}
     const otherProps = {} as P
@@ -76,12 +83,12 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
                 { ...resolvedWorkingProps, ...resolvedCustomProps },
                 theme
               ),
-              ...filterObject(resolvedDefaultProps),  // Component defaultProps
-              ...resolvedCustomProps,                 // Component customProps
-              ...convertMp(mpProps, theme),                  // "mp" prop
-              ...(xflex ? fp(xflex) : {}),            // "xflex" prop
-              ...styleProps,                          // Actual style from props
-              ...filterObject(extend),                // "extend" prop
+              ...filterObject(resolvedDefaultProps),                                      // Component defaultProps
+              ...resolvedCustomProps,                                                     // Component customProps
+              ...convertMp(mpProps, theme),                                               // "mp" prop
+              ...convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
+              ...styleProps,                                                              // Actual style from props
+              ...filterObject(extend),                                                    // "extend" prop
               /* eslint-enable no-multi-spaces */
             },
             theme

@@ -13,10 +13,8 @@ function useMediaQuery(upOrDownOrBetweenOrQuery: 'up' | 'down' | 'between' | str
 
   const createBetweenMediaQuery = useCallback(() => {
     const { breakpoints } = theme
-
-    const breakpoint1Value = breakpoint1 ? breakpoints[breakpoint1] : 0
-    const breakpoint2Value = breakpoint2 ? breakpoints[breakpoint2] : 0
-
+    const breakpoint1Value = typeof breakpoint1 === 'string' ? breakpoints[breakpoint1] : breakpoint1 || 0
+    const breakpoint2Value = typeof breakpoint2 === 'string' ? breakpoints[breakpoint2] : breakpoint2 || 0
     const min = breakpoint1Value < breakpoint2Value ? breakpoint1Value : breakpoint2Value
     const max = breakpoint1Value > breakpoint2Value ? breakpoint1Value : breakpoint2Value
 
@@ -25,9 +23,7 @@ function useMediaQuery(upOrDownOrBetweenOrQuery: 'up' | 'down' | 'between' | str
 
   const isMatched = useCallback(() => {
     const { breakpoints } = theme
-
-    const breakpoint1Value = breakpoint1 ? breakpoints[breakpoint1] : 0
-
+    const breakpoint1Value = typeof breakpoint1 === 'string' ? breakpoints[breakpoint1] : breakpoint1 || 0
     const up = upOrDownOrBetweenOrQuery === 'up'
     const down = upOrDownOrBetweenOrQuery === 'down'
     const between = upOrDownOrBetweenOrQuery === 'between'

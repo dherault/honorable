@@ -28,6 +28,9 @@ export type MpProps = {
 
 export type XflexProps = {
   xflex?: string
+  'xflex-mobile'?: string
+  'xflex-tablet'?: string
+  'xflex-desktop'?: string
 }
 
 export type ExtendProps = {
