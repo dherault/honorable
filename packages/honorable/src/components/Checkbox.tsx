@@ -1,12 +1,14 @@
 import { MouseEvent, ReactNode, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ElementProps } from '../types'
+
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-type CheckboxProps = typeof Span & {
+type CheckboxProps = ElementProps<'span'> & {
   defaultChecked?: boolean
   checked?: boolean
   disabled?: boolean

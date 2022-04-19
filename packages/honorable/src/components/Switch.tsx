@@ -1,6 +1,8 @@
 import { MouseEvent, ReactNode, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ElementProps } from '../types'
+
 import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
@@ -8,7 +10,7 @@ import useTheme from '../hooks/useTheme'
 
 import { Div, Span } from './tags'
 
-type SwitchProps = typeof Div & {
+type SwitchProps = ElementProps<'div'> & {
   defaultChecked?: boolean
   checked?: boolean
   disabled?: boolean

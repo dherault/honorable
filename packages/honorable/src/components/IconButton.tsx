@@ -1,12 +1,14 @@
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ElementProps } from '../types'
+
 import useTheme from '../hooks/useTheme'
 import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-type IconButtonProps = typeof Span & {
+type IconButtonProps = ElementProps<'span'> & {
   children: ReactNode
 }
 

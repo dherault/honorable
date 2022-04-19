@@ -1,13 +1,15 @@
 import { MouseEvent, ReactNode, useRef } from 'react'
 import PropTypes from 'prop-types'
 
+import { ElementProps } from '../types'
+
 import useTheme from '../hooks/useTheme'
 import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
 
 import { Div } from './tags'
 
-type ModalProps = typeof Div & {
+type ModalProps = ElementProps<'div'> & {
   open?: boolean
   onClose?: (event: MouseEvent) => void
   children: ReactNode

@@ -1,11 +1,13 @@
 import { ReactNode } from 'react'
 import PropTypes from 'prop-types'
 
+import { ElementProps } from '../types'
+
 import withHonorable from '../withHonorable'
 
 import { Div } from './tags'
 
-type ButtonGroupProps = typeof Div & {
+type ButtonGroupProps = ElementProps<'div'> & {
   children: ReactNode
 }
 

@@ -1,13 +1,15 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ElementProps } from '../types'
+
 import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuValueDispatcherType, MenuValueType } from '../contexts/MenuContext'
 
 import { Div } from './tags'
 
-type MenuProps = {
+type MenuProps = ElementProps<'div'> & {
   children: ReactNode
   selected?: MenuValueType
   setSelected?: MenuValueDispatcherType

@@ -1,6 +1,8 @@
 import { MouseEvent, ReactNode, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
+import { ElementProps } from '../types'
+
 import withHonorable from '../withHonorable'
 
 import MenuContext from '../contexts/MenuContext'
@@ -8,7 +10,7 @@ import enhanceEventTarget from '../utils/enhanceEventTarget'
 
 import { Div } from './tags'
 
-type MenuItemProps = typeof Div & {
+type MenuItemProps = ElementProps<'div'> & {
   value?: any
   onClick?: (event: MouseEvent) => void
   children?: ReactNode
