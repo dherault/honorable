@@ -26,6 +26,10 @@ export type StyleProps = {
 }
 
 export type MpProperties = typeof mpProperties[number]
+  | `${typeof mpProperties[number]}-mobile`
+  | `${typeof mpProperties[number]}-tablet`
+  | `${typeof mpProperties[number]}-desktop`
+
 export type MpProps = {
   [mpKey in MpProperties]?: number | string | 'auto'
 }

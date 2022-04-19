@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-spaces */
 import { ComponentType, Ref, forwardRef } from 'react'
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
@@ -5,9 +6,7 @@ import styled from '@emotion/styled'
 import {
   HonorableProps,
   InnerHonorableProps,
-  MpProperties,
   MpProps,
-  StyleProperties,
   StyleProps,
   StyledHonorableProps,
 } from './types'
@@ -31,6 +30,13 @@ const allStyleProperties = [
   ...styleProperties.map(x => `${x}-mobile`),
   ...styleProperties.map(x => `${x}-tablet`),
   ...styleProperties.map(x => `${x}-desktop`),
+]
+
+const allMpProperties = [
+  ...mpProperties,
+  ...mpProperties.map(x => `${x}-mobile`),
+  ...mpProperties.map(x => `${x}-tablet`),
+  ...mpProperties.map(x => `${x}-desktop`),
 ]
 
 // React HOC to support style props
@@ -66,7 +72,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
     Object.entries(resolvedProps).forEach(([key, value]) => {
-      if (mpProperties.includes(key as MpProperties)) {
+      if (allMpProperties.includes(key)) {
         mpProps[key] = value
       }
       else if (allStyleProperties.includes(key) || isSelector(key)) {
@@ -84,19 +90,17 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         honorable={(
           resolveAll(
             {
-              /* eslint-disable no-multi-spaces */
-              ...resolveCustomProps(                  // Global customProps
+              ...resolveCustomProps(
                 theme.global?.customProps,
                 { ...resolvedWorkingProps, ...resolvedCustomProps },
                 theme
-              ),
+              ),                                                                          // Global customProps
               ...filterObject(resolvedDefaultProps),                                      // Component defaultProps
               ...resolvedCustomProps,                                                     // Component customProps
               ...convertMp(mpProps, theme),                                               // "mp" prop
               ...convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
               ...styleProps,                                                              // Actual style from props
               ...filterObject(extend),                                                    // "extend" prop
-              /* eslint-enable no-multi-spaces */
             },
             theme
           )
