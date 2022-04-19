@@ -11,7 +11,6 @@ import {
   P,
   Section,
   Span,
-  useMediaQuery,
 } from 'honorable'
 import { AiFillGithub } from 'react-icons/ai'
 
@@ -24,9 +23,6 @@ import ShowcaseContext from '../contexts/ShowcaseContext'
 function Home() {
   const [showcase, setShowcase] = useState('default')
   const showcaseValue = useMemo(() => [showcase, setShowcase], [showcase])
-  const isMobile = useMediaQuery('down', 'mobile')
-
-  console.log('isMobile', isMobile)
 
   return (
     <ShowcaseContext.Provider value={showcaseValue}>
