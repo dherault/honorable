@@ -106,7 +106,9 @@ function ComponentsShowcase() {
           Item 3
         </MenuItem>
       </Select> */}
-      <ControlledSelect mt={2} />
+      <Div xflex="x4">
+        <ControlledSelect mt={2} />
+      </Div>
       <Div xflex="x4">
         <UserCard mt={2} />
       </Div>
@@ -115,9 +117,7 @@ function ComponentsShowcase() {
 }
 
 function ControlledSelect(props) {
-  const [value, setValue] = useState(null)
-
-  console.log('value', value)
+  const [value, setValue] = useState(1)
 
   return (
     <Select

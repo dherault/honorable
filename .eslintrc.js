@@ -37,7 +37,7 @@ module.exports = {
     'react/forbid-foreign-prop-types': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
-    'no-unused-vars': ['warn', { varsIgnorePattern: '^React$' }],
+    'no-unused-vars': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',

@@ -80,7 +80,7 @@ function WithTheme({ children, theme }) {
 // Then depending on scrolling or not, show a different comp
 function Showcase() {
   const [showcase] = useContext(ShowcaseContext)
-  const debouncedShowcase = useDebounce(showcase, 250)
+  const debouncedShowcase = useDebounce(showcase, 150)
 
   const showcaseToComponent = useMemo(() => ({
     default: (

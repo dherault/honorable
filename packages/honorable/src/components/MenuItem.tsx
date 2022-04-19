@@ -36,7 +36,6 @@ function MenuItem({ value, onClick, children, ...props }: MenuItemProps) {
       userSelect="none"
       {...props}
       onClick={event => {
-        console.log('value', value)
         setMenuSelected([value, children, event])
 
         if (typeof onClick === 'function') onClick(enhanceEventTarget(event, { value }))
