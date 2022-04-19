@@ -15,6 +15,7 @@ export default [
   'pb',
   'pr',
   'pl',
+  // TODO v1 remove this
   // mobile
   'm-mobile',
   'mx-mobile',

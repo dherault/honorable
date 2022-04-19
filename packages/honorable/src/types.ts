@@ -17,6 +17,10 @@ export type AnyProps = {
 }
 
 export type StyleProperties = typeof styleProperties[number]
+  | `${typeof styleProperties[number]}-mobile`
+  | `${typeof styleProperties[number]}-tablet`
+  | `${typeof styleProperties[number]}-desktop`
+
 export type StyleProps = {
   [styleKey in StyleProperties]?: any
 }

@@ -67,7 +67,7 @@ function Home() {
             top={0}
             right={0}
             width="100%"
-            height="100vh"
+            minHeight="100vh"
           >
             <Showcase />
           </Div>
@@ -163,10 +163,11 @@ function HeroSection() {
       p={2}
       px-mobile={1}
       xflex="y5"
-      height="100vh"
+      minHeight="100vh"
     >
       <Div
         mt={-8}
+        mt-mobile={-4}
         xflex="y2s"
         maxWidth="100%"
       >
@@ -195,7 +196,7 @@ function HeroSection() {
         </H1>
         <Div
           xflex="x4s"
-          xflex-mobile="y1"
+          display-mobile="block"
           mt={2}
         >
           <A
@@ -213,8 +214,9 @@ function HeroSection() {
             mt-mobile={1}
             flexGrow={1}
             maxWidth={360}
+            width-mobile="100%"
           >
-            npm i --save honorable @emotion/react @emotion/styled
+            npm i --save honorable honorable-theme-default @emotion/react @emotion/styled
           </CommandLinePre>
         </Div>
       </Div>
@@ -324,7 +326,7 @@ function DemoSection() {
       px={4}
       px-mobile={1}
       xflex="y5s"
-      height="100vh"
+      minHeight="100vh"
     >
       <Div flexShrink={0}>
         <H2
@@ -458,7 +460,7 @@ function ThemeDocsSection() {
       py={8}
       px={4}
       px-mobile={1}
-      height="100vh"
+      minHeight="100vh"
       xflex="y1s"
     >
       <H2

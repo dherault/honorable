@@ -26,6 +26,13 @@ import resolveAll from './utils/resolveAll'
 import resolveAliases from './utils/resolveAliases'
 import resolveCustomProps from './utils/resolveCustomProps'
 
+const allStyleProperties = [
+  ...styleProperties,
+  ...styleProperties.map(x => `${x}-mobile`),
+  ...styleProperties.map(x => `${x}-tablet`),
+  ...styleProperties.map(x => `${x}-desktop`),
+]
+
 // React HOC to support style props
 function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) {
   const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes || {}
@@ -62,7 +69,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       if (mpProperties.includes(key as MpProperties)) {
         mpProps[key] = value
       }
-      else if (styleProperties.includes(key as StyleProperties) || isSelector(key)) {
+      else if (allStyleProperties.includes(key) || isSelector(key)) {
         styleProps[key] = value
       }
       else {

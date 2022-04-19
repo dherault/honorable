@@ -1,8 +1,13 @@
 import { mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
+const mobile = 600
+
 export default mergeTheme(defaultTheme, {
   name: 'Honorable',
+  breakpoints: {
+    mobile,
+  },
   global: {
     customProps: new Map([
       [
@@ -40,11 +45,17 @@ export default mergeTheme(defaultTheme, {
   h1: {
     defaultProps: {
       fontSize: '5rem',
+      [`@media (max-width: ${mobile}px)`]: {
+        fontSize: '3rem',
+      },
     },
   },
   h2: {
     defaultProps: {
       fontSize: '2rem',
+      [`@media (max-width: ${mobile}px)`]: {
+        fontSize: '1.5rem',
+      },
     },
   },
   iconButton: {
