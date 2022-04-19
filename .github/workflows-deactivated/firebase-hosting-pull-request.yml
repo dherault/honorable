@@ -20,7 +20,7 @@ jobs:
               - 'landing/**/*'
             designer:
               - 'designer/**/*'
-  build_and_preview_landing:
+  preview_landing:
     needs: changes_detector
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.landing == 'true' }}'
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HONORABLE_LANDING }}'
           projectId: honorable-landing
           entryPoint: landing
-  build_and_preview_designer:
+  preview_designer:
     needs: changes_detector
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.designer == 'true' }}'
     runs-on: ubuntu-latest
