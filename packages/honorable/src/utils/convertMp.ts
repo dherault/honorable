@@ -3,6 +3,8 @@ import {
   StyleProps,
 } from '../types'
 
+import createMediaQuery from './createMediaQuery'
+
 const mpConversion = {
   m: 'margin',
   p: 'padding',
@@ -47,15 +49,19 @@ function convertMp(mpProps: object, theme: HonorableTheme): StyleProps {
       unmediatedConvertedStyle[property] = value
     })
 
-    const breakpoint = mediaKey ? theme.breakpoints?.[mediaKey] : null
-
-    if (typeof breakpoint !== 'number') {
+    if (!mediaKey) {
       Object.assign(convertedStyle, unmediatedConvertedStyle)
 
       return
     }
 
-    const query = `@media (max-width: ${breakpoint}px)`
+    const query = createMediaQuery(mediaKey, theme)
+
+    if (!query) {
+      Object.assign(convertedStyle, unmediatedConvertedStyle)
+
+      return
+    }
 
     Object.assign(
       convertedStyle,

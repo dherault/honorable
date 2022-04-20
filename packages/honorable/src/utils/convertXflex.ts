@@ -5,6 +5,8 @@ import {
   StyleProps,
 } from '../types'
 
+import createMediaQuery from './createMediaQuery'
+
 type ConverXFlexArgs = {
   xflex?: string
   xflexMobile?: string
@@ -12,11 +14,11 @@ type ConverXFlexArgs = {
   xflexDesktop?: string
 }
 
-function createXflexMediaQuery(xflex: string, breakpoint: number) {
-  if (!(xflex && breakpoint)) return {}
+function createXflexMediaQuery(xflex: string, breakpointName: string, theme: HonorableTheme) {
+  if (!xflex) return {}
 
   return {
-    [`@media (max-width: ${breakpoint}px)`]: {
+    [createMediaQuery(breakpointName, theme)]: {
       ...fp(xflex),
     },
   }
@@ -26,13 +28,11 @@ function convertXflex(
   { xflex, xflexMobile, xflexTablet, xflexDesktop }: ConverXFlexArgs,
   theme: HonorableTheme
 ): StyleProps {
-  const { mobile, tablet, desktop } = theme.breakpoints || {}
-
   return {
     ...(xflex ? fp(xflex) : null),
-    ...createXflexMediaQuery(xflexMobile, mobile),
-    ...createXflexMediaQuery(xflexTablet, tablet),
-    ...createXflexMediaQuery(xflexDesktop, desktop),
+    ...createXflexMediaQuery(xflexMobile, 'mobile', theme),
+    ...createXflexMediaQuery(xflexTablet, 'tablet', theme),
+    ...createXflexMediaQuery(xflexDesktop, 'desktop', theme),
   }
 }
 
