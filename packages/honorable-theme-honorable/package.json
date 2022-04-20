@@ -1,6 +1,6 @@
 {
   "name": "honorable-theme-honorable",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "The honorable theme for the Honorable project",
   "main": "dist/index.js",
   "scripts": {
