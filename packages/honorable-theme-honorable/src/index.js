@@ -26,6 +26,9 @@ export default mergeTheme(defaultTheme, {
         ({ text }) => text === 'large',
         {
           fontSize: '1.5rem',
+          [`@media (max-width: ${mobile}px)`]: {
+            fontSize: '1.25rem',
+          },
         },
       ],
     ]),
@@ -54,6 +57,9 @@ export default mergeTheme(defaultTheme, {
           marginLeft: 'auto',
           marginRight: 'auto',
           maxWidth: 'calc(100% * 3 / 4)',
+          [`@media (max-width: ${mobile}px)`]: {
+            maxWidth: 'unset',
+          },
         },
       ],
     ]),

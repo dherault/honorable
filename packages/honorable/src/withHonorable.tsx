@@ -2,6 +2,7 @@
 import { ComponentType, Ref, forwardRef } from 'react'
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
+import merge from 'lodash.merge'
 
 import {
   HonorableProps,
@@ -66,7 +67,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const styleProps: StyleProps = {}
     const mpProps: MpProps = {}
     const otherProps = {} as P
-    const resolvedProps = resolveAliases(nextProps as StyleProps, theme)
+    const resolvedProps = resolveAliases(nextProps, theme)
     const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StyleProps, theme)
     const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps }
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
@@ -89,19 +90,19 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         theme={theme}
         honorable={(
           resolveAll(
-            {
-              ...resolveCustomProps(
+            merge(
+              resolveCustomProps(
                 theme.global?.customProps,
                 { ...resolvedWorkingProps, ...resolvedCustomProps },
                 theme
-              ),                                                                          // Global customProps
-              ...filterObject(resolvedDefaultProps),                                      // Component defaultProps
-              ...resolvedCustomProps,                                                     // Component customProps
-              ...convertMp(mpProps, theme),                                               // "mp" prop
-              ...convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
-              ...styleProps,                                                              // Actual style from props
-              ...filterObject(extend),                                                    // "extend" prop
-            },
+              ),                                                                       // Global customProps
+              filterObject(resolvedDefaultProps),                                      // Component defaultProps
+              resolvedCustomProps,                                                     // Component customProps
+              convertMp(mpProps, theme),                                               // "mp" prop
+              convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
+              styleProps,                                                              // Actual style from props
+              filterObject(extend),                                                    // "extend" prop
+            ),
             theme
           )
         )}

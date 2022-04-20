@@ -19,7 +19,7 @@ function CommandLinePre({ children, ...props }) {
     <Pre
       p={0}
       xflex="x4"
-      display="inline-flex"
+      display="flex"
       border="1px solid border"
       borderRadius={4}
       position="relative"

@@ -40,6 +40,8 @@ function Home() {
             zIndex={10}
             flexBasis="calc(100vw - 100vh * 3 / 4)"
             flexShrink={1}
+            flexGrow-tablet={1}
+            flexGrow-mobile={1}
             position="relative"
             maxWidth="100%"
           >
@@ -62,6 +64,7 @@ function Home() {
             flexGrow={1}
             backgroundColor="background-light"
             display-tablet="none"
+            display-mobile="none"
           >
             <Div
               position="sticky"
@@ -75,6 +78,7 @@ function Home() {
           </Div>
           <ThemeSwitch
             position="fixed"
+            position-mobile="absolute"
             right="2rem"
             top="2rem"
             zIndex={1000}
@@ -85,6 +89,7 @@ function Home() {
             bottom="2rem"
             right="2rem"
             zIndex={1000}
+            display-mobile="none"
           >
             <A
               href="https://docs.honorable.design"
@@ -231,16 +236,20 @@ function DemoSection() {
     <Section
       container
       py={8}
+      py-tablet={4}
+      pt-mobile={2}
+      pb-mobile={4}
       px-mobile={1}
-      minHeight="100vh"
+      minHeight-desktop="100vh"
       xflex="y2"
     >
-      <H2>
+      <H2 textAlign="center">
         HTML tags and CSS, that's it.
       </H2>
       <P
-        text="large"
         mt={4}
+        text="large"
+        textAlign="center"
       >
         Import any HTML tag as a component:
       </P>
@@ -248,8 +257,9 @@ function DemoSection() {
         {"import { Div } from 'honorable'"}
       </CodeBlock>
       <P
-        text="large"
         mt={2}
+        text="large"
+        textAlign="center"
       >
         Pass CSS as props:
       </P>
@@ -261,8 +271,9 @@ function DemoSection() {
 />`}
       </CodeBlock>
       <P
-        text="large"
         mt={2}
+        text="large"
+        textAlign="center"
       >
         Use variables and custom props from your theme anywhere:
       </P>
@@ -283,13 +294,13 @@ function DesignSection() {
   return (
     <Section
       container
-      pt={4}
-      pb={6}
+      py={8}
+      py-tablet={4}
+      py-mobile={4}
       px-mobile={1}
+      minHeight-desktop="100vh"
     >
-      <H2
-        textAlign="center"
-      >
+      <H2 textAlign="center">
         Designed to create fast, accessible React apps
       </H2>
       <DesignSectionItem
@@ -297,6 +308,9 @@ function DesignSection() {
         icon="0️⃣"
         action={(
           <A
+            mt={1.5}
+            display-mobile="none"
+            display-tablet="none"
             userSelect="none"
             onClick={() => setShowcase('conventions')}
           >
@@ -311,6 +325,9 @@ function DesignSection() {
         icon="🔧"
         action={(
           <A
+            mt={1.5}
+            display-mobile="none"
+            display-tablet="none"
             userSelect="none"
             onClick={() => setShowcase('theming')}
           >
@@ -324,6 +341,9 @@ function DesignSection() {
         icon="🫡"
         action={(
           <A
+            mt={1.5}
+            display-mobile="none"
+            display-tablet="none"
             userSelect="none"
             onClick={() => setShowcase('accessibility')}
           >
@@ -339,6 +359,9 @@ function DesignSection() {
         icon="📱"
         action={(
           <A
+            mt={1.5}
+            display-mobile="none"
+            display-tablet="none"
             userSelect="none"
             onClick={() => setShowcase('mobile')}
           >
@@ -377,7 +400,6 @@ function DesignSectionItem({ children, icon = '👉', action = '', ...props }) {
         <Span
           text="normal"
           display="block"
-          mt={1.5}
         >
           {action}
         </Span>
@@ -398,8 +420,10 @@ function ThemeDocsSection() {
     <Section
       container
       py={8}
+      py-tablet={4}
+      py-mobile={4}
       px-mobile={1}
-      minHeight="100vh"
+      minHeight-desktop="100vh"
       xflex="y1s"
     >
       <H2
@@ -436,11 +460,11 @@ function FooterSection() {
       px-mobile={1}
       xflex="x4"
     >
-      <P>
+      <P flexShrink={0}>
         MIT License
       </P>
       <Span flexGrow={1} />
-      <P mr-mobile={3}>
+      <P textAlign="right">
         Made with ❤️ in 🇫🇮 by{' '}
         <A
           href="https://github.com/dherault"

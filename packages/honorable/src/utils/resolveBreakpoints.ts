@@ -6,7 +6,7 @@ import {
 import filterObject from './filterObject'
 import createMediaQuery from './createMediaQuery'
 
-function resolveBreakpoints(styleProps: StyleProps, theme: HonorableTheme) {
+function resolveBreakpoints(styleProps: StyleProps, theme: HonorableTheme): StyleProps {
   const breakpoints = Object.keys(filterObject(theme.breakpoints))
 
   return Object.entries(styleProps).reduce((acc, [key, value]) => {
