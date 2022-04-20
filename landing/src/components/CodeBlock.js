@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { Div } from 'honorable'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx'
@@ -11,7 +11,6 @@ SyntaxHighlighter.registerLanguage('jsx', jsx)
 
 function CodeBlock({ children, ...props }) {
   const [themeMode] = useContext(ThemeModeContext)
-  const [clicked, setClicked] = useState(false)
 
   const highlighterStyle = themeMode === 'dark' ? highlighterStyleDark : highlighterStyleLight
 
@@ -27,39 +26,17 @@ function CodeBlock({ children, ...props }) {
     },
   }
 
-  const style = {
-    '& > #code-block-click': {
-      opacity: 0,
-    },
-    '&:hover > #code-block-click': {
-      opacity: 1,
-    },
-  }
-
   return (
     <Div
+      p={1}
       backgroundColor="background-light"
       border="1px solid border"
       borderRadius={4}
-      overflowY={clicked ? 'scroll' : 'hidden'}
+      overflowY="auto"
       position="relative"
-      {...style}
+      display="inline-block"
       {...props}
-      onClick={() => setClicked(true)}
     >
-      {!clicked && (
-        <Div
-          id="code-block-click"
-          position="absolute"
-          top={0}
-          right={0}
-          p={1}
-          color="primary"
-          transition="opacity 150ms ease"
-        >
-          Click to scroll
-        </Div>
-      )}
       <SyntaxHighlighter
         language="jsx"
         style={customHighlighterStyle}

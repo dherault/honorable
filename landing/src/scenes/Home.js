@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 import {
   A,
   Button,
@@ -14,11 +13,12 @@ import {
 } from 'honorable'
 import { AiFillGithub } from 'react-icons/ai'
 
+import ShowcaseContext from '../contexts/ShowcaseContext'
+
 import Showcase from '../components/Showcase'
 import CodeBlock from '../components/CodeBlock'
 import ThemeSwitch from '../components/ThemeSwitch'
 import CommandLinePre from '../components/CommandLinePre'
-import ShowcaseContext from '../contexts/ShowcaseContext'
 
 function Home() {
   const [showcase, setShowcase] = useState('default')
@@ -33,16 +33,16 @@ function Home() {
       >
         <Div
           elevation={1}
-          flexGrow={1}
-          flexShrink={1}
           zIndex={10}
+          flexBasis="calc(100vw - 100vh * 3 / 4)"
+          flexShrink={1}
           position="relative"
           maxWidth="100%"
         >
           <ScrollListener showcase="default">
             <HeroSection />
           </ScrollListener>
-          <ScrollListener showcase="productCard">
+          <ScrollListener showcase="square">
             <DemoSection />
           </ScrollListener>
           <ScrollListener showcase="design">
@@ -55,8 +55,7 @@ function Home() {
         </Div>
         <Div
           position="relative"
-          flexBasis="calc(100vh * 3 / 4)"
-          flexShrink={1}
+          flexGrow={1}
           backgroundColor="background-light"
           display-tablet="none"
         >
@@ -262,12 +261,12 @@ const codeText = `
         justifyContent="space-between"
       >
         <A>
-          <Icon mr={0.5}>
+          <Icon marginRight="0.5rem">
             <MessageIcon />
           </Icon>
           Message
         </A>
-        <Button ml={1}>
+        <Button marginLeft="1rem">
           Hire
         </Button>
       </Div>
@@ -316,53 +315,52 @@ const codeTextShorthands = `
     </Article>`
 
 function DemoSection() {
-  const [isShorthands, setIsShorthands] = useState(false)
-
   return (
     <Section
-      py={2}
-      px={4}
+      container
+      py={8}
       px-mobile={1}
-      xflex="y5s"
       minHeight="100vh"
+      xflex="y2"
     >
-      <Div flexShrink={0}>
-        <H2
-          textAlign="center"
-        >
-          HTML tags as base components, CSS as props
-        </H2>
-      </Div>
-      <CodeBlock
-        mt={3}
-        p={1}
-        height={727}
-        flexShrink={0}
+      <H2>
+        HTML tags and CSS, that's it.
+      </H2>
+      <P
+        text="large"
+        mt={4}
       >
-        {createCode(isShorthands ? codeTextShorthands : codeText)}
+        Import any HTML tag as a component:
+      </P>
+      <CodeBlock mt={1}>
+        {"import { Div } from 'honorable'"}
       </CodeBlock>
-      <Div
-        mt={0.5}
-        xflex="x6"
-        flexShrink={0}
+      <P
+        text="large"
+        mt={2}
       >
-        {isShorthands && (
-          <A
-            as={Link}
-            to="/xflex"
-            userSelect="none"
-          >
-            How does xflex work?
-          </A>
-        )}
-        <A
-          ml={1}
-          userSelect="none"
-          onClick={() => setIsShorthands(x => !x)}
-        >
-          {isShorthands ? 'Use pure CSS syntax' : 'Use shorthands!'}
-        </A>
-      </Div>
+        Pass CSS as props:
+      </P>
+      <CodeBlock mt={1}>
+        {`<Div
+  width={64}
+  height={64}
+  borderRadius={4}
+/>`}
+      </CodeBlock>
+      <P
+        text="large"
+        mt={2}
+      >
+        Use variables and custom props from your theme anywhere:
+      </P>
+      <CodeBlock mt={1}>
+        {`<Div
+  // ...
+  backgroundColor="primary"
+  elevation={2}
+/>`}
+      </CodeBlock>
     </Section>
   )
 }
@@ -370,35 +368,35 @@ function DemoSection() {
 function DesignSection() {
   return (
     <Section
-      py={8}
-      px={4}
+      container
+      pt={4}
+      pb={6}
       px-mobile={1}
     >
       <H2
-        pt={2}
         textAlign="center"
       >
         Designed to create fast, accessible React apps
       </H2>
       <DesignSectionItem
+        mt={3}
         icon="0️⃣"
         action={(
           <A userSelect="none">
             Show me how to create my own conventions!
           </A>
         )}
-        mt={3}
       >
-        Honorable's props are convention-free by default, <br />which means a 0 learning curve for developers that already know CSS.
+        Honorable's props are convention-free by default, <br />which means a 0 learning curve if you already know CSS.
       </DesignSectionItem>
       <DesignSectionItem
+        mt={3}
         icon="🔧"
         action={(
           <A userSelect="none">
             Display what a cool theme looks like!
           </A>
         )}
-        mt={3}
       >
         The theming API is simple, composable and inheritable.
       </DesignSectionItem>
@@ -414,13 +412,13 @@ function DesignSection() {
         Full keyboard navigation, managed focus, WAI-ARIA compliant.
       </DesignSectionItem>
       <DesignSectionItem
+        mt={3}
         icon="📱"
         action={(
           <A userSelect="none">
             Pop out some small-screens code!
           </A>
         )}
-        mt={3}
       >
         Mobile-ready and responsive by nature.
       </DesignSectionItem>
@@ -433,12 +431,22 @@ function DesignSectionItem({ children, icon = '👉', action = '', ...props }) {
     <Div
       xflex="x1s"
       text="large"
+      backgroundColor="background"
+      borderRadius={4}
+      overflow="hidden"
+      border="1px solid border"
       {...props}
     >
-      <Span>
+      <Span
+        pt={1}
+        pl={1}
+      >
         {icon}
       </Span>
-      <P ml={1}>
+      <P
+        py={1}
+        ml={1}
+      >
         {children}
         <Span
           text="normal"
@@ -448,6 +456,13 @@ function DesignSectionItem({ children, icon = '👉', action = '', ...props }) {
           {action}
         </Span>
       </P>
+      <Div flexGrow={1} />
+      <Div
+        ml={1}
+        width={4}
+        flexShrink={0}
+        backgroundColor="primary"
+      />
     </Div>
   )
 }
@@ -455,8 +470,8 @@ function DesignSectionItem({ children, icon = '👉', action = '', ...props }) {
 function ThemeDocsSection() {
   return (
     <Section
+      container
       py={8}
-      px={4}
       px-mobile={1}
       minHeight="100vh"
       xflex="y1s"
@@ -480,7 +495,7 @@ function ThemeDocsSection() {
         Perfect for teams. 👌
       </P>
       <CommandLinePre mt={3}>
-        npx honorable-documentation ./src/theme.js --out ./DesignSystem.md
+        npx honorable-documentation ./src/theme.js --out ./design-system
       </CommandLinePre>
     </Section>
   )

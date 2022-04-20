@@ -336,13 +336,10 @@ export default {
     },
   },
   progressBar: {
-    defaultProps: {
-      borderRadius: 4,
-      overflow: 'hidden',
-    },
     partProps: {
       inner: {
         defaultProps: {
+          borderRadius: 4,
           backgroundColor: 'primary',
           transition: 'width 150ms ease',
         },

@@ -18,10 +18,11 @@ function ProgressBar(props: ProgressBarProps) {
   return (
     <Div
       xflex="x4s"
-      height={16}
+      height={8}
       {...otherProps}
     >
       <Div
+        backgroundColor="black"
         width={`max(0%, min(100%, calc(${value} * 100%)))`}
         extend={resolvePartProps('progressBar', 'inner', props, theme)}
       />

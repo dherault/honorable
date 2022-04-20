@@ -2,16 +2,18 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import {
   A,
   Div,
+  P,
   ThemeProvider,
   mergeTheme,
 } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 import materialTheme from 'honorable-theme-material'
 import wireframeTheme from 'honorable-theme-wireframe'
+import honorableTheme from 'honorable-theme-honorable'
 
-import useDebounce from '../../hooks/useDebounce'
-import ShowcaseContext from '../../contexts/ShowcaseContext'
-import ThemeModeContext from '../../contexts/ThemeModeContext'
+import useDebounce from '../hooks/useDebounce'
+import ShowcaseContext from '../contexts/ShowcaseContext'
+import ThemeModeContext from '../contexts/ThemeModeContext'
 
 import UserCard from './UserCard'
 import ComponentsShowcase from './ComponentsShowcase'
@@ -88,13 +90,26 @@ function Showcase() {
         <ComponentsShowcase />
       </WithRotatingTheme>
     ),
-    productCard: (
-      <WithTheme theme={defaultTheme}>
+    square: (
+      <WithTheme theme={honorableTheme}>
         <Div
           flexGrow={1}
           xflex="y5"
         >
-          <UserCard />
+          <P
+            text="large"
+            mt={2}
+          >
+            And here you go:
+          </P>
+          <Div
+            mt={1}
+            width={64}
+            height={64}
+            borderRadius={4}
+            backgroundColor="primary"
+            elevation={2}
+          />
         </Div>
       </WithTheme>
     ),

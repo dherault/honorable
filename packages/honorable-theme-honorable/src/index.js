@@ -30,18 +30,6 @@ export default mergeTheme(defaultTheme, {
       ],
     ]),
   },
-  div: {
-    customProps: new Map([
-      [
-        ({ container }) => container,
-        {
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          maxWidth: 'calc(1080px * 3 / 4)',
-        },
-      ],
-    ]),
-  },
   h1: {
     defaultProps: {
       fontSize: '5rem',
@@ -57,6 +45,18 @@ export default mergeTheme(defaultTheme, {
         fontSize: '1.5rem',
       },
     },
+  },
+  section: {
+    customProps: new Map([
+      [
+        ({ container }) => container,
+        {
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          maxWidth: 'calc(100% * 3 / 4)',
+        },
+      ],
+    ]),
   },
   iconButton: {
     customProps: new Map([
