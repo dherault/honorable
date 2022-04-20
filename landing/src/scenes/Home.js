@@ -14,6 +14,7 @@ import {
 import { AiFillGithub } from 'react-icons/ai'
 
 import ShowcaseContext from '../contexts/ShowcaseContext'
+import ShowcaseInnerContext from '../contexts/ShowcaseInnerContext'
 
 import Showcase from '../components/Showcase'
 import CodeBlock from '../components/CodeBlock'
@@ -21,94 +22,98 @@ import ThemeSwitch from '../components/ThemeSwitch'
 import CommandLinePre from '../components/CommandLinePre'
 
 function Home() {
-  const [showcase, setShowcase] = useState('default')
+  const [showcase, setShowcase] = useState('main')
+  const [showcaseInner, setShowcaseInner] = useState('none')
   const showcaseValue = useMemo(() => [showcase, setShowcase], [showcase])
+  const showcaseInnerValue = useMemo(() => [showcaseInner, setShowcaseInner], [showcaseInner])
 
   return (
     <ShowcaseContext.Provider value={showcaseValue}>
-      <Div
-        xflex="x4s"
-        maxWidth="100vw"
-        position="relative"
-      >
+      <ShowcaseInnerContext.Provider value={showcaseInnerValue}>
         <Div
-          elevation={1}
-          zIndex={10}
-          flexBasis="calc(100vw - 100vh * 3 / 4)"
-          flexShrink={1}
+          xflex="x4s"
+          maxWidth="100vw"
           position="relative"
-          maxWidth="100%"
-        >
-          <ScrollListener showcase="default">
-            <HeroSection />
-          </ScrollListener>
-          <ScrollListener showcase="square">
-            <DemoSection />
-          </ScrollListener>
-          <ScrollListener showcase="design">
-            <DesignSection />
-          </ScrollListener>
-          <ScrollListener showcase="docs">
-            <ThemeDocsSection />
-          </ScrollListener>
-          <FooterSection />
-        </Div>
-        <Div
-          position="relative"
-          flexGrow={1}
-          backgroundColor="background-light"
-          display-tablet="none"
         >
           <Div
-            position="sticky"
-            top={0}
-            right={0}
-            width="100%"
-            height="100vh"
+            elevation={1}
+            zIndex={10}
+            flexBasis="calc(100vw - 100vh * 3 / 4)"
+            flexShrink={1}
+            position="relative"
+            maxWidth="100%"
           >
-            <Showcase />
+            <ScrollListener showcase="main">
+              <HeroSection />
+            </ScrollListener>
+            <ScrollListener showcase="square">
+              <DemoSection />
+            </ScrollListener>
+            <ScrollListener showcase="design">
+              <DesignSection />
+            </ScrollListener>
+            <ScrollListener showcase="docs">
+              <ThemeDocsSection />
+            </ScrollListener>
+            <FooterSection />
+          </Div>
+          <Div
+            position="relative"
+            flexGrow={1}
+            backgroundColor="background-light"
+            display-tablet="none"
+          >
+            <Div
+              position="sticky"
+              top={0}
+              right={0}
+              width="100%"
+              height="100vh"
+            >
+              <Showcase />
+            </Div>
+          </Div>
+          <ThemeSwitch
+            position="fixed"
+            right="2rem"
+            top="2rem"
+            zIndex={1000}
+          />
+          <Div
+            xflex="x6"
+            position="fixed"
+            bottom="2rem"
+            right="2rem"
+            zIndex={1000}
+          >
+            <A
+              href="https://docs.honorable.design"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Docs
+            </A>
+            <IconButton
+              variant="ghost"
+              as="a"
+              display="flex"
+              color="text-light"
+              ml={1}
+              mr={-0.5}
+              my={-0.5}
+              cursor="pointer"
+              href="https://github.com/dherault/honorable"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AiFillGithub
+                color="inherit"
+                size={24}
+              />
+            </IconButton>
           </Div>
         </Div>
-        <ThemeSwitch
-          position="fixed"
-          right="2rem"
-          top="2rem"
-          zIndex={1000}
-        />
-        <Div
-          xflex="x6"
-          position="fixed"
-          bottom="2rem"
-          right="2rem"
-          zIndex={1000}
-        >
-          <A
-            href="https://docs.honorable.design"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Docs
-          </A>
-          <IconButton
-            variant="ghost"
-            as="a"
-            display="flex"
-            color="text-light"
-            ml={1}
-            mr={-0.5}
-            my={-0.5}
-            cursor="pointer"
-            href="https://github.com/dherault/honorable"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <AiFillGithub
-              color="inherit"
-              size={24}
-            />
-          </IconButton>
-        </Div>
-      </Div>
+      </ShowcaseInnerContext.Provider>
     </ShowcaseContext.Provider>
   )
 }
@@ -221,99 +226,6 @@ function HeroSection() {
   )
 }
 
-const createCode = code => `import { A, Article, Button, Div, H3, Icon, Img, P } from 'honorable'
-
-function UserCard({ user = {}, ...props }) {
-  return (${code}
-  )
-}`
-
-const codeText = `
-    <Article
-      padding="1rem"
-      border="1px solid border"
-      borderRadius={4}
-      backgroundColor="background"
-      {...props}
-    >
-      <Div display="flex">
-        <Img
-          src="/images/user.jpeg"
-          width={64}
-          borderRadius={4}
-        />
-        <Div marginLeft="1rem">
-          <H3>
-            {user.name}
-          </H3>
-          <P
-            marginTop="0.25rem"
-            color="text-light"
-          >
-            {user.email}
-          </P>
-        </Div>
-      </Div>
-      <Div
-        marginTop="1rem"
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <A>
-          <Icon marginRight="0.5rem">
-            <MessageIcon />
-          </Icon>
-          Message
-        </A>
-        <Button marginLeft="1rem">
-          Hire
-        </Button>
-      </Div>
-    </Article>`
-
-const codeTextShorthands = `
-    <Article
-      p={1}
-      border="1px solid border"
-      borderRadius={4}
-      backgroundColor="background"
-      {...props}
-    >
-      <Div xflex="x4">
-        <Img
-          src="/images/user.jpeg"
-          width={64}
-          borderRadius={4}
-        />
-        <Div ml={1}>
-          <H3>
-            {user.name}
-          </H3>
-          <P
-            mt={0.25}
-            color="text-light"
-          >
-            {user.email}
-          </P>
-        </Div>
-      </Div>
-      <Div
-        mt={1}
-        xflex="x5b"
-      >
-        <A>
-          <Icon mr={0.5}>
-            <MessageIcon />
-          </Icon>
-          Message
-        </A>
-        <Button ml={1}>
-          Hire
-        </Button>
-      </Div>
-    </Article>`
-
 function DemoSection() {
   return (
     <Section
@@ -366,6 +278,8 @@ function DemoSection() {
 }
 
 function DesignSection() {
+  const [, setShowcase] = useContext(ShowcaseInnerContext)
+
   return (
     <Section
       container
@@ -382,7 +296,10 @@ function DesignSection() {
         mt={3}
         icon="0️⃣"
         action={(
-          <A userSelect="none">
+          <A
+            userSelect="none"
+            onClick={() => setShowcase('conventions')}
+          >
             Show me how to create my own conventions!
           </A>
         )}
@@ -393,7 +310,10 @@ function DesignSection() {
         mt={3}
         icon="🔧"
         action={(
-          <A userSelect="none">
+          <A
+            userSelect="none"
+            onClick={() => setShowcase('theming')}
+          >
             Display what a cool theme looks like!
           </A>
         )}
@@ -403,7 +323,10 @@ function DesignSection() {
       <DesignSectionItem
         icon="🫡"
         action={(
-          <A userSelect="none">
+          <A
+            userSelect="none"
+            onClick={() => setShowcase('accessibility')}
+          >
             Amaze me with a fully keyboard accessible component!
           </A>
         )}
@@ -415,7 +338,10 @@ function DesignSection() {
         mt={3}
         icon="📱"
         action={(
-          <A userSelect="none">
+          <A
+            userSelect="none"
+            onClick={() => setShowcase('mobile')}
+          >
             Pop out some small-screens code!
           </A>
         )}

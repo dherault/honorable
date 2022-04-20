@@ -1,3 +1,3 @@
 import { createContext } from 'react'
 
-export default createContext(['default', () => {}])
+export default createContext(['main', () => {}])
