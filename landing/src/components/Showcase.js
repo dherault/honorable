@@ -100,12 +100,28 @@ function SquareShowcase() {
         </P>
         <Div
           mt={1}
-          width={64}
-          height={64}
-          borderRadius={4}
-          backgroundColor="primary"
-          elevation={2}
-        />
+          xflex="x5"
+        >
+          <P
+            text="xlarge"
+            transform="scale(-1, 1)"
+          >
+            🎉
+          </P>
+          <Div
+            mx={4}
+            width={64}
+            height={64}
+            borderRadius={4}
+            backgroundColor="primary"
+            elevation={2}
+          />
+          <P
+            text="xlarge"
+          >
+            🎉
+          </P>
+        </Div>
       </Div>
     </WithTheme>
   )
@@ -225,7 +241,7 @@ const aliasesCode = `const theme = {
 }
 
 //...
-<Div bg="primary" padding="1rem">
+<Div bg="success" padding="1rem">
   Some div with a colored background
 </Div>`
 
@@ -255,7 +271,7 @@ function AliasesShowcase() {
         Gives you:
       </P>
       <Div
-        bg="primary"
+        bg="success"
         p={1}
         mt={1}
       >
@@ -328,12 +344,18 @@ function ThemingShowcase() {
       <P text="large">
         Theming made easy:
       </P>
-      <CodeBlock
-        mt={1}
-        background="background"
+      <Div
+        px={2}
+        width="100%"
       >
-        {themingCode}
-      </CodeBlock>
+        <CodeBlock
+          mt={1}
+          width="100%"
+          background="background"
+        >
+          {themingCode}
+        </CodeBlock>
+      </Div>
     </WithTheme>
   )
 }

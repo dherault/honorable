@@ -8,6 +8,9 @@ export default mergeTheme(defaultTheme, {
   breakpoints: {
     mobile,
   },
+  colors: {
+    secondary: '#FFC547',
+  },
   global: {
     customProps: new Map([
       [
@@ -28,6 +31,15 @@ export default mergeTheme(defaultTheme, {
           fontSize: '1.5rem',
           [`@media (max-width: ${mobile}px)`]: {
             fontSize: '1.25rem',
+          },
+        },
+      ],
+      [
+        ({ text }) => text === 'xlarge',
+        {
+          fontSize: '2rem',
+          [`@media (max-width: ${mobile}px)`]: {
+            fontSize: '1.5rem',
           },
         },
       ],

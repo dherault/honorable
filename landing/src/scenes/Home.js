@@ -241,49 +241,59 @@ function DemoSection() {
       pb-mobile={4}
       px-mobile={1}
       minHeight-desktop="100vh"
-      xflex="y2"
+      xflex="y1"
     >
-      <H2 textAlign="center">
+      <H2
+        width="100%"
+        textAlign="center"
+      >
         HTML tags and CSS, that's it.
       </H2>
-      <P
-        mt={4}
-        text="large"
-        textAlign="center"
+      <Div
+        margin="0 auto"
+        xflex="y2s"
       >
-        Import any HTML tag as a component:
-      </P>
-      <CodeBlock mt={1}>
-        {"import { Div } from 'honorable'"}
-      </CodeBlock>
-      <P
-        mt={2}
-        text="large"
-        textAlign="center"
-      >
-        Pass CSS as props:
-      </P>
-      <CodeBlock mt={1}>
-        {`<Div
+
+        <P
+          mt={4}
+          text="large"
+          textAlign="center"
+        >
+          Import any HTML tag as a component:
+        </P>
+        <CodeBlock mt={1}>
+          {"import { Div } from 'honorable'"}
+        </CodeBlock>
+        <P
+          mt={2}
+          text="large"
+          textAlign="center"
+        >
+          Pass CSS as props:
+        </P>
+        <CodeBlock mt={1}>
+          {`<Div
   width={64}
   height={64}
   borderRadius={4}
 />`}
-      </CodeBlock>
-      <P
-        mt={2}
-        text="large"
-        textAlign="center"
-      >
-        Use variables and custom props from your theme anywhere:
-      </P>
-      <CodeBlock mt={1}>
-        {`<Div
+        </CodeBlock>
+        <P
+          mt={2}
+          text="large"
+          textAlign="center"
+        >
+          Use variables and custom props<br />from your theme anywhere:
+        </P>
+        <CodeBlock mt={1}>
+          {`<Div
   // ...
   backgroundColor="primary"
   elevation={2}
 />`}
-      </CodeBlock>
+        </CodeBlock>
+      </Div>
+
     </Section>
   )
 }
