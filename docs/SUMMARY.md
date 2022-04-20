@@ -133,3 +133,7 @@
   * [deserializeTheme](api-reference/theme-helpers/deserializetheme.md)
 * [Theme utils](api-reference/theme-utils/README.md)
   * [resolveColor](api-reference/theme-utils/resolvecolor.md)
+
+## Recipes
+
+* [Container](recipes/container.md)

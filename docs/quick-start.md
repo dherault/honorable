@@ -7,13 +7,13 @@ In your current React app:
 {% tabs %}
 {% tab title="NPM" %}
 ```
-npm install --save honorable @emotion/react @emotion/styled
+npm install --save honorable honorable-theme-default @emotion/react @emotion/styled
 ```
 {% endtab %}
 
 {% tab title="Yarn" %}
 ```
-yarn honorable @emotion/react @emotion/styled
+yarn honorable honorable-theme-default @emotion/react @emotion/styled
 ```
 {% endtab %}
 {% endtabs %}
@@ -23,12 +23,13 @@ yarn honorable @emotion/react @emotion/styled
 In your main `App` file:
 
 ```jsx
-import { ThemeProvider, CssBaseline } from 'honorable'
+import { ThemeProvider, CssBaseline, mergeTheme } from 'honorable'
+import defaultTheme from 'honorable-theme-default'
 
 // Define a theme, see the theming section
-const theme = {
+const theme = mergeTheme(defaultTheme, {
   mode: 'light',
-}
+})
 
 function App() {
   return (
@@ -68,7 +69,7 @@ Give a look and feel to your application by editing your theme.
 
 ```jsx
 const theme = {
-  mode: 'light',
+  mode: 'dark',
   colors: {
     primary: '#0070f3', 
   },

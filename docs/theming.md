@@ -10,6 +10,12 @@ Here is what a theme should look like:
 const theme = {
   // Set the mode of your theme, either light or dark
   mode: 'light',
+  // Set the breakpoints
+  breakpoints: {
+    mobile: 600,
+    tablet: 900,
+    desktop: 1200,
+  },
   // Give some colors to your theme, according to the mode
   colors: {
     primary: '#2196f3',
@@ -32,6 +38,11 @@ const theme = {
       fontFamily: 'Roboto',
       boxSizing: 'border-box',
     },
+  },
+  // Props that are passed to the HTML tag by CssBaseline
+  html: {
+    fontFamily: 'Roboto',
+    color: 'text',
   },
   // These props are applied to the <A /> component
   a: {
@@ -74,6 +85,15 @@ const theme = {
     defaultProps: {
       borderRadius: 4,
     },
+    // partProps allow you to customize **any** part of a component
+    // See the component's documentation for naming conventions
+    partProps: {
+      backdrop: {
+        defaultProps: {
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        },
+      },
+    },
   },
   // And so on
 }
@@ -91,11 +111,31 @@ Available presets are:
 
 If you create your own, feel free to add it to the list.
 
+## Theme inheritance
+
+Your can inherit any other theme with `mergeTheme`
+
+```javascript
+import { mergeTheme } from  'honorable'
+
+const theme = mergeTheme(theme1, theme2, ...)
+```
+
+See the following documentation for more:
+
+{% content-ref url="api-reference/theme-helpers/mergetheme.md" %}
+[mergetheme.md](api-reference/theme-helpers/mergetheme.md)
+{% endcontent-ref %}
+
 ## Theme composition
 
 ### `mode`
 
 Can be any string, typically `light` or `dark`. Corresponds to any global variation you want to express on your theme.
+
+### `breakpoints`
+
+...
 
 ### `colors`
 
@@ -134,22 +174,6 @@ See also:
 ### `global`
 
 ### `[component]`
-
-## Theme inheritance
-
-Your can inherit any other theme with `mergeTheme`
-
-```javascript
-import { mergeTheme } from  'honorable'
-
-const theme = mergeTheme(theme1, theme2, ...)
-```
-
-See the following documentation for more:
-
-{% content-ref url="api-reference/theme-helpers/mergetheme.md" %}
-[mergetheme.md](api-reference/theme-helpers/mergetheme.md)
-{% endcontent-ref %}
 
 ## Theme serialization
 
