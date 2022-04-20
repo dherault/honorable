@@ -348,7 +348,7 @@ function DesignSection() {
         The theming API is simple, composable and inheritable.
       </DesignSectionItem>
       <DesignSectionItem
-        icon="🫡"
+        icon="🎹"
         action={(
           <A
             mt={1.5}
@@ -474,7 +474,10 @@ function FooterSection() {
         MIT License
       </P>
       <Span flexGrow={1} />
-      <P textAlign="right">
+      <P
+        ml={1}
+        textAlign="right"
+      >
         Made with ❤️ in 🇫🇮 by{' '}
         <A
           href="https://github.com/dherault"
