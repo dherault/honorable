@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react'
 
 // Add value, checked, etc... to event.target and event.currentTarget
-function enhanceEventTarget(event: MouseEvent, object: object): MouseEvent {
+function enhanceEventTarget<T>(event: MouseEvent<T>, object: object): MouseEvent<T> {
   return {
     ...event,
     target: {

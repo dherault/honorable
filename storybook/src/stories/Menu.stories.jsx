@@ -25,6 +25,30 @@ function Template({ items, ...args }) {
   )
 }
 
+function ExtendedTemplate({ items, ...args }) {
+  function renderItem({ text, items }) {
+    return (
+      <MenuItem
+        key={text}
+        value={text}
+      >
+        {text}
+        {Array.isArray(items) && (
+          <Menu {...args}>
+            {items.map(renderItem)}
+          </Menu>
+        )}
+      </MenuItem>
+    )
+  }
+
+  return (
+    <Menu {...args}>
+      {items.map(renderItem)}
+    </Menu>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
   items: [
@@ -32,4 +56,47 @@ Default.args = {
     'CSS',
     'Lovers',
   ],
+  focused: false,
+}
+
+export const SubMenu = ExtendedTemplate.bind({})
+SubMenu.args = {
+  items: [
+    { text: 'For' },
+    { text: 'CSS' },
+    { text: 'Lovers' },
+    {
+      text: 'And',
+      items: [
+        { text: 'For' },
+        { text: 'CSS' },
+        { text: 'Lovers' },
+        {
+          text: 'And',
+          items: [
+            { text: 'For' },
+            { text: 'CSS' },
+            { text: 'Lovers' },
+            {
+              text: 'And',
+              items: [
+                { text: 'For' },
+                { text: 'CSS' },
+                { text: 'Lovers' },
+                {
+                  text: 'And',
+                  items: [
+                    { text: 'For' },
+                    { text: 'CSS' },
+                    { text: 'Lovers' },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  focused: false,
 }

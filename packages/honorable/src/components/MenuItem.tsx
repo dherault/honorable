@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useContext, useEffect } from 'react'
+import { ReactNode, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -13,20 +13,21 @@ import { Div } from './tags'
 type MenuItemProps = ElementProps<'div'> & {
   value?: any
   itemIndex?: number
-  onClick?: (event: MouseEvent) => void
+  active?: boolean
   children?: ReactNode
 }
 
 const propTypes = {
   value: PropTypes.any,
-  onClick: PropTypes.func,
   itemIndex: PropTypes.number,
+  active: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 function MenuItem({
   value,
-  onClick,
   children,
+  // active,
   itemIndex,
   ...props
 }: MenuItemProps) {
@@ -55,7 +56,25 @@ function MenuItem({
           event,
           renderedItem: children,
         }))
-        if (typeof onClick === 'function') onClick(enhanceEventTarget(event, { value }))
+        if (typeof props.onClick === 'function') props.onClick(enhanceEventTarget<HTMLDivElement>(event, { value }))
+      }}
+      onMouseEnter={event => {
+        if (menuState.activeItemIndex !== itemIndex) {
+          setMenuState(x => ({
+            ...x,
+            activeItemIndex: itemIndex,
+          }))
+        }
+        if (typeof props.onClick === 'function') props.onMouseEnter(event)
+      }}
+      onMouseMove={event => {
+        if (menuState.activeItemIndex !== itemIndex) {
+          setMenuState(x => ({
+            ...x,
+            activeItemIndex: itemIndex,
+          }))
+        }
+        if (typeof props.onClick === 'function') props.onMouseEnter(event)
       }}
     >
       {children}

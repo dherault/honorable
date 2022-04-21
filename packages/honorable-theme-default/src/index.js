@@ -301,7 +301,7 @@ export default {
       borderRadius: '50%',
       background: 'background',
       elevation: 1,
-      transition: 'background-color 200ms ease, color 200ms ease',
+      transition: 'color 200ms ease, background-color 200ms ease',
       '&:hover': {
         backgroundColor: 'transparencify(primary, 85)',
       },
@@ -322,10 +322,16 @@ export default {
   menuItem: {
     defaultProps: {
       padding: '0.5rem 1rem',
-      '&:hover': {
-        backgroundColor: 'transparencify(primary, 90)',
-      },
     },
+    customProps: new Map([
+      [
+        ({ active }) => active,
+        {
+          backgroundColor: 'primary',
+          color: 'white',
+        },
+      ],
+    ]),
   },
   modal: {
     defaultProps: {
