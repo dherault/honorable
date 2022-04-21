@@ -45,36 +45,44 @@ function Menu({
   const previousActualSelected = usePrevious(menuState) || menuState
   const [hideTimeoutId, setHideTimeoutId] = useState<NodeJS.Timeout>()
 
+  // On outside click, unset active item
   useOutsideClick(menuRef, () => setMenuState(x => ({ ...x, activeItemIndex: -1 })))
 
+  // Give the parent menuState the current value of the menuState
   useEffect(() => {
     if (typeof setInitialMenuState === 'function' && (initialMenuState.value !== menuState.value || initialMenuState.renderedItem !== menuState.renderedItem)) {
       setInitialMenuState(menuState)
     }
   }, [menuState, initialMenuState, setInitialMenuState])
 
+  // For select
+  // TODO is this necessary?
   useEffect(() => {
     if (typeof setUpdated === 'function' && menuState !== previousActualSelected) {
       setUpdated()
     }
   }, [menuState, previousActualSelected, setUpdated])
 
+  // If the parent forces the focus, focus
   useEffect(() => {
     if (initialMenuState.focused) {
       setMenuState(x => ({ ...x, focused: true }))
     }
   }, [initialMenuState.focused, setMenuState])
 
+  // If focused by props, focus element
   useEffect(() => {
     if (menuState.focused) menuRef.current.focus()
   }, [menuState.focused])
 
+  // If startActiveItemIndex changes, activate the corresponding item
   useEffect(() => {
     if (startActiveItemIndex > -1) {
       setMenuState(x => ({ ...x, activeItemIndex: startActiveItemIndex }))
     }
   }, [startActiveItemIndex])
 
+  // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
@@ -92,6 +100,8 @@ function Menu({
     }
   }
 
+  // On mouse leave, unset the active item
+  // Give it a timeout to allow mouse rip
   function handleMouseLeave() {
     setHideTimeoutId(
       setTimeout(() => {
@@ -100,6 +110,7 @@ function Menu({
     )
   }
 
+  // On mouse enter, clear the mouse leave timeout
   function handleMouseEnter() {
     clearTimeout(hideTimeoutId)
   }

@@ -78,6 +78,8 @@ function MenuItem(props: MenuItemProps) {
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
+    console.log('xxx', isSubMenuItem, menuState.focused, itemIndex, active)
+
     if (!active) return
 
     if (subMenu && event.key === 'ArrowRight') {
@@ -92,7 +94,7 @@ function MenuItem(props: MenuItemProps) {
   }
 
   if (active) {
-    console.log('active isSubMenuVisible', itemIndex, isSubMenuVisible)
+    console.log('active isSubMenuVisible isSubMenuItem', itemIndex, isSubMenuVisible, isSubMenuItem)
   }
 
   return (
