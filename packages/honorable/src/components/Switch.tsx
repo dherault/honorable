@@ -45,12 +45,6 @@ function Switch(props: SwitchProps) {
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
 
-  const style = {
-    '&:hover': {
-      boxShadow: `0 0 0 2px ${theme.utils.resolveColor('shadow')}`,
-    },
-  }
-
   return (
     <Div
       xflex="y2s"
@@ -70,7 +64,6 @@ function Switch(props: SwitchProps) {
         setUncontrolledChecked(!actualChecked)
       }}
       role="button"
-      {...style}
       {...otherProps}
     >
       {actualChecked && !!checkedBackground && (

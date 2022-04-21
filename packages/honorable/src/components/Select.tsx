@@ -84,7 +84,8 @@ function Select(props: SelectProps) {
 
   return (
     <Div
-      minWidth={128}
+      minWidth={128 + 32 + 8 + 2}
+      display="inline-block"
       border="1px solid border"
       borderRadius={4}
       position="relative"

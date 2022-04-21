@@ -8,6 +8,16 @@ export default mergeTheme(defaultTheme, {
   breakpoints: {
     mobile,
   },
+  // aliases: {
+  //   keys: {
+  //     w: 'width',
+  //   },
+  //   values: {
+  //     width: {
+  //       full: '100%',
+  //     },
+  //   },
+  // },
   colors: {
     secondary: '#FFC547',
   },

@@ -297,6 +297,7 @@ export default {
   iconButton: {
     defaultProps: {
       padding: '0.5rem',
+      border: 'none',
       borderRadius: '50%',
       background: 'background',
       elevation: 1,
@@ -311,6 +312,7 @@ export default {
   },
   menu: {
     defaultProps: {
+      padding: '0.5rem 0',
       elevation: 1,
       backgroundColor: 'background',
       borderRadius: 4,
@@ -327,6 +329,7 @@ export default {
   },
   modal: {
     defaultProps: {
+      padding: '2rem',
       borderRadius: 4,
     },
   },
@@ -340,6 +343,22 @@ export default {
         },
       },
     },
+  },
+  switch: {
+    defaultProps: {
+      transition: 'background-color 150ms ease',
+      '&:hover': {
+        boxShadow: '0 0 0 2px border',
+      },
+    },
+    customProps: new Map([
+      [
+        ({ checked }) => checked,
+        {
+          backgroundColor: 'primary',
+        },
+      ],
+    ]),
   },
 }
 

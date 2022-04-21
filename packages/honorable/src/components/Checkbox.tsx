@@ -28,8 +28,7 @@ const propTypes = {
 
 const defaultIcon = (
   <svg
-    width="24px"
-    height="24px"
+    width="100%"
     viewBox="0 0 15 15"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
