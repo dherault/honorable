@@ -316,22 +316,37 @@ export default {
       elevation: 1,
       backgroundColor: 'background',
       borderRadius: 4,
-      overflow: 'hidden',
-    },
-  },
-  menuItem: {
-    defaultProps: {
-      padding: '0.5rem 1rem',
+      outline: 'none',
     },
     customProps: new Map([
       [
-        ({ active }) => active,
+        ({ isSubMenu }) => isSubMenu,
         {
-          backgroundColor: 'primary',
-          color: 'white',
+          marginTop: '-0.5rem',
         },
       ],
     ]),
+  },
+  menuItem: {
+    defaultProps: {
+      outline: 'none',
+    },
+    partProps: {
+      inner: {
+        defaultProps: {
+          padding: '0.5rem 1rem',
+        },
+        customProps: new Map([
+          [
+            ({ active }) => active,
+            {
+              backgroundColor: 'primary',
+              color: 'white',
+            },
+          ],
+        ]),
+      },
+    },
   },
   modal: {
     defaultProps: {

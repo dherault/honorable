@@ -34,7 +34,7 @@ function ExtendedTemplate({ items, ...args }) {
       >
         {text}
         {Array.isArray(items) && (
-          <Menu {...args}>
+          <Menu>
             {items.map(renderItem)}
           </Menu>
         )}
@@ -56,47 +56,25 @@ Default.args = {
     'CSS',
     'Lovers',
   ],
-  focused: false,
+}
+
+const items = [
+  { text: 'For' },
+  { text: 'CSS' },
+  { text: 'Lovers' },
+  { text: 'And' },
+]
+
+function makeItems(items, depth = 1) {
+  if (depth <= 0) return items
+
+  return items.map((item, i) => ({
+    ...item,
+    items: i % 2 === depth % 2 ? null : makeItems(items, depth - 1),
+  }))
 }
 
 export const SubMenu = ExtendedTemplate.bind({})
 SubMenu.args = {
-  items: [
-    { text: 'For' },
-    { text: 'CSS' },
-    { text: 'Lovers' },
-    {
-      text: 'And',
-      items: [
-        { text: 'For' },
-        { text: 'CSS' },
-        { text: 'Lovers' },
-        {
-          text: 'And',
-          items: [
-            { text: 'For' },
-            { text: 'CSS' },
-            { text: 'Lovers' },
-            {
-              text: 'And',
-              items: [
-                { text: 'For' },
-                { text: 'CSS' },
-                { text: 'Lovers' },
-                {
-                  text: 'And',
-                  items: [
-                    { text: 'For' },
-                    { text: 'CSS' },
-                    { text: 'Lovers' },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  focused: false,
+  items: makeItems(items, 6),
 }

@@ -5,6 +5,7 @@ export type MenuStateType = {
   renderedItem?: ReactNode
   event?: MouseEvent
   activeItemIndex?: number
+  focused?: boolean
 }
 
 export type MenuStateDispatcherType = Dispatch<SetStateAction<MenuStateType>>

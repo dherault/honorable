@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, MouseEvent, ReactElement, ReactNode, cloneElement, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, ReactElement, ReactNode, cloneElement, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -17,7 +17,8 @@ type MenuProps = ElementProps<'div'> & {
   menuState?: MenuStateType
   setMenuState?: MenuStateDispatcherType
   setUpdated?: () => unknown
-  focused?: boolean
+  isSubMenu?: boolean
+  startActiveItemIndex?: number
 }
 
 const propTypes = {
@@ -25,57 +26,82 @@ const propTypes = {
   menuState: PropTypes.object,
   setMenuState: PropTypes.func,
   setUpdated: PropTypes.func,
-  focused: PropTypes.bool,
+  isSubMenu: PropTypes.bool,
+  startActiveItemIndex: PropTypes.number,
 }
 
 function Menu({
-  focused,
-  menuState,
-  setMenuState,
+  menuState: initialMenuState = {},
+  setMenuState: setInitialMenuState,
   setUpdated,
+  isSubMenu,
+  startActiveItemIndex = -1,
   children,
   ...props
 }: MenuProps) {
   const menuRef = useRef<HTMLDivElement>()
-  const [actualMenuState, setActualMenuState] = useState<MenuStateType>({ ...menuState, activeItemIndex: -1 })
-  const menuValue = useMemo<MenuContextType>(() => [actualMenuState, setActualMenuState], [actualMenuState, setActualMenuState])
-  const previousActualSelected = usePrevious(actualMenuState) || actualMenuState
+  const [menuState, setMenuState] = useState<MenuStateType>({ ...initialMenuState, activeItemIndex: startActiveItemIndex })
+  const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState], [menuState])
+  const previousActualSelected = usePrevious(menuState) || menuState
+  const [hideTimeoutId, setHideTimeoutId] = useState<NodeJS.Timeout>()
 
-  useOutsideClick(menuRef, () => setActualMenuState(x => ({ ...x, activeItemIndex: -1 })))
+  useOutsideClick(menuRef, () => setMenuState(x => ({ ...x, activeItemIndex: -1 })))
 
   useEffect(() => {
-    if (typeof setMenuState === 'function' && (menuState.value !== actualMenuState.value || menuState.renderedItem !== actualMenuState.renderedItem)) {
-      setMenuState(actualMenuState)
+    if (typeof setInitialMenuState === 'function' && (initialMenuState.value !== menuState.value || initialMenuState.renderedItem !== menuState.renderedItem)) {
+      setInitialMenuState(menuState)
     }
-  }, [actualMenuState, menuState, setMenuState])
+  }, [menuState, initialMenuState, setInitialMenuState])
 
   useEffect(() => {
-    if (typeof setUpdated === 'function' && actualMenuState !== previousActualSelected) {
+    if (typeof setUpdated === 'function' && menuState !== previousActualSelected) {
       setUpdated()
     }
-  }, [actualMenuState, previousActualSelected, setUpdated])
+  }, [menuState, previousActualSelected, setUpdated])
 
   useEffect(() => {
-    if (focused) menuRef.current.focus()
-  }, [focused])
+    if (initialMenuState.focused) {
+      setMenuState(x => ({ ...x, focused: true }))
+    }
+  }, [initialMenuState.focused, setMenuState])
+
+  useEffect(() => {
+    if (menuState.focused) menuRef.current.focus()
+  }, [menuState.focused])
+
+  useEffect(() => {
+    if (startActiveItemIndex > -1) {
+      setMenuState(x => ({ ...x, activeItemIndex: startActiveItemIndex }))
+    }
+  }, [startActiveItemIndex])
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
+    if (!menuState.focused) return
+
     switch (event.key) {
       case 'ArrowUp': {
-        setActualMenuState(x => ({ ...x, activeItemIndex: Math.max(0, x.activeItemIndex - 1) }))
+        setMenuState(x => ({ ...x, activeItemIndex: Math.max(0, x.activeItemIndex - 1) }))
         break
       }
       case 'ArrowDown': {
-        setActualMenuState(x => ({ ...x, activeItemIndex: Math.min(Children.count(children) - 1, x.activeItemIndex + 1) }))
+        setMenuState(x => ({ ...x, activeItemIndex: Math.min(Children.count(children) - 1, x.activeItemIndex + 1) }))
         break
       }
     }
   }
 
   function handleMouseLeave() {
-    setActualMenuState(x => ({ ...x, activeItemIndex: -1 }))
+    setHideTimeoutId(
+      setTimeout(() => {
+        setMenuState(x => ({ ...x, activeItemIndex: -1 }))
+      }, 330)
+    )
+  }
+
+  function handleMouseEnter() {
+    clearTimeout(hideTimeoutId)
   }
 
   return (
@@ -93,14 +119,18 @@ function Menu({
           handleMouseLeave()
           if (typeof props.onMouseLeave === 'function') props.onMouseLeave(event)
         }}
+        onMouseEnter={event => {
+          handleMouseEnter()
+          if (typeof props.onMouseEnter === 'function') props.onMouseEnter(event)
+        }}
       >
         {Children.map(children, (child: ReactElement, index) => {
           if (child.type === MenuItem) {
-
             return cloneElement(child, {
-              ...child.props,
+              isSubMenuItem: isSubMenu,
               itemIndex: index,
-              active: index === actualMenuState.activeItemIndex,
+              active: index === menuState.activeItemIndex,
+              ...child.props,
             })
           }
 
