@@ -12,6 +12,7 @@ import { Div } from './tags'
 
 type MenuItemProps = ElementProps<'div'> & {
   value?: any
+  itemIndex?: number
   onClick?: (event: MouseEvent) => void
   children?: ReactNode
 }
@@ -19,16 +20,28 @@ type MenuItemProps = ElementProps<'div'> & {
 const propTypes = {
   value: PropTypes.any,
   onClick: PropTypes.func,
+  itemIndex: PropTypes.number,
 }
 
-function MenuItem({ value, onClick, children, ...props }: MenuItemProps) {
-  const [menuSelected, setMenuSelected] = useContext(MenuContext)
+function MenuItem({ value, onClick, children, itemIndex, ...props }: MenuItemProps) {
+  const [menuState, setMenuState] = useContext(MenuContext)
 
   useEffect(() => {
-    if (menuSelected && menuSelected[0] === value && !menuSelected[1]) {
-      setMenuSelected([value, children, null])
+    if (menuState && typeof menuState.registerItem === 'function') {
+      menuState.registerItem(itemIndex, value)
     }
-  }, [menuSelected, setMenuSelected, value, children])
+  }, [menuState, itemIndex, value])
+
+  useEffect(() => {
+    // If selected but not rendered, render it
+    if (menuState && menuState.value === value && !menuState.renderedItem) {
+      setMenuState({
+        ...menuState,
+        value,
+        renderedItem: children,
+      })
+    }
+  }, [menuState, setMenuState, value, children])
 
   return (
     <Div
@@ -36,8 +49,12 @@ function MenuItem({ value, onClick, children, ...props }: MenuItemProps) {
       userSelect="none"
       {...props}
       onClick={event => {
-        setMenuSelected([value, children, event])
-
+        setMenuState(x => ({
+          ...x,
+          value,
+          event,
+          renderedItem: children,
+        }))
         if (typeof onClick === 'function') onClick(enhanceEventTarget(event, { value }))
       }}
     >

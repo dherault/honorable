@@ -1,7 +1,13 @@
 import { Dispatch, MouseEvent, ReactNode, SetStateAction, createContext } from 'react'
 
-export type MenuValueType = [any, ReactNode, MouseEvent]
-export type MenuValueDispatcherType = Dispatch<SetStateAction<MenuValueType>>
-export type MenuContextType = [MenuValueType, MenuValueDispatcherType]
+export type MenuStateType = {
+  value?: any
+  renderedItem?: ReactNode
+  event?: MouseEvent
+  registerItem?: (index: number, value: any) => void
+}
 
-export default createContext<MenuContextType>([[undefined, undefined, undefined], () => {}])
+export type MenuStateDispatcherType = Dispatch<SetStateAction<MenuStateType>>
+export type MenuContextType = [MenuStateType, MenuStateDispatcherType]
+
+export default createContext<MenuContextType>([{}, () => {}])

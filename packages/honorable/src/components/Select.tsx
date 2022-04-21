@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
 
-import { MenuValueType } from '../contexts/MenuContext'
+import { MenuStateType } from '../contexts/MenuContext'
 import useTheme from '../hooks/useTheme'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import resolvePartProps from '../utils/resolvePartProps'
@@ -29,13 +29,14 @@ function Select(props: SelectProps) {
   const { children, onChange, value, onClick, ...otherProps } = props
   const theme = useTheme()
   const [opened, setOpened] = useState(false)
-  const [selected, setSelected] = useState<MenuValueType>([value, undefined, undefined])
+  const [menuState, setMenuState] = useState<MenuStateType>({})
+  const { value: currentValue, renderedItem, event } = menuState
 
   useEffect(() => {
-    if (selected[2] && selected[0] !== value) {
-      onChange(enhanceEventTarget(selected[2], { value: selected[0] }))
+    if (event && currentValue !== value) {
+      onChange(enhanceEventTarget(event, { value: currentValue }))
     }
-  }, [selected, value, onChange])
+  }, [event, currentValue, value, onChange])
 
   function renderCaret() {
     return (
@@ -67,8 +68,8 @@ function Select(props: SelectProps) {
   function renderMenu(hidden = false) {
     return (
       <Menu
-        selected={selected}
-        setSelected={setSelected}
+        menuState={menuState}
+        setMenuState={setMenuState}
         setUpdated={() => setOpened(false)}
         position="absolute"
         top="100%"
@@ -76,6 +77,7 @@ function Select(props: SelectProps) {
         left={0}
         zIndex={100}
         display={hidden ? 'none' : 'block'}
+        extend={resolvePartProps('select', 'menu', props, theme)}
       >
         {children}
       </Menu>
@@ -98,13 +100,14 @@ function Select(props: SelectProps) {
           setOpened(x => !x)
           if (typeof onClick === 'function') onClick(event)
         }}
+        extend={resolvePartProps('select', 'inner', props, theme)}
       >
         <Div
           py={0.5}
           pl={0.5}
-          extend={resolvePartProps('select', 'value', props, theme)}
+          extend={resolvePartProps('select', 'selected', props, theme)}
         >
-          {selected[1]}
+          {renderedItem || '\u00a0'}
         </Div>
         <Span flexGrow={1} />
         {renderCaret()}

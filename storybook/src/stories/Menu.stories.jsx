@@ -10,16 +10,26 @@ export default {
   },
 }
 
-function Template(args) {
+function Template({ items, ...args }) {
   return (
     <Menu {...args}>
-      <MenuItem>JavaScript</MenuItem>
-      <MenuItem>HTML</MenuItem>
-      <MenuItem>CSS</MenuItem>
+      {items.map(item => (
+        <MenuItem
+          key={item}
+          value={item}
+        >
+          {item}
+        </MenuItem>
+      ))}
     </Menu>
   )
 }
 
 export const Default = Template.bind({})
 Default.args = {
+  items: [
+    'For',
+    'CSS',
+    'Lovers',
+  ],
 }

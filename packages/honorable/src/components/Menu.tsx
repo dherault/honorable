@@ -1,52 +1,74 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { Children, ReactElement, ReactNode, cloneElement, useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
 
 import withHonorable from '../withHonorable'
 
-import MenuContext, { MenuContextType, MenuValueDispatcherType, MenuValueType } from '../contexts/MenuContext'
+import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../contexts/MenuContext'
 import usePrevious from '../hooks/usePrevious'
 
 import { Div } from './tags'
+import MenuItem from './MenuItem'
 
 type MenuProps = ElementProps<'div'> & {
   children: ReactNode
-  selected?: MenuValueType
-  setSelected?: MenuValueDispatcherType
+  menuState?: MenuStateType
+  setMenuState?: MenuStateDispatcherType
   setUpdated?: () => unknown
 }
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.any),
-  setSelected: PropTypes.func,
+  menuState: PropTypes.object,
+  setMenuState: PropTypes.func,
   setUpdated: PropTypes.func,
 }
 
-function Menu({ selected, setSelected, setUpdated, ...props }: MenuProps) {
-  const [actualSelected, setActualSelected] = useState<MenuValueType>(selected || [undefined, undefined, undefined])
-  const menuValue = useMemo<MenuContextType>(() => [actualSelected, setActualSelected], [actualSelected, setActualSelected])
-  const previousActualSelected = usePrevious(actualSelected) || actualSelected
+function Menu({ menuState, setMenuState, setUpdated, children, ...props }: MenuProps) {
+  const [registeredItems, setRegisteredItems] = useState([])
+  const registerItem = useCallback((index: number, value: any) => {
+    setRegisteredItems(x => {
+      const nextRegisteredtems = x.slice()
+
+      nextRegisteredtems[index] = value
+
+      return nextRegisteredtems
+    })
+  }, [])
+  const [actualMenuState, setActualMenuState] = useState<MenuStateType>({ ...menuState, registerItem })
+  const menuValue = useMemo<MenuContextType>(() => [actualMenuState, setActualMenuState], [actualMenuState, setActualMenuState])
+  const previousActualSelected = usePrevious(actualMenuState) || actualMenuState
 
   useEffect(() => {
-    if (typeof setSelected === 'function' && (selected[0] !== actualSelected[0] || selected[1] !== actualSelected[1])) {
-      setSelected(actualSelected)
+    if (typeof setMenuState === 'function' && (menuState.value !== actualMenuState.value || menuState.renderedItem !== actualMenuState.renderedItem)) {
+      setMenuState(actualMenuState)
     }
-  }, [setSelected, actualSelected, selected])
+  }, [actualMenuState, menuState, setMenuState])
 
   useEffect(() => {
-    if (typeof setUpdated === 'function' && actualSelected !== previousActualSelected) {
+    if (typeof setUpdated === 'function' && actualMenuState !== previousActualSelected) {
       setUpdated()
     }
-  }, [setUpdated, actualSelected, previousActualSelected])
+  }, [actualMenuState, previousActualSelected, setUpdated])
+
+  console.log('registeredItems', registeredItems)
 
   return (
     <MenuContext.Provider value={menuValue}>
       <Div
         display="inline-block"
         {...props}
-      />
+      >
+        {Children.map(children, (child: ReactElement, index) => {
+          if (child.type === MenuItem) {
+
+            return cloneElement(child, { ...child.props, itemIndex: index })
+          }
+
+          return child
+        })}
+      </Div>
     </MenuContext.Provider>
   )
 }
