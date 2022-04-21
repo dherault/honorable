@@ -1,5 +1,6 @@
-import { Children, ReactElement, ReactNode, cloneElement, useCallback, useEffect, useMemo, useState } from 'react'
+import { Children, ReactElement, ReactNode, cloneElement, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import useKeys from 'react-piano-keys'
 
 import { ElementProps } from '../types'
 
@@ -25,20 +26,21 @@ const propTypes = {
   setUpdated: PropTypes.func,
 }
 
-function Menu({ menuState, setMenuState, setUpdated, children, ...props }: MenuProps) {
-  const [registeredItems, setRegisteredItems] = useState([])
-  const registerItem = useCallback((index: number, value: any) => {
-    setRegisteredItems(x => {
-      const nextRegisteredtems = x.slice()
-
-      nextRegisteredtems[index] = value
-
-      return nextRegisteredtems
-    })
-  }, [])
-  const [actualMenuState, setActualMenuState] = useState<MenuStateType>({ ...menuState, registerItem })
+function Menu({
+  menuState,
+  setMenuState,
+  setUpdated,
+  children,
+  ...props
+}: MenuProps) {
+  const menuRef = useRef()
+  const [activeItemIndex, setActiveItemIndex] = useState(-1)
+  const [actualMenuState, setActualMenuState] = useState<MenuStateType>({ ...menuState, activeItemIndex })
   const menuValue = useMemo<MenuContextType>(() => [actualMenuState, setActualMenuState], [actualMenuState, setActualMenuState])
   const previousActualSelected = usePrevious(actualMenuState) || actualMenuState
+
+  useKeys(menuRef.current, 'up', () => handleKey('up'))
+  useKeys(menuRef.current, 'down', () => handleKey('down'))
 
   useEffect(() => {
     if (typeof setMenuState === 'function' && (menuState.value !== actualMenuState.value || menuState.renderedItem !== actualMenuState.renderedItem)) {
@@ -52,11 +54,14 @@ function Menu({ menuState, setMenuState, setUpdated, children, ...props }: MenuP
     }
   }, [actualMenuState, previousActualSelected, setUpdated])
 
-  console.log('registeredItems', registeredItems)
+  function handleKey(key: string) {
+    console.log('key', key)
+  }
 
   return (
     <MenuContext.Provider value={menuValue}>
       <Div
+        ref={menuRef}
         display="inline-block"
         {...props}
       >

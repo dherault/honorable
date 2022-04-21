@@ -26,7 +26,13 @@ const propTypes = {
 }
 
 function Select(props: SelectProps) {
-  const { children, onChange, value, onClick, ...otherProps } = props
+  const {
+    children,
+    onChange,
+    value,
+    onClick,
+    ...otherProps
+  } = props
   const theme = useTheme()
   const [opened, setOpened] = useState(false)
   const [menuState, setMenuState] = useState<MenuStateType>({})

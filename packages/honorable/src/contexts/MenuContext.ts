@@ -4,7 +4,7 @@ export type MenuStateType = {
   value?: any
   renderedItem?: ReactNode
   event?: MouseEvent
-  registerItem?: (index: number, value: any) => void
+  activeItemIndex?: number
 }
 
 export type MenuStateDispatcherType = Dispatch<SetStateAction<MenuStateType>>

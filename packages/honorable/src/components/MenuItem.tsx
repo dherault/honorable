@@ -23,14 +23,14 @@ const propTypes = {
   itemIndex: PropTypes.number,
 }
 
-function MenuItem({ value, onClick, children, itemIndex, ...props }: MenuItemProps) {
+function MenuItem({
+  value,
+  onClick,
+  children,
+  itemIndex,
+  ...props
+}: MenuItemProps) {
   const [menuState, setMenuState] = useContext(MenuContext)
-
-  useEffect(() => {
-    if (menuState && typeof menuState.registerItem === 'function') {
-      menuState.registerItem(itemIndex, value)
-    }
-  }, [menuState, itemIndex, value])
 
   useEffect(() => {
     // If selected but not rendered, render it

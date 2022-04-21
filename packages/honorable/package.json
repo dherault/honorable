@@ -36,7 +36,8 @@
     "flexpad": "^3.1.0",
     "lodash.merge": "^4.6.2",
     "lodash.mergewith": "^4.6.2",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "react-piano-keys": "^1.2.0"
   },
   "peerDependencies": {
     "@emotion/react": "^11.9.0",
