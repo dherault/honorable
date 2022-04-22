@@ -5,7 +5,7 @@ export type MenuStateType = {
   renderedItem?: ReactNode
   event?: MouseEvent
   activeItemIndex?: number
-  focused?: boolean
+  active?: boolean
   isSubMenuVisible?: boolean
 }
 

@@ -1,11 +1,11 @@
-import { Children, KeyboardEvent, ReactElement, ReactNode, cloneElement, useContext, useEffect, useRef, useState } from 'react'
+import { Children, KeyboardEvent, ReactElement, ReactNode, cloneElement, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
 
 import withHonorable from '../withHonorable'
 
-import MenuContext, { MenuStateType } from '../contexts/MenuContext'
+import MenuContext, { MenuContextType, MenuStateType } from '../contexts/MenuContext'
 import useTheme from '../hooks/useTheme'
 // import enhanceEventTarget from '../utils/enhanceEventTarget'
 import resolvePartProps from '../utils/resolvePartProps'
@@ -30,6 +30,28 @@ const propTypes = {
   onClick: PropTypes.func,
 }
 
+function MenuItemTriangle({ isTop = false, size = 0, ...props }) {
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>()
+  const [displayed, setDisplayed] = useState(true)
+
+  if (!displayed) return null
+
+  return (
+    <Div
+      width={0}
+      height={0}
+      borderLeft={`${size}px solid transparent`}
+      borderBottom={isTop ? `${size}px solid transparent` : 'none'}
+      borderTop={!isTop ? `${size}px solid transparent` : 'none'}
+      cursor="pointer"
+      onMouseEnter={() => setTimeoutId(setTimeout(() => setDisplayed(false), 330))}
+      onMouseLeave={() => clearTimeout(timeoutId)}
+      zIndex={100}
+      {...props}
+    />
+  )
+}
+
 function MenuItem(props: MenuItemProps) {
   const {
     value,
@@ -41,14 +63,22 @@ function MenuItem(props: MenuItemProps) {
   } = props
   const menuItemRef = useRef<HTMLDivElement>()
   const theme = useTheme()
-  const [menuState, setMenuState,, setParentMenuState] = useContext(MenuContext)
+  const [menuState, setMenuState, parentMenuState, setParentMenuState] = useContext(MenuContext)
   const [subMenu, setSubMenu] = useState(null)
-  const [subMenuState, setSubMenuState] = useState<MenuStateType>({ focused: false, isSubMenuVisible: false })
+  const [subMenuState, setSubMenuState] = useState<MenuStateType>({ active: false, isSubMenuVisible: false })
+  const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, setMenuState, parentMenuState, setParentMenuState])
+  const [height, setHeight] = useState(0)
+
+  console.log('height', height)
 
   if (active && itemIndex === 0 && isSubMenuItem) {
-    console.log('menuState', menuState)
-    console.log('subMenuState', subMenuState)
+    console.log('menuState', menuState.active)
+    // console.log('subMenuState', subMenuState)
   }
+
+  useEffect(() => {
+    setHeight(menuItemRef.current.offsetHeight)
+  }, [])
 
   // If selected but not rendered, render it
   // useEffect(() => {
@@ -74,53 +104,58 @@ function MenuItem(props: MenuItemProps) {
   // Otherwise if subMenu is focused unfocus subMenu
   // Otherwise hide subMenu
   useEffect(() => {
-    if (active && menuState.focused) {
+    if (active && menuState.active) {
       menuItemRef.current.focus()
       // setMenuState(x => ({ ...x, isSubMenuVisible: true })) // NO
     }
     // else if (subMenuState.focused) setSubMenuState(x => ({ ...x, focused: false }))
-  }, [active, menuState.focused])
+  }, [active, menuState.active])
 
   // On right key, focus subMenu
   // On left key, unfocus menu
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
-    if (!(active && menuState.focused)) return
+    if (!(active && menuState.active)) return
 
     if (subMenu && event.key === 'ArrowRight') {
       console.log('arrowright', itemIndex)
       if (menuState.isSubMenuVisible) {
         console.log('case1right')
-        setMenuState(x => ({ ...x, focused: false }))
-        setSubMenuState(x => ({ ...x, focused: true, activeItemIndex: 0, isSubMenuVisible: true }))
+        setMenuState(x => ({ ...x, active: false }))
+        setSubMenuState(x => ({ ...x, active: true, activeItemIndex: 0, isSubMenuVisible: true }))
       }
       else {
         console.log('case2right')
         // setParentMenuState(x => ({ ...x, focused: false }))
         setMenuState(x => ({ ...x, isSubMenuVisible: true }))
-        setSubMenuState(x => ({ ...x, focused: false, activeItemIndex: -1 }))
+        setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1 }))
       }
     }
     else if (isSubMenuItem && event.key === 'ArrowLeft') {
       console.log('arrowleft', itemIndex)
       if (subMenu) {
+        setSubMenuState(x => ({ ...x, active: false, isSubMenuVisible: false }))
+
         if (menuState.isSubMenuVisible) {
           console.log('case1left')
           menuItemRef.current.focus()
-          setMenuState(x => ({ ...x, focused: true, isSubMenuVisible: false }))
-          setSubMenuState(x => ({ ...x, focused: false, isSubMenuVisible: false }))
+          setMenuState(x => ({ ...x, active: true, isSubMenuVisible: false }))
         }
         else {
           console.log('case2left')
-          setMenuState(x => ({ ...x, focused: false, isSubMenuVisible: false }))
-          setParentMenuState(x => ({ ...x, focused: true, isSubMenuVisible: false }))
+          setMenuState(x => ({ ...x, active: false, activeItemIndex: -1 }))
+          setTimeout(() => {
+            setParentMenuState(x => ({ ...x, active: true, isSubMenuVisible: false }))
+          }, 0)
         }
       }
       else {
         console.log('case3left')
-        setMenuState(x => ({ ...x, focused: false, isSubMenuVisible: false }))
-        setParentMenuState(x => ({ ...x, focused: true, isSubMenuVisible: false }))
+        setMenuState(x => ({ ...x, active: false, isSubMenuVisible: false }))
+        setTimeout(() => {
+          setParentMenuState(x => ({ ...x, active: true, isSubMenuVisible: false }))
+        }, 0)
       }
     }
   }
@@ -153,24 +188,28 @@ function MenuItem(props: MenuItemProps) {
           }))
         }}
         onMouseEnter={() => {
-          if (menuState.activeItemIndex !== itemIndex) {
+          if (!(active && menuState.active)) {
             setMenuState(x => ({
               ...x,
-              focused: true,
+              active: true,
               activeItemIndex: itemIndex,
               isSubMenuVisible: true,
             }))
+            setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
+            setParentMenuState(x => ({ ...x, active: false }))
             menuItemRef.current.focus()
           }
         }}
         onMouseMove={() => {
-          if (menuState.activeItemIndex !== itemIndex) {
+          if (!(active && menuState.active)) {
             setMenuState(x => ({
               ...x,
-              focused: true,
+              active: true,
               activeItemIndex: itemIndex,
               isSubMenuVisible: true,
             }))
+            setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
+            setParentMenuState(x => ({ ...x, active: false }))
             menuItemRef.current.focus()
           }
         }}
@@ -207,15 +246,34 @@ function MenuItem(props: MenuItemProps) {
           </>
         )}
       </Div>
-      {active && subMenu && menuState.isSubMenuVisible && cloneElement(subMenu, {
-        isSubMenu: true,
-        menuState: subMenuState,
-        setMenuState: setSubMenuState,
-        position: 'absolute',
-        top: 0,
-        left: '100%',
-        ...subMenu.props,
-      })}
+      {active && subMenu && menuState.isSubMenuVisible && (
+        <>
+          <MenuItemTriangle
+            isTop
+            size={height * 1.5}
+            position="absolute"
+            top={-height * 1.5}
+            right={0}
+          />
+          <MenuContext.Provider value={menuValue}>
+            {cloneElement(subMenu, {
+              isSubMenu: true,
+              menuState: subMenuState,
+              setMenuState: setSubMenuState,
+              position: 'absolute',
+              top: 0,
+              left: '100%',
+              ...subMenu.props,
+            })}
+          </MenuContext.Provider>
+          <MenuItemTriangle
+            size={height * 1.5}
+            position="absolute"
+            bottom={-height * 1.5}
+            right={0}
+          />
+        </>
+      )}
     </Div>
   )
 }

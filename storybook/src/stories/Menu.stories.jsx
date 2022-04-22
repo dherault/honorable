@@ -11,21 +11,6 @@ export default {
 }
 
 function Template({ items, ...args }) {
-  return (
-    <Menu {...args}>
-      {items.map(item => (
-        <MenuItem
-          key={item}
-          value={item}
-        >
-          {item}
-        </MenuItem>
-      ))}
-    </Menu>
-  )
-}
-
-function ExtendedTemplate({ items, ...args }) {
   function renderItem({ text, items }) {
     return (
       <MenuItem
@@ -49,15 +34,6 @@ function ExtendedTemplate({ items, ...args }) {
   )
 }
 
-export const Default = Template.bind({})
-Default.args = {
-  items: [
-    'For',
-    'CSS',
-    'Lovers',
-  ],
-}
-
 const items = [
   { text: 'For' },
   { text: 'CSS' },
@@ -74,7 +50,12 @@ function makeItems(items, depth = 1) {
   }))
 }
 
-export const SubMenu = ExtendedTemplate.bind({})
+export const Default = Template.bind({})
+Default.args = {
+  items,
+}
+
+export const SubMenu = Template.bind({})
 SubMenu.args = {
   items: makeItems(items, 6),
 }
