@@ -1,5 +1,6 @@
 import { Children, KeyboardEvent, ReactElement, ReactNode, cloneElement, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import { Transition } from 'react-transition-group'
 
 import { ElementProps } from '../types'
 
@@ -18,6 +19,7 @@ type MenuProps = ElementProps<'div'> & {
   setMenuState?: MenuStateDispatcherType
   // setUpdated?: () => unknown
   isSubMenu?: boolean
+  fade?: boolean
 }
 
 const propTypes = {
@@ -26,6 +28,7 @@ const propTypes = {
   setMenuState: PropTypes.func,
   // setUpdated: PropTypes.func,
   isSubMenu: PropTypes.bool,
+  fade: PropTypes.bool,
 }
 
 function Menu({
@@ -33,6 +36,7 @@ function Menu({
   setMenuState: setInitialMenuState,
   // setUpdated,
   isSubMenu,
+  fade,
   children,
   ...props
 }: MenuProps) {
@@ -108,41 +112,78 @@ function Menu({
     clearTimeout(hideTimeoutId)
   }
 
+  function wrapFade(element: ReactElement) {
+    if (!fade) return element
+
+    const duration = 330
+
+    const defaultStyle = {
+      position: 'relative',
+      top: -4,
+      opacity: 0,
+      transition: `opacity ${duration}ms ease, top ${duration}ms ease`,
+    }
+
+    const transitionStyles = {
+      entering: { opacity: 1, top: 0 },
+      entered: { opacity: 1, top: 0 },
+      exiting: { opacity: 0 },
+      exited: { opacity: 0 },
+    }
+
+    return (
+      <Transition
+        in
+        appear
+        timeout={duration}
+      >
+        {(state: string) => cloneElement(element, {
+          ...element.props,
+          ...defaultStyle,
+          ...transitionStyles[state],
+        })}
+      </Transition>
+    )
+  }
+
   return (
     <MenuContext.Provider value={menuValue}>
-      <Div
-        ref={menuRef}
-        tabIndex={0}
-        display="inline-block"
-        {...props}
+      {wrapFade(
+        <Div
+          ref={menuRef}
+          tabIndex={0}
+          display="inline-block"
+          {...props}
         // style={{ backgroundColor: menuState.active ? 'pink' : 'transparent' }}
-        onKeyDown={event => {
-          handleKeyDown(event)
-          if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
-        }}
-        onMouseLeave={event => {
-          handleMouseLeave()
-          if (typeof props.onMouseLeave === 'function') props.onMouseLeave(event)
-        }}
-        onMouseEnter={event => {
-          handleMouseEnter()
-          if (typeof props.onMouseEnter === 'function') props.onMouseEnter(event)
-        }}
-      >
-        {Children.map(children, (child: ReactElement, index) => {
+          onKeyDown={event => {
+            handleKeyDown(event)
+            if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
+          }}
+          onMouseLeave={event => {
+            handleMouseLeave()
+            if (typeof props.onMouseLeave === 'function') props.onMouseLeave(event)
+          }}
+          onMouseEnter={event => {
+            handleMouseEnter()
+            if (typeof props.onMouseEnter === 'function') props.onMouseEnter(event)
+          }}
+        >
+          {Children.map(children, (child: ReactElement, index) => {
           // If child is a MenuItem, give it some more props
-          if (child.type === MenuItem) {
-            return cloneElement(child, {
-              isSubMenuItem: isSubMenu,
-              itemIndex: index,
-              active: index === menuState.activeItemIndex,
-              ...child.props,
-            })
-          }
+            if (child.type === MenuItem) {
+              return cloneElement(child, {
+                fade,
+                isSubMenuItem: isSubMenu,
+                itemIndex: index,
+                active: index === menuState.activeItemIndex,
+                ...child.props,
+              })
+            }
 
-          return child
-        })}
-      </Div>
+            return child
+          })}
+        </Div>
+      )}
     </MenuContext.Provider>
   )
 }

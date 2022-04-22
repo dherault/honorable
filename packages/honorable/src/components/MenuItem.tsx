@@ -19,6 +19,7 @@ type MenuItemProps = ElementProps<'div'> & {
   itemIndex?: number
   active?: boolean
   isSubMenuItem?: boolean
+  fade?: boolean
   children?: ReactNode
 }
 
@@ -27,6 +28,7 @@ const propTypes = {
   itemIndex: PropTypes.number,
   active: PropTypes.bool,
   isSubMenuItem: PropTypes.bool,
+  fade: PropTypes.bool,
   onClick: PropTypes.func,
 }
 
@@ -68,6 +70,7 @@ function MenuItem(props: MenuItemProps) {
     active,
     itemIndex,
     isSubMenuItem,
+    fade,
     ...otherProps
   } = props
   const menuItemRef = useRef<HTMLDivElement>()
@@ -236,6 +239,7 @@ function MenuItem(props: MenuItemProps) {
           />
           <MenuContext.Provider value={menuValue}>
             {cloneElement(subMenu, {
+              fade,
               isSubMenu: true,
               menuState: subMenuState,
               setMenuState: setSubMenuState,
