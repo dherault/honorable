@@ -59,3 +59,9 @@ export const SubMenu = Template.bind({})
 SubMenu.args = {
   items: makeItems(items, 6),
 }
+
+export const Fade = Template.bind({})
+Fade.args = {
+  fade: true,
+  items: makeItems(items, 6),
+}
