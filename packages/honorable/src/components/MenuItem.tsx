@@ -30,7 +30,11 @@ const propTypes = {
   onClick: PropTypes.func,
 }
 
-function MenuItemTriangle({ isTop = false, size = 0, ...props }) {
+// A triangle to smooth the user interaction with the submenus
+// Prevents losing focus when hovering on a submenu
+function MenuItemTriangle(props: any) {
+  const { isTop = false, size = 0, ...otherProps } = props
+  const theme = useTheme()
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>()
   const [displayed, setDisplayed] = useState(true)
 
@@ -44,10 +48,15 @@ function MenuItemTriangle({ isTop = false, size = 0, ...props }) {
       borderBottom={isTop ? `${size}px solid transparent` : 'none'}
       borderTop={!isTop ? `${size}px solid transparent` : 'none'}
       cursor="pointer"
-      onMouseEnter={() => setTimeoutId(setTimeout(() => setDisplayed(false), 330))}
+      onMouseEnter={() => {
+        setTimeoutId(setTimeout(() => {
+          setDisplayed(false)
+        }, 330))
+      }}
       onMouseLeave={() => clearTimeout(timeoutId)}
       zIndex={100}
-      {...props}
+      {...otherProps}
+      extend={resolvePartProps('menuItem', 'triangle', props, theme)}
     />
   )
 }
@@ -69,27 +78,11 @@ function MenuItem(props: MenuItemProps) {
   const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, setMenuState, parentMenuState, setParentMenuState])
   const [height, setHeight] = useState(0)
 
-  console.log('height', height)
-
-  if (active && itemIndex === 0 && isSubMenuItem) {
-    console.log('menuState', menuState.active)
-    // console.log('subMenuState', subMenuState)
-  }
-
+  // Set height for the submenu's triangle
   useEffect(() => {
-    setHeight(menuItemRef.current.offsetHeight)
+    // times 1.5 to make the triangle large enough
+    setHeight(menuItemRef.current.offsetHeight * 1.5)
   }, [])
-
-  // If selected but not rendered, render it
-  // useEffect(() => {
-  //   if (menuState && menuState.value === value && !menuState.renderedItem) {
-  //     setMenuState({
-  //       ...menuState,
-  //       value,
-  //       renderedItem: children,
-  //     })
-  //   }
-  // }, [menuState, setMenuState, value, children])
 
   // Find subMenu amongs children
   useEffect(() => {
@@ -106,9 +99,7 @@ function MenuItem(props: MenuItemProps) {
   useEffect(() => {
     if (active && menuState.active) {
       menuItemRef.current.focus()
-      // setMenuState(x => ({ ...x, isSubMenuVisible: true })) // NO
     }
-    // else if (subMenuState.focused) setSubMenuState(x => ({ ...x, focused: false }))
   }, [active, menuState.active])
 
   // On right key, focus subMenu
@@ -119,31 +110,24 @@ function MenuItem(props: MenuItemProps) {
     if (!(active && menuState.active)) return
 
     if (subMenu && event.key === 'ArrowRight') {
-      console.log('arrowright', itemIndex)
       if (menuState.isSubMenuVisible) {
-        console.log('case1right')
         setMenuState(x => ({ ...x, active: false }))
         setSubMenuState(x => ({ ...x, active: true, activeItemIndex: 0, isSubMenuVisible: true }))
       }
       else {
-        console.log('case2right')
-        // setParentMenuState(x => ({ ...x, focused: false }))
         setMenuState(x => ({ ...x, isSubMenuVisible: true }))
         setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1 }))
       }
     }
     else if (isSubMenuItem && event.key === 'ArrowLeft') {
-      console.log('arrowleft', itemIndex)
       if (subMenu) {
         setSubMenuState(x => ({ ...x, active: false, isSubMenuVisible: false }))
 
         if (menuState.isSubMenuVisible) {
-          console.log('case1left')
           menuItemRef.current.focus()
           setMenuState(x => ({ ...x, active: true, isSubMenuVisible: false }))
         }
         else {
-          console.log('case2left')
           setMenuState(x => ({ ...x, active: false, activeItemIndex: -1 }))
           setTimeout(() => {
             setParentMenuState(x => ({ ...x, active: true, isSubMenuVisible: false }))
@@ -151,7 +135,6 @@ function MenuItem(props: MenuItemProps) {
         }
       }
       else {
-        console.log('case3left')
         setMenuState(x => ({ ...x, active: false, isSubMenuVisible: false }))
         setTimeout(() => {
           setParentMenuState(x => ({ ...x, active: true, isSubMenuVisible: false }))
@@ -159,10 +142,6 @@ function MenuItem(props: MenuItemProps) {
       }
     }
   }
-
-  // if (active) {
-  //   console.log('active isSubMenuVisible', itemIndex, subMenuState.isSubMenuVisible)
-  // }
 
   return (
     <Div
@@ -250,9 +229,9 @@ function MenuItem(props: MenuItemProps) {
         <>
           <MenuItemTriangle
             isTop
-            size={height * 1.5}
+            size={height}
             position="absolute"
-            top={-height * 1.5}
+            top={-height}
             right={0}
           />
           <MenuContext.Provider value={menuValue}>
@@ -267,9 +246,9 @@ function MenuItem(props: MenuItemProps) {
             })}
           </MenuContext.Provider>
           <MenuItemTriangle
-            size={height * 1.5}
+            size={height}
             position="absolute"
-            bottom={-height * 1.5}
+            bottom={-height}
             right={0}
           />
         </>

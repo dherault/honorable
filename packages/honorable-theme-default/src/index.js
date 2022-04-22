@@ -316,7 +316,7 @@ export default {
       elevation: 1,
       backgroundColor: 'background',
       borderRadius: 4,
-      // outline: 'none',
+      outline: 'none',
     },
     customProps: new Map([
       [
@@ -329,7 +329,7 @@ export default {
   },
   menuItem: {
     defaultProps: {
-      // outline: 'none',
+      outline: 'none',
     },
     partProps: {
       inner: {

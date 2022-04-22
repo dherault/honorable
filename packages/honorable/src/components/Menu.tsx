@@ -16,7 +16,7 @@ type MenuProps = ElementProps<'div'> & {
   children: ReactNode
   menuState?: MenuStateType
   setMenuState?: MenuStateDispatcherType
-  setUpdated?: () => unknown
+  // setUpdated?: () => unknown
   isSubMenu?: boolean
 }
 
@@ -24,14 +24,14 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   menuState: PropTypes.object,
   setMenuState: PropTypes.func,
-  setUpdated: PropTypes.func,
+  // setUpdated: PropTypes.func,
   isSubMenu: PropTypes.bool,
 }
 
 function Menu({
   menuState: initialMenuState,
   setMenuState: setInitialMenuState,
-  setUpdated,
+  // setUpdated,
   isSubMenu,
   children,
   ...props
@@ -40,18 +40,15 @@ function Menu({
   const [parentMenuState, setParentMenuState] = useContext(MenuContext)
   const [menuState, setMenuState] = useState<MenuStateType>(initialMenuState || {})
   const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, parentMenuState, setParentMenuState])
-  // const previousActualSelected = usePrevious(menuState) || menuState
   const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
 
   const [hideTimeoutId, setHideTimeoutId] = useState<NodeJS.Timeout>()
 
-  // console.log('menuState', menuState, initialMenuState)
-
   // On outside click, unset active item
   useOutsideClick(menuRef, () => setMenuState(x => ({ ...x, activeItemIndex: -1 })))
 
+  // Sync parent menu state with menu state
   useEffect(() => {
-    console.log('effect', menuState)
     if (typeof setInitialMenuState === 'function') {
       setInitialMenuState(x => {
         if (x.active === menuState.active) return x
@@ -61,44 +58,12 @@ function Menu({
     }
   }, [setInitialMenuState, menuState])
 
+  // Sync menu state with parent menu state
   useEffect(() => {
-    console.log('effect2', initialMenuState)
     if (previousInitialMenuState !== initialMenuState) {
       setMenuState(x => initialMenuState || x)
     }
   }, [previousInitialMenuState, initialMenuState])
-  // Give the parent menuState the current value of the menuState
-  // useEffect(() => {
-  //   if (typeof setInitialMenuState === 'function' && (initialMenuState.value !== menuState.value || initialMenuState.renderedItem !== menuState.renderedItem)) {
-  //     setInitialMenuState({
-  //       ...initialMenuState ,
-  //       ...menuState,
-  //     })
-  //   }
-  // }, [menuState, initialMenuState, setInitialMenuState])
-
-  // For select
-  // // TODO is this necessary?
-  // useEffect(() => {
-  //   if (typeof setUpdated === 'function' && menuState !== previousActualSelected) {
-  //     setUpdated()
-  //   }
-  // }, [menuState, previousActualSelected, setUpdated])
-
-  // If the parent forces the focus, focus
-  // useEffect(() => {
-  //   setMenuState(x => ({ ...x, focused: initialMenuState.focused }))
-  // }, [initialMenuState.focused, setMenuState])
-
-  // If focused by props, focus element
-  // useEffect(() => {
-  //   if (menuState.focused && menuState.activeItemIndex === -1) menuRef.current.focus()
-  // }, [menuState.focused, menuState.activeItemIndex])
-
-  // Sync activeItemIndex from parent
-  // useEffect(() => {
-  //   setMenuState(x => ({ ...x, activeItemIndex: initialMenuState.activeItemIndex }))
-  // }, [initialMenuState.activeItemIndex])
 
   // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -150,7 +115,7 @@ function Menu({
         tabIndex={0}
         display="inline-block"
         {...props}
-        style={{ backgroundColor: menuState.active ? 'pink' : 'transparent' }}
+        // style={{ backgroundColor: menuState.active ? 'pink' : 'transparent' }}
         onKeyDown={event => {
           handleKeyDown(event)
           if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
@@ -165,6 +130,7 @@ function Menu({
         }}
       >
         {Children.map(children, (child: ReactElement, index) => {
+          // If child is a MenuItem, give it some more props
           if (child.type === MenuItem) {
             return cloneElement(child, {
               isSubMenuItem: isSubMenu,
