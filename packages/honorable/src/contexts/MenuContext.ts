@@ -6,9 +6,10 @@ export type MenuStateType = {
   event?: MouseEvent
   activeItemIndex?: number
   focused?: boolean
+  isSubMenuVisible?: boolean
 }
 
 export type MenuStateDispatcherType = Dispatch<SetStateAction<MenuStateType>>
-export type MenuContextType = [MenuStateType, MenuStateDispatcherType]
+export type MenuContextType = [MenuStateType, MenuStateDispatcherType, MenuStateType, MenuStateDispatcherType]
 
-export default createContext<MenuContextType>([{}, () => {}])
+export default createContext<MenuContextType>([{}, () => {}, {}, () => {}])

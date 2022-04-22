@@ -41,21 +41,25 @@ function MenuItem(props: MenuItemProps) {
   } = props
   const menuItemRef = useRef<HTMLDivElement>()
   const theme = useTheme()
-  const [menuState, setMenuState] = useContext(MenuContext)
+  const [menuState, setMenuState,, setParentMenuState] = useContext(MenuContext)
   const [subMenu, setSubMenu] = useState(null)
-  const [subMenuState, setSubMenuState] = useState<MenuStateType>({})
-  const [isSubMenuVisible, setIsSubMenuVisible] = useState(true)
+  const [subMenuState, setSubMenuState] = useState<MenuStateType>({ focused: false, isSubMenuVisible: false })
+
+  if (active && itemIndex === 0 && isSubMenuItem) {
+    console.log('menuState', menuState)
+    console.log('subMenuState', subMenuState)
+  }
 
   // If selected but not rendered, render it
-  useEffect(() => {
-    if (menuState && menuState.value === value && !menuState.renderedItem) {
-      setMenuState({
-        ...menuState,
-        value,
-        renderedItem: children,
-      })
-    }
-  }, [menuState, setMenuState, value, children])
+  // useEffect(() => {
+  //   if (menuState && menuState.value === value && !menuState.renderedItem) {
+  //     setMenuState({
+  //       ...menuState,
+  //       value,
+  //       renderedItem: children,
+  //     })
+  //   }
+  // }, [menuState, setMenuState, value, children])
 
   // Find subMenu amongs children
   useEffect(() => {
@@ -67,35 +71,63 @@ function MenuItem(props: MenuItemProps) {
   }, [children])
 
   // Focus if active
-  // Otherwise unfocus subMenu
+  // Otherwise if subMenu is focused unfocus subMenu
+  // Otherwise hide subMenu
   useEffect(() => {
-    if (active) menuItemRef.current.focus()
-    else if (subMenuState.focused) setSubMenuState(x => ({ ...x, focused: false }))
-  }, [active, subMenuState.focused])
+    if (active && menuState.focused) {
+      menuItemRef.current.focus()
+      // setMenuState(x => ({ ...x, isSubMenuVisible: true })) // NO
+    }
+    // else if (subMenuState.focused) setSubMenuState(x => ({ ...x, focused: false }))
+  }, [active, menuState.focused])
 
   // On right key, focus subMenu
   // On left key, unfocus menu
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
-    console.log('xxx', isSubMenuItem, menuState.focused, itemIndex, active)
-
-    if (!active) return
+    if (!(active && menuState.focused)) return
 
     if (subMenu && event.key === 'ArrowRight') {
-      setMenuState(x => ({ ...x, focused: false }))
-      setSubMenuState(x => ({ ...x, focused: true }))
-      setIsSubMenuVisible(true)
+      console.log('arrowright', itemIndex)
+      if (menuState.isSubMenuVisible) {
+        console.log('case1right')
+        setMenuState(x => ({ ...x, focused: false }))
+        setSubMenuState(x => ({ ...x, focused: true, activeItemIndex: 0, isSubMenuVisible: true }))
+      }
+      else {
+        console.log('case2right')
+        // setParentMenuState(x => ({ ...x, focused: false }))
+        setMenuState(x => ({ ...x, isSubMenuVisible: true }))
+        setSubMenuState(x => ({ ...x, focused: false, activeItemIndex: -1 }))
+      }
     }
     else if (isSubMenuItem && event.key === 'ArrowLeft') {
-      setMenuState(x => ({ ...x, focused: true }))
-      setIsSubMenuVisible(false)
+      console.log('arrowleft', itemIndex)
+      if (subMenu) {
+        if (menuState.isSubMenuVisible) {
+          console.log('case1left')
+          menuItemRef.current.focus()
+          setMenuState(x => ({ ...x, focused: true, isSubMenuVisible: false }))
+          setSubMenuState(x => ({ ...x, focused: false, isSubMenuVisible: false }))
+        }
+        else {
+          console.log('case2left')
+          setMenuState(x => ({ ...x, focused: false, isSubMenuVisible: false }))
+          setParentMenuState(x => ({ ...x, focused: true, isSubMenuVisible: false }))
+        }
+      }
+      else {
+        console.log('case3left')
+        setMenuState(x => ({ ...x, focused: false, isSubMenuVisible: false }))
+        setParentMenuState(x => ({ ...x, focused: true, isSubMenuVisible: false }))
+      }
     }
   }
 
-  if (active) {
-    console.log('active isSubMenuVisible isSubMenuItem', itemIndex, isSubMenuVisible, isSubMenuItem)
-  }
+  // if (active) {
+  //   console.log('active isSubMenuVisible', itemIndex, subMenuState.isSubMenuVisible)
+  // }
 
   return (
     <Div
@@ -126,7 +158,9 @@ function MenuItem(props: MenuItemProps) {
               ...x,
               focused: true,
               activeItemIndex: itemIndex,
+              isSubMenuVisible: true,
             }))
+            menuItemRef.current.focus()
           }
         }}
         onMouseMove={() => {
@@ -135,7 +169,9 @@ function MenuItem(props: MenuItemProps) {
               ...x,
               focused: true,
               activeItemIndex: itemIndex,
+              isSubMenuVisible: true,
             }))
+            menuItemRef.current.focus()
           }
         }}
         extend={resolvePartProps('menuItem', 'inner', props, theme)}
@@ -171,11 +207,10 @@ function MenuItem(props: MenuItemProps) {
           </>
         )}
       </Div>
-      {active && subMenu && isSubMenuVisible && cloneElement(subMenu, {
+      {active && subMenu && menuState.isSubMenuVisible && cloneElement(subMenu, {
         isSubMenu: true,
         menuState: subMenuState,
         setMenuState: setSubMenuState,
-        startActiveItemIndex: subMenuState.focused ? 0 : -1,
         position: 'absolute',
         top: 0,
         left: '100%',
