@@ -6,7 +6,7 @@ import { ElementProps } from '../types'
 import useTheme from '../hooks/useTheme'
 import withHonorable from '../withHonorable'
 
-import { Button } from './tags'
+import { ButtonBase } from './tags'
 
 type IconButtonProps = ElementProps<'button'> & {
   children: ReactNode
@@ -28,7 +28,7 @@ function IconButton(props: IconButtonProps) {
   }, [theme])
 
   return (
-    <Button
+    <ButtonBase
       ref={rootRef}
       height={height}
       xflex="x5"

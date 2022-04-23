@@ -3,6 +3,7 @@
 export * from './components/tags'
 export { default as ThemeProvider } from './components/ThemeProvider'
 export { default as CssBaseline } from './components/CssBaseline'
+export { default as Button } from './components/Button'
 export { default as ButtonGroup } from './components/ButtonGroup'
 export { default as Checkbox } from './components/Checkbox'
 export { default as Icon } from './components/Icon'

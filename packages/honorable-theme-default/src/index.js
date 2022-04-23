@@ -137,6 +137,20 @@ export default {
         },
       ],
     ]),
+    partProps: {
+      startIcon: {
+        defaultProps: {
+          marginLeft: '-0.5rem',
+          marginRight: '0.5rem',
+        },
+      },
+      endIcon: {
+        defaultProps: {
+          marginLeft: '0.5rem',
+          marginRight: '-0.5rem',
+        },
+      },
+    },
   },
   h1: {
     defaultProps: {
@@ -316,7 +330,7 @@ export default {
       elevation: 1,
       backgroundColor: 'background',
       borderRadius: 4,
-      // outline: 'none',
+      outline: 'none',
     },
     customProps: new Map([
       [
@@ -329,7 +343,7 @@ export default {
   },
   menuItem: {
     defaultProps: {
-      // outline: 'none',
+      outline: 'none',
     },
     partProps: {
       inner: {
