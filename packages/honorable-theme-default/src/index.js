@@ -140,14 +140,14 @@ export default {
     partProps: {
       startIcon: {
         defaultProps: {
-          marginLeft: '-0.5rem',
+          marginLeft: 'calc(-0.5rem + 2px)',
           marginRight: '0.5rem',
         },
       },
       endIcon: {
         defaultProps: {
           marginLeft: '0.5rem',
-          marginRight: '-0.5rem',
+          marginRight: 'calc(-0.5rem + 2px)',
         },
       },
     },
