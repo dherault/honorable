@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useRef } from 'react'
+import { MouseEvent, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -13,13 +13,11 @@ import { Div } from './tags'
 type ModalProps = ElementProps<'div'> & {
   open?: boolean
   onClose?: (event: MouseEvent | KeyboardEvent) => void
-  children: ReactNode
 }
 
 const propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  children: PropTypes.node.isRequired,
 }
 
 function Modal({

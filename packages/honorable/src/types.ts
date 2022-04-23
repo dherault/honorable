@@ -16,6 +16,10 @@ export type AnyProps = {
   [key: string]: any
 }
 
+export type ThemeProps = {
+  theme: HonorableTheme
+}
+
 export type StyleProperties = typeof styleProperties[number]
   | `${typeof styleProperties[number]}-mobile`
   | `${typeof styleProperties[number]}-tablet`
@@ -47,10 +51,6 @@ export type ExtendProps = {
 
 export type HonorableRefProps = {
   honorableRef: Ref<any>
-}
-
-export type ThemeProps = {
-  theme: HonorableTheme
 }
 
 export type HonorableProps<P> = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & P & AnyProps>

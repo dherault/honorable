@@ -9,8 +9,8 @@ import withHonorable from '../withHonorable'
 import { Span } from './tags'
 
 type CheckboxProps = ElementProps<'span'> & {
-  defaultChecked?: boolean
   checked?: boolean
+  defaultChecked?: boolean
   disabled?: boolean
   icon?: ReactNode
   onChange?: (event: MouseEvent) => void
@@ -18,8 +18,8 @@ type CheckboxProps = ElementProps<'span'> & {
 }
 
 const propTypes = {
-  defaultChecked: PropTypes.bool,
   checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
   icon: PropTypes.node,
   onChange: PropTypes.func,

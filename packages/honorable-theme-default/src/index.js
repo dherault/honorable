@@ -44,10 +44,6 @@ export default {
   global: {
     defaultProps: {
       boxSizing: 'border-box',
-      // '::selection': {
-      //   color: 'white',
-      //   backgroundColor: 'primary',
-      // },
     },
     customProps: new Map([
       ...createElevation().map((styles, i) => [
@@ -152,6 +148,29 @@ export default {
       },
     },
   },
+  buttonGroup: {
+    defaultProps: {
+      border: '1px solid primary',
+      borderRadius: 4,
+      '& > button': {
+        border: 'none',
+        borderRadius: 0,
+        borderLeft: '1px solid darken(primary)',
+        '&:first-of-type': {
+          borderLeft: 'none',
+        },
+      },
+    },
+  },
+  dropdownButton: {
+    partProps: {
+      menu: {
+        defaultProps: {
+          color: 'text',
+        },
+      },
+    },
+  },
   h1: {
     defaultProps: {
       margin: 0,
@@ -186,6 +205,22 @@ export default {
     defaultProps: {
       borderWidth: '0px',
       borderTop: '1px solid border',
+    },
+  },
+  iconButton: {
+    defaultProps: {
+      padding: '0.5rem',
+      border: 'none',
+      borderRadius: '50%',
+      background: 'background',
+      elevation: 1,
+      transition: 'color 200ms ease, background-color 200ms ease',
+      '&:hover': {
+        backgroundColor: 'transparencify(primary, 85)',
+      },
+      '&:active': {
+        backgroundColor: 'transparencify(primary, 65)',
+      },
     },
   },
   input: {
@@ -251,79 +286,6 @@ export default {
       marginBottom: '0.25rem',
     },
   },
-  p: {
-    defaultProps: {
-      margin: 0,
-    },
-  },
-  pre: {
-    defaultProps: {
-      display: 'inline-block',
-      margin: 0,
-      padding: '4px 8px',
-      borderRadius: 4,
-      backgroundColor: 'background-light',
-    },
-  },
-  table: {
-    defaultProps: {
-      width: '100%',
-      backgroundColor: 'background',
-      border: '1px solid border',
-      borderRadius: 4,
-      borderCollapse: 'collapse',
-    },
-  },
-  td: {
-    defaultProps: {
-      padding: '1rem',
-    },
-  },
-  th: {
-    defaultProps: {
-      padding: '1rem',
-    },
-  },
-  tr: {
-    defaultProps: {
-      textAlign: 'left',
-      borderTop: '1px solid border',
-      '&:first-of-type': {
-        border: 'none',
-      },
-    },
-  },
-  // Other components
-  buttonGroup: {
-    defaultProps: {
-      border: '1px solid primary',
-      borderRadius: 4,
-      '& > button': {
-        border: 'none',
-        borderRadius: 0,
-        borderLeft: '1px solid darken(primary)',
-        '&:first-of-type': {
-          borderLeft: 'none',
-        },
-      },
-    },
-  },
-  iconButton: {
-    defaultProps: {
-      padding: '0.5rem',
-      border: 'none',
-      borderRadius: '50%',
-      background: 'background',
-      elevation: 1,
-      transition: 'color 200ms ease, background-color 200ms ease',
-      '&:hover': {
-        backgroundColor: 'transparencify(primary, 85)',
-      },
-      '&:active': {
-        backgroundColor: 'transparencify(primary, 65)',
-      },
-    },
-  },
   menu: {
     defaultProps: {
       padding: '0.5rem 0',
@@ -368,6 +330,20 @@ export default {
       borderRadius: 4,
     },
   },
+  p: {
+    defaultProps: {
+      margin: 0,
+    },
+  },
+  pre: {
+    defaultProps: {
+      display: 'inline-block',
+      margin: 0,
+      padding: '4px 8px',
+      borderRadius: 4,
+      backgroundColor: 'background-light',
+    },
+  },
   progressBar: {
     partProps: {
       inner: {
@@ -394,6 +370,34 @@ export default {
         },
       ],
     ]),
+  },
+  table: {
+    defaultProps: {
+      width: '100%',
+      backgroundColor: 'background',
+      border: '1px solid border',
+      borderRadius: 4,
+      borderCollapse: 'collapse',
+    },
+  },
+  td: {
+    defaultProps: {
+      padding: '1rem',
+    },
+  },
+  th: {
+    defaultProps: {
+      padding: '1rem',
+    },
+  },
+  tr: {
+    defaultProps: {
+      textAlign: 'left',
+      borderTop: '1px solid border',
+      '&:first-of-type': {
+        border: 'none',
+      },
+    },
   },
 }
 

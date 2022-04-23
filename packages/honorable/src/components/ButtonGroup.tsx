@@ -1,19 +1,12 @@
-import { ReactNode } from 'react'
-import PropTypes from 'prop-types'
-
 import { ElementProps } from '../types'
 
 import withHonorable from '../withHonorable'
 
 import { Div } from './tags'
 
-type ButtonGroupProps = ElementProps<'div'> & {
-  children: ReactNode
-}
+type ButtonGroupProps = ElementProps<'div'>
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-}
+const propTypes = {}
 
 function ButtonGroup(props: ButtonGroupProps) {
   return (

@@ -1,19 +1,12 @@
-import { ReactNode } from 'react'
-import PropTypes from 'prop-types'
-
 import { ElementProps } from '../types'
 
 import withHonorable from '../withHonorable'
 
 import { Span } from './tags'
 
-type IconProps = ElementProps<'span'> & {
-  children: ReactNode
-}
+type IconProps = ElementProps<'span'>
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-}
+const propTypes = {}
 
 function Icon(props: IconProps) {
   return (

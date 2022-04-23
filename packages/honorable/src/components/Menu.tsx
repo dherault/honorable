@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, ReactElement, ReactNode, cloneElement, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, ReactElement, cloneElement, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 
@@ -14,7 +14,6 @@ import { Div } from './tags'
 import MenuItem from './MenuItem'
 
 type MenuProps = ElementProps<'div'> & {
-  children: ReactNode
   menuState?: MenuStateType
   setMenuState?: MenuStateDispatcherType
   isSubMenu?: boolean
@@ -22,7 +21,6 @@ type MenuProps = ElementProps<'div'> & {
 }
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   menuState: PropTypes.object,
   setMenuState: PropTypes.func,
   isSubMenu: PropTypes.bool,

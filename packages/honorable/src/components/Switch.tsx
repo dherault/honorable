@@ -11,8 +11,8 @@ import useTheme from '../hooks/useTheme'
 import { Div, Span } from './tags'
 
 type SwitchProps = ElementProps<'div'> & {
-  defaultChecked?: boolean
   checked?: boolean
+  defaultChecked?: boolean
   disabled?: boolean
   onChange?: (event: MouseEvent) => void
   onClick?: (event: MouseEvent) => void
@@ -21,8 +21,8 @@ type SwitchProps = ElementProps<'div'> & {
 }
 
 const propTypes = {
-  defaultChecked: PropTypes.bool,
   checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
   checkedBackground: PropTypes.node,

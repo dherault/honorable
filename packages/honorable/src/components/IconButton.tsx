@@ -1,5 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
+import { useEffect, useRef, useState } from 'react'
 
 import { ElementProps } from '../types'
 
@@ -8,13 +7,9 @@ import withHonorable from '../withHonorable'
 
 import { ButtonBase } from './tags'
 
-type IconButtonProps = ElementProps<'button'> & {
-  children: ReactNode
-}
+type IconButtonProps = ElementProps<'button'>
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-}
+const propTypes = {}
 
 function IconButton(props: IconButtonProps) {
   const theme = useTheme()
