@@ -17,7 +17,6 @@ type MenuProps = ElementProps<'div'> & {
   children: ReactNode
   menuState?: MenuStateType
   setMenuState?: MenuStateDispatcherType
-  // setUpdated?: () => unknown
   isSubMenu?: boolean
   fade?: boolean
 }
@@ -26,48 +25,115 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   menuState: PropTypes.object,
   setMenuState: PropTypes.func,
-  // setUpdated: PropTypes.func,
   isSubMenu: PropTypes.bool,
   fade: PropTypes.bool,
+}
+
+const sortEntries = ([keyA]: string[], [keyB]: string[]) => keyA.localeCompare(keyB)
+
+function areEntriesIdentical(a: object, b: object) {
+  if (!(a && b)) return false
+  if (a === b) return true
+
+  const aEntries = Object.entries(a)
+  const bEntries = Object.entries(b)
+
+  if (aEntries.length !== bEntries.length) {
+    return false
+  }
+
+  aEntries.sort(sortEntries)
+  bEntries.sort(sortEntries)
+
+  return aEntries.every(([key, value], i) => bEntries[i][0] === key && bEntries[i][1] === value)
+}
+
+const defaultMenuState: MenuStateType = {
+  activeItemIndex: -1,
 }
 
 function Menu({
   menuState: initialMenuState,
   setMenuState: setInitialMenuState,
-  // setUpdated,
-  isSubMenu,
   fade,
+  isSubMenu,
   children,
   ...props
 }: MenuProps) {
   const menuRef = useRef<HTMLDivElement>()
   const [parentMenuState, setParentMenuState] = useContext(MenuContext)
-  const [menuState, setMenuState] = useState<MenuStateType>(initialMenuState || {})
+  const [menuState, setMenuState] = useState<MenuStateType>(initialMenuState || defaultMenuState)
   const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, parentMenuState, setParentMenuState])
+  const previousMenuState = usePrevious(menuState) || menuState
   const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
 
-  const [hideTimeoutId, setHideTimeoutId] = useState<NodeJS.Timeout>()
-
   // On outside click, unset active item
-  useOutsideClick(menuRef, () => setMenuState(x => ({ ...x, activeItemIndex: -1 })))
+  useOutsideClick(menuRef, () => setMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false })))
+
+  useEffect(() => {
+    if (menuState.shouldFocus) {
+      menuRef.current.focus()
+
+      setMenuState(x => ({
+        ...x,
+        active: true,
+        shouldFocus: false,
+        activeItemIndex: typeof x.activeItemIndex === 'number' ? x.activeItemIndex : -1,
+      }))
+    }
+  }, [menuState.shouldFocus])
 
   // Sync parent menu state with menu state
   useEffect(() => {
-    if (typeof setInitialMenuState === 'function') {
-      setInitialMenuState(x => {
-        if (x.active === menuState.active) return x
+    // console.log('effect')
 
-        return menuState
+    if (typeof setInitialMenuState === 'function' && !areEntriesIdentical(previousMenuState, menuState)) {
+      // console.log('effect1inner')
+
+      setInitialMenuState(x => {
+        if (areEntriesIdentical(x, menuState)) return x
+        // console.log('effect1innerinner')
+
+        return {
+          ...x,
+          ...menuState,
+        }
       })
     }
-  }, [setInitialMenuState, menuState])
+    else if (typeof initialMenuState === 'object' && initialMenuState && !areEntriesIdentical(previousInitialMenuState, initialMenuState)) {
+      // console.log('effect2inner')
 
-  // Sync menu state with parent menu state
-  useEffect(() => {
-    if (previousInitialMenuState !== initialMenuState) {
-      setMenuState(x => initialMenuState || x)
+      setMenuState(x => {
+        if (areEntriesIdentical(x, initialMenuState)) return x
+        // console.log('effect2innerinner')
+
+        return {
+          ...x,
+          ...initialMenuState,
+        }
+      })
     }
-  }, [previousInitialMenuState, initialMenuState])
+  }, [previousInitialMenuState, initialMenuState, setInitialMenuState, previousMenuState, menuState])
+
+  // Sync menu state with grand parent menu state
+  useEffect(() => {
+    if (typeof setParentMenuState === 'function' && menuState.shouldSyncWithParent) {
+      // console.log('setParentMenuState', parentMenuState.value, menuState.value)
+      setParentMenuState(x => ({
+        ...x,
+        value: menuState.value,
+        event: menuState.event,
+        renderedItem: menuState.renderedItem,
+        shouldSyncWithParent: true,
+        isSubMenuVisible: false,
+      }))
+      setMenuState(x => ({
+        ...x,
+        shouldSyncWithParent: false,
+        isSubMenuVisible: false,
+      }))
+    }
+  }, [menuState, parentMenuState, setParentMenuState])
 
   // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -100,16 +166,7 @@ function Menu({
   // On mouse leave, unset the active item
   // Give it a timeout to allow mouse rip
   function handleMouseLeave() {
-    setHideTimeoutId(
-      setTimeout(() => {
-        setMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
-      }, 330)
-    )
-  }
-
-  // On mouse enter, clear the mouse leave timeout
-  function handleMouseEnter() {
-    clearTimeout(hideTimeoutId)
+    setMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
   }
 
   function wrapFade(element: ReactElement) {
@@ -163,10 +220,10 @@ function Menu({
             handleMouseLeave()
             if (typeof props.onMouseLeave === 'function') props.onMouseLeave(event)
           }}
-          onMouseEnter={event => {
-            handleMouseEnter()
-            if (typeof props.onMouseEnter === 'function') props.onMouseEnter(event)
-          }}
+          // onMouseEnter={event => {
+          //   handleMouseEnter()
+          //   if (typeof props.onMouseEnter === 'function') props.onMouseEnter(event)
+          // }}
         >
           {Children.map(children, (child: ReactElement, index) => {
           // If child is a MenuItem, give it some more props

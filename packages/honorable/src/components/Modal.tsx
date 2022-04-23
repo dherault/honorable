@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { ElementProps } from '../types'
 
 import useTheme from '../hooks/useTheme'
+import useEscapeKey from '../hooks/useEscapeKey'
 import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
 
@@ -11,7 +12,7 @@ import { Div } from './tags'
 
 type ModalProps = ElementProps<'div'> & {
   open?: boolean
-  onClose?: (event: MouseEvent) => void
+  onClose?: (event: MouseEvent | KeyboardEvent) => void
   children: ReactNode
 }
 
@@ -28,6 +29,8 @@ function Modal({
 }: ModalProps) {
   const theme = useTheme()
   const backdropRef = useRef()
+
+  useEscapeKey(onClose)
 
   if (!open) return null
 

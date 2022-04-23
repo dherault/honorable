@@ -34,6 +34,7 @@ const propTypes = {
 
 // A triangle to smooth the user interaction with the submenus
 // Prevents losing focus when hovering on a submenu
+// TODO replace it with a delay on the menu disappearance
 function MenuItemTriangle(props: any) {
   const { isTop = false, size = 0, ...otherProps } = props
   const theme = useTheme()
@@ -41,6 +42,10 @@ function MenuItemTriangle(props: any) {
   const [displayed, setDisplayed] = useState(true)
 
   if (!displayed) return null
+
+  // function handleMouseMove({ movementX, movementY }: MouseEvent) {
+    // console.log('event', movementX, movementY)
+  // }
 
   return (
     <Div
@@ -53,9 +58,10 @@ function MenuItemTriangle(props: any) {
       onMouseEnter={() => {
         setTimeoutId(setTimeout(() => {
           setDisplayed(false)
-        }, 330))
+        }, 200))
       }}
       onMouseLeave={() => clearTimeout(timeoutId)}
+      // onMouseMove={handleMouseMove}
       zIndex={100}
       {...otherProps}
       extend={resolvePartProps('menuItem', 'triangle', props, theme)}
@@ -107,6 +113,7 @@ function MenuItem(props: MenuItemProps) {
 
   // On right key, focus subMenu
   // On left key, unfocus menu
+  // On enter key, select item
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
@@ -144,6 +151,15 @@ function MenuItem(props: MenuItemProps) {
         }, 0)
       }
     }
+    else if (event.key === 'Enter') {
+      setMenuState(x => ({
+        ...x,
+        value,
+        event,
+        renderedItem: children,
+        shouldSyncWithParent: true,
+      }))
+    }
   }
 
   return (
@@ -167,6 +183,7 @@ function MenuItem(props: MenuItemProps) {
             value,
             event,
             renderedItem: children,
+            shouldSyncWithParent: true,
           }))
         }}
         onMouseEnter={() => {

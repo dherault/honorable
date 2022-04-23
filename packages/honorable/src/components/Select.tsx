@@ -1,10 +1,13 @@
-import { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react'
+import { Children, KeyboardEvent, MouseEvent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
 
 import { MenuStateType } from '../contexts/MenuContext'
 import useTheme from '../hooks/useTheme'
+import usePrevious from '../hooks/usePrevious'
+import useOutsideClick from '../hooks/useOutsideClick'
+import useEscapeKey from '../hooks/useEscapeKey'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import resolvePartProps from '../utils/resolvePartProps'
 
@@ -16,13 +19,20 @@ import Menu from './Menu'
 type SelectProps = ElementProps<'div'> & {
   children: ReactNode
   value?: any
-  onChange?: (event: MouseEvent) => void
+  onChange?: (event: MouseEvent | KeyboardEvent) => void
+  fade?: boolean
 }
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   value: PropTypes.any,
   onChange: PropTypes.func,
+  fade: PropTypes.bool,
+}
+
+const defaultMenuState: MenuStateType = {
+  activeItemIndex: -1,
+  shouldFocus: true,
 }
 
 function Select(props: SelectProps) {
@@ -30,19 +40,42 @@ function Select(props: SelectProps) {
     children,
     onChange,
     value,
+    fade,
     onClick,
     ...otherProps
   } = props
   const theme = useTheme()
+  const selectRef = useRef()
   const [opened, setOpened] = useState(false)
-  const [menuState, setMenuState] = useState<MenuStateType>({})
+  const [menuState, setMenuState] = useState<MenuStateType>(defaultMenuState)
   const { value: currentValue, renderedItem, event } = menuState
+  const previousEvent = usePrevious(event)
+
+  useOutsideClick(selectRef, () => setOpened(false))
+  useEscapeKey(() => setOpened(false))
 
   useEffect(() => {
-    if (event && currentValue !== value) {
+    // console.log(previousEvent !== event)
+    if (previousEvent !== event && typeof onChange === 'function') {
       onChange(enhanceEventTarget(event, { value: currentValue }))
+      setOpened(false)
+      setMenuState(x => ({ ...x, ...defaultMenuState }))
     }
-  }, [event, currentValue, value, onChange])
+  }, [previousEvent, event, currentValue, value, onChange])
+
+  function renderSelected() {
+    if (!renderedItem) return '\u00a0'
+
+    const nodes: ReactElement[] = []
+
+    Children.forEach(renderedItem, (child: ReactElement) => {
+      if (child?.type === Menu) return
+
+      nodes.push(child)
+    })
+
+    return nodes
+  }
 
   function renderCaret() {
     return (
@@ -71,9 +104,12 @@ function Select(props: SelectProps) {
     )
   }
 
-  function renderMenu(hidden = false) {
+  function renderMenu() {
+    if (!opened) return null
+
     return (
       <Menu
+        fade={fade}
         menuState={menuState}
         setMenuState={setMenuState}
         setUpdated={() => setOpened(false)}
@@ -82,7 +118,6 @@ function Select(props: SelectProps) {
         right={0}
         left={0}
         zIndex={100}
-        display={hidden ? 'none' : 'block'}
         extend={resolvePartProps('select', 'menu', props, theme)}
       >
         {children}
@@ -92,6 +127,7 @@ function Select(props: SelectProps) {
 
   return (
     <Div
+      ref={selectRef}
       minWidth={128 + 32 + 8 + 2}
       display="inline-block"
       border="1px solid border"
@@ -113,12 +149,12 @@ function Select(props: SelectProps) {
           pl={0.5}
           extend={resolvePartProps('select', 'selected', props, theme)}
         >
-          {renderedItem || '\u00a0'}
+          {renderSelected()}
         </Div>
         <Span flexGrow={1} />
         {renderCaret()}
       </Div>
-      {renderMenu(!opened)}
+      {renderMenu()}
     </Div>
   )
 }
