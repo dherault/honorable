@@ -85,14 +85,9 @@ function Menu({
 
   // Sync parent menu state with menu state
   useEffect(() => {
-    // console.log('effect')
-
     if (typeof setInitialMenuState === 'function' && !areEntriesIdentical(previousMenuState, menuState)) {
-      // console.log('effect1inner')
-
       setInitialMenuState(x => {
         if (areEntriesIdentical(x, menuState)) return x
-        // console.log('effect1innerinner')
 
         return {
           ...x,
@@ -101,11 +96,8 @@ function Menu({
       })
     }
     else if (typeof initialMenuState === 'object' && initialMenuState && !areEntriesIdentical(previousInitialMenuState, initialMenuState)) {
-      // console.log('effect2inner')
-
       setMenuState(x => {
         if (areEntriesIdentical(x, initialMenuState)) return x
-        // console.log('effect2innerinner')
 
         return {
           ...x,
@@ -118,7 +110,6 @@ function Menu({
   // Sync menu state with grand parent menu state
   useEffect(() => {
     if (typeof setParentMenuState === 'function' && menuState.shouldSyncWithParent) {
-      // console.log('setParentMenuState', parentMenuState.value, menuState.value)
       setParentMenuState(x => ({
         ...x,
         value: menuState.value,

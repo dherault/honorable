@@ -43,10 +43,6 @@ function MenuItemTriangle(props: any) {
 
   if (!displayed) return null
 
-  // function handleMouseMove({ movementX, movementY }: MouseEvent) {
-    // console.log('event', movementX, movementY)
-  // }
-
   return (
     <Div
       width={0}
@@ -110,6 +106,16 @@ function MenuItem(props: MenuItemProps) {
       menuItemRef.current.focus()
     }
   }, [active, menuState.active])
+
+  // Set renderedItem if value matches menuState.value
+  // Used by selects with value set on
+  useEffect(() => {
+    if (menuState.value === value && menuState.renderedItem !== children) {
+      setMenuState(x => ({
+        ...x, renderedItem: children,
+      }))
+    }
+  }, [menuState, setMenuState, value, children])
 
   // On right key, focus subMenu
   // On left key, unfocus menu

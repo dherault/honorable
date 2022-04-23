@@ -30,11 +30,6 @@ const propTypes = {
   fade: PropTypes.bool,
 }
 
-const defaultMenuState: MenuStateType = {
-  activeItemIndex: -1,
-  shouldFocus: true,
-}
-
 function Select(props: SelectProps) {
   const {
     children,
@@ -47,19 +42,18 @@ function Select(props: SelectProps) {
   const theme = useTheme()
   const selectRef = useRef()
   const [opened, setOpened] = useState(false)
-  const [menuState, setMenuState] = useState<MenuStateType>(defaultMenuState)
+  const [menuState, setMenuState] = useState<MenuStateType>({ value })
   const { value: currentValue, renderedItem, event } = menuState
   const previousEvent = usePrevious(event)
 
-  useOutsideClick(selectRef, () => setOpened(false))
   useEscapeKey(() => setOpened(false))
+  useOutsideClick(selectRef, () => setOpened(false))
 
   useEffect(() => {
-    // console.log(previousEvent !== event)
     if (previousEvent !== event && typeof onChange === 'function') {
       onChange(enhanceEventTarget(event, { value: currentValue }))
       setOpened(false)
-      setMenuState(x => ({ ...x, ...defaultMenuState }))
+      setMenuState(x => ({ ...x, activeItemIndex: -1 }))
     }
   }, [previousEvent, event, currentValue, value, onChange])
 
@@ -104,27 +98,6 @@ function Select(props: SelectProps) {
     )
   }
 
-  function renderMenu() {
-    if (!opened) return null
-
-    return (
-      <Menu
-        fade={fade}
-        menuState={menuState}
-        setMenuState={setMenuState}
-        setUpdated={() => setOpened(false)}
-        position="absolute"
-        top="100%"
-        right={0}
-        left={0}
-        zIndex={100}
-        extend={resolvePartProps('select', 'menu', props, theme)}
-      >
-        {children}
-      </Menu>
-    )
-  }
-
   return (
     <Div
       ref={selectRef}
@@ -140,6 +113,7 @@ function Select(props: SelectProps) {
         cursor="pointer"
         onClick={event => {
           setOpened(x => !x)
+          setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
         extend={resolvePartProps('select', 'inner', props, theme)}
@@ -154,7 +128,21 @@ function Select(props: SelectProps) {
         <Span flexGrow={1} />
         {renderCaret()}
       </Div>
-      {renderMenu()}
+      <Menu
+        fade={fade}
+        menuState={menuState}
+        setMenuState={setMenuState}
+        setUpdated={() => setOpened(false)}
+        position="absolute"
+        top="100%"
+        right={0}
+        left={0}
+        zIndex={100}
+        display={opened ? 'block' : 'none'}
+        extend={resolvePartProps('select', 'menu', props, theme)}
+      >
+        {children}
+      </Menu>
     </Div>
   )
 }
