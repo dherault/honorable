@@ -45,18 +45,12 @@ function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
   const { value, event } = menuState
   const previousEvent = usePrevious(event)
 
-  console.log('menuState', menuState)
-
   useEscapeKey(handleClose)
-  useOutsideClick(dropdownButtonRef, () => {
-    console.log('outside click')
-    handleClose()
-  })
+  useOutsideClick(dropdownButtonRef, handleClose)
 
   useEffect(() => {
     if (previousEvent !== event) {
       if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { value }))
-      console.log('close', previousEvent, event)
       handleClose()
     }
   }, [previousEvent, event, value, onChange])
@@ -72,7 +66,6 @@ function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
   }
 
   function handleClose() {
-    console.log('handleClose')
     setActualOpen(false)
     setMenuState(x => ({ ...x, activeItemIndex: -1 }))
   }

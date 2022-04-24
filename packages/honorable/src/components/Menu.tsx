@@ -71,7 +71,6 @@ ref: Ref<any>
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {
-    console.log('outside click Menu')
     setMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
   })
 
@@ -91,25 +90,16 @@ ref: Ref<any>
   // Sync parent menu state with menu state
   useEffect(() => {
     if (typeof setInitialMenuState === 'function' && !areEntriesIdentical(previousMenuState, menuState)) {
-      setInitialMenuState(x => {
-        // TODO v1 is this useful?
-        if (areEntriesIdentical(x, menuState)) return x
-
-        return {
-          ...x,
-          ...menuState,
-        }
-      })
+      setInitialMenuState(x => ({
+        ...x,
+        ...menuState,
+      }))
     }
     else if (typeof initialMenuState === 'object' && initialMenuState && !areEntriesIdentical(previousInitialMenuState, initialMenuState)) {
-      setMenuState(x => {
-        if (areEntriesIdentical(x, initialMenuState)) return x
-
-        return {
-          ...x,
-          ...initialMenuState,
-        }
-      })
+      setMenuState(x => ({
+        ...x,
+        ...initialMenuState,
+      }))
     }
   }, [previousInitialMenuState, initialMenuState, setInitialMenuState, previousMenuState, menuState])
 
