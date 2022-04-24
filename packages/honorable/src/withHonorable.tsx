@@ -84,6 +84,10 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       }
     })
 
+    if (name === 'buttonBase') console.log('honorableRef buttonBase', honorableRef, nextProps.ref)
+    if (name === 'button') console.log('honorableRef button', honorableRef, nextProps.ref)
+    if (name === 'dropdownButton') console.log('honorableRef dropdownButton', honorableRef, nextProps.ref)
+
     return (
       <HonorableStyle
         ref={honorableRef}
@@ -115,7 +119,8 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
 
   Honorable.displayName = `Honorable(Honorable${displayName})`
 
-  const forwardHonorableRef = (props: HonorableProps<P>, ref: Ref<any>) => (
+  // @ts-ignore
+  const forwardHonorableRef = (props: HonorableProps<P>, ref: Ref<any>) => (name.includes('tton') && console.log('ref', name, ref)) || (
     <Honorable
       {...props}
       honorableRef={ref}

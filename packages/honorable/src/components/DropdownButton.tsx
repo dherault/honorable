@@ -65,12 +65,15 @@ function DropdownButton(props: DropdownButtonProps) {
       {...otherProps}
       onClick={event => {
         setActualOpen(x => !x)
+        setMenuState(x => ({ ...x, shouldFocus: true }))
         if (typeof props.onClick === 'function') props.onClick(event)
       }}
     >
       {label}
       <Menu
         fade={fade}
+        menuState={menuState}
+        setMenuState={setMenuState}
         position="absolute"
         top="100%"
         right={0}

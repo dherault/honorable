@@ -18,11 +18,14 @@ type ButtonProps = ElementProps<'button'> & {
 const propTypes = {
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
+  // ref: PropTypes.any,
 }
 
 function Button(props: ButtonProps) {
   const { startIcon, endIcon, children, ...otherProps } = props
   const theme = useTheme()
+
+  console.log('otherProps', otherProps)
 
   return (
     <ButtonBase
