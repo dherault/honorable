@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   A,
   Article,
@@ -16,24 +17,13 @@ import {
   Select,
   Span,
 } from 'honorable'
-import { useState } from 'react'
+
+import Karaoke from './Karaoke'
 
 function ComponentsShowcase() {
   return (
     <Div mt={2}>
-      <Div xflex="x4">
-        <Button>
-          Submit
-        </Button>
-        <Button
-          ml={1}
-          variant="outlined"
-        >
-          Cancel
-        </Button>
-      </Div>
       <Input
-        mt={2}
         display="block"
         placeholder="What's on your mind?"
       />
@@ -55,67 +45,21 @@ function ComponentsShowcase() {
           </svg>
         </IconButton>
       </Div>
-      <Div mt={2}>
-        <Checkbox />
-        <Checkbox
-          ml={1}
-          defaultChecked
-        />
-        <Checkbox
-          ml={1}
-          disabled
-        />
-        <Checkbox
-          ml={1}
-          defaultChecked
-          disabled
-        />
-      </Div>
       <ButtonGroup mt={2}>
         <Button>
-          One
+          For
         </Button>
         <Button>
-          Two
+          CSS
         </Button>
         <Button>
-          Three
+          Lovers
         </Button>
       </ButtonGroup>
-      {/* <Div mt={2}>
-        <Menu>
-          <MenuItem>
-            Item 1
-          </MenuItem>
-          <MenuItem>
-            Item 2
-          </MenuItem>
-          <MenuItem>
-            Item 3
-          </MenuItem>
-        </Menu>
-      </Div> */}
-      {/* <Select mt={2}>
-        <MenuItem>
-          Item 1
-        </MenuItem>
-        <MenuItem>
-          Item 2
-        </MenuItem>
-        <MenuItem>
-          Item 3
-        </MenuItem>
-      </Select> */}
-      <Div xflex="x4">
-        <ControlledSelect mt={2} />
-      </Div>
       <Div xflex="x4">
         <UserCard mt={2} />
       </Div>
-      <ProgressBar
-        value={0.5}
-        mt={2}
-      />
+      <Karaoke mt={2} />
     </Div>
   )
 }

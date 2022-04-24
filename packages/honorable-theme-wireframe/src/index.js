@@ -27,7 +27,7 @@ export default mergeTheme(defaultTheme, {
       ],
     ]),
   },
-  button: {
+  buttonBase: {
     defaultProps: {
       color: 'text',
       backgroundColor: 'transparent',
