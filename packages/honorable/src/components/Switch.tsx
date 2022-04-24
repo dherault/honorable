@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useState } from 'react'
+import { MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -29,7 +29,7 @@ const propTypes = {
   uncheckedBackground: PropTypes.node,
 }
 
-function Switch(props: SwitchProps) {
+function Switch(props: SwitchProps, ref: Ref<any>) {
   const {
     defaultChecked,
     checked,
@@ -40,13 +40,13 @@ function Switch(props: SwitchProps) {
     uncheckedBackground = null,
     ...otherProps
   } = props
-
   const theme = useTheme()
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
 
   return (
     <Div
+      ref={ref}
       xflex="y2s"
       flexShrink={0}
       display="inline-flex"
@@ -97,6 +97,8 @@ function Switch(props: SwitchProps) {
   )
 }
 
-Switch.propTypes = propTypes
+const ForwaredSwitch = forwardRef(Switch)
 
-export default withHonorable<SwitchProps>(Switch, 'switch')
+ForwaredSwitch.propTypes = propTypes
+
+export default withHonorable<SwitchProps>(ForwaredSwitch, 'switch')

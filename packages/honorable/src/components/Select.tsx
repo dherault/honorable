@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, MouseEvent, ReactElement, useEffect, useRef, useState } from 'react'
+import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -6,6 +6,7 @@ import { ElementProps } from '../types'
 import { MenuStateType } from '../contexts/MenuContext'
 import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
+import useForkedRef from '../hooks/useForkedRef'
 import useEscapeKey from '../hooks/useEscapeKey'
 import useOutsideClick from '../hooks/useOutsideClick'
 import resolvePartProps from '../utils/resolvePartProps'
@@ -30,7 +31,7 @@ const propTypes = {
 }
 
 // TODO what if value changes
-function Select(props: SelectProps) {
+function Select(props: SelectProps, ref: Ref<any>) {
   const {
     children,
     onChange,
@@ -41,6 +42,7 @@ function Select(props: SelectProps) {
   } = props
   const theme = useTheme()
   const selectRef = useRef()
+  const forkedRef = useForkedRef(ref, selectRef)
   const [opened, setOpened] = useState(false) // TODO actualOpen
   const [menuState, setMenuState] = useState<MenuStateType>({ value })
   const { value: currentValue, renderedItem, event } = menuState
@@ -86,7 +88,7 @@ function Select(props: SelectProps) {
 
   return (
     <Div
-      ref={selectRef}
+      ref={forkedRef}
       minWidth={128 + 32 + 8 + 2}
       display="inline-block"
       border="1px solid border"
@@ -132,6 +134,8 @@ function Select(props: SelectProps) {
   )
 }
 
-Select.propTypes = propTypes
+const ForwardedSelect = forwardRef(Select)
 
-export default withHonorable<SelectProps>(Select, 'select')
+ForwardedSelect.propTypes = propTypes
+
+export default withHonorable<SelectProps>(ForwardedSelect, 'select')

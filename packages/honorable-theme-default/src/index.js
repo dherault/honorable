@@ -73,7 +73,6 @@ export default {
       padding: '0.5rem 1rem',
       border: '1px solid primary',
       borderRadius: 4,
-      cursor: 'pointer',
       userSelect: 'none',
       textDecoration: 'none',
       transition: 'color 150ms ease, background-color 150ms ease',
@@ -146,6 +145,11 @@ export default {
           marginRight: 'calc(-0.5rem + 2px)',
         },
       },
+    },
+  },
+  buttonBase: {
+    defaultProps: {
+      cursor: 'pointer',
     },
   },
   buttonGroup: {

@@ -1,3 +1,4 @@
+import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -14,9 +15,10 @@ const propTypes = {
   rotation: PropTypes.number,
 }
 
-function Caret({ rotation = 0, ...props }: CaretProps) {
+function Caret({ rotation = 0, ...props }: CaretProps, ref: Ref<any>) {
   return (
     <Svg
+      ref={ref}
       width={15}
       viewBox="0 0 15 15"
       fill="none"
@@ -35,6 +37,8 @@ function Caret({ rotation = 0, ...props }: CaretProps) {
   )
 }
 
-Caret.propTypes = propTypes
+const ForwaredCaret = forwardRef(Caret)
 
-export default withHonorable<CaretProps>(Caret, 'caret')
+ForwaredCaret.propTypes = propTypes
+
+export default withHonorable<CaretProps>(ForwaredCaret, 'caret')

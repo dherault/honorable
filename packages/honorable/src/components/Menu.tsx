@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, ReactElement, cloneElement, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 
@@ -7,6 +7,7 @@ import { ElementProps } from '../types'
 import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../contexts/MenuContext'
+import useForkedRef from '../hooks/useForkedRef'
 import usePrevious from '../hooks/usePrevious'
 import useOutsideClick from '../hooks/useOutsideClick'
 
@@ -57,8 +58,11 @@ function Menu({
   isSubMenu,
   children,
   ...props
-}: MenuProps) {
+}: MenuProps,
+ref: Ref<any>
+) {
   const menuRef = useRef<HTMLDivElement>()
+  const forkedRef = useForkedRef(ref, menuRef)
   const [parentMenuState, setParentMenuState] = useContext(MenuContext)
   const [menuState, setMenuState] = useState<MenuStateType>(initialMenuState || defaultMenuState)
   const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, parentMenuState, setParentMenuState])
@@ -66,7 +70,10 @@ function Menu({
   const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
 
   // On outside click, unset active item
-  useOutsideClick(menuRef, () => setMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false })))
+  useOutsideClick(menuRef, () => {
+    console.log('outside click Menu')
+    setMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
+  })
 
   useEffect(() => {
     if (menuState.shouldFocus) {
@@ -85,6 +92,7 @@ function Menu({
   useEffect(() => {
     if (typeof setInitialMenuState === 'function' && !areEntriesIdentical(previousMenuState, menuState)) {
       setInitialMenuState(x => {
+        // TODO v1 is this useful?
         if (areEntriesIdentical(x, menuState)) return x
 
         return {
@@ -114,12 +122,11 @@ function Menu({
         event: menuState.event,
         renderedItem: menuState.renderedItem,
         shouldSyncWithParent: true,
-        isSubMenuVisible: false,
       }))
       setMenuState(x => ({
         ...x,
         shouldSyncWithParent: false,
-        isSubMenuVisible: false,
+        activeItemIndex: -1,
       }))
     }
   }, [menuState, parentMenuState, setParentMenuState])
@@ -196,11 +203,10 @@ function Menu({
     <MenuContext.Provider value={menuValue}>
       {wrapFade(
         <Div
-          ref={menuRef}
+          ref={forkedRef}
           tabIndex={0}
           display="inline-block"
           {...props}
-        // style={{ backgroundColor: menuState.active ? 'pink' : 'transparent' }}
           onKeyDown={event => {
             handleKeyDown(event)
             if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
@@ -209,10 +215,6 @@ function Menu({
             handleMouseLeave()
             if (typeof props.onMouseLeave === 'function') props.onMouseLeave(event)
           }}
-          // onMouseEnter={event => {
-          //   handleMouseEnter()
-          //   if (typeof props.onMouseEnter === 'function') props.onMouseEnter(event)
-          // }}
         >
           {Children.map(children, (child: ReactElement, index) => {
           // If child is a MenuItem, give it some more props
@@ -234,6 +236,8 @@ function Menu({
   )
 }
 
-Menu.propTypes = propTypes
+const ForwardedMenu = forwardRef(Menu)
 
-export default withHonorable<MenuProps>(Menu, 'menu')
+ForwardedMenu.propTypes = propTypes
+
+export default withHonorable<MenuProps>(ForwardedMenu, 'menu')

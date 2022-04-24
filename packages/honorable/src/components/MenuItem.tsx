@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, ReactElement, cloneElement, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -6,6 +6,7 @@ import { ElementProps } from '../types'
 import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateType } from '../contexts/MenuContext'
+import useForkedRef from '../hooks/useForkedRef'
 import useTheme from '../hooks/useTheme'
 import resolvePartProps from '../utils/resolvePartProps'
 
@@ -63,7 +64,7 @@ function MenuItemTriangle(props: any) {
   )
 }
 
-function MenuItem(props: MenuItemProps) {
+function MenuItem(props: MenuItemProps, ref: Ref<any>) {
   const {
     value,
     children,
@@ -73,8 +74,9 @@ function MenuItem(props: MenuItemProps) {
     fade,
     ...otherProps
   } = props
-  const menuItemRef = useRef<HTMLDivElement>()
   const theme = useTheme()
+  const menuItemRef = useRef<HTMLDivElement>()
+  const forkedRef = useForkedRef(ref, menuItemRef)
   const [menuState, setMenuState, parentMenuState, setParentMenuState] = useContext(MenuContext)
   const [subMenu, setSubMenu] = useState(null)
   const [subMenuState, setSubMenuState] = useState<MenuStateType>({ active: false, isSubMenuVisible: false })
@@ -168,7 +170,7 @@ function MenuItem(props: MenuItemProps) {
 
   return (
     <Div
-      ref={menuItemRef}
+      ref={forkedRef}
       position="relative"
       tabIndex={itemIndex}
       {...otherProps}
@@ -268,6 +270,8 @@ function MenuItem(props: MenuItemProps) {
   )
 }
 
-MenuItem.propTypes = propTypes
+const ForwardedMenuItem = forwardRef(MenuItem)
 
-export default withHonorable<MenuItemProps>(MenuItem, 'menuItem')
+ForwardedMenuItem.propTypes = propTypes
+
+export default withHonorable<MenuItemProps>(ForwardedMenuItem, 'menuItem')

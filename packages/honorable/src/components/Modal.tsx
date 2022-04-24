@@ -1,4 +1,4 @@
-import { MouseEvent, useRef } from 'react'
+import { MouseEvent, Ref, forwardRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -20,11 +20,8 @@ const propTypes = {
   onClose: PropTypes.func,
 }
 
-function Modal({
-  open = false,
-  onClose,
-  ...props
-}: ModalProps) {
+function Modal(props: ModalProps, ref: Ref<any>) {
+  const { open = false, onClose, ...otherProps } = props
   const theme = useTheme()
   const backdropRef = useRef()
 
@@ -51,15 +48,18 @@ function Modal({
       onClick={handleBackdropClick}
     >
       <Div
+        ref={ref}
         backgroundColor="background"
         overflowY="auto"
         m={6}
-        {...props}
+        {...otherProps}
       />
     </Div>
   )
 }
 
-Modal.propTypes = propTypes
+const ForwardedModal = forwardRef(Modal)
 
-export default withHonorable<ModalProps>(Modal, 'modal')
+ForwardedModal.propTypes = propTypes
+
+export default withHonorable<ModalProps>(ForwardedModal, 'modal')

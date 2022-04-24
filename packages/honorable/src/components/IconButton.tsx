@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { Ref, forwardRef, useEffect, useRef, useState } from 'react'
 
 import { ElementProps } from '../types'
 
-import useTheme from '../hooks/useTheme'
 import withHonorable from '../withHonorable'
+
+import useTheme from '../hooks/useTheme'
+import useForkedRef from '../hooks/useForkedRef'
 
 import { ButtonBase } from './tags'
 
@@ -11,20 +13,21 @@ type IconButtonProps = ElementProps<'button'>
 
 const propTypes = {}
 
-function IconButton(props: IconButtonProps) {
+function IconButton(props: IconButtonProps, ref: Ref<any>) {
   const theme = useTheme()
-  const rootRef = useRef<any>()
+  const iconButtonRef = useRef<any>()
+  const forkedRef = useForkedRef(ref, iconButtonRef)
   const [height, setHeight] = useState<number | 'auto'>('auto')
 
   useEffect(() => {
-    if (rootRef.current) {
-      setHeight(rootRef.current.offsetWidth)
+    if (iconButtonRef.current) {
+      setHeight(iconButtonRef.current.offsetWidth)
     }
   }, [theme])
 
   return (
     <ButtonBase
-      ref={rootRef}
+      ref={forkedRef}
       height={height}
       xflex="x5"
       display="inline-flex"
@@ -33,6 +36,8 @@ function IconButton(props: IconButtonProps) {
   )
 }
 
-IconButton.propTypes = propTypes
+const ForwardedIconButton = forwardRef(IconButton)
 
-export default withHonorable<IconButtonProps>(IconButton, 'iconButton')
+ForwardedIconButton.propTypes = propTypes
+
+export default withHonorable<IconButtonProps>(ForwardedIconButton, 'iconButton')

@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -9,6 +9,7 @@ import { MenuStateType } from '../contexts/MenuContext'
 import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
 import useEscapeKey from '../hooks/useEscapeKey'
+import useForkedRef from '../hooks/useForkedRef'
 import useOutsideClick from '../hooks/useOutsideClick'
 import resolvePartProps from '../utils/resolvePartProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
@@ -16,8 +17,9 @@ import enhanceEventTarget from '../utils/enhanceEventTarget'
 import Button from './Button'
 import Caret from './Caret'
 import Menu from './Menu'
+import { Div } from './tags'
 
-type DropdownButtonProps = ElementProps<'button'> & {
+type DropdownButtonProps = ElementProps<'div'> & {
   open?: boolean
   defaultOpen?: boolean
   label?: string
@@ -33,43 +35,65 @@ const propTypes = {
   onChange: PropTypes.func,
 }
 
-function DropdownButton(props: DropdownButtonProps) {
+function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
   const { open, defaultOpen, label, fade, onChange, children, ...otherProps } = props
   const theme = useTheme()
-  const dropdownRef = useRef()
+  const dropdownButtonRef = useRef<any>()
+  const forkedRef = useForkedRef(ref, dropdownButtonRef)
   const [actualOpen, setActualOpen] = useState(open || defaultOpen)
-  const [menuState, setMenuState] = useState<MenuStateType>({})
+  const [menuState, setMenuState] = useState<MenuStateType>({ activeItemIndex: -1 })
   const { value, event } = menuState
   const previousEvent = usePrevious(event)
 
-  useEscapeKey(() => setActualOpen(false))
-  useOutsideClick(dropdownRef, () => setActualOpen(false))
+  console.log('menuState', menuState)
+
+  useEscapeKey(handleClose)
+  useOutsideClick(dropdownButtonRef, () => {
+    console.log('outside click')
+    handleClose()
+  })
 
   useEffect(() => {
-    if (previousEvent !== event && typeof onChange === 'function') {
-      onChange(enhanceEventTarget(event, { value }))
-      setActualOpen(false)
-      setMenuState(x => ({ ...x, activeItemIndex: -1 }))
+    if (previousEvent !== event) {
+      if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { value }))
+      console.log('close', previousEvent, event)
+      handleClose()
     }
   }, [previousEvent, event, value, onChange])
 
   useEffect(() => {
-    setActualOpen(open || defaultOpen)
+    if (open || defaultOpen) handleOpen()
+    else handleClose()
   }, [open, defaultOpen])
 
+  function handleOpen() {
+    setActualOpen(true)
+    setMenuState(x => ({ ...x, shouldFocus: true, isSubMenuVisible: true, activeItemIndex: -1 }))
+  }
+
+  function handleClose() {
+    console.log('handleClose')
+    setActualOpen(false)
+    setMenuState(x => ({ ...x, activeItemIndex: -1 }))
+  }
+
   return (
-    <Button
-      ref={dropdownRef}
+    <Div
+      ref={forkedRef}
       position="relative"
-      endIcon={<Caret rotation={actualOpen ? 180 : 0} />}
+      display="inline-block"
       {...otherProps}
-      onClick={event => {
-        setActualOpen(x => !x)
-        setMenuState(x => ({ ...x, shouldFocus: true }))
-        if (typeof props.onClick === 'function') props.onClick(event)
-      }}
     >
-      {label}
+      <Button
+        endIcon={<Caret rotation={actualOpen ? 180 : 0} />}
+        onClick={() => {
+          if (actualOpen) handleClose()
+          else handleOpen()
+        }}
+        extend={resolvePartProps('dropdownButton', 'button', props, theme)}
+      >
+        {label}
+      </Button>
       <Menu
         fade={fade}
         menuState={menuState}
@@ -84,10 +108,12 @@ function DropdownButton(props: DropdownButtonProps) {
       >
         {children}
       </Menu>
-    </Button>
+    </Div>
   )
 }
 
-DropdownButton.propTypes = propTypes
+const ForwardedDropdownButton = forwardRef(DropdownButton)
 
-export default withHonorable<DropdownButtonProps>(DropdownButton, 'dropdownButton')
+ForwardedDropdownButton.propTypes = propTypes
+
+export default withHonorable<DropdownButtonProps>(ForwardedDropdownButton, 'dropdownButton')

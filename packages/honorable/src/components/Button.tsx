@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -21,14 +21,13 @@ const propTypes = {
   // ref: PropTypes.any,
 }
 
-function Button(props: ButtonProps) {
+function Button(props: ButtonProps, ref: Ref<any>) {
   const { startIcon, endIcon, children, ...otherProps } = props
   const theme = useTheme()
 
-  console.log('otherProps', otherProps)
-
   return (
     <ButtonBase
+      ref={ref}
       xflex="x4"
       {...otherProps}
     >
@@ -53,6 +52,8 @@ function Button(props: ButtonProps) {
   )
 }
 
-Button.propTypes = propTypes
+const ForwardedButton = forwardRef(Button)
 
-export default withHonorable<ButtonProps>(Button, 'button')
+ForwardedButton.propTypes = propTypes
+
+export default withHonorable<ButtonProps>(ForwardedButton, 'button')

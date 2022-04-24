@@ -1,3 +1,5 @@
+import { Ref, forwardRef } from 'react'
+
 import { ElementProps } from '../types'
 
 import withHonorable from '../withHonorable'
@@ -8,9 +10,10 @@ type IconProps = ElementProps<'span'>
 
 const propTypes = {}
 
-function Icon(props: IconProps) {
+function Icon(props: IconProps, ref: Ref<any>) {
   return (
     <Span
+      ref={ref}
       xflex="x5"
       display="inline-flex"
       {...props}
@@ -18,6 +21,8 @@ function Icon(props: IconProps) {
   )
 }
 
-Icon.propTypes = propTypes
+const ForwardedIcon = forwardRef(Icon)
 
-export default withHonorable<IconProps>(Icon, 'icon')
+ForwardedIcon.propTypes = propTypes
+
+export default withHonorable<IconProps>(ForwardedIcon, 'icon')

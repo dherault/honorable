@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useState } from 'react'
+import { MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -50,7 +50,9 @@ function Checkbox({
   onChange,
   onClick,
   ...props
-}: CheckboxProps) {
+}: CheckboxProps,
+ref: Ref<any>
+) {
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
 
@@ -62,6 +64,7 @@ function Checkbox({
 
   return (
     <Span
+      ref={ref}
       xflex="x5"
       display="inline-flex"
       color="white"
@@ -88,6 +91,8 @@ function Checkbox({
   )
 }
 
-Checkbox.propTypes = propTypes
+const ForwaredCheckbox = forwardRef(Checkbox)
 
-export default withHonorable<CheckboxProps>(Checkbox, 'checkbox')
+ForwaredCheckbox.propTypes = propTypes
+
+export default withHonorable<CheckboxProps>(ForwaredCheckbox, 'checkbox')
