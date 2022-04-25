@@ -315,13 +315,16 @@ export default {
       inner: {
         defaultProps: {
           padding: '0.5rem 1rem',
+          borderRadius: 2,
+          border: '1px solid white',
         },
         customProps: new Map([
           [
             ({ active }) => active,
             {
-              backgroundColor: 'primary',
-              color: 'white',
+              backgroundColor: 'transparencify(primary, 85)',
+              color: 'primary',
+              border: '1px solid primary',
             },
           ],
         ]),
@@ -356,6 +359,14 @@ export default {
           backgroundColor: 'primary',
           transition: 'width 150ms ease',
         },
+      },
+    },
+  },
+  select: {
+    defaultProps: {
+      border: '1px solid border',
+      '&:hover': {
+        border: '1px solid primary',
       },
     },
   },
