@@ -82,8 +82,8 @@ export default {
         borderColor: 'darken(primary, 10)',
       },
       ':active': {
-        backgroundColor: 'primary',
-        borderColor: 'primary',
+        backgroundColor: 'darken(primary, 20)',
+        borderColor: 'darken(primary, 20)',
       },
       '&:disabled': {
         backgroundColor: 'lightgrey',
