@@ -100,6 +100,7 @@ function KaraokeBox({ lyrics }) {
         fontSize={24}
         color="transparencify(white, 50)"
         height={56}
+        xflex="x4"
       >
         {currentLineIndex > 0 ? lyricsArray[currentLineIndex - 1] : ''}
       </P>
@@ -108,6 +109,7 @@ function KaraokeBox({ lyrics }) {
         fontSize={24}
         color="white"
         height={56}
+        xflex="x4"
       >
         {lyricsArray[currentLineIndex]}
       </P>
@@ -115,6 +117,7 @@ function KaraokeBox({ lyrics }) {
         fontSize={24}
         color="transparencify(white, 50)"
         height={56}
+        xflex="x4"
       >
         {currentLineIndex < lyricsArray.length - 1 ? lyricsArray[currentLineIndex + 1] : ''}
       </P>

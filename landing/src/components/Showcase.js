@@ -49,13 +49,13 @@ function WithRotatingTheme({ children }) {
   const [currentTheme, setCurrentTheme] = useState(themes[0])
   const nextTheme = useMemo(() => themes[(themes.indexOf(currentTheme) + 1) % themes.length], [currentTheme])
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setCurrentTheme(nextTheme)
-    }, themeTransitionPeriod)
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     setCurrentTheme(nextTheme)
+  //   }, themeTransitionPeriod)
 
-    return () => clearTimeout(timeoutId)
-  }, [nextTheme])
+  //   return () => clearTimeout(timeoutId)
+  // }, [nextTheme])
 
   return (
     <ThemeProvider theme={prepareTheme(currentTheme, mode)}>

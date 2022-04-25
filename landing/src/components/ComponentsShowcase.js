@@ -20,6 +20,7 @@ import {
 } from 'honorable'
 
 import Karaoke from './Karaoke'
+import WhatsOnYourMind from './WhatsOnYourMind'
 
 const items = [
   { text: 'For' },
@@ -31,10 +32,10 @@ const items = [
 function ComponentsShowcase() {
   return (
     <Div mt={2}>
-      <Input
-        display="block"
-        placeholder="What's on your mind?"
-      />
+      <WhatsOnYourMind />
+      <Button mt={2}>
+        Button
+      </Button>
       <Div mt={2}>
         <IconButton color="primary">
           <svg
@@ -67,7 +68,7 @@ function ComponentsShowcase() {
       <Div xflex="x4">
         <UserCard mt={2} />
       </Div>
-      <Template items={makeItems(items, 6)} />
+      <ControlledSelect items={makeItems(items, 6)} />
       <Karaoke mt={2} />
     </Div>
   )
@@ -82,7 +83,7 @@ function makeItems(items, depth = 1) {
   }))
 }
 
-function Template({ items, initialValue, ...args }) {
+function ControlledSelect({ items, initialValue, ...args }) {
   const [value, setValue] = useState(initialValue)
 
   function renderItem({ text, items }) {
@@ -108,28 +109,6 @@ function Template({ items, initialValue, ...args }) {
       onChange={event => setValue(event.target.value)}
     >
       {items.map(renderItem)}
-    </Select>
-  )
-}
-
-function ControlledSelect(props) {
-  const [value, setValue] = useState(1)
-
-  return (
-    <Select
-      value={value}
-      onChange={event => setValue(event.target.value)}
-      {...props}
-    >
-      <MenuItem value={1}>
-        Item 1
-      </MenuItem>
-      <MenuItem value={2}>
-        Item 2
-      </MenuItem>
-      <MenuItem value={3}>
-        Item 3
-      </MenuItem>
     </Select>
   )
 }

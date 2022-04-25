@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 
 import { ThemeProviderProps } from '../types'
@@ -18,5 +19,18 @@ function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
     </ThemeContext.Provider>
   )
 }
+
+function Extend({ theme = {}, children }: ThemeProviderProps) {
+  const existingTheme = useContext(ThemeContext)
+  const extendedTheme = enhanceTheme(mergeTheme(existingTheme, theme))
+
+  return (
+    <ThemeContext.Provider value={extendedTheme}>
+      {children}
+    </ThemeContext.Provider>
+  )
+}
+
+ThemeProvider.Extend = Extend
 
 export default ThemeProvider

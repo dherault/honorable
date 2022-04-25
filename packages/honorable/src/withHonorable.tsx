@@ -89,12 +89,13 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         honorable={(
           resolveAll(
             merge(
-              resolveCustomProps(
+              {},
+              resolvedDefaultProps,                                                    // Component defaultProps
+              resolveCustomProps(                                                      // Global customProps
                 theme.global?.customProps,
                 { ...resolvedWorkingProps, ...resolvedCustomProps },
                 theme
-              ),                                                                       // Global customProps
-              resolvedDefaultProps,                                                    // Component defaultProps
+              ),
               resolvedCustomProps,                                                     // Component customProps
               convertMp(mpProps, theme),                                               // "mp" prop
               convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop

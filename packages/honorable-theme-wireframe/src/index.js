@@ -28,20 +28,20 @@ export default mergeTheme(defaultTheme, {
     ]),
   },
   buttonBase: {
-    defaultProps: {
-      color: 'text',
-      backgroundColor: 'transparent',
-      borderColor: 'primary',
-      '&:hover': {
-        backgroundColor: 'transparencify(primary, 85)',
-      },
-    },
+    // defaultProps: {
+    //   color: 'text',
+    //   backgroundColor: 'transparent',
+    //   borderColor: 'primary',
+    //   '&:hover': {
+    //     backgroundColor: 'transparencify(primary, 85)',
+    //   },
+    // },
   },
   input: {
-    defaultProps: {
-      color: 'text',
-      backgroundColor: 'transparent',
-      borderColor: 'primary',
-    },
+    // defaultProps: {
+    //   color: 'text',
+    //   backgroundColor: 'transparent',
+    //   borderColor: 'primary',
+    // },
   },
 })
