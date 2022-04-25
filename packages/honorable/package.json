@@ -1,6 +1,6 @@
 {
   "name": "honorable",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "dist/index.js",
   "scripts": {
@@ -40,8 +40,8 @@
     "react-transition-group": "^4.4.2"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/react": ">=10.0.0",
+    "@emotion/styled": ">=10.0.0",
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0"
   },
