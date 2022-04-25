@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import '@emotion/react'
 import React, { PropsWithChildren, PropsWithRef, Ref } from 'react'
 
@@ -6,11 +5,11 @@ import * as tags from './components/tags'
 import styleProperties from './data/styleProperties'
 import mpProperties from './data/mpProperties'
 
-export type ElementProps<Tag> = PropsWithRef<
+export type ElementProps<Tag> = PropsWithRef<PropsWithChildren<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
->
+>>
 
 export type AnyProps = {
   [key: string]: any

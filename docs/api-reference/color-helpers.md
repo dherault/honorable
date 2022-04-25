@@ -24,13 +24,13 @@ Darkens a color by the given percentage amount (between 0 and 100).
 }
 ```
 
-## `transparencify(color, amount = 50)`
+## `transparency(color, amount = 50)`
 
 Applies transparency to a color by the given percentage amount (between 0 and 100).
 
 ```javascript
 {
-  color: 'transparencify(primary)'
-  backgroundColor: 'transparencify(background, 12)',
+  color: 'transparency(primary)'
+  backgroundColor: 'transparency(background, 12)',
 }
 ```

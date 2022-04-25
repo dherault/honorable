@@ -124,10 +124,10 @@ export default {
           color: 'primary',
           backgroundColor: 'transparent',
           ':hover': {
-            backgroundColor: 'transparencify(primary, 90)',
+            backgroundColor: 'transparency(primary, 90)',
           },
           ':active': {
-            backgroundColor: 'transparencify(primary, 75)',
+            backgroundColor: 'transparency(primary, 75)',
           },
         },
       ],
@@ -220,10 +220,10 @@ export default {
       elevation: 1,
       transition: 'color 200ms ease, background-color 200ms ease',
       '&:hover': {
-        backgroundColor: 'transparencify(primary, 85)',
+        backgroundColor: 'transparency(primary, 85)',
       },
       '&:active': {
-        backgroundColor: 'transparencify(primary, 65)',
+        backgroundColor: 'transparency(primary, 65)',
       },
     },
   },
@@ -322,7 +322,7 @@ export default {
           [
             ({ active }) => active,
             {
-              backgroundColor: 'transparencify(primary, 85)',
+              backgroundColor: 'transparency(primary, 85)',
               color: 'primary',
               border: '1px solid primary',
             },

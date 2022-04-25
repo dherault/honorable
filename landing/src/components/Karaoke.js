@@ -98,7 +98,7 @@ function KaraokeBox({ lyrics }) {
     >
       <P
         fontSize={24}
-        color="transparencify(white, 50)"
+        color="transparency(white, 50)"
         height={56}
         xflex="x4"
       >
@@ -115,7 +115,7 @@ function KaraokeBox({ lyrics }) {
       </P>
       <P
         fontSize={24}
-        color="transparencify(white, 50)"
+        color="transparency(white, 50)"
         height={56}
         xflex="x4"
       >

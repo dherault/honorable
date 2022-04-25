@@ -33,7 +33,7 @@ export default mergeTheme(defaultTheme, {
     //   backgroundColor: 'transparent',
     //   borderColor: 'primary',
     //   '&:hover': {
-    //     backgroundColor: 'transparencify(primary, 85)',
+    //     backgroundColor: 'transparency(primary, 85)',
     //   },
     // },
   },

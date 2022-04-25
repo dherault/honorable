@@ -4,7 +4,7 @@ import namedColors from '../data/namedColors'
 
 import isSelector from './isSelector'
 import { darken, lighten } from './lightenAndDarken'
-import transparencify from './transparencify'
+import transparency from './transparency'
 
 /*
   resolveColor
@@ -40,7 +40,7 @@ const colorProperties = [
   'textShadow',
 ]
 
-// TODO test that
+// TODO v1 test that
 function resolveColor<T>(value: T, theme: HonorableTheme = {}): T {
   return resolveColorEntry(null, value, theme)
 }
@@ -121,9 +121,9 @@ const colorHelpers = [
     fn: (color: string, intensity: number) => darken(color, intensity),
   },
   {
-    name: 'transparencify',
-    regex: /transparencify\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
-    fn: (color: string, intensity: number) => transparencify(color, intensity),
+    name: 'transparency',
+    regex: /transparency\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
+    fn: (color: string, intensity: number) => transparency(color, intensity),
   },
 ]
 

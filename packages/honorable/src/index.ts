@@ -22,5 +22,7 @@ export { default as useTheme } from './hooks/useTheme'
 export { default as withHonorable } from './withHonorable'
 export { default as mergeTheme } from './utils/mergeTheme'
 export { default as resolveColor } from './utils/resolveColor'
-export { default as transparencify } from './utils/transparencify'
+export { default as transparency } from './utils/transparency'
 export { lighten, darken } from './utils/lightenAndDarken'
+// Types
+export * from './types'
