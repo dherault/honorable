@@ -321,7 +321,7 @@ export default {
   },
   ProgressBar: {
     partProps: {
-      inner: {
+      Inner: {
         defaultProps: {
           borderRadius: 4,
           backgroundColor: 'primary',
