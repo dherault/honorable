@@ -1,7 +1,7 @@
 import '@emotion/react'
 import React, { PropsWithChildren, PropsWithRef, Ref } from 'react'
 
-import * as tags from './components/tags'
+import * as components from './components'
 import styleProperties from './data/styleProperties'
 import mpProperties from './data/mpProperties'
 
@@ -73,7 +73,7 @@ export type ColorStyle = string | ColorValue | {
 
 export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StyleProps | ((props: object, theme: HonorableTheme) => StyleProps) >
 
-export type ComponentNames = keyof typeof tags
+export type ComponentNames = keyof typeof components
 
 export type ComponentProps = {
   defaultProps?: StyleProps
