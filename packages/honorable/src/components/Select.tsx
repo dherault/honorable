@@ -80,7 +80,7 @@ function Select(props: SelectProps, ref: Ref<any>) {
         p={0.5}
         xflex="x5"
         userSelect="none"
-        extend={resolvePartProps('select', 'caret', props, theme)}
+        extend={resolvePartProps('Select', 'Caret', props, theme)}
       >
         <Caret rotation={opened ? 180 : 0} />
       </Span>
@@ -104,12 +104,12 @@ function Select(props: SelectProps, ref: Ref<any>) {
           setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
-        extend={resolvePartProps('select', 'inner', props, theme)}
+        extend={resolvePartProps('Select', 'Inner', props, theme)}
       >
         <Div
           py={0.5}
           pl={0.5}
-          extend={resolvePartProps('select', 'selected', props, theme)}
+          extend={resolvePartProps('Select', 'Selected', props, theme)}
         >
           {renderSelected()}
         </Div>
@@ -126,7 +126,7 @@ function Select(props: SelectProps, ref: Ref<any>) {
         left={0}
         zIndex={100}
         display={opened ? 'block' : 'none'}
-        extend={resolvePartProps('select', 'menu', props, theme)}
+        extend={resolvePartProps('Select', 'Menu', props, theme)}
       >
         {children}
       </Menu>
@@ -138,4 +138,4 @@ const ForwardedSelect = forwardRef(Select)
 
 ForwardedSelect.propTypes = propTypes
 
-export default withHonorable<SelectProps>(ForwardedSelect, 'select')
+export default withHonorable<SelectProps>(ForwardedSelect, 'Select')

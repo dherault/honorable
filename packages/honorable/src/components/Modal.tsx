@@ -44,7 +44,7 @@ function Modal(props: ModalProps, ref: Ref<any>) {
       bottom="0"
       zIndex="1000"
       backgroundColor="rgba(0, 0, 0, 0.5)"
-      extend={resolvePartProps('modal', 'backdrop', { open, onClose, ...props }, theme)}
+      extend={resolvePartProps('Modal', 'Backdrop', { open, onClose, ...props }, theme)}
       onClick={handleBackdropClick}
     >
       <Div
@@ -62,4 +62,4 @@ const ForwardedModal = forwardRef(Modal)
 
 ForwardedModal.propTypes = propTypes
 
-export default withHonorable<ModalProps>(ForwardedModal, 'modal')
+export default withHonorable<ModalProps>(ForwardedModal, 'Modal')

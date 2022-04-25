@@ -55,7 +55,7 @@ export default mergeTheme(defaultTheme, {
       ],
     ]),
   },
-  h1: {
+  H1: {
     defaultProps: {
       fontSize: '5rem',
       [`@media (max-width: ${mobile}px)`]: {
@@ -63,7 +63,7 @@ export default mergeTheme(defaultTheme, {
       },
     },
   },
-  h2: {
+  H2: {
     defaultProps: {
       fontSize: '2rem',
       [`@media (max-width: ${mobile}px)`]: {
@@ -71,7 +71,7 @@ export default mergeTheme(defaultTheme, {
       },
     },
   },
-  section: {
+  Section: {
     customProps: new Map([
       [
         ({ container }) => container,
@@ -86,7 +86,7 @@ export default mergeTheme(defaultTheme, {
       ],
     ]),
   },
-  iconButton: {
+  IconButton: {
     customProps: new Map([
       [
         ({ variant }) => variant === 'ghost',

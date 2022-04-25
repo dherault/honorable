@@ -59,7 +59,7 @@ function MenuItemTriangle(props: any) {
       // onMouseMove={handleMouseMove}
       zIndex={100}
       {...otherProps}
-      extend={resolvePartProps('menuItem', 'triangle', props, theme)}
+      extend={resolvePartProps('MenuItem', 'triangle', props, theme)}
     />
   )
 }
@@ -218,7 +218,7 @@ function MenuItem(props: MenuItemProps, ref: Ref<any>) {
             menuItemRef.current.focus()
           }
         }}
-        extend={resolvePartProps('menuItem', 'inner', props, theme)}
+        extend={resolvePartProps('MenuItem', 'Inner', props, theme)}
       >
         {Children.map(children, (child: ReactElement) => {
           if (child?.type === Menu) return null
@@ -232,7 +232,7 @@ function MenuItem(props: MenuItemProps, ref: Ref<any>) {
               ml={0.5}
               mr={-0.5}
               rotation={-90}
-              extend={resolvePartProps('menuItem', 'caret', props, theme)}
+              extend={resolvePartProps('MenuItem', 'Caret', props, theme)}
             />
           </>
         )}
@@ -274,4 +274,4 @@ const ForwardedMenuItem = forwardRef(MenuItem)
 
 ForwardedMenuItem.propTypes = propTypes
 
-export default withHonorable<MenuItemProps>(ForwardedMenuItem, 'menuItem')
+export default withHonorable<MenuItemProps>(ForwardedMenuItem, 'MenuItem')

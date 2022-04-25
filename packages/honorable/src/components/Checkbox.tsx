@@ -95,4 +95,4 @@ const ForwaredCheckbox = forwardRef(Checkbox)
 
 ForwaredCheckbox.propTypes = propTypes
 
-export default withHonorable<CheckboxProps>(ForwaredCheckbox, 'checkbox')
+export default withHonorable<CheckboxProps>(ForwaredCheckbox, 'Checkbox')

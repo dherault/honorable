@@ -230,4 +230,4 @@ const ForwardedMenu = forwardRef(Menu)
 
 ForwardedMenu.propTypes = propTypes
 
-export default withHonorable<MenuProps>(ForwardedMenu, 'menu')
+export default withHonorable<MenuProps>(ForwardedMenu, 'Menu')

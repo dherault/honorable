@@ -17,7 +17,6 @@ import mpProperties from './data/mpProperties'
 import useTheme from './hooks/useTheme'
 
 import filterObject from './utils/filterObject'
-import capitalize from './utils/capitalize'
 import isSelector from './utils/isSelector'
 import convertMp from './utils/convertMp'
 import convertXflex from './utils/convertXflex'
@@ -112,7 +111,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
 
   const ForwardedHonorable = forwardRef(Honorable)
 
-  ForwardedHonorable.displayName = `Honorable(${capitalize(name)})`
+  ForwardedHonorable.displayName = `Honorable(${name})`
   ForwardedHonorable.propTypes = componentPropsTypes
 
   return ForwardedHonorable

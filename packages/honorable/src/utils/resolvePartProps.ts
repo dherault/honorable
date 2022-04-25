@@ -1,3 +1,5 @@
+import merge from 'lodash.merge'
+
 import {
   HonorableTheme,
   StyleProps,
@@ -16,10 +18,11 @@ function resolvePartProps(componentKey: string, partKey: string, props: object, 
 
   if (!(partTheme && typeof partTheme === 'object')) return {}
 
-  return {
-    ...filterObject(partTheme.defaultProps),
-    ...resolveCustomProps(partTheme.customProps, props, theme),
-  }
+  return merge(
+    {},
+    filterObject(partTheme.defaultProps),
+    resolveCustomProps(partTheme.customProps, props, theme),
+  )
 }
 
 export default resolvePartProps

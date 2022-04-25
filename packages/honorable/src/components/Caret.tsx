@@ -41,4 +41,4 @@ const ForwaredCaret = forwardRef(Caret)
 
 ForwaredCaret.propTypes = propTypes
 
-export default withHonorable<CaretProps>(ForwaredCaret, 'caret')
+export default withHonorable<CaretProps>(ForwaredCaret, 'Caret')

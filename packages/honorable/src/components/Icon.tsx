@@ -25,4 +25,4 @@ const ForwardedIcon = forwardRef(Icon)
 
 ForwardedIcon.propTypes = propTypes
 
-export default withHonorable<IconProps>(ForwardedIcon, 'icon')
+export default withHonorable<IconProps>(ForwardedIcon, 'Icon')

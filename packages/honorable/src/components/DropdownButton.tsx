@@ -83,7 +83,7 @@ function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
           if (actualOpen) handleClose()
           else handleOpen()
         }}
-        extend={resolvePartProps('dropdownButton', 'button', props, theme)}
+        extend={resolvePartProps('DropdownButton', 'Button', props, theme)}
       >
         {label}
       </Button>
@@ -97,7 +97,7 @@ function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
         left={0}
         zIndex={100}
         display={actualOpen ? 'block' : 'none'}
-        extend={resolvePartProps('dropdownButton', 'menu', props, theme)}
+        extend={resolvePartProps('DropdownButton', 'Menu', props, theme)}
       >
         {children}
       </Menu>
@@ -109,4 +109,4 @@ const ForwardedDropdownButton = forwardRef(DropdownButton)
 
 ForwardedDropdownButton.propTypes = propTypes
 
-export default withHonorable<DropdownButtonProps>(ForwardedDropdownButton, 'dropdownButton')
+export default withHonorable<DropdownButtonProps>(ForwardedDropdownButton, 'DropdownButton')

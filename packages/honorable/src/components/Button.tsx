@@ -34,7 +34,7 @@ function Button(props: ButtonProps, ref: Ref<any>) {
       {!!startIcon && (
         <Span
           xflex="x5"
-          extend={resolvePartProps('button', 'startIcon', props, theme)}
+          extend={resolvePartProps('Button', 'StartIcon', props, theme)}
         >
           {startIcon}
         </Span>
@@ -43,7 +43,7 @@ function Button(props: ButtonProps, ref: Ref<any>) {
       {!!endIcon && (
         <Span
           xflex="x5"
-          extend={resolvePartProps('button', 'endIcon', props, theme)}
+          extend={resolvePartProps('Button', 'EndIcon', props, theme)}
         >
           {endIcon}
         </Span>
@@ -56,4 +56,4 @@ const ForwardedButton = forwardRef(Button)
 
 ForwardedButton.propTypes = propTypes
 
-export default withHonorable<ButtonProps>(ForwardedButton, 'button')
+export default withHonorable<ButtonProps>(ForwardedButton, 'Button')

@@ -29,7 +29,7 @@ function ProgressBar(props: ProgressBarProps, ref: Ref<any>) {
       <Div
         backgroundColor="black"
         width={`max(0%, min(100%, calc(${value} * 100%)))`}
-        extend={resolvePartProps('progressBar', 'inner', props, theme)}
+        extend={resolvePartProps('ProgressBar', 'Inner', props, theme)}
       />
     </Div>
   )
@@ -39,4 +39,4 @@ const ForwardedProgressBar = forwardRef(ProgressBar)
 
 ForwardedProgressBar.propTypes = propTypes
 
-export default withHonorable<ProgressBarProps>(ForwardedProgressBar, 'progressBar')
+export default withHonorable<ProgressBarProps>(ForwardedProgressBar, 'ProgressBar')

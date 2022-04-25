@@ -40,4 +40,4 @@ const ForwardedIconButton = forwardRef(IconButton)
 
 ForwardedIconButton.propTypes = propTypes
 
-export default withHonorable<IconButtonProps>(ForwardedIconButton, 'iconButton')
+export default withHonorable<IconButtonProps>(ForwardedIconButton, 'IconButton')

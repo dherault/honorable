@@ -25,4 +25,4 @@ const ForwardedButtonGroup = forwardRef(ButtonGroup)
 
 ForwardedButtonGroup.propTypes = propTypes
 
-export default withHonorable<ButtonGroupProps>(ForwardedButtonGroup, 'buttonGroup')
+export default withHonorable<ButtonGroupProps>(ForwardedButtonGroup, 'ButtonGroup')

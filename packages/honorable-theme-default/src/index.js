@@ -55,7 +55,7 @@ export default {
       ]),
     ]),
   },
-  a: {
+  A: {
     defaultProps: {
       display: 'inline-block',
       color: 'primary',
@@ -66,7 +66,7 @@ export default {
       },
     },
   },
-  button: {
+  Button: {
     defaultProps: {
       color: 'white',
       backgroundColor: 'primary',
@@ -115,31 +115,15 @@ export default {
           padding: '0.85rem 1.25rem',
         },
       ],
-      [
-        assignToString(
-          ({ variant }) => variant === 'outlined',
-          "({ variant }) => variant === 'outlined'"
-        ),
-        {
-          color: 'primary',
-          backgroundColor: 'transparent',
-          ':hover': {
-            backgroundColor: 'transparency(primary, 90)',
-          },
-          ':active': {
-            backgroundColor: 'transparency(primary, 75)',
-          },
-        },
-      ],
     ]),
     partProps: {
-      startIcon: {
+      StartIcon: {
         defaultProps: {
           marginLeft: 'calc(-0.5rem + 2px)',
           marginRight: '0.5rem',
         },
       },
-      endIcon: {
+      EndIcon: {
         defaultProps: {
           marginLeft: '0.5rem',
           marginRight: 'calc(-0.5rem + 2px)',
@@ -147,12 +131,12 @@ export default {
       },
     },
   },
-  buttonBase: {
+  ButtonBase: {
     defaultProps: {
       cursor: 'pointer',
     },
   },
-  buttonGroup: {
+  ButtonGroup: {
     defaultProps: {
       border: '1px solid primary',
       borderRadius: 4,
@@ -166,7 +150,7 @@ export default {
       },
     },
   },
-  dropdownButton: {
+  DropdownButton: {
     partProps: {
       menu: {
         defaultProps: {
@@ -175,43 +159,43 @@ export default {
       },
     },
   },
-  h1: {
+  H1: {
     defaultProps: {
       margin: 0,
     },
   },
-  h2: {
+  H2: {
     defaultProps: {
       margin: 0,
     },
   },
-  h3: {
+  H3: {
     defaultProps: {
       margin: 0,
     },
   },
-  h4: {
+  H4: {
     defaultProps: {
       margin: 0,
     },
   },
-  h5: {
+  H5: {
     defaultProps: {
       margin: 0,
     },
   },
-  h6: {
+  H6: {
     defaultProps: {
       margin: 0,
     },
   },
-  hr: {
+  Hr: {
     defaultProps: {
       borderWidth: '0px',
       borderTop: '1px solid border',
     },
   },
-  iconButton: {
+  IconButton: {
     defaultProps: {
       padding: '0.5rem',
       border: 'none',
@@ -227,7 +211,7 @@ export default {
       },
     },
   },
-  input: {
+  Input: {
     defaultProps: {
       padding: '0.5rem',
       color: 'text',
@@ -267,30 +251,14 @@ export default {
         },
       },
     },
-    // TODO remove from default theme
-    customProps: new Map([
-      [
-        assignToString(
-          ({ variant }) => variant === 'underlined',
-          "({ variant }) => variant === 'underlined'"
-        ),
-        {
-          borderWidth: 0,
-          borderRadius: 0,
-          borderBottom: '1px solid border',
-          backgroundColor: 'transparent',
-          color: 'text',
-        },
-      ],
-    ]),
   },
-  label: {
+  Label: {
     defaultProps: {
       display: 'block',
       marginBottom: '0.25rem',
     },
   },
-  menu: {
+  Menu: {
     defaultProps: {
       padding: '0.5rem 0',
       elevation: 1,
@@ -307,12 +275,12 @@ export default {
       ],
     ]),
   },
-  menuItem: {
+  MenuItem: {
     defaultProps: {
       outline: 'none',
     },
     partProps: {
-      inner: {
+      Inner: {
         defaultProps: {
           padding: '0.5rem 1rem',
           borderRadius: 2,
@@ -331,18 +299,18 @@ export default {
       },
     },
   },
-  modal: {
+  Modal: {
     defaultProps: {
       padding: '2rem',
       borderRadius: 4,
     },
   },
-  p: {
+  P: {
     defaultProps: {
       margin: 0,
     },
   },
-  pre: {
+  Pre: {
     defaultProps: {
       display: 'inline-block',
       margin: 0,
@@ -351,7 +319,7 @@ export default {
       backgroundColor: 'background-light',
     },
   },
-  progressBar: {
+  ProgressBar: {
     partProps: {
       inner: {
         defaultProps: {
@@ -362,7 +330,7 @@ export default {
       },
     },
   },
-  select: {
+  Select: {
     defaultProps: {
       border: '1px solid border',
       '&:hover': {
@@ -370,7 +338,7 @@ export default {
       },
     },
   },
-  switch: {
+  Switch: {
     defaultProps: {
       transition: 'background-color 150ms ease',
       '&:hover': {
@@ -386,7 +354,7 @@ export default {
       ],
     ]),
   },
-  table: {
+  Table: {
     defaultProps: {
       width: '100%',
       backgroundColor: 'background',
@@ -395,17 +363,17 @@ export default {
       borderCollapse: 'collapse',
     },
   },
-  td: {
+  Td: {
     defaultProps: {
       padding: '1rem',
     },
   },
-  th: {
+  Th: {
     defaultProps: {
       padding: '1rem',
     },
   },
-  tr: {
+  Tr: {
     defaultProps: {
       textAlign: 'left',
       borderTop: '1px solid border',

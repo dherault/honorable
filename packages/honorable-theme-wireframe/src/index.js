@@ -27,21 +27,4 @@ export default mergeTheme(defaultTheme, {
       ],
     ]),
   },
-  buttonBase: {
-    // defaultProps: {
-    //   color: 'text',
-    //   backgroundColor: 'transparent',
-    //   borderColor: 'primary',
-    //   '&:hover': {
-    //     backgroundColor: 'transparency(primary, 85)',
-    //   },
-    // },
-  },
-  input: {
-    // defaultProps: {
-    //   color: 'text',
-    //   backgroundColor: 'transparent',
-    //   borderColor: 'primary',
-    // },
-  },
 })

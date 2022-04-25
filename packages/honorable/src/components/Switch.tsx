@@ -91,7 +91,7 @@ function Switch(props: SwitchProps, ref: Ref<any>) {
         top={2}
         left={actualChecked ? 'calc(100% - 22px)' : 2}
         transition="left 150ms ease"
-        extend={resolvePartProps('switch', 'handle', props, theme)}
+        extend={resolvePartProps('switch', 'Handle', props, theme)}
       />
     </Div>
   )
@@ -101,4 +101,4 @@ const ForwaredSwitch = forwardRef(Switch)
 
 ForwaredSwitch.propTypes = propTypes
 
-export default withHonorable<SwitchProps>(ForwaredSwitch, 'switch')
+export default withHonorable<SwitchProps>(ForwaredSwitch, 'Switch')
