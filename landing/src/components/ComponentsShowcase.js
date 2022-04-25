@@ -11,6 +11,7 @@ import {
   IconButton,
   Img,
   Input,
+  Menu,
   MenuItem,
   P,
   ProgressBar,
@@ -19,6 +20,13 @@ import {
 } from 'honorable'
 
 import Karaoke from './Karaoke'
+
+const items = [
+  { text: 'For' },
+  { text: 'CSS' },
+  { text: 'Lovers' },
+  { text: 'And' },
+]
 
 function ComponentsShowcase() {
   return (
@@ -59,8 +67,48 @@ function ComponentsShowcase() {
       <Div xflex="x4">
         <UserCard mt={2} />
       </Div>
+      <Template items={makeItems(items, 6)} />
       <Karaoke mt={2} />
     </Div>
+  )
+}
+
+function makeItems(items, depth = 1) {
+  if (depth <= 0) return items
+
+  return items.map((item, i) => ({
+    ...item,
+    items: i % 2 === depth % 2 ? null : makeItems(items, depth - 1),
+  }))
+}
+
+function Template({ items, initialValue, ...args }) {
+  const [value, setValue] = useState(initialValue)
+
+  function renderItem({ text, items }) {
+    return (
+      <MenuItem
+        key={text}
+        value={text}
+      >
+        {text}
+        {Array.isArray(items) && (
+          <Menu>
+            {items.map(renderItem)}
+          </Menu>
+        )}
+      </MenuItem>
+    )
+  }
+
+  return (
+    <Select
+      {...args}
+      value={value}
+      onChange={event => setValue(event.target.value)}
+    >
+      {items.map(renderItem)}
+    </Select>
   )
 }
 

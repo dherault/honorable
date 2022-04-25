@@ -82,7 +82,7 @@ function KaraokeBox({ lyrics }) {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentLineIndex(x => x === lyricsArray.length - 1 ? 0 : x + 1)
-    }, 60 * 60 * 1000 / (141 + 8) / 8)
+    }, 60 * 60 * 1000 / 141 / 8)
 
     return () => {
       clearInterval(intervalId)
@@ -101,7 +101,7 @@ function KaraokeBox({ lyrics }) {
         color="transparencify(white, 50)"
         height={56}
       >
-        {currentLineIndex > 0 ? lyricsArray[currentLineIndex - 1] : '\u00a0'}
+        {currentLineIndex > 0 ? lyricsArray[currentLineIndex - 1] : ''}
       </P>
       <P
         my={1}
@@ -116,7 +116,7 @@ function KaraokeBox({ lyrics }) {
         color="transparencify(white, 50)"
         height={56}
       >
-        {currentLineIndex < lyricsArray.length - 1 ? lyricsArray[currentLineIndex + 1] : '\u00a0'}
+        {currentLineIndex < lyricsArray.length - 1 ? lyricsArray[currentLineIndex + 1] : ''}
       </P>
     </Div>
   )
