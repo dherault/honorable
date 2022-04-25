@@ -1,5 +1,6 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import { css } from '@emotion/react'
 
 import { ElementProps } from '../types'
 
@@ -91,7 +92,6 @@ function Select(props: SelectProps, ref: Ref<any>) {
       ref={forkedRef}
       minWidth={128 + 32 + 8 + 2}
       display="inline-block"
-      border="1px solid border"
       borderRadius={4}
       position="relative"
       {...otherProps}

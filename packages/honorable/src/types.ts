@@ -15,6 +15,9 @@ export type ElementProps<Tag> = PropsWithRef<
 export type AnyProps = {
   [key: string]: any
 }
+export type CssProps = {
+  css?: any
+}
 
 export type ThemeProps = {
   theme: HonorableTheme
@@ -25,7 +28,7 @@ export type StyleProperties = typeof styleProperties[number]
   | `${typeof styleProperties[number]}-tablet`
   | `${typeof styleProperties[number]}-desktop`
 
-export type StyleProps = {
+export type StyleProps = CssProps & {
   [styleKey in StyleProperties]?: any
 }
 
@@ -49,13 +52,7 @@ export type ExtendProps = {
   extend?: object
 }
 
-export type HonorableRefProps = {
-  honorableRef: Ref<any>
-}
-
 export type HonorableProps<P> = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & P & AnyProps>
-
-export type InnerHonorableProps<P> = HonorableProps<P> & HonorableRefProps
 
 export type StyledHonorableProps = {
   ref: Ref<any>

@@ -1,12 +1,11 @@
 /* eslint-disable no-multi-spaces */
 import { ComponentType, Ref, forwardRef } from 'react'
-import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
+import isPropValid from '@emotion/is-prop-valid'
 import merge from 'lodash.merge'
 
 import {
   HonorableProps,
-  InnerHonorableProps,
   MpProps,
   StyleProps,
   StyledHonorableProps,
@@ -48,15 +47,14 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
-      shouldForwardProp: prop => isPropValid(prop) || propTypeKeys.includes(prop as string),
+      shouldForwardProp: prop =>  isPropValid(prop) || propTypeKeys.includes(prop as string),
     }
   )(props => props.honorable)
 
-  function Honorable(props: InnerHonorableProps<P>) {
+  function Honorable(props: HonorableProps<P>, ref: Ref<any>) {
     const theme = useTheme()
-    const { customProps, defaultProps = {} } = theme[name] || {}
+    const { defaultProps = {}, customProps } = theme[name] || {}
     const {
-      honorableRef,
       extend = {},
       xflex,
       'xflex-mobile': xflexMobile,
@@ -86,7 +84,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
 
     return (
       <HonorableStyle
-        ref={honorableRef}
+        ref={ref}
         theme={theme}
         honorable={(
           resolveAll(
@@ -96,7 +94,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
                 { ...resolvedWorkingProps, ...resolvedCustomProps },
                 theme
               ),                                                                       // Global customProps
-              filterObject(resolvedDefaultProps),                                      // Component defaultProps
+              resolvedDefaultProps,                                                    // Component defaultProps
               resolvedCustomProps,                                                     // Component customProps
               convertMp(mpProps, theme),                                               // "mp" prop
               convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
@@ -111,22 +109,10 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     )
   }
 
-  const displayName = capitalize(name)
+  const ForwardedHonorable = forwardRef(Honorable)
 
-  Honorable.displayName = `Honorable(Honorable${displayName})`
-
-  const forwardHonorableRef = (props: HonorableProps<P>, ref: Ref<any>) => (
-    <Honorable
-      {...props}
-      honorableRef={ref}
-    />
-  )
-
-  forwardHonorableRef.displayName = `Honorable(${displayName})`
-
-  const ForwardedHonorable = forwardRef<any, HonorableProps<P>>(forwardHonorableRef)
-
-  ForwardedHonorable.displayName = forwardHonorableRef.displayName
+  ForwardedHonorable.displayName = `Honorable(${capitalize(name)})`
+  ForwardedHonorable.propTypes = componentPropsTypes
 
   return ForwardedHonorable
 }
