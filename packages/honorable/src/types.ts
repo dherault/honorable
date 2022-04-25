@@ -72,7 +72,7 @@ export type ColorStyle = string | ColorValue | {
   [modeKey in Mode]: string | ColorValue
 }
 
-export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StyleProps>
+export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StyleProps | ((props: object, theme: HonorableTheme) => StyleProps) >
 
 export type ComponentNames = keyof typeof tags
 

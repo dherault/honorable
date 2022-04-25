@@ -4,6 +4,8 @@ import {
   StyleProps,
 } from '../types'
 
+import filterObject from './filterObject'
+
 // Return the style object of applied customProps
 function resolveCustomProps(customProps: CustomProps, props: object = {}, theme: HonorableTheme = {}): StyleProps {
   const resolvedStyles = {}
@@ -11,13 +13,9 @@ function resolveCustomProps(customProps: CustomProps, props: object = {}, theme:
   if (!(customProps && customProps instanceof Map)) return resolvedStyles
 
   customProps.forEach((styles, fn) => {
-    try {
-      if (typeof fn === 'function' && fn(props, theme)) {
-        Object.assign(resolvedStyles, styles)
-      }
-    }
-    catch (error) {
-      //
+    if (typeof fn === 'function' && fn(props, theme)) {
+      if (typeof styles === 'function') Object.assign(resolvedStyles, styles(props, theme))
+      else Object.assign(resolvedStyles, filterObject(styles))
     }
   })
 

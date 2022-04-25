@@ -16,11 +16,6 @@ function Template(args) {
     <Div xflex="x4">
       <Button
         {...args}
-        ml={2}
-        mt={2}
-      />
-      <Button
-        {...args}
       />
     </Div>
   )
