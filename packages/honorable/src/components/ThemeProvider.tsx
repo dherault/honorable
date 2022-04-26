@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 
 import { ThemeProviderProps } from '../types'

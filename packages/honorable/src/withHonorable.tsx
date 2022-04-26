@@ -68,9 +68,9 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const styleProps: StyleProps = {}
     const mpProps: MpProps = {}
     const otherProps = {} as P
-    const resolvedProps = resolveAliases({ ...nextProps, ...overridedProps }, theme)
+    const resolvedProps = resolveAliases(nextProps, theme)
     const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StyleProps, theme)
-    const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps }
+    const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridedProps }
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
     Object.entries(resolvedProps).forEach(([key, value]) => {

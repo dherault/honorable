@@ -10,6 +10,7 @@ import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } 
 import useForkedRef from '../hooks/useForkedRef'
 import usePrevious from '../hooks/usePrevious'
 import useOutsideClick from '../hooks/useOutsideClick'
+import useRegisterProps from '../hooks/useRegisterProps'
 
 import { Div } from './tags'
 import MenuItem from './MenuItem'
@@ -49,10 +50,17 @@ function areEntriesIdentical(a: object, b: object) {
 
 const defaultMenuState: MenuStateType = {
   activeItemIndex: -1,
+  active: false,
+  event: null,
+  value: null,
+  isSubMenuVisible: false,
+  renderedItem: null,
+  shouldFocus: false,
+  shouldSyncWithParent: false,
 }
 
 function Menu({
-  menuState: initialMenuState,
+  menuState: initialMenuState = {},
   setMenuState: setInitialMenuState,
   fade,
   isSubMenu,
@@ -64,10 +72,13 @@ ref: Ref<any>
   const menuRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, menuRef)
   const [parentMenuState, setParentMenuState] = useContext(MenuContext)
-  const [menuState, setMenuState] = useState<MenuStateType>(initialMenuState || defaultMenuState)
+  const [menuState, setMenuState] = useState<MenuStateType>({ ...defaultMenuState, ...initialMenuState })
   const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, parentMenuState, setParentMenuState])
   const previousMenuState = usePrevious(menuState) || menuState
   const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
+
+  // Give `active` and `activeItemIndex` and other props to customProps
+  useRegisterProps('Menu', menuState)
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {

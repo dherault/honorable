@@ -11,6 +11,7 @@ import usePrevious from '../hooks/usePrevious'
 import useEscapeKey from '../hooks/useEscapeKey'
 import useForkedRef from '../hooks/useForkedRef'
 import useOutsideClick from '../hooks/useOutsideClick'
+import useRegisterProps from '../hooks/useRegisterProps'
 import resolvePartProps from '../utils/resolvePartProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 
@@ -45,6 +46,7 @@ function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
   const { value, event } = menuState
   const previousEvent = usePrevious(event)
 
+  useRegisterProps('DropdownButton', { open: actualOpen })
   useEscapeKey(handleClose)
   useOutsideClick(dropdownButtonRef, handleClose)
 

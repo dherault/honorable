@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Menu, MenuItem, Select } from 'honorable'
+import { Button, Div, Menu, MenuItem, Select } from 'honorable'
 
 export default {
   title: 'Select',
@@ -10,24 +10,24 @@ export default {
   },
 }
 
+function renderItem({ text, items }) {
+  return (
+    <MenuItem
+      key={text}
+      value={text}
+    >
+      {text}
+      {Array.isArray(items) && (
+        <Menu>
+          {items.map(renderItem)}
+        </Menu>
+      )}
+    </MenuItem>
+  )
+}
+
 function Template({ items, initialValue, ...args }) {
   const [value, setValue] = useState(initialValue)
-
-  function renderItem({ text, items }) {
-    return (
-      <MenuItem
-        key={text}
-        value={text}
-      >
-        {text}
-        {Array.isArray(items) && (
-          <Menu>
-            {items.map(renderItem)}
-          </Menu>
-        )}
-      </MenuItem>
-    )
-  }
 
   return (
     <Select
@@ -37,6 +37,31 @@ function Template({ items, initialValue, ...args }) {
     >
       {items.map(renderItem)}
     </Select>
+  )
+}
+
+function Template2({ items, initialValue, ...args }) {
+  const [value, setValue] = useState(initialValue)
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Div xflex="x4">
+      <Select
+        {...args}
+        open={open}
+        onOpen={setOpen}
+        value={value}
+        onChange={event => setValue(event.target.value)}
+      >
+        {items.map(renderItem)}
+      </Select>
+      <Button
+        ml={1}
+        onClick={() => setOpen(x => !x)}
+      >
+        Toggle
+      </Button>
+    </Div>
   )
 }
 
@@ -61,6 +86,12 @@ Default.args = {
   items,
 }
 
+export const DefaultOpen = Template.bind({})
+DefaultOpen.args = {
+  items,
+  defaultOpen: true,
+}
+
 export const Selected = Template.bind({})
 Selected.args = {
   items,
@@ -70,4 +101,9 @@ Selected.args = {
 export const SubMenu = Template.bind({})
 SubMenu.args = {
   items: makeItems(items, 6),
+}
+
+export const Controlled = Template2.bind({})
+Controlled.args = {
+  items,
 }
