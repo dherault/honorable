@@ -24,6 +24,7 @@ module.exports = {
   },
   globals: {
     JSX: true,
+    jest: true,
   },
   plugins: [
     '@typescript-eslint',

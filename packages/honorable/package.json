@@ -10,7 +10,8 @@
     "clean:node-modules": "rimraf node_module package-lock.json",
     "clean:peerDependencies": "rimraf node_modules/react node_modules/react-dom",
     "clean:build": "rimraf dist",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm test && npm run build",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -46,12 +47,19 @@
     "react-dom": ">=16.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.merge": "^4.6.7",
     "@types/lodash.mergewith": "^4.6.7",
-    "@types/node": "^17.0.26",
+    "@types/node": "^17.0.27",
     "@types/react": "^18.0.6",
     "@types/react-transition-group": "^4.4.4",
+    "babel-jest": "^28.0.1",
+    "jest": "^28.0.1",
+    "jest-environment-jsdom": "^28.0.1",
     "nodemon": "^2.0.15",
     "normalize.css": "^8.0.1",
     "rimraf": "^3.0.2",

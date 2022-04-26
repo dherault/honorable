@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -14,8 +14,7 @@ type SwitchProps = ElementProps<'div'> & {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
-  onChange?: (event: MouseEvent) => void
-  onClick?: (event: MouseEvent) => void
+  onChange?: (event: MouseEvent | KeyboardEvent) => void
   checkedBackground?: ReactNode
   uncheckedBackground?: ReactNode
 }
@@ -24,18 +23,17 @@ const propTypes = {
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
   onChange: PropTypes.func,
-  onClick: PropTypes.func,
   checkedBackground: PropTypes.node,
   uncheckedBackground: PropTypes.node,
 }
 
+// TODO v1 decide weither to use actualChecked or uncontrolledChecked
 function Switch(props: SwitchProps, ref: Ref<any>) {
   const {
     defaultChecked,
     checked,
     disabled,
     onChange,
-    onClick,
     checkedBackground = null,
     uncheckedBackground = null,
     ...otherProps
@@ -43,6 +41,13 @@ function Switch(props: SwitchProps, ref: Ref<any>) {
   const theme = useTheme()
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.code === 'Enter' || event.code === 'Space') {
+      if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
+      setUncontrolledChecked(!actualChecked)
+    }
+  }
 
   return (
     <Div
@@ -57,14 +62,20 @@ function Switch(props: SwitchProps, ref: Ref<any>) {
       backgroundColor="background-light"
       userSelect="none"
       cursor="pointer"
+      role="button"
+      tabIndex={0}
+      {...otherProps}
       onClick={event => {
-        if (typeof onClick === 'function') onClick(event)
         if (disabled) return
         if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
+        if (typeof props.onClick === 'function') props.onClick(event)
         setUncontrolledChecked(!actualChecked)
       }}
-      role="button"
-      {...otherProps}
+      onKeyDown={event => {
+        if (disabled) return
+        handleKeyDown(event)
+        if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
+      }}
     >
       {actualChecked && !!checkedBackground && (
         <Div

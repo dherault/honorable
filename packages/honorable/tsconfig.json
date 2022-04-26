@@ -23,6 +23,7 @@
       "DOM"
     ],
     "suppressImplicitAnyIndexErrors": true,
+    "types": ["jest", "node"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "tests/**/*"]
 }
