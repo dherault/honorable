@@ -1,21 +1,26 @@
-import { useContext } from 'react'
+import { useMemo, useState } from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 
 import { ThemeProviderProps } from '../types'
 
 import ThemeContext from '../contexts/ThemeContext'
+import RegisterPropsContext, { RegisterPropsContextType, RegisterPropsType } from '../contexts/RegisterPropsContext'
 import defaultTheme from '../data/defaultTheme'
 import enhanceTheme from '../utils/enhanceTheme'
 import mergeTheme from '../utils/mergeTheme'
 
 function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
   const userTheme = enhanceTheme(mergeTheme(defaultTheme, theme))
+  const [registeredProps, setRegisteredProps] = useState<RegisterPropsType>({})
+  const registerPropsValue = useMemo<RegisterPropsContextType>(() => [registeredProps, setRegisteredProps], [registeredProps])
 
   return (
     <ThemeContext.Provider value={userTheme}>
-      <EmotionProvider theme={userTheme}>
-        {children}
-      </EmotionProvider>
+      <RegisterPropsContext.Provider value={registerPropsValue}>
+        <EmotionProvider theme={userTheme}>
+          {children}
+        </EmotionProvider>
+      </RegisterPropsContext.Provider>
     </ThemeContext.Provider>
   )
 }

@@ -150,6 +150,34 @@ export default {
       },
     },
   },
+  Checkbox: {
+    defaultProps: {
+      width: 24,
+      height: 24,
+      color: 'white',
+      backgroundColor: 'transparent',
+      border: '1px solid border',
+      borderRadius: 2,
+      cursor: 'pointer',
+      userSelect: 'none',
+    },
+    customProps: new Map([
+      [
+        ({ disabled }) => disabled,
+        {
+          cursor: 'not-allowed',
+          backgroundColor: 'border',
+        },
+      ],
+      [
+        ({ checked }) => checked,
+        ({ disabled }) => ({
+          backgroundColor: 'primary',
+          borderColor: disabled ? 'border' : 'primary',
+        }),
+      ],
+    ]),
+  },
   DropdownButton: {
     partProps: {
       menu: {

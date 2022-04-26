@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-spaces */
-import { ComponentType, Ref, forwardRef } from 'react'
+import { ComponentType, Ref, forwardRef, useContext } from 'react'
 import styled from '@emotion/styled'
 import isPropValid from '@emotion/is-prop-valid'
 import merge from 'lodash.merge'
@@ -23,6 +23,7 @@ import convertXflex from './utils/convertXflex'
 import resolveAll from './utils/resolveAll'
 import resolveAliases from './utils/resolveAliases'
 import resolveCustomProps from './utils/resolveCustomProps'
+import RegisterPropsContext from './contexts/RegisterPropsContext'
 
 const allStyleProperties = [
   ...styleProperties,
@@ -52,6 +53,9 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
 
   function Honorable(props: HonorableProps<P>, ref: Ref<any>) {
     const theme = useTheme()
+    const [registeredProps] = useContext(RegisterPropsContext)
+
+    const overridedProps = registeredProps[name] || {}
     const { defaultProps = {}, customProps } = theme[name] || {}
     const {
       extend = {},
@@ -64,7 +68,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const styleProps: StyleProps = {}
     const mpProps: MpProps = {}
     const otherProps = {} as P
-    const resolvedProps = resolveAliases(nextProps, theme)
+    const resolvedProps = resolveAliases({ ...nextProps, ...overridedProps }, theme)
     const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StyleProps, theme)
     const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps }
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)

@@ -1,10 +1,12 @@
-import { MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
 
-import enhanceEventTarget from '../utils/enhanceEventTarget'
 import withHonorable from '../withHonorable'
+
+import enhanceEventTarget from '../utils/enhanceEventTarget'
+import useRegisterProps from '../hooks/useRegisterProps'
 
 import { Span } from './tags'
 
@@ -13,8 +15,7 @@ type CheckboxProps = ElementProps<'span'> & {
   defaultChecked?: boolean
   disabled?: boolean
   icon?: ReactNode
-  onChange?: (event: MouseEvent) => void
-  onClick?: (event: MouseEvent) => void
+  onChange?: (event: MouseEvent | KeyboardEvent) => void
 }
 
 const propTypes = {
@@ -23,7 +24,6 @@ const propTypes = {
   disabled: PropTypes.bool,
   icon: PropTypes.node,
   onChange: PropTypes.func,
-  onClick: PropTypes.func,
 }
 
 const defaultIcon = (
@@ -48,13 +48,14 @@ function Checkbox({
   disabled = false,
   icon = defaultIcon,
   onChange,
-  onClick,
   ...props
 }: CheckboxProps,
 ref: Ref<any>
 ) {
-  const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
-  const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
+  const [actualChecked, setActualChecked] = useState(checked || defaultChecked)
+
+  // Override `checked` prop in customProps
+  useRegisterProps('Checkbox', { checked: actualChecked })
 
   const style = {
     '&:hover': {
@@ -62,28 +63,34 @@ ref: Ref<any>
     },
   }
 
+  function handleChange(event: MouseEvent | KeyboardEvent) {
+    if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
+    setActualChecked(!actualChecked)
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.code === 'Enter' || event.code === 'Space') {
+      handleChange(event)
+    }
+  }
+
   return (
     <Span
       ref={ref}
       xflex="x5"
       display="inline-flex"
-      color="white"
-      backgroundColor={actualChecked ? disabled ? 'border' : 'primary' : 'transparent'}
-      borderStyle="solid"
-      borderWidth={1}
-      borderRadius={2}
-      borderColor={actualChecked && !disabled ? 'primary' : 'border'}
-      cursor={disabled ? 'not-allowed' : 'pointer'}
-      width={24}
-      height={24}
-      userSelect="none"
+      tabIndex={0}
       {...style}
       {...props}
       onClick={event => {
-        if (typeof onClick === 'function') onClick(event)
         if (disabled) return
-        if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
-        setUncontrolledChecked(!actualChecked)
+        handleChange(event)
+        if (typeof props.onClick === 'function') props.onClick(event)
+      }}
+      onKeyDown={event => {
+        if (disabled) return
+        handleKeyDown(event)
+        if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
       }}
     >
       {actualChecked && icon}
