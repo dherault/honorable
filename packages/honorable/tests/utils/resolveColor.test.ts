@@ -94,14 +94,14 @@ describe('lighten and darken', () => {
     expect(resolveColor('lighten(#00000080, 10)', theme)).toBe('#1a1a1a80')
   })
 
-  test('it returns a resolved lightened color with rgb syntax', () => {
-    expect(resolveColor('lighten(rgb(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
-  })
+  // test('it returns a resolved lightened color with rgb syntax', () => {
+  //   expect(resolveColor('lighten(rgb(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
+  // })
 
-  test('it returns a resolved lighten color with rgba syntax', () => {
-    expect(resolveColor('lighten(rgba(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
-    expect(resolveColor('lighten(rgba(0, 0, 0, 128), 10)', theme)).toBe('#1a1a1a80')
-  })
+  // test('it returns a resolved lighten color with rgba syntax', () => {
+  //   expect(resolveColor('lighten(rgba(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
+  //   expect(resolveColor('lighten(rgba(0, 0, 0, 128), 10)', theme)).toBe('#1a1a1a80')
+  // })
 })
 
 describe('transparencify', () => {
@@ -133,12 +133,12 @@ describe('transparencify', () => {
     expect(resolveColor('transparency(#00000080, 10)', theme)).toBe('#00000066')
   })
 
-  test('it returns a resolved transparencified color with rgb syntax', () => {
-    expect(resolveColor('transparency(rgb(0, 0, 0), 10)', theme)).toBe('#000000e6')
-  })
+  // test('it returns a resolved transparencified color with rgb syntax', () => {
+  //   expect(resolveColor('transparency(rgb(0, 0, 0), 10)', theme)).toBe('#000000e6')
+  // })
 
-  test('it returns a resolved transparencified color with rgba syntax', () => {
-    expect(resolveColor('transparency(rgba(0, 0, 0), 10)', theme)).toBe('#000000e6')
-    expect(resolveColor('transparency(rgba(0, 0, 0, 128), 10)', theme)).toBe('#00000066')
-  })
+  // test('it returns a resolved transparencified color with rgba syntax', () => {
+  //   expect(resolveColor('transparency(rgba(0, 0, 0), 10)', theme)).toBe('#000000e6')
+  //   expect(resolveColor('transparency(rgba(0, 0, 0, 128), 10)', theme)).toBe('#00000066')
+  // })
 })

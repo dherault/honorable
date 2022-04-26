@@ -19,8 +19,6 @@ function transparency(colorHex: string, value = 50) {
 
   const value16 = Math.max(0, Math.min(255, Math.round((1 - value / 100) * 255 - transparency)))
 
-  console.log('value16', value16)
-
   return `#${colorHexWithoutPound}${value16.toString(16).padStart(2, '0')}`
 }
 
