@@ -95,7 +95,7 @@ function resolveThemeColor(color: string, theme: HonorableTheme, previousColor =
   const foundColor = typeof theme.colors[color] === 'string'
     ? theme.colors[color]
     : typeof theme.colors[color] === 'object'
-      ? theme.colors[color][theme.mode]
+      ? theme.colors[color][theme.mode || 'light']
       : color
 
   return foundColor === previousColor ? foundColor : resolveThemeColor(foundColor, theme, foundColor, i + 1)
@@ -112,17 +112,17 @@ function resolveThemeColor(color: string, theme: HonorableTheme, previousColor =
 const colorHelpers = [
   {
     name: 'lighten',
-    regex: /lighten\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
+    regex: /lighten\(([\w()-,#]*)?\)/g,
     fn: (color: string, intensity: number) => lighten(color, intensity),
   },
   {
     name: 'darken',
-    regex: /darken\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
+    regex: /darken\(([\w()-,#]*)?\)/g,
     fn: (color: string, intensity: number) => darken(color, intensity),
   },
   {
     name: 'transparency',
-    regex: /transparency\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
+    regex: /transparency\(([\w()-,#]*)?\)/g,
     fn: (color: string, intensity: number) => transparency(color, intensity),
   },
 ]
@@ -136,22 +136,50 @@ function applyColorHelpers(colorString: string, i = 0): string {
     if (colorString.includes(name)) {
       return colorString.replace(
         regex,
-        (_match, color, intensityString) => {
-          let intensity = intensityString ? parseInt(intensityString) : undefined
+        (_match, colorAndIntensityString) => {
+          const intensityArray = colorAndIntensityString.split(',')
 
-          if (intensity !== intensity) intensity = undefined
+          let color = colorAndIntensityString
+          let intensity = parseInt(intensityArray[intensityArray.length - 1])
 
-          return fn(convertNamedColor(color.trim()), intensity)
+          if (intensity === intensity) {
+            intensityArray.pop()
+            color = intensityArray.join(',')
+          }
+          else {
+            intensity = undefined
+          }
+
+          return fn(convertCssColorFunctions(convertNamedColor(color)), intensity)
         }
       )
     }
 
     return colorString
-  }, colorString)
+  }, colorString.replaceAll(' ', ''))
 
   return appliedColor === colorString ? appliedColor : applyColorHelpers(appliedColor, i + 1)
 }
 
+/*
+  convertCssColorFunctions
+  ------------
+  Convert a named CSS color function to its hex value.
+  eg: "rgb(255, 0, 0)" => "#ff0000"
+  Needed for applying helper functions on CSS colors
+*/
+
+function convertCssColorFunctions(value: string) {
+  const match = value.match(/^rgba?\((\d{1,3}),(\d{1,3}),(\d{1,3}),?(\d{1,3})?\)$/)
+
+  if (match) {
+    const alpha = parseInt(match[4])
+
+    return `#${parseInt(match[1]).toString(16).padEnd(2, '0')}${parseInt(match[2]).toString(16).padEnd(2, '0')}${parseInt(match[3]).toString(16).padEnd(2, '0')}${alpha === alpha ? alpha.toString(16).padEnd(2, '0') : ''}`
+  }
+
+  return value
+}
 /*
   convertNamedColors
   ------------

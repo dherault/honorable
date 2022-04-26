@@ -11,7 +11,8 @@
     "clean:peerDependencies": "rimraf node_modules/react node_modules/react-dom",
     "clean:build": "rimraf dist",
     "prepublishOnly": "npm run clean && npm test && npm run build",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "nodemon --watch src --watch tests --ext ts,tsx --exec \"npm run test\""
   },
   "repository": {
     "type": "git",

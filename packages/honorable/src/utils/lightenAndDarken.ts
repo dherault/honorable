@@ -1,12 +1,27 @@
+function extendColorHex(colorHexWithoutPound: string) {
+  return colorHexWithoutPound[0] + colorHexWithoutPound[0] + colorHexWithoutPound[1] + colorHexWithoutPound[1] + colorHexWithoutPound[2] + colorHexWithoutPound[2]
+}
+
 // Lighten a hex color by a given amount
 export function lighten(colorHex: string, value = 25) {
   if (!(typeof colorHex === 'string' && typeof value === 'number' && colorHex.startsWith('#'))) return colorHex
 
   const value16 = Math.round(value / 100 * 255)
 
-  colorHex = colorHex.slice(1)
+  let transparency = ''
+  let colorHexWithoutPound = colorHex.slice(1)
 
-  const num = parseInt(colorHex, 16)
+  // Handle short hex
+  if (colorHexWithoutPound.length === 3) colorHexWithoutPound = extendColorHex(colorHexWithoutPound)
+  // Handle transparency hex
+  else if (colorHexWithoutPound.length === 8) {
+    transparency = colorHexWithoutPound.slice(-2)
+    colorHexWithoutPound = colorHexWithoutPound.slice(0, 6)
+  }
+  // Handle invalid hex
+  else if (colorHexWithoutPound.length !== 6) return colorHex
+
+  const num = parseInt(colorHexWithoutPound, 16)
 
   let r = (num >> 16) + value16
 
@@ -23,7 +38,7 @@ export function lighten(colorHex: string, value = 25) {
   if (g > 255) g = 255
   else if (g < 0) g = 0
 
-  return `#${(g | (b << 8) | (r << 16)).toString(16).padStart(6, '0')}`
+  return `#${(g | (b << 8) | (r << 16)).toString(16).padStart(6, '0')}${transparency}`
 }
 
 export const darken = (colorHex: string, amount = 12) => lighten(colorHex, -amount)
