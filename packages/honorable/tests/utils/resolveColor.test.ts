@@ -62,11 +62,11 @@ describe('lighten and darken', () => {
     expect(resolveColor('darken(#ffffff, 10)', theme)).toBe('#e6e6e6')
   })
 
-  test('it returns a lightened hex color, with second argument', () => {
+  test('it returns a lightened short hex color, with second argument', () => {
     expect(resolveColor('lighten(#000, 10)', theme)).toBe('#1a1a1a')
   })
 
-  test('it returns a darkened hex color, with second argument', () => {
+  test('it returns a darkened short hex color, with second argument', () => {
     expect(resolveColor('darken(#fff, 10)', theme)).toBe('#e6e6e6')
   })
 
@@ -90,16 +90,55 @@ describe('lighten and darken', () => {
     expect(resolveColor('lighten(#ffff, 10)', theme)).toBe('#ffff')
   })
 
-  test('it returns a resolved lighten color with transparency', () => {
+  test('it returns a resolved lightened color with transparency', () => {
     expect(resolveColor('lighten(#00000080, 10)', theme)).toBe('#1a1a1a80')
   })
 
-  test('it returns a resolved lighten color with rgb syntax', () => {
+  test('it returns a resolved lightened color with rgb syntax', () => {
     expect(resolveColor('lighten(rgb(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
   })
 
   test('it returns a resolved lighten color with rgba syntax', () => {
     expect(resolveColor('lighten(rgba(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
     expect(resolveColor('lighten(rgba(0, 0, 0, 128), 10)', theme)).toBe('#1a1a1a80')
+  })
+})
+
+describe('transparencify', () => {
+  test('it returns a transparencified hex color', () => {
+    expect(resolveColor('transparency(#000000)', theme)).toBe('#00000080')
+  })
+
+  test('it returns a transparencified hex color, with second argument', () => {
+    expect(resolveColor('transparency(#000000, 10)', theme)).toBe('#000000e6')
+  })
+
+  test('it returns a transparencified short hex color, with second argument', () => {
+    expect(resolveColor('transparency(#000, 10)', theme)).toBe('#000000e6')
+  })
+
+  test('it returns a resolved transparencified theme color', () => {
+    expect(resolveColor('transparency(primary, 10)', theme)).toBe('#0000ffe6')
+  })
+
+  test('it returns a resolved transparencified CSS color', () => {
+    expect(resolveColor('transparency(blue, 10)', theme)).toBe('#0000ffe6')
+  })
+
+  test('it returns the given color if not a valid color', () => {
+    expect(resolveColor('transparency(#ffff, 10)', theme)).toBe('#ffff')
+  })
+
+  test('it returns a resolved transparencified color with transparency', () => {
+    expect(resolveColor('transparency(#00000080, 10)', theme)).toBe('#00000066')
+  })
+
+  test('it returns a resolved transparencified color with rgb syntax', () => {
+    expect(resolveColor('transparency(rgb(0, 0, 0), 10)', theme)).toBe('#000000e6')
+  })
+
+  test('it returns a resolved transparencified color with rgba syntax', () => {
+    expect(resolveColor('transparency(rgba(0, 0, 0), 10)', theme)).toBe('#000000e6')
+    expect(resolveColor('transparency(rgba(0, 0, 0, 128), 10)', theme)).toBe('#00000066')
   })
 })

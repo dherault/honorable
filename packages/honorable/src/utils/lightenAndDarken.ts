@@ -1,6 +1,4 @@
-function extendColorHex(colorHexWithoutPound: string) {
-  return colorHexWithoutPound[0] + colorHexWithoutPound[0] + colorHexWithoutPound[1] + colorHexWithoutPound[1] + colorHexWithoutPound[2] + colorHexWithoutPound[2]
-}
+import extendColorHex from './extendColorHex'
 
 // Lighten a hex color by a given amount
 export function lighten(colorHex: string, value = 25) {
