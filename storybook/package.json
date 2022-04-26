@@ -20,8 +20,8 @@
     ]
   },
   "dependencies": {
-    "honorable": "^0.35.0",
-    "honorable-theme-default": "^0.18.0",
+    "honorable": "^0.42.0",
+    "honorable-theme-default": "^0.25.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.1"

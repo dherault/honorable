@@ -25,5 +25,5 @@
     "suppressImplicitAnyIndexErrors": true,
     "types": ["jest", "node"]
   },
-  "include": ["src/**/*", "tests/**/*"]
+  "include": ["src/**/*"]
 }

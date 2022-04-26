@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useMemo, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ElementProps } from '../types'
@@ -15,7 +15,7 @@ type CheckboxProps = ElementProps<'span'> & {
   defaultChecked?: boolean
   disabled?: boolean
   icon?: ReactNode
-  onChange?: (event: MouseEvent | KeyboardEvent) => void
+  onChange?: (event: MouseEvent | KeyboardEvent | ChangeEvent) => void
 }
 
 const propTypes = {
