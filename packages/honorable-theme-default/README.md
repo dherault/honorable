@@ -2,7 +2,7 @@
 
 A React UI library for 2022 and beyond.
 
-- [Honorable](https://honorable.design)
+- [Website](https://honorable.design)
 - [Documentation](https://docs.honorable.design)
 - [Storybook](https://storybook.honorable.design)
 - [Theme Designer](https://design.honorable.design)
