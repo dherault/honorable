@@ -1,16 +1,14 @@
 import { ReactNode, Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { ElementProps } from '../types'
-
 import withHonorable from '../withHonorable'
 
 import useTheme from '../hooks/useTheme'
 import resolvePartProps from '../utils/resolvePartProps'
 
-import { ButtonBase, Span } from './tags'
+import { ButtonBase, ButtonBaseProps, Span } from './tags'
 
-type ButtonProps = ElementProps<'button'> & {
+export type ButtonProps = ButtonBaseProps & {
   startIcon?: ReactNode
   endIcon?: ReactNode
 }
@@ -21,7 +19,7 @@ const propTypes = {
   // ref: PropTypes.any,
 }
 
-function Button(props: ButtonProps, ref: Ref<any>) {
+function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const { startIcon, endIcon, children, ...otherProps } = props
   const theme = useTheme()
 
@@ -52,8 +50,10 @@ function Button(props: ButtonProps, ref: Ref<any>) {
   )
 }
 
-const ForwardedButton = forwardRef(Button)
+ButtonRef.displayName = 'Button'
+
+const ForwardedButton = forwardRef(ButtonRef)
 
 ForwardedButton.propTypes = propTypes
 
-export default withHonorable<ButtonProps>(ForwardedButton, 'Button')
+export const Button = withHonorable<ButtonProps>(ForwardedButton, 'Button')

@@ -1,8 +1,6 @@
 import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ElementProps } from '../types'
-
 import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateType } from '../contexts/MenuContext'
@@ -10,11 +8,11 @@ import useForkedRef from '../hooks/useForkedRef'
 import useTheme from '../hooks/useTheme'
 import resolvePartProps from '../utils/resolvePartProps'
 
-import { Div, Span } from './tags'
-import Menu from './Menu'
-import Caret from './Caret'
+import { Div, DivProps, Span } from './tags'
+import { Menu } from './Menu'
+import { Caret } from './Caret'
 
-type MenuItemProps = ElementProps<'div'> & {
+export type MenuItemProps = DivProps & {
   value?: any
   itemIndex?: number
   active?: boolean
@@ -64,7 +62,7 @@ function MenuItemTriangle(props: any) {
   )
 }
 
-function MenuItem(props: MenuItemProps, ref: Ref<any>) {
+function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const {
     value,
     children,
@@ -270,8 +268,10 @@ function MenuItem(props: MenuItemProps, ref: Ref<any>) {
   )
 }
 
-const ForwardedMenuItem = forwardRef(MenuItem)
+MenuItemRef.displayName = 'MenuItemRef'
+
+const ForwardedMenuItem = forwardRef(MenuItemRef)
 
 ForwardedMenuItem.propTypes = propTypes
 
-export default withHonorable<MenuItemProps>(ForwardedMenuItem, 'MenuItem')
+export const MenuItem = withHonorable<MenuItemProps>(ForwardedMenuItem, 'MenuItem')

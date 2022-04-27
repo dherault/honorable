@@ -2,7 +2,7 @@ import fp from 'flexpad'
 
 import {
   HonorableTheme,
-  StyleProps,
+  StylesProps,
 } from '../types'
 
 import createMediaQuery from './createMediaQuery'
@@ -27,7 +27,7 @@ function createXflexMediaQuery(xflex: string, breakpointName: string, theme: Hon
 function convertXflex(
   { xflex, xflexMobile, xflexTablet, xflexDesktop }: ConverXFlexArgs,
   theme: HonorableTheme
-): StyleProps {
+): StylesProps {
   return {
     ...(xflex ? fp(xflex) : null),
     ...createXflexMediaQuery(xflexMobile, 'mobile', theme),

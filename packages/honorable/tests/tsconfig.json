@@ -20,7 +20,8 @@
       "ESNext",
       "DOM"
     ],
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "types": ["jest", "node"]
   },
-  "include": ["src/**/*"]
+  "include": ["./**/*"]
 }

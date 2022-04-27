@@ -1,7 +1,7 @@
-import { useContext, useMemo, useState } from 'react'
+import { PropsWithChildren, useContext, useMemo, useState } from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 
-import { ThemeProviderProps } from '../types'
+import { ThemeProps } from '../types'
 
 import ThemeContext from '../contexts/ThemeContext'
 import RegisterPropsContext, { RegisterPropsContextType, RegisterPropsType } from '../contexts/RegisterPropsContext'
@@ -9,7 +9,9 @@ import defaultTheme from '../data/defaultTheme'
 import enhanceTheme from '../utils/enhanceTheme'
 import mergeTheme from '../utils/mergeTheme'
 
-function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
+export type ThemeProviderProps = PropsWithChildren<ThemeProps>
+
+export function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
   const userTheme = enhanceTheme(mergeTheme(defaultTheme, theme))
   const [registeredProps, setRegisteredProps] = useState<RegisterPropsType>({})
   const registerPropsValue = useMemo<RegisterPropsContextType>(() => [registeredProps, setRegisteredProps], [registeredProps])
@@ -37,5 +39,3 @@ function Extend({ theme = {}, children }: ThemeProviderProps) {
 }
 
 ThemeProvider.Extend = Extend
-
-export default ThemeProvider

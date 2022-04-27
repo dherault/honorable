@@ -1,21 +1,19 @@
 import { Ref, forwardRef } from 'react'
 
-import { ElementProps } from '../types'
-
 import withHonorable from '../withHonorable'
 
 import useTheme from '../hooks/useTheme'
 import resolvePartProps from '../utils/resolvePartProps'
 
-import { Div } from './tags'
+import { Div, DivProps } from './tags'
 
-type ProgressBarProps = ElementProps<'div'> & {
+type ProgressBarProps = DivProps & {
   value: number
 }
 
 const propTypes = {}
 
-function ProgressBar(props: ProgressBarProps, ref: Ref<any>) {
+function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
   const theme = useTheme()
   const { value, ...otherProps } = props
 
@@ -35,8 +33,10 @@ function ProgressBar(props: ProgressBarProps, ref: Ref<any>) {
   )
 }
 
-const ForwardedProgressBar = forwardRef(ProgressBar)
+ProgressBarRef.displayName = 'ProgressBar'
+
+const ForwardedProgressBar = forwardRef(ProgressBarRef)
 
 ForwardedProgressBar.propTypes = propTypes
 
-export default withHonorable<ProgressBarProps>(ForwardedProgressBar, 'ProgressBar')
+export const ProgressBar = withHonorable<ProgressBarProps>(ForwardedProgressBar, 'ProgressBar')

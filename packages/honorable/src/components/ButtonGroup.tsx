@@ -1,16 +1,14 @@
 import { Ref, forwardRef } from 'react'
 
-import { ElementProps } from '../types'
-
 import withHonorable from '../withHonorable'
 
-import { Div } from './tags'
+import { Div, DivProps } from './tags'
 
-type ButtonGroupProps = ElementProps<'div'>
+type ButtonGroupProps = DivProps
 
 const propTypes = {}
 
-function ButtonGroup(props: ButtonGroupProps, ref: Ref<any>) {
+function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
@@ -21,8 +19,10 @@ function ButtonGroup(props: ButtonGroupProps, ref: Ref<any>) {
   )
 }
 
-const ForwardedButtonGroup = forwardRef(ButtonGroup)
+ButtonGroupRef.displayName = 'ButtonGroup'
+
+const ForwardedButtonGroup = forwardRef(ButtonGroupRef)
 
 ForwardedButtonGroup.propTypes = propTypes
 
-export default withHonorable<ButtonGroupProps>(ForwardedButtonGroup, 'ButtonGroup')
+export const ButtonGroup = withHonorable<ButtonGroupProps>(ForwardedButtonGroup, 'ButtonGroup')

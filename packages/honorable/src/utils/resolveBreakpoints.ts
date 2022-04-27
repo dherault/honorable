@@ -1,15 +1,15 @@
 import {
   HonorableTheme,
-  StyleProps,
+  StylesProps,
 } from '../types'
 
 import filterObject from './filterObject'
 import createMediaQuery from './createMediaQuery'
 
-function resolveBreakpoints(styleProps: StyleProps, theme: HonorableTheme): StyleProps {
+function resolveBreakpoints(StylesProps: StylesProps, theme: HonorableTheme): StylesProps {
   const breakpoints = Object.keys(filterObject(theme.breakpoints))
 
-  return Object.entries(styleProps).reduce((acc, [key, value]) => {
+  return Object.entries(StylesProps).reduce((acc, [key, value]) => {
     for (const breakpointName of breakpoints) {
       if (key.endsWith(`-${breakpointName}`)) {
         const query = createMediaQuery(breakpointName, theme)

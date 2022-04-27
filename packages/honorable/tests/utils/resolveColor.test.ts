@@ -28,14 +28,11 @@ describe('Color resolution', () => {
   })
 
   test('it resolves a theme color based on mode', () => {
-    // @ts-ignore
     expect(resolveColor('modedColor', theme)).toBe(theme.colors.modedColor.light)
-    // @ts-ignore
     expect(resolveColor('modedColor', { ...theme, mode: 'dark' })).toBe(theme.colors.modedColor.dark)
   })
 
   test('it resolves a theme color based on mode, without a mode in theme', () => {
-    // @ts-ignore
     expect(resolveColor('modedColor', { ...theme, mode: null })).toBe(theme.colors.modedColor.light)
   })
 

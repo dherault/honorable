@@ -2,8 +2,6 @@ import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, u
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 
-import { ElementProps } from '../types'
-
 import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../contexts/MenuContext'
@@ -12,10 +10,10 @@ import usePrevious from '../hooks/usePrevious'
 import useOutsideClick from '../hooks/useOutsideClick'
 import useRegisterProps from '../hooks/useRegisterProps'
 
-import { Div } from './tags'
-import MenuItem from './MenuItem'
+import { Div, DivProps } from './tags'
+import { MenuItem } from './MenuItem'
 
-type MenuProps = ElementProps<'div'> & {
+export type MenuProps = DivProps & {
   menuState?: MenuStateType
   setMenuState?: MenuStateDispatcherType
   isSubMenu?: boolean
@@ -59,7 +57,7 @@ const defaultMenuState: MenuStateType = {
   shouldSyncWithParent: false,
 }
 
-function Menu({
+function MenuRef({
   menuState: initialMenuState = {},
   setMenuState: setInitialMenuState,
   fade,
@@ -237,8 +235,10 @@ ref: Ref<any>
   )
 }
 
-const ForwardedMenu = forwardRef(Menu)
+MenuRef.displayName = 'Menu'
+
+const ForwardedMenu = forwardRef(MenuRef)
 
 ForwardedMenu.propTypes = propTypes
 
-export default withHonorable<MenuProps>(ForwardedMenu, 'Menu')
+export const Menu = withHonorable<MenuProps>(ForwardedMenu, 'Menu')

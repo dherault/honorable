@@ -1,16 +1,14 @@
 import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ElementProps } from '../types'
-
 import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import useTheme from '../hooks/useTheme'
 
-import { Div, Span } from './tags'
+import { Div, DivProps, Span } from './tags'
 
-type SwitchProps = ElementProps<'div'> & {
+export type SwitchProps = DivProps & {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
@@ -28,7 +26,7 @@ const propTypes = {
 }
 
 // TODO v1 decide weither to use actualChecked or uncontrolledChecked
-function Switch(props: SwitchProps, ref: Ref<any>) {
+function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const {
     defaultChecked,
     checked,
@@ -108,8 +106,10 @@ function Switch(props: SwitchProps, ref: Ref<any>) {
   )
 }
 
-const ForwaredSwitch = forwardRef(Switch)
+SwitchRef.displayName = 'Switch'
+
+const ForwaredSwitch = forwardRef(SwitchRef)
 
 ForwaredSwitch.propTypes = propTypes
 
-export default withHonorable<SwitchProps>(ForwaredSwitch, 'Switch')
+export const Switch = withHonorable<SwitchProps>(ForwaredSwitch, 'Switch')

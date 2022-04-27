@@ -1,16 +1,14 @@
 import { MouseEvent, Ref, forwardRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { ElementProps } from '../types'
-
 import useTheme from '../hooks/useTheme'
 import useEscapeKey from '../hooks/useEscapeKey'
 import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
 
-import { Div } from './tags'
+import { Div, DivProps } from './tags'
 
-type ModalProps = ElementProps<'div'> & {
+export type ModalProps = DivProps & {
   open?: boolean
   onClose?: (event: MouseEvent | KeyboardEvent) => void
 }
@@ -20,7 +18,7 @@ const propTypes = {
   onClose: PropTypes.func,
 }
 
-function Modal(props: ModalProps, ref: Ref<any>) {
+function ModalRef(props: ModalProps, ref: Ref<any>) {
   const { open = false, onClose, ...otherProps } = props
   const theme = useTheme()
   const backdropRef = useRef()
@@ -58,8 +56,10 @@ function Modal(props: ModalProps, ref: Ref<any>) {
   )
 }
 
-const ForwardedModal = forwardRef(Modal)
+ModalRef.displayName = 'Modal'
+
+const ForwardedModal = forwardRef(ModalRef)
 
 ForwardedModal.propTypes = propTypes
 
-export default withHonorable<ModalProps>(ForwardedModal, 'Modal')
+export const Modal = withHonorable<ModalProps>(ForwardedModal, 'Modal')

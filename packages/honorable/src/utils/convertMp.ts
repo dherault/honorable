@@ -1,6 +1,6 @@
 import {
   HonorableTheme,
-  StyleProps,
+  StylesProps,
 } from '../types'
 
 import createMediaQuery from './createMediaQuery'
@@ -31,7 +31,7 @@ function convertMpValue(value: any) {
 }
 
 // Convert a series of mp props (whose keys are m, p, mx, ...) into a style object
-function convertMp(mpProps: object, theme: HonorableTheme): StyleProps {
+function convertMp(mpProps: object, theme: HonorableTheme): StylesProps {
   const convertedStyle = {}
 
   Object.keys(mpProps).forEach(key => {

@@ -1,8 +1,6 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ElementProps } from '../types'
-
 import { MenuStateType } from '../contexts/MenuContext'
 import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
@@ -16,11 +14,11 @@ import enhanceEventTarget from '../utils/enhanceEventTarget'
 
 import withHonorable from '../withHonorable'
 
-import { Div, Span } from './tags'
-import Menu from './Menu'
-import Caret from './Caret'
+import { Div, DivProps, Span } from './tags'
+import { Menu } from './Menu'
+import { Caret } from './Caret'
 
-type SelectProps = ElementProps<'div'> & {
+export type SelectProps = DivProps & {
   open?: boolean
   defaultOpen?: boolean
   value?: any
@@ -38,7 +36,7 @@ const propTypes = {
   fade: PropTypes.bool,
 }
 
-function Select(props: SelectProps, ref: Ref<any>) {
+function SelectRef(props: SelectProps, ref: Ref<any>) {
   const {
     open,
     defaultOpen,
@@ -157,8 +155,10 @@ function Select(props: SelectProps, ref: Ref<any>) {
   )
 }
 
-const ForwardedSelect = forwardRef(Select)
+SelectRef.displayName = 'Select'
+
+const ForwardedSelect = forwardRef(SelectRef)
 
 ForwardedSelect.propTypes = propTypes
 
-export default withHonorable<SelectProps>(ForwardedSelect, 'Select')
+export const Select = withHonorable<SelectProps>(ForwardedSelect, 'Select')

@@ -7,11 +7,11 @@ import merge from 'lodash.merge'
 import {
   HonorableProps,
   MpProps,
-  StyleProps,
   StyledHonorableProps,
+  StylesProps,
 } from './types'
 
-import styleProperties from './data/styleProperties'
+import stylesProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
 
 import useTheme from './hooks/useTheme'
@@ -25,11 +25,11 @@ import resolveAliases from './utils/resolveAliases'
 import resolveCustomProps from './utils/resolveCustomProps'
 import RegisterPropsContext from './contexts/RegisterPropsContext'
 
-const allStyleProperties = [
-  ...styleProperties,
-  ...styleProperties.map(x => `${x}-mobile`),
-  ...styleProperties.map(x => `${x}-tablet`),
-  ...styleProperties.map(x => `${x}-desktop`),
+const allStylesProperties = [
+  ...stylesProperties,
+  ...stylesProperties.map(x => `${x}-mobile`),
+  ...stylesProperties.map(x => `${x}-tablet`),
+  ...stylesProperties.map(x => `${x}-desktop`),
 ]
 
 const allMpProperties = [
@@ -65,11 +65,11 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       'xflex-desktop': xflexDesktop,
       ...nextProps
     } = props
-    const styleProps: StyleProps = {}
+    const stylesProps: StylesProps = {}
     const mpProps: MpProps = {}
     const otherProps = {} as P
     const resolvedProps = resolveAliases(nextProps, theme)
-    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StyleProps, theme)
+    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StylesProps, theme)
     const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridedProps }
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
@@ -77,8 +77,8 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       if (allMpProperties.includes(key)) {
         mpProps[key] = value
       }
-      else if (allStyleProperties.includes(key) || isSelector(key)) {
-        styleProps[key] = value
+      else if (allStylesProperties.includes(key) || isSelector(key)) {
+        stylesProps[key] = value
       }
       else {
         otherProps[key] = value
@@ -102,7 +102,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
               resolvedCustomProps,                                                     // Component customProps
               convertMp(mpProps, theme),                                               // "mp" prop
               convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
-              styleProps,                                                              // Actual style from props
+              stylesProps,                                                              // Actual style from props
               filterObject(extend),                                                    // "extend" prop
             ),
             theme

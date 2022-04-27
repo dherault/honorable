@@ -2,14 +2,14 @@ import merge from 'lodash.merge'
 
 import {
   HonorableTheme,
-  StyleProps,
+  StylesProps,
 } from '../types'
 
 import resolveCustomProps from './resolveCustomProps'
 import filterObject from './filterObject'
 
 // Return the style object of applied partProps
-function resolvePartProps(componentKey: string, partKey: string, props: object, theme: HonorableTheme): StyleProps {
+function resolvePartProps(componentKey: string, partKey: string, props: object, theme: HonorableTheme): StylesProps {
   const componentTheme = theme[componentKey]
 
   if (!(componentTheme && typeof componentTheme === 'object')) return {}

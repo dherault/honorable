@@ -368,7 +368,7 @@ template {
 }
 `
 
-function CssBaseline() {
+export function CssBaseline() {
   const theme = useTheme()
 
   return (
@@ -398,5 +398,3 @@ function CssBaseline() {
     </>
   )
 }
-
-export default CssBaseline

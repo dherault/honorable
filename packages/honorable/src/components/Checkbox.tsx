@@ -1,16 +1,14 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ElementProps } from '../types'
-
 import withHonorable from '../withHonorable'
 
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 import useRegisterProps from '../hooks/useRegisterProps'
 
-import { Span } from './tags'
+import { Span, SpanProps } from './tags'
 
-type CheckboxProps = ElementProps<'span'> & {
+export type CheckboxProps = SpanProps & {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
@@ -42,7 +40,7 @@ const defaultIcon = (
   </svg>
 )
 
-function Checkbox({
+function CheckboxRef({
   defaultChecked,
   checked,
   disabled = false,
@@ -98,8 +96,10 @@ ref: Ref<any>
   )
 }
 
-const ForwaredCheckbox = forwardRef(Checkbox)
+CheckboxRef.displayName = 'Checkbox'
+
+const ForwaredCheckbox = forwardRef(CheckboxRef)
 
 ForwaredCheckbox.propTypes = propTypes
 
-export default withHonorable<CheckboxProps>(ForwaredCheckbox, 'Checkbox')
+export const Checkbox = withHonorable<CheckboxProps>(ForwaredCheckbox, 'Checkbox')

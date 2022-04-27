@@ -1,9 +1,40 @@
 import '@emotion/react'
 import React, { PropsWithChildren, PropsWithRef, Ref } from 'react'
 
-import * as components from './components'
-import styleProperties from './data/styleProperties'
+import * as tags from './components/tags'
+import { Button } from './components/Button'
+import { ButtonGroup } from './components/ButtonGroup'
+import { Caret } from './components/Caret'
+import { Checkbox } from './components/Checkbox'
+import { DropdownButton } from './components/DropdownButton'
+import { Icon } from './components/Icon'
+import { IconButton } from './components/IconButton'
+import { Menu } from './components/Menu'
+import { MenuItem } from './components/MenuItem'
+import { Modal } from './components/Modal'
+import { ProgressBar } from './components/ProgressBar'
+import { Select } from './components/Select'
+import { Switch } from './components/Switch'
+
+import stylesProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
+
+const components: Record<string, any> = {
+  ...tags,
+  Button,
+  ButtonGroup,
+  Caret,
+  Checkbox,
+  DropdownButton,
+  Icon,
+  IconButton,
+  Menu,
+  MenuItem,
+  Modal,
+  ProgressBar,
+  Select,
+  Switch,
+} as const
 
 export type ElementProps<Tag> = PropsWithRef<PropsWithChildren<
   Tag extends keyof JSX.IntrinsicElements
@@ -22,13 +53,13 @@ export type ThemeProps = {
   theme: HonorableTheme
 }
 
-export type StyleProperties = typeof styleProperties[number]
-  | `${typeof styleProperties[number]}-mobile`
-  | `${typeof styleProperties[number]}-tablet`
-  | `${typeof styleProperties[number]}-desktop`
+export type StylesProperties = typeof stylesProperties[number]
+  | `${typeof stylesProperties[number]}-mobile`
+  | `${typeof stylesProperties[number]}-tablet`
+  | `${typeof stylesProperties[number]}-desktop`
 
-export type StyleProps = CssProps & {
-  [styleKey in StyleProperties]?: any
+export type StylesProps = CssProps & {
+  [stylesKey in StylesProperties]?: any
 }
 
 export type MpProperties = typeof mpProperties[number]
@@ -51,42 +82,37 @@ export type ExtendProps = {
   extend?: object
 }
 
-export type HonorableProps<P> = PropsWithChildren<StyleProps & MpProps & XflexProps & ExtendProps & P & AnyProps>
+export type HonorableProps<P> = P & StylesProps & MpProps & XflexProps & ExtendProps & AnyProps
 
 export type StyledHonorableProps = {
   ref: Ref<any>
   theme: HonorableTheme
-  honorable: StyleProps
+  honorable: StylesProps
 }
 
 export type Mode = 'light' | 'dark' | string
 
-export type FontStyle = {
-  family: string
-  size: number | string
+export type ColorKey = string
+export type ColorValue = string | ColorKey | {
+  [modeKey in Mode]: string | ColorKey
 }
 
-export type ColorValue = string
-export type ColorStyle = string | ColorValue | {
-  [modeKey in Mode]: string | ColorValue
-}
-
-export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StyleProps | ((props: object, theme: HonorableTheme) => StyleProps) >
+export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StylesProps | ((props: object, theme: HonorableTheme) => StylesProps)>
 
 export type ComponentNames = keyof typeof components
 
 export type ComponentProps = {
-  defaultProps?: StyleProps
+  defaultProps?: StylesProps
   customProps?: CustomProps
   partProps?: {
     [key: string]: {
-      defaultProps?: StyleProps
+      defaultProps?: StylesProps
       customProps?: CustomProps
     }
   }
 }
 
-export interface HonorableThemeBase {
+export type HonorableThemeBase = {
   name?: string
   mode?: Mode
   breakpoints?: {
@@ -95,23 +121,21 @@ export interface HonorableThemeBase {
     desktop?: number
   }
   colors?: {
-    [key: ColorValue]: ColorStyle
+    [key: ColorKey]: ColorValue
   }
   aliases?: {
     [key: string]: string
   }
-  html?: StyleProps
+  html?: StylesProps
   global?: ComponentProps
   utils?: {
-    resolveColor: (color: string | StyleProps) => string | StyleProps
+    resolveColor: (color: string | StylesProps) => string | StylesProps
   }
 }
 
 export type HonorableTheme = HonorableThemeBase & {
   [componentNameKey in ComponentNames]?: ComponentProps
 }
-
-export type ThemeProviderProps = PropsWithChildren<ThemeProps>
 
 // Redecalare forwardRef
 // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forward_and_create_ref/

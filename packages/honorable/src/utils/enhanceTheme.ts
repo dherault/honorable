@@ -1,6 +1,6 @@
 import {
   HonorableTheme,
-  StyleProps,
+  StylesProps,
 } from '../types'
 
 import resolveColor from './resolveColor'
@@ -10,7 +10,7 @@ function enhanceTheme(theme: HonorableTheme) {
   return {
     ...theme,
     utils: {
-      resolveColor: (color: string | StyleProps) => resolveColor(color, theme),
+      resolveColor: (color: string | StylesProps) => resolveColor(color, theme),
     },
   } as HonorableTheme
 }

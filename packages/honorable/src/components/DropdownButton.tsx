@@ -1,8 +1,6 @@
 import { KeyboardEvent, MouseEvent, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ElementProps } from '../types'
-
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
@@ -15,12 +13,12 @@ import useRegisterProps from '../hooks/useRegisterProps'
 import resolvePartProps from '../utils/resolvePartProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 
-import Button from './Button'
-import Caret from './Caret'
-import Menu from './Menu'
-import { Div } from './tags'
+import { Button } from './Button'
+import { Caret } from './Caret'
+import { Menu } from './Menu'
+import { Div, DivProps } from './tags'
 
-type DropdownButtonProps = ElementProps<'div'> & {
+export type DropdownButtonProps = DivProps & {
   open?: boolean
   defaultOpen?: boolean
   label?: string
@@ -36,7 +34,7 @@ const propTypes = {
   onChange: PropTypes.func,
 }
 
-function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
+function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const { open, defaultOpen, label, fade, onChange, children, ...otherProps } = props
   const theme = useTheme()
   const dropdownButtonRef = useRef<any>()
@@ -107,8 +105,10 @@ function DropdownButton(props: DropdownButtonProps, ref: Ref<any>) {
   )
 }
 
-const ForwardedDropdownButton = forwardRef(DropdownButton)
+DropdownButtonRef.displayName = 'DropdownButton'
+
+const ForwardedDropdownButton = forwardRef(DropdownButtonRef)
 
 ForwardedDropdownButton.propTypes = propTypes
 
-export default withHonorable<DropdownButtonProps>(ForwardedDropdownButton, 'DropdownButton')
+export const DropdownButton = withHonorable<DropdownButtonProps>(ForwardedDropdownButton, 'DropdownButton')
