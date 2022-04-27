@@ -15,7 +15,7 @@ A React UI library for 2022 and beyond.
 
 ```jsx
 import { Button, CssBaseline, ThemeProvider, mergeTheme } from 'honorable'
-import defaultTheme from 'honorable-default-theme'
+import defaultTheme from 'honorable-theme-default'
 
 const theme = mergeTheme(defaultTheme, {
   // your theme goes here
