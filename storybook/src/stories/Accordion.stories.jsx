@@ -45,17 +45,17 @@ function TemplateControlled(args) {
     >
       <Accordion
         {...args}
-        onExpand={() => setExpanded(1)}
+        onExpand={() => setExpanded(expanded === 1 ? null : 1)}
         expanded={expanded === 1}
       />
       <Accordion
         {...args}
-        onExpand={() => setExpanded(2)}
+        onExpand={() => setExpanded(expanded === 2 ? null : 2)}
         expanded={expanded === 2}
       />
       <Accordion
         {...args}
-        onExpand={() => setExpanded(3)}
+        onExpand={() => setExpanded(expanded === 3 ? null : 3)}
         expanded={expanded === 3}
       />
     </Div>
