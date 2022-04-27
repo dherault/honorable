@@ -41,6 +41,7 @@ const defaultIcon = (
 )
 
 function CheckboxRef({
+  honorableId,
   defaultChecked,
   checked,
   disabled = false,
@@ -53,7 +54,7 @@ ref: Ref<any>
   const [actualChecked, setActualChecked] = useState(checked || defaultChecked)
 
   // Override `checked` prop in customProps
-  useRegisterProps('Checkbox', { checked: actualChecked })
+  useRegisterProps('Checkbox', { checked: actualChecked }, honorableId)
 
   const style = {
     '&:hover': {

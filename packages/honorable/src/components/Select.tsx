@@ -37,6 +37,7 @@ const propTypes = {
 
 function SelectRef(props: SelectProps, ref: Ref<any>) {
   const {
+    honorableId,
     open,
     defaultOpen,
     value,
@@ -62,7 +63,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   }, [actualOpen, onOpen])
 
   // Override the `open` props in customProps
-  useRegisterProps('Select', { open: actualOpen })
+  useRegisterProps('Select', { open: actualOpen }, honorableId)
   useEscapeKey(() => handleOpen(false))
   useOutsideClick(selectRef, () => handleOpen(false))
 

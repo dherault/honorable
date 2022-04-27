@@ -4,7 +4,11 @@ import React, { PropsWithRef, Ref } from 'react'
 import stylesProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
 
-export type ElementProps<Tag> = PropsWithRef<
+export type HonorableIdProps = {
+  honorableId?: number
+}
+
+export type ElementProps<Tag> = HonorableIdProps & PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
@@ -56,6 +60,7 @@ export type StyledHonorableProps = {
   ref: Ref<any>
   theme: HonorableTheme
   honorable: StylesProps
+  honorableId: number
 }
 
 export type Mode = 'light' | 'dark' | string

@@ -34,7 +34,16 @@ const propTypes = {
 }
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
-  const { open, defaultOpen, label, fade, onChange, children, ...otherProps } = props
+  const {
+    honorableId,
+    open,
+    defaultOpen,
+    label,
+    fade,
+    onChange,
+    children,
+    ...otherProps
+  } = props
   const dropdownButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
   const [actualOpen, setActualOpen] = useState(open ?? defaultOpen ?? false)
@@ -42,7 +51,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const { value, event } = menuState
   const previousEvent = usePrevious(event)
 
-  useRegisterProps('DropdownButton', { open: actualOpen })
+  useRegisterProps('DropdownButton', { open: actualOpen }, honorableId)
   useEscapeKey(handleClose)
   useOutsideClick(dropdownButtonRef, handleClose)
 

@@ -10,11 +10,11 @@ import RegisterPropsContext from '../contexts/RegisterPropsContext'
 import useTheme from './useTheme'
 
 // Return the style object of applied partProps
-function usePartProps(name: string, partKey: string, props: object): StylesProps {
+function usePartProps(name: string, partKey: string, props: object, id = 0): StylesProps {
   const theme = useTheme()
   const [registeredProps] = useContext(RegisterPropsContext)
 
-  const overridenProps = registeredProps[name] || {}
+  const overridenProps = registeredProps[name]?.[id] || {}
   const componentTheme = theme[name]
 
   if (!(componentTheme && typeof componentTheme === 'object')) return {}

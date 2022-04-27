@@ -28,13 +28,22 @@ const propTypes = {
 const defaultExpandIcon = <Caret />
 
 function AccordionRef(props: AccordionProps, ref: Ref<any>) {
-  const { expanded, defaultExpanded, onExpand, expandIcon = defaultExpandIcon, title, children, ...otherProps } = props
+  const {
+    honorableId,
+    expanded,
+    defaultExpanded,
+    onExpand,
+    expandIcon = defaultExpandIcon,
+    title,
+    children,
+    ...otherProps
+  } = props
   const childrenRef = useRef<HTMLDivElement>()
   const [childrenHeight, setChildrenHeight] = useState<number | 'auto'>('auto')
   const [uncontrolledExpanded, setUncontrollerExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
 
-  useRegisterProps('Accordion', { expanded: uncontrolledExpanded })
+  useRegisterProps('Accordion', { expanded: uncontrolledExpanded }, honorableId)
 
   const extendTitle = usePartProps('Accordion', 'Title', props)
   const extendExpandIcon = usePartProps('Accordion', 'ExpandIcon', props)

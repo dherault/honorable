@@ -58,6 +58,7 @@ const defaultMenuState: MenuStateType = {
 }
 
 function MenuRef({
+  honorableId,
   menuState: initialMenuState = {},
   setMenuState: setInitialMenuState,
   fade,
@@ -76,7 +77,7 @@ ref: Ref<any>
   const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
 
   // Give `active` and `activeItemIndex` and other props to customProps
-  useRegisterProps('Menu', menuState)
+  useRegisterProps('Menu', menuState, honorableId)
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {

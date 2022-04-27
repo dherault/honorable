@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-spaces */
-import { ComponentType, Ref, forwardRef, useContext } from 'react'
+import { ComponentType, Ref, forwardRef, useContext, useRef } from 'react'
 import styled from '@emotion/styled'
 import isPropValid from '@emotion/is-prop-valid'
 import merge from 'lodash.merge'
@@ -47,15 +47,18 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
-      shouldForwardProp: prop =>  isPropValid(prop) || propTypeKeys.includes(prop as string),
+      // TODO v1 check the necessity of every member (especially isPropValid)
+      shouldForwardProp: prop =>  isPropValid(prop) || (typeof ComponentOrTag !== 'string' && prop === 'honorableId') || propTypeKeys.includes(prop as string),
     }
   )(props => props.honorable)
 
   function Honorable(props: HonorableProps<P>, ref: Ref<any>) {
+    // TODO v1 replace with uuid?
+    const honorableId = useRef(Math.random()).current
     const theme = useTheme()
     const [registeredProps] = useContext(RegisterPropsContext)
 
-    const overridenProps = registeredProps[name] || {}
+    const overridenProps = registeredProps[name]?.[honorableId] || {}
     const { defaultProps = {}, customProps } = theme[name] || {}
     const {
       extend = {},
@@ -89,6 +92,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       <HonorableStyle
         ref={ref}
         theme={theme}
+        honorableId={honorableId}
         honorable={(
           resolveAll(
             merge(
