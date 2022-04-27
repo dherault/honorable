@@ -13,6 +13,7 @@ jobs:
     outputs:
       landing: ${{ steps.filter.outputs.landing }}
       designer: ${{ steps.filter.outputs.designer }}
+      storybook: ${{ steps.filter.outputs.storybook }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -23,13 +24,15 @@ jobs:
               - 'landing/**/*'
             designer:
               - 'designer/**/*'
+            storybook:
+              - 'storybook/**/*'
   deploy_landing:
     needs: changes_detector
     if: ${{ needs.changes_detector.outputs.landing == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm i && cd landing && npm i && npm run build
+      - run: npm ci && cd landing && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -43,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm i && cd designer && npm i && npm run build
+      - run: npm ci && cd designer && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -51,3 +54,17 @@ jobs:
           channelId: live
           projectId: honorable-designer
           entryPoint: designer
+  deploy_storybook:
+    needs: changes_detector
+    if: ${{ needs.changes_detector.outputs.storybook == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci && cd storybook && npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HONORABLE_STORYBOOK }}'
+          channelId: live
+          projectId: honorable-storybook
+          entryPoint: storybook

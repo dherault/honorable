@@ -1,7 +1,7 @@
 import { HonorableTheme } from '../src/types'
 
-export default {
-  name: 'Tests',
+export const theme: HonorableTheme = {
+  name: 'Test',
   mode: 'light',
   colors: {
     primary: '#0000ff',
@@ -17,4 +17,4 @@ export default {
       dark: 'secondary',
     },
   },
-} as HonorableTheme
+}

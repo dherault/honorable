@@ -1,46 +1,14 @@
 import '@emotion/react'
-import React, { PropsWithChildren, PropsWithRef, Ref } from 'react'
-
-import * as tags from './components/tags'
-import { Button } from './components/Button'
-import { ButtonGroup } from './components/ButtonGroup'
-import { Caret } from './components/Caret'
-import { Checkbox } from './components/Checkbox'
-import { DropdownButton } from './components/DropdownButton'
-import { Icon } from './components/Icon'
-import { IconButton } from './components/IconButton'
-import { Menu } from './components/Menu'
-import { MenuItem } from './components/MenuItem'
-import { Modal } from './components/Modal'
-import { ProgressBar } from './components/ProgressBar'
-import { Select } from './components/Select'
-import { Switch } from './components/Switch'
+import React, { PropsWithRef, Ref } from 'react'
 
 import stylesProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
 
-const components: Record<string, any> = {
-  ...tags,
-  Button,
-  ButtonGroup,
-  Caret,
-  Checkbox,
-  DropdownButton,
-  Icon,
-  IconButton,
-  Menu,
-  MenuItem,
-  Modal,
-  ProgressBar,
-  Select,
-  Switch,
-} as const
-
-export type ElementProps<Tag> = PropsWithRef<PropsWithChildren<
+export type ElementProps<Tag> = PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
->>
+>
 
 export type AnyProps = {
   [key: string]: any
@@ -99,8 +67,6 @@ export type ColorValue = string | ColorKey | {
 
 export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StylesProps | ((props: object, theme: HonorableTheme) => StylesProps)>
 
-export type ComponentNames = keyof typeof components
-
 export type ComponentProps = {
   defaultProps?: StylesProps
   customProps?: CustomProps
@@ -112,7 +78,7 @@ export type ComponentProps = {
   }
 }
 
-export interface HonorableThemeBase {
+export type HonorableTheme = {
   name?: string
   mode?: Mode
   breakpoints?: {
@@ -131,10 +97,135 @@ export interface HonorableThemeBase {
   utils?: {
     resolveColor: (color: string | StylesProps) => string | StylesProps
   }
-}
-
-export type HonorableTheme = HonorableThemeBase & {
-  [componentNameKey in ComponentNames]?: ComponentProps
+  // Tags
+  ButtonBase?: ComponentProps
+  MenuBase?: ComponentProps
+  SelectBase?: ComponentProps
+  A?: ComponentProps
+  Abbr?: ComponentProps
+  Address?: ComponentProps
+  Area?: ComponentProps
+  Article?: ComponentProps
+  Aside?: ComponentProps
+  Audio?: ComponentProps
+  B?: ComponentProps
+  Base?: ComponentProps
+  Bdi?: ComponentProps
+  Bdo?: ComponentProps
+  Blockquote?: ComponentProps
+  Body?: ComponentProps
+  Br?: ComponentProps
+  Canvas?: ComponentProps
+  Caption?: ComponentProps
+  Cite?: ComponentProps
+  Code?: ComponentProps
+  Col?: ComponentProps
+  Colgroup?: ComponentProps
+  Data?: ComponentProps
+  Datalist?: ComponentProps
+  Dd?: ComponentProps
+  Del?: ComponentProps
+  Details?: ComponentProps
+  Dfn?: ComponentProps
+  Dialog?: ComponentProps
+  Div?: ComponentProps
+  Dl?: ComponentProps
+  Dt?: ComponentProps
+  Em?: ComponentProps
+  Embed?: ComponentProps
+  Fieldset?: ComponentProps
+  Figcaption?: ComponentProps
+  Figure?: ComponentProps
+  Footer?: ComponentProps
+  Form?: ComponentProps
+  H1?: ComponentProps
+  H2?: ComponentProps
+  H3?: ComponentProps
+  H4?: ComponentProps
+  H5?: ComponentProps
+  H6?: ComponentProps
+  Head?: ComponentProps
+  Header?: ComponentProps
+  Hr?: ComponentProps
+  // Html?: ComponentProps
+  I?: ComponentProps
+  Iframe?: ComponentProps
+  Img?: ComponentProps
+  Input?: ComponentProps
+  Ins?: ComponentProps
+  Kbd?: ComponentProps
+  Label?: ComponentProps
+  Legend?: ComponentProps
+  Li?: ComponentProps
+  Link?: ComponentProps
+  Main?: ComponentProps
+  Map?: ComponentProps
+  Mark?: ComponentProps
+  Meta?: ComponentProps
+  Meter?: ComponentProps
+  Nav?: ComponentProps
+  Noscript?: ComponentProps
+  // Object?: ComponentProps
+  Ol?: ComponentProps
+  Optgroup?: ComponentProps
+  Option?: ComponentProps
+  Output?: ComponentProps
+  P?: ComponentProps
+  Param?: ComponentProps
+  Picture?: ComponentProps
+  Portal?: ComponentProps
+  Pre?: ComponentProps
+  Progress?: ComponentProps
+  Q?: ComponentProps
+  Rp?: ComponentProps
+  Rt?: ComponentProps
+  Ruby?: ComponentProps
+  S?: ComponentProps
+  Samp?: ComponentProps
+  Script?: ComponentProps
+  Section?: ComponentProps
+  Slot?: ComponentProps
+  Small?: ComponentProps
+  Source?: ComponentProps
+  Span?: ComponentProps
+  Strong?: ComponentProps
+  Style?: ComponentProps
+  Sub?: ComponentProps
+  Summary?: ComponentProps
+  Sup?: ComponentProps
+  Svg?: ComponentProps
+  Table?: ComponentProps
+  Tbody?: ComponentProps
+  Td?: ComponentProps
+  Template?: ComponentProps
+  Textarea?: ComponentProps
+  Tfoot?: ComponentProps
+  Th?: ComponentProps
+  Thead?: ComponentProps
+  Time?: ComponentProps
+  Title?: ComponentProps
+  Tr?: ComponentProps
+  Track?: ComponentProps
+  U?: ComponentProps
+  Ul?: ComponentProps
+  Var?: ComponentProps
+  Video?: ComponentProps
+  Wbr?: ComponentProps
+  // Components
+  Accordion?: ComponentProps
+  Button?: ComponentProps
+  ButtonGroup?: ComponentProps
+  Caret?: ComponentProps
+  Checkbox?: ComponentProps
+  DropdownButton?: ComponentProps
+  Icon?: ComponentProps
+  IconButton?: ComponentProps
+  Menu?: ComponentProps
+  MenuItem?: ComponentProps
+  Modal?: ComponentProps
+  ProgressBar?: ComponentProps
+  Select?: ComponentProps
+  Switch?: ComponentProps
 }
 
 // Redecalare forwardRef
@@ -147,5 +238,5 @@ declare module 'react' {
 
 declare module '@emotion/react' {
   // @ts-ignore
-  export type Theme = HonorableThemeBase
+  export type Theme = HonorableTheme
 }

@@ -40,7 +40,6 @@ const colorProperties = [
   'textShadow',
 ]
 
-// TODO v1 test that
 function resolveColor<T>(value: T, theme: HonorableTheme = {}): T {
   return resolveColorEntry(null, value, theme)
 }
@@ -124,22 +123,22 @@ lighten(rgba(0,0,0,50), 10)
 lighten(rgb( 0 , 0 , 0 ))
 lighten(rgb(0 , 0 , 0 ) , 10)
 lighten(rgba( 0 , 0, 0 , 50 ) )
-lighten(rgba(0, 0 , 0, 50 ), 10)
+lighten(rgba(0, 0 , 0, 50 ), 10 )
 */
 const colorHelpers = [
   {
     name: 'lighten',
-    regex: /lighten\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
+    regex: /lighten\s*\(\s*(rgba?\s*\([^)]+\)|[^,)]+)(?:\s*,\s*)?([^)\s]*)\s*\)/g,
     fn: (color: string, intensity: number) => lighten(color, intensity),
   },
   {
     name: 'darken',
-    regex: /darken\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
+    regex: /darken\s*\(\s*(rgba?\s*\([^)]+\)|[^,)]+)(?:\s*,\s*)?([^)\s]*)\s*\)/g,
     fn: (color: string, intensity: number) => darken(color, intensity),
   },
   {
     name: 'transparency',
-    regex: /transparency\s*\(\s*([^(),]*),?\s*([0-9]*)?\s*\)/g,
+    regex: /transparency\s*\(\s*(rgba?\s*\([^)]+\)|[^,)]+)(?:\s*,\s*)?([^)\s]*)\s*\)/g,
     fn: (color: string, intensity: number) => transparency(color, intensity),
   },
 ]
