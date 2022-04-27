@@ -112,7 +112,7 @@ export type ComponentProps = {
   }
 }
 
-export type HonorableThemeBase = {
+export interface HonorableThemeBase {
   name?: string
   mode?: Mode
   breakpoints?: {
