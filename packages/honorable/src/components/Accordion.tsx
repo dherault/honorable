@@ -40,10 +40,10 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   } = props
   const childrenRef = useRef<HTMLDivElement>()
   const [childrenHeight, setChildrenHeight] = useState<number | 'auto'>('auto')
-  const [uncontrolledExpanded, setUncontrollerExpanded] = useState(defaultExpanded ?? false)
+  const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
 
-  useRegisterProps('Accordion', { expanded: uncontrolledExpanded }, honorableId)
+  useRegisterProps('Accordion', { expanded: actualExpanded }, honorableId)
 
   const extendTitle = usePartProps('Accordion', 'Title', props)
   const extendExpandIcon = usePartProps('Accordion', 'ExpandIcon', props)
@@ -51,7 +51,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const extendChildrenInner = usePartProps('Accordion', 'ChildrenInner', props)
 
   const handleExpand = useCallback(() => {
-    setUncontrollerExpanded(!actualExpanded)
+    setUncontrolledExpanded(!actualExpanded)
     if (typeof onExpand === 'function') onExpand(!actualExpanded)
   }, [actualExpanded, onExpand])
 

@@ -4,6 +4,8 @@ import withHonorable from '../withHonorable'
 
 export type ButtonBaseProps = ElementProps<'button'>
 export const ButtonBase = withHonorable<ButtonBaseProps>('button', 'ButtonBase')
+export type InputBaseProps = ElementProps<'input'>
+export const InputBase = withHonorable<InputBaseProps>('input', 'InputBase')
 export type MenuBaseProps = ElementProps<'menu'>
 export const MenuBase = withHonorable<MenuBaseProps>('menu', 'MenuBase')
 export type SelectBaseProps = ElementProps<'select'>
@@ -109,8 +111,6 @@ export type IframeProps = ElementProps<'iframe'>
 export const Iframe = withHonorable<IframeProps>('iframe', 'Iframe')
 export type ImgProps = ElementProps<'img'>
 export const Img = withHonorable<ImgProps>('img', 'Img')
-export type InputProps = ElementProps<'input'>
-export const Input = withHonorable<InputProps>('input', 'Input')
 export type InsProps = ElementProps<'ins'>
 export const Ins = withHonorable<InsProps>('ins', 'Ins')
 export type KbdProps = ElementProps<'kbd'>

@@ -289,14 +289,71 @@ export default {
   },
   Input: {
     defaultProps: {
-      padding: '0.5rem',
-      color: 'text',
       backgroundColor: 'background',
       border: '1px solid border',
       borderRadius: 4,
+      overflow: 'hidden',
+      '& > textarea': {
+        padding: '0.5rem 0',
+        resize: 'none',
+        outline: 'none',
+        border: 'none',
+      },
+    },
+    customProps: new Map([
+      [
+        ({ active }) => active,
+        {
+          border: '1px solid primary',
+        },
+      ],
+      [
+        ({ disabled }) => disabled,
+        {
+          backgroundColor: 'background-light',
+          cursor: 'not-allowed',
+          '& > textarea': {
+            backgroundColor: 'background-light',
+            cursor: 'not-allowed',
+          },
+        },
+      ],
+    ]),
+    partProps: {
+      InputBase: {
+        customProps: new Map([
+          [
+            ({ disabled }) => disabled,
+            {
+              cursor: 'not-allowed',
+              backgroundColor: 'background-light',
+            },
+          ],
+        ]),
+      },
+      StartIcon: {
+        defaultProps: {
+          marginTop: '0.5rem',
+          marginRight: '0.5rem',
+          color: 'text',
+        },
+      },
+      EndIcon: {
+        defaultProps: {
+          marginTop: '0.5rem',
+          marginLeft: '0.5rem',
+          color: 'text',
+        },
+      },
+    },
+  },
+  InputBase: {
+    defaultProps: {
+      padding: '0.5rem 0',
+      color: 'text',
+      border: 'none',
       '&:focus': {
         outline: 'none',
-        borderColor: 'primary',
       },
       '&[type="checkbox"]': {
         appearance: 'none',

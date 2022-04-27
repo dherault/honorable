@@ -104,6 +104,7 @@ export type HonorableTheme = {
   }
   // Tags
   ButtonBase?: ComponentProps
+  InputBase?: ComponentProps
   MenuBase?: ComponentProps
   SelectBase?: ComponentProps
   A?: ComponentProps
@@ -156,7 +157,6 @@ export type HonorableTheme = {
   I?: ComponentProps
   Iframe?: ComponentProps
   Img?: ComponentProps
-  Input?: ComponentProps
   Ins?: ComponentProps
   Kbd?: ComponentProps
   Label?: ComponentProps
@@ -225,6 +225,7 @@ export type HonorableTheme = {
   DropdownButton?: ComponentProps
   Icon?: ComponentProps
   IconButton?: ComponentProps
+  Input?: ComponentProps
   Menu?: ComponentProps
   MenuItem?: ComponentProps
   Modal?: ComponentProps
