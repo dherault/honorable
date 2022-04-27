@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateType } from '../contexts/MenuContext'
+import usePartProps from '../hooks/usePartProps'
 import useForkedRef from '../hooks/useForkedRef'
-import useTheme from '../hooks/useTheme'
-import resolvePartProps from '../utils/resolvePartProps'
 
 import { Div, DivProps, Span } from './tags'
 import { Menu } from './Menu'
@@ -34,9 +33,10 @@ const propTypes = {
 // TODO replace it with a delay on the menu disappearance
 function MenuItemTriangle(props: any) {
   const { isTop = false, size = 0, ...otherProps } = props
-  const theme = useTheme()
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>()
   const [displayed, setDisplayed] = useState(true)
+
+  const extendTriangle = usePartProps('MenuItem', 'Triangle', props)
 
   if (!displayed) return null
 
@@ -57,7 +57,7 @@ function MenuItemTriangle(props: any) {
       // onMouseMove={handleMouseMove}
       zIndex={100}
       {...otherProps}
-      extend={resolvePartProps('MenuItem', 'triangle', props, theme)}
+      extend={extendTriangle}
     />
   )
 }
@@ -72,7 +72,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     fade,
     ...otherProps
   } = props
-  const theme = useTheme()
   const menuItemRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, menuItemRef)
   const [menuState, setMenuState, parentMenuState, setParentMenuState] = useContext(MenuContext)
@@ -80,6 +79,9 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const [subMenuState, setSubMenuState] = useState<MenuStateType>({ active: false, isSubMenuVisible: false })
   const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, setMenuState, parentMenuState, setParentMenuState])
   const [height, setHeight] = useState(0)
+
+  const extendInner = usePartProps('MenuItem', 'Inner', props)
+  const extendCaret = usePartProps('MenuItem', 'Caret', props)
 
   // Set height for the submenu's triangle
   useEffect(() => {
@@ -216,7 +218,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             menuItemRef.current.focus()
           }
         }}
-        extend={resolvePartProps('MenuItem', 'Inner', props, theme)}
+        extend={extendInner}
       >
         {Children.map(children, (child: ReactElement) => {
           if (child?.type === Menu) return null
@@ -230,7 +232,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
               ml={0.5}
               mr={-0.5}
               rotation={-90}
-              extend={resolvePartProps('MenuItem', 'Caret', props, theme)}
+              extend={extendCaret}
             />
           </>
         )}

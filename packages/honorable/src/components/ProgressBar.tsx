@@ -2,8 +2,7 @@ import { Ref, forwardRef } from 'react'
 
 import withHonorable from '../withHonorable'
 
-import useTheme from '../hooks/useTheme'
-import resolvePartProps from '../utils/resolvePartProps'
+import usePartProps from '../hooks/usePartProps'
 
 import { Div, DivProps } from './tags'
 
@@ -14,8 +13,9 @@ type ProgressBarProps = DivProps & {
 const propTypes = {}
 
 function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
-  const theme = useTheme()
   const { value, ...otherProps } = props
+
+  const extendInner = usePartProps('ProgressBar', 'Inner', props)
 
   return (
     <Div
@@ -27,7 +27,7 @@ function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
       <Div
         backgroundColor="black"
         width={`max(0%, min(100%, calc(${value} * 100%)))`}
-        extend={resolvePartProps('ProgressBar', 'Inner', props, theme)}
+        extend={extendInner}
       />
     </Div>
   )

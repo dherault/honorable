@@ -109,6 +109,23 @@ function resolveThemeColor(color: string, theme: HonorableTheme, previousColor =
   Do it recursively to support nested color helpers.
 */
 
+// For regex testing-purposes
+/*
+lighten(#000000, 10)
+lighten(#000000)
+lighten(rgb(0, 0, 0))
+lighten(rgb(0, 0, 0), 10)
+lighten(rgba(0, 0, 0, 50))
+lighten(rgba(0, 0, 0, 50), 10)
+lighten(rgb(0,0,0))
+lighten(rgb(0,0,0), 10)
+lighten(rgba(0,0,0,50))
+lighten(rgba(0,0,0,50), 10)
+lighten(rgb( 0 , 0 , 0 ))
+lighten(rgb(0 , 0 , 0 ) , 10)
+lighten(rgba( 0 , 0, 0 , 50 ) )
+lighten(rgba(0, 0 , 0, 50 ), 10)
+*/
 const colorHelpers = [
   {
     name: 'lighten',
@@ -129,7 +146,7 @@ const colorHelpers = [
 
 function applyColorHelpers(colorString: string, i = 0): string {
   if (i >= 64) {
-    throw new Error('Could not apply color helper.')
+    throw new Error('Could not apply color helper. Too many recursions.')
   }
 
   const appliedColor = colorHelpers.reduce((colorString, { regex, fn, name }) => {
@@ -141,6 +158,7 @@ function applyColorHelpers(colorString: string, i = 0): string {
 
           if (intensity !== intensity) intensity = undefined
 
+          // Might be useful to do color.replaceAll(' ', '')
           return fn(convertNamedColor(color.trim()), intensity)
         }
       )

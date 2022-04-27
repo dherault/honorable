@@ -55,7 +55,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const theme = useTheme()
     const [registeredProps] = useContext(RegisterPropsContext)
 
-    const overridedProps = registeredProps[name] || {}
+    const overridenProps = registeredProps[name] || {}
     const { defaultProps = {}, customProps } = theme[name] || {}
     const {
       extend = {},
@@ -70,7 +70,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const otherProps = {} as P
     const resolvedProps = resolveAliases(nextProps, theme)
     const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StylesProps, theme)
-    const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridedProps }
+    const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridenProps }
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
     Object.entries(resolvedProps).forEach(([key, value]) => {

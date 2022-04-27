@@ -3,6 +3,7 @@
 export * from './components/tags'
 export * from './components/ThemeProvider'
 export * from './components/CssBaseline'
+export * from './components/Accordion'
 export * from './components/Button'
 export * from './components/ButtonGroup'
 export * from './components/Checkbox'

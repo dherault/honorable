@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
-import useTheme from '../hooks/useTheme'
-import resolvePartProps from '../utils/resolvePartProps'
+import usePartProps from '../hooks/usePartProps'
 
 import { ButtonBase, ButtonBaseProps, Span } from './tags'
 
@@ -16,12 +15,13 @@ export type ButtonProps = ButtonBaseProps & {
 const propTypes = {
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
-  // ref: PropTypes.any,
 }
 
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const { startIcon, endIcon, children, ...otherProps } = props
-  const theme = useTheme()
+
+  const extendStartIcon = usePartProps('Button', 'StartIcon', props)
+  const extendEndIcon = usePartProps('Button', 'EndIcon', props)
 
   return (
     <ButtonBase
@@ -32,7 +32,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       {!!startIcon && (
         <Span
           xflex="x5"
-          extend={resolvePartProps('Button', 'StartIcon', props, theme)}
+          extend={extendStartIcon}
         >
           {startIcon}
         </Span>
@@ -41,7 +41,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       {!!endIcon && (
         <Span
           xflex="x5"
-          extend={resolvePartProps('Button', 'EndIcon', props, theme)}
+          extend={extendEndIcon}
         >
           {endIcon}
         </Span>

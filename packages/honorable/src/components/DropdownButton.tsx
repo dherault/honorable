@@ -4,13 +4,12 @@ import PropTypes from 'prop-types'
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
-import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
+import usePartProps from '../hooks/usePartProps'
 import useEscapeKey from '../hooks/useEscapeKey'
 import useForkedRef from '../hooks/useForkedRef'
 import useOutsideClick from '../hooks/useOutsideClick'
 import useRegisterProps from '../hooks/useRegisterProps'
-import resolvePartProps from '../utils/resolvePartProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 
 import { Button } from './Button'
@@ -36,11 +35,10 @@ const propTypes = {
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const { open, defaultOpen, label, fade, onChange, children, ...otherProps } = props
-  const theme = useTheme()
   const dropdownButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
-  const [actualOpen, setActualOpen] = useState(open || defaultOpen)
-  const [menuState, setMenuState] = useState<MenuStateType>({ activeItemIndex: -1 })
+  const [actualOpen, setActualOpen] = useState(open ?? defaultOpen ?? false)
+  const [menuState, setMenuState] = useState<MenuStateType>({})
   const { value, event } = menuState
   const previousEvent = usePrevious(event)
 
@@ -48,17 +46,23 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   useEscapeKey(handleClose)
   useOutsideClick(dropdownButtonRef, handleClose)
 
+  const extendButton = usePartProps('DropdownButton', 'Button', props)
+  const extendMenu = usePartProps('DropdownButton', 'Menu', props)
+
   useEffect(() => {
-    if (previousEvent !== event) {
+    if (event && previousEvent !== event) {
       if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { value }))
       handleClose()
     }
   }, [previousEvent, event, value, onChange])
 
   useEffect(() => {
+    // Prevents initial handleClose
+    if (!previousEvent) return
+
     if (open || defaultOpen) handleOpen()
     else handleClose()
-  }, [open, defaultOpen])
+  }, [open, defaultOpen, previousEvent])
 
   function handleOpen() {
     setActualOpen(true)
@@ -83,7 +87,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
           if (actualOpen) handleClose()
           else handleOpen()
         }}
-        extend={resolvePartProps('DropdownButton', 'Button', props, theme)}
+        extend={extendButton}
       >
         {label}
       </Button>
@@ -97,7 +101,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
         left={0}
         zIndex={100}
         display={actualOpen ? 'block' : 'none'}
-        extend={resolvePartProps('DropdownButton', 'Menu', props, theme)}
+        extend={extendMenu}
       >
         {children}
       </Menu>

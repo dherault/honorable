@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { IconButton } from 'honorable'
 
 export default {

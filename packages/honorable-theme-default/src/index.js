@@ -66,6 +66,54 @@ export default {
       },
     },
   },
+  Accordion: {
+    defaultProps: {
+      elevation: 1,
+      backgroundColor: 'background',
+      borderBottom: '1px solid border',
+      overflow: 'hidden',
+      userSelect: 'none',
+      '&:first-of-type': {
+        borderTopLeftRadius: 4,
+        borderTopRightRadius: 4,
+      },
+      '&:last-of-type': {
+        borderBottom: 'none',
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4,
+      },
+    },
+    partProps: {
+      Title: {
+        defaultProps: {
+          padding: '1rem',
+        },
+      },
+      Children: {
+        defaultProps: {
+          transition: 'height 200ms ease',
+        },
+      },
+      ChildrenInner: {
+        defaultProps: {
+          padding: '0rem 1rem 1rem 1rem',
+        },
+      },
+      ExpandIcon: {
+        defaultProps: {
+          transition: 'transform 200ms ease',
+        },
+        customProps: new Map([
+          [
+            ({ expanded }) => expanded,
+            {
+              transform: 'rotate(180deg)',
+            },
+          ],
+        ]),
+      },
+    },
+  },
   Button: {
     defaultProps: {
       color: 'white',

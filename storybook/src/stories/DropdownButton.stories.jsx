@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button, Div, DropdownButton, Menu, MenuItem } from 'honorable'
 

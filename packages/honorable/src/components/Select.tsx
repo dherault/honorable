@@ -2,14 +2,13 @@ import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, use
 import PropTypes from 'prop-types'
 
 import { MenuStateType } from '../contexts/MenuContext'
-import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
 import usePreviousWithDefault from '../hooks/usePreviousWithDefault'
+import usePartProps from '../hooks/usePartProps'
 import useForkedRef from '../hooks/useForkedRef'
 import useEscapeKey from '../hooks/useEscapeKey'
 import useOutsideClick from '../hooks/useOutsideClick'
 import useRegisterProps from '../hooks/useRegisterProps'
-import resolvePartProps from '../utils/resolvePartProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 
 import withHonorable from '../withHonorable'
@@ -48,10 +47,9 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     children,
     ...otherProps
   } = props
-  const theme = useTheme()
   const selectRef = useRef()
   const forkedRef = useForkedRef(ref, selectRef)
-  const [actualOpen, setActualOpen] = useState(open || defaultOpen || false)
+  const [actualOpen, setActualOpen] = useState(open ?? defaultOpen ?? false)
   const [menuState, setMenuState] = useState<MenuStateType>({ value })
   const { value: currentValue, renderedItem, event } = menuState
   const previousEvent = usePrevious(event)
@@ -67,6 +65,11 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   useRegisterProps('Select', { open: actualOpen })
   useEscapeKey(() => handleOpen(false))
   useOutsideClick(selectRef, () => handleOpen(false))
+
+  const extendCaret = usePartProps('Select', 'Caret', props)
+  const extendInner = usePartProps('Select', 'Inner', props)
+  const extendSelected = usePartProps('Select', 'Selected', props)
+  const extendMenu = usePartProps('Select', 'Menu', props)
 
   useEffect(() => {
     if (typeof open === 'undefined' || previousOpen === open) return
@@ -101,7 +104,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         p={0.5}
         xflex="x5"
         userSelect="none"
-        extend={resolvePartProps('Select', 'Caret', props, theme)}
+        extend={extendCaret}
       >
         <Caret rotation={actualOpen ? 180 : 0} />
       </Span>
@@ -125,12 +128,12 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
-        extend={resolvePartProps('Select', 'Inner', props, theme)}
+        extend={extendInner}
       >
         <Div
           py={0.5}
           pl={0.5}
-          extend={resolvePartProps('Select', 'Selected', props, theme)}
+          extend={extendSelected}
         >
           {renderSelected()}
         </Div>
@@ -147,7 +150,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         left={0}
         zIndex={100}
         display={actualOpen ? 'block' : 'none'}
-        extend={resolvePartProps('Select', 'Menu', props, theme)}
+        extend={extendMenu}
       >
         {children}
       </Menu>

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Menu, MenuItem } from 'honorable'
 
 export default {

@@ -1,9 +1,8 @@
 import { MouseEvent, Ref, forwardRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-import useTheme from '../hooks/useTheme'
+import usePartProps from '../hooks/usePartProps'
 import useEscapeKey from '../hooks/useEscapeKey'
-import resolvePartProps from '../utils/resolvePartProps'
 import withHonorable from '../withHonorable'
 
 import { Div, DivProps } from './tags'
@@ -20,10 +19,11 @@ const propTypes = {
 
 function ModalRef(props: ModalProps, ref: Ref<any>) {
   const { open = false, onClose, ...otherProps } = props
-  const theme = useTheme()
   const backdropRef = useRef()
 
   useEscapeKey(onClose)
+
+  const extendBackdrop = usePartProps('Modal', 'Backdrop', props)
 
   if (!open) return null
 
@@ -42,7 +42,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
       bottom="0"
       zIndex="1000"
       backgroundColor="rgba(0, 0, 0, 0.5)"
-      extend={resolvePartProps('Modal', 'Backdrop', { open, onClose, ...props }, theme)}
+      extend={extendBackdrop}
       onClick={handleBackdropClick}
     >
       <Div
