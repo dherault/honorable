@@ -4,6 +4,8 @@ import React, { PropsWithRef, Ref } from 'react'
 import stylesProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
 
+// TODO v1 use CSSProperties from react
+
 export type HonorableIdProps = {
   honorableId?: number
 }
@@ -17,10 +19,6 @@ export type ElementProps<Tag> = HonorableIdProps & PropsWithRef<
 export type AnyProps = {
   [key: string]: any
 }
-export type CssProps = {
-  css?: any
-}
-
 export type ThemeProps = {
   theme: HonorableTheme
 }
@@ -29,6 +27,10 @@ export type StylesProperties = typeof stylesProperties[number]
   | `${typeof stylesProperties[number]}-mobile`
   | `${typeof stylesProperties[number]}-tablet`
   | `${typeof stylesProperties[number]}-desktop`
+
+export type CssProps = {
+  css?: any
+}
 
 export type StylesProps = CssProps & {
   [stylesKey in StylesProperties]?: any
@@ -70,7 +72,9 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
-export type CustomProps = Map<(props: object, theme: HonorableTheme) => boolean, StylesProps | ((props: object, theme: HonorableTheme) => StylesProps)>
+export type CustomPropsKeyFunction = (props: object, theme: HonorableTheme) => boolean
+export type CustomPropsValueFunction = (props: object, theme: HonorableTheme) => StylesProps
+export type CustomProps = Map<CustomPropsKeyFunction, StylesProps | CustomPropsValueFunction>
 
 export type ComponentProps = {
   defaultProps?: StylesProps

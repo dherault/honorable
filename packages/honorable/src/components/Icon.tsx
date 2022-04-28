@@ -4,7 +4,7 @@ import withHonorable from '../withHonorable'
 
 import { Span, SpanProps } from './tags'
 
-type IconProps = SpanProps
+export type IconProps = SpanProps
 
 export const iconPropTypes = {}
 
