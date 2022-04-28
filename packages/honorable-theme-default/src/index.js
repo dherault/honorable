@@ -416,16 +416,12 @@ export default {
       Inner: {
         defaultProps: {
           padding: '0.5rem 1rem',
-          borderRadius: 2,
-          border: '1px solid white',
         },
         customProps: new Map([
           [
             ({ active }) => active,
             {
-              backgroundColor: 'transparency(primary, 85)',
-              color: 'primary',
-              border: '1px solid primary',
+              backgroundColor: 'background-light',
             },
           ],
         ]),

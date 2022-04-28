@@ -218,7 +218,7 @@ ref: Ref<any>
         >
           {Children.map(children, (child: ReactElement, index) => {
           // If child is a MenuItem, give it some more props
-            if (child.type === MenuItem) {
+            if (child?.type === MenuItem) {
               return cloneElement(child, {
                 fade,
                 isSubMenuItem: isSubMenu,
