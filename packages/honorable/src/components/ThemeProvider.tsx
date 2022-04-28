@@ -32,7 +32,7 @@ export function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
   )
 }
 
-function Extend({ theme = {}, children }: ThemeProviderProps) {
+export function ExtendTheme({ theme = {}, children }: ThemeProviderProps) {
   const existingTheme = useContext(ThemeContext)
   const extendedTheme = enhanceTheme(mergeTheme(existingTheme, theme))
 
@@ -44,5 +44,4 @@ function Extend({ theme = {}, children }: ThemeProviderProps) {
 }
 
 ThemeProvider.propTypes = themProviderPropTypes
-Extend.propTypes = themProviderPropTypes
-ThemeProvider.Extend = Extend
+ExtendTheme.propTypes = themProviderPropTypes
