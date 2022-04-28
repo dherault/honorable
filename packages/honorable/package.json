@@ -1,12 +1,12 @@
 {
   "name": "honorable",
-  "version": "0.49.0",
+  "version": "0.51.0",
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "dist/index.js",
   "scripts": {
     "dev": "npm run clean:peerDependencies && npm run clean:build && nodemon --watch src --ext ts,tsx --exec \"npm run build\"",
     "build": "npx tsc --declaration",
-    "clean": "npm run clean:build && npm run clean:node-modules && npm i && npm run clean:peerDependencies",
+    "clean": "npm run clean:build && npm run clean:node-modules && npm i --force && npm run clean:peerDependencies",
     "clean:node-modules": "rimraf node_module package-lock.json",
     "clean:peerDependencies": "rimraf node_modules/react node_modules/react-dom",
     "clean:build": "rimraf dist",
