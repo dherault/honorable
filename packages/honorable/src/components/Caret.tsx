@@ -9,7 +9,7 @@ export type CaretProps = SvgProps & {
   rotation?: number
 }
 
-const propTypes = {
+export const caretPropTypes = {
   rotation: PropTypes.number,
 }
 
@@ -39,6 +39,6 @@ CaretRef.displayName = 'Caret'
 
 const ForwaredCaret = forwardRef(CaretRef)
 
-ForwaredCaret.propTypes = propTypes
+ForwaredCaret.propTypes = caretPropTypes
 
 export const Caret = withHonorable<CaretProps>(ForwaredCaret, 'Caret')

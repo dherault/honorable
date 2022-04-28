@@ -12,7 +12,7 @@ export type ButtonProps = ButtonBaseProps & {
   endIcon?: ReactNode
 }
 
-const propTypes = {
+export const buttonPropTypes = {
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
 }
@@ -54,6 +54,6 @@ ButtonRef.displayName = 'Button'
 
 const ForwardedButton = forwardRef(ButtonRef)
 
-ForwardedButton.propTypes = propTypes
+ForwardedButton.propTypes = buttonPropTypes
 
 export const Button = withHonorable<ButtonProps>(ForwardedButton, 'Button')

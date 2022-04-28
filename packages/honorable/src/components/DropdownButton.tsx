@@ -25,7 +25,7 @@ export type DropdownButtonProps = DivProps & {
   onChange?: (event: MouseEvent | KeyboardEvent) => void
 }
 
-const propTypes = {
+export const dropdownButtonPropTypes = {
   open: PropTypes.bool,
   defaultOpen: PropTypes.bool,
   label: PropTypes.string,
@@ -122,6 +122,6 @@ DropdownButtonRef.displayName = 'DropdownButton'
 
 const ForwardedDropdownButton = forwardRef(DropdownButtonRef)
 
-ForwardedDropdownButton.propTypes = propTypes
+ForwardedDropdownButton.propTypes = dropdownButtonPropTypes
 
 export const DropdownButton = withHonorable<DropdownButtonProps>(ForwardedDropdownButton, 'DropdownButton')

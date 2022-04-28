@@ -4,9 +4,9 @@ import withHonorable from '../withHonorable'
 
 import { Div, DivProps } from './tags'
 
-type ButtonGroupProps = DivProps
+export type ButtonGroupProps = DivProps
 
-const propTypes = {}
+export const buttonGroupPropTypes = {}
 
 function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   return (
@@ -23,6 +23,6 @@ ButtonGroupRef.displayName = 'ButtonGroup'
 
 const ForwardedButtonGroup = forwardRef(ButtonGroupRef)
 
-ForwardedButtonGroup.propTypes = propTypes
+ForwardedButtonGroup.propTypes = buttonGroupPropTypes
 
 export const ButtonGroup = withHonorable<ButtonGroupProps>(ForwardedButtonGroup, 'ButtonGroup')

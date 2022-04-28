@@ -17,7 +17,7 @@ export type SwitchProps = DivProps & {
   uncheckedBackground?: ReactNode
 }
 
-const propTypes = {
+export const switchPropTypes = {
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
   onChange: PropTypes.func,
@@ -111,6 +111,6 @@ SwitchRef.displayName = 'Switch'
 
 const ForwaredSwitch = forwardRef(SwitchRef)
 
-ForwaredSwitch.propTypes = propTypes
+ForwaredSwitch.propTypes = switchPropTypes
 
 export const Switch = withHonorable<SwitchProps>(ForwaredSwitch, 'Switch')

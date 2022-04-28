@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, Ref, forwardRef, useCallback, useState } from 'react'
+import { ChangeEvent, FocusEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
@@ -7,15 +7,18 @@ import withHonorable from '../withHonorable'
 import usePartProps from '../hooks/usePartProps'
 import useRegisterProps from '../hooks/useRegisterProps'
 
-import { Div, DivProps, InputBase, TextareaProps } from './tags'
+import { Div, DivProps, InputBase } from './tags'
 
-export type ValueType = (string | number | readonly string[]) & string
+export type ValueType = (string | number | readonly string[]) & string | number
 
-export type InputProps = DivProps & {
+// TODO v1 readOnly
+export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur'> & {
   type?: string
   value?: ValueType
   defaultValue?: ValueType
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onBlur?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   startIcon?: ReactNode
   endIcon?: ReactNode
   disabled?: boolean
@@ -25,13 +28,7 @@ export type InputProps = DivProps & {
   maxRows?: number
 }
 
-export type ExpandableTextareaProps = TextareaProps & {
-  value?: string
-  maxRows?: number
-  honorableInputProps?: object
-}
-
-const propTypes = {
+export const inputPropTypes = {
   type: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -52,6 +49,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     value,
     defaultValue,
     onChange,
+    onFocus,
+    onBlur,
     startIcon,
     endIcon,
     disabled,
@@ -72,10 +71,10 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   const extendEndIcon = usePartProps('Input', 'EndIcon', props)
   const extendTextArea = usePartProps('Input', 'TextArea', props)
 
-  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUncontrolledValue(event.target.value)
     if (typeof onChange === 'function') onChange(event)
-  }, [onChange])
+  }
 
   return (
     <Div
@@ -100,8 +99,14 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           disabled={disabled}
           value={actualValue}
           onChange={handleChange}
-          onFocus={() => setActive(true)}
-          onBlur={() => setActive(false)}
+          onFocus={event => {
+            setActive(true)
+            if (typeof onFocus === 'function') onFocus(event)
+          }}
+          onBlur={event => {
+            setActive(false)
+            if (typeof onBlur === 'function') onBlur(event)
+          }}
           extend={extendInputBase}
         />
       )}
@@ -111,8 +116,14 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           disabled={disabled}
           value={actualValue}
           onChange={handleChange}
-          onFocus={() => setActive(true)}
-          onBlur={() => setActive(false)}
+          onFocus={event => {
+            setActive(true)
+            if (typeof onFocus === 'function') onFocus(event)
+          }}
+          onBlur={event => {
+            setActive(false)
+            if (typeof onBlur === 'function') onBlur(event)
+          }}
           minRows={minRows}
           maxRows={maxRows}
           style={extendTextArea}
@@ -134,8 +145,6 @@ InputRef.displayName = 'Input'
 
 const ForwardedInput = forwardRef(InputRef)
 
-// There is a conflict between `title` of DivProps and this component
-// @ts-ignore
-ForwardedInput.propTypes = propTypes
+ForwardedInput.propTypes = inputPropTypes
 
 export const Input = withHonorable<InputProps>(ForwardedInput, 'Input')

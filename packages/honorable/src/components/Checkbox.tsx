@@ -16,7 +16,7 @@ export type CheckboxProps = SpanProps & {
   onChange?: (event: MouseEvent | KeyboardEvent | ChangeEvent) => void
 }
 
-const propTypes = {
+export const checkboxPropTypes = {
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -101,6 +101,6 @@ CheckboxRef.displayName = 'Checkbox'
 
 const ForwaredCheckbox = forwardRef(CheckboxRef)
 
-ForwaredCheckbox.propTypes = propTypes
+ForwaredCheckbox.propTypes = checkboxPropTypes
 
 export const Checkbox = withHonorable<CheckboxProps>(ForwaredCheckbox, 'Checkbox')

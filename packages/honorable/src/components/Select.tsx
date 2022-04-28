@@ -26,7 +26,7 @@ export type SelectProps = DivProps & {
   fade?: boolean
 }
 
-const propTypes = {
+export const selectPropTypes = {
   open: PropTypes.bool,
   defaultOpen: PropTypes.bool,
   value: PropTypes.any,
@@ -163,6 +163,6 @@ SelectRef.displayName = 'Select'
 
 const ForwardedSelect = forwardRef(SelectRef)
 
-ForwardedSelect.propTypes = propTypes
+ForwardedSelect.propTypes = selectPropTypes
 
 export const Select = withHonorable<SelectProps>(ForwardedSelect, 'Select')

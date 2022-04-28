@@ -12,7 +12,7 @@ export type ModalProps = DivProps & {
   onClose?: (event: MouseEvent | KeyboardEvent) => void
 }
 
-const propTypes = {
+export const modalPropTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
 }
@@ -60,6 +60,6 @@ ModalRef.displayName = 'Modal'
 
 const ForwardedModal = forwardRef(ModalRef)
 
-ForwardedModal.propTypes = propTypes
+ForwardedModal.propTypes = modalPropTypes
 
 export const Modal = withHonorable<ModalProps>(ForwardedModal, 'Modal')

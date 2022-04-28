@@ -19,7 +19,7 @@ export type MenuItemProps = DivProps & {
   fade?: boolean
 }
 
-const propTypes = {
+export const menuItemPropTypes = {
   value: PropTypes.any,
   itemIndex: PropTypes.number,
   active: PropTypes.bool,
@@ -274,6 +274,6 @@ MenuItemRef.displayName = 'MenuItemRef'
 
 const ForwardedMenuItem = forwardRef(MenuItemRef)
 
-ForwardedMenuItem.propTypes = propTypes
+ForwardedMenuItem.propTypes = menuItemPropTypes
 
 export const MenuItem = withHonorable<MenuItemProps>(ForwardedMenuItem, 'MenuItem')

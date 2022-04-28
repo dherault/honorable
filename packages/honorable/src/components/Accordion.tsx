@@ -9,7 +9,7 @@ import useRegisterProps from '../hooks/useRegisterProps'
 import { Div, DivProps } from './tags'
 import { Caret } from './Caret'
 
-export type AccordionProps = DivProps & {
+export type AccordionProps = Omit<DivProps, 'title'> & {
   expanded?: boolean
   defaultExpanded?: boolean
   onExpand? (expanded: boolean): void
@@ -17,7 +17,7 @@ export type AccordionProps = DivProps & {
   expandIcon?: ReactNode
 }
 
-const propTypes = {
+export const accordionPropTypes = {
   expanded: PropTypes.bool,
   defaultExpanded: PropTypes.bool,
   onExpand: PropTypes.func,
@@ -25,15 +25,13 @@ const propTypes = {
   expandIcon: PropTypes.node,
 }
 
-const defaultExpandIcon = <Caret />
-
 function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const {
     honorableId,
     expanded,
     defaultExpanded,
     onExpand,
-    expandIcon = defaultExpandIcon,
+    expandIcon,
     title,
     children,
     ...otherProps
@@ -76,7 +74,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
           xflex="x5"
           extend={extendExpandIcon}
         >
-          {expandIcon}
+          {expandIcon || <Caret />}
         </Div>
       </Div>
       <Div
@@ -98,8 +96,6 @@ AccordionRef.displayName = 'Accordion'
 
 const ForwardedAccordion = forwardRef(AccordionRef)
 
-// There is a conflict between `title` of DivProps and this component
-// @ts-ignore
-ForwardedAccordion.propTypes = propTypes
+ForwardedAccordion.propTypes = accordionPropTypes
 
 export const Accordion = withHonorable<AccordionProps>(ForwardedAccordion, 'Accordion')

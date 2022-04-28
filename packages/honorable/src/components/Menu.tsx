@@ -20,7 +20,7 @@ export type MenuProps = DivProps & {
   fade?: boolean
 }
 
-const propTypes = {
+export const menuPropTypes = {
   menuState: PropTypes.object,
   setMenuState: PropTypes.func,
   isSubMenu: PropTypes.bool,
@@ -240,6 +240,6 @@ MenuRef.displayName = 'Menu'
 
 const ForwardedMenu = forwardRef(MenuRef)
 
-ForwardedMenu.propTypes = propTypes
+ForwardedMenu.propTypes = menuPropTypes
 
 export const Menu = withHonorable<MenuProps>(ForwardedMenu, 'Menu')

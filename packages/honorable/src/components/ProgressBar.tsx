@@ -10,7 +10,7 @@ type ProgressBarProps = DivProps & {
   value: number
 }
 
-const propTypes = {}
+export const progressBarPropTypes = {}
 
 function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
   const { value, ...otherProps } = props
@@ -37,6 +37,6 @@ ProgressBarRef.displayName = 'ProgressBar'
 
 const ForwardedProgressBar = forwardRef(ProgressBarRef)
 
-ForwardedProgressBar.propTypes = propTypes
+ForwardedProgressBar.propTypes = progressBarPropTypes
 
 export const ProgressBar = withHonorable<ProgressBarProps>(ForwardedProgressBar, 'ProgressBar')

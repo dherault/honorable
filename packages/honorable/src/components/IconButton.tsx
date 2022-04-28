@@ -9,7 +9,7 @@ import { ButtonBase, ButtonBaseProps } from './tags'
 
 export type IconButtonProps = ButtonBaseProps
 
-const propTypes = {}
+export const iconButtonPropTypes = {}
 
 function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
   const theme = useTheme()
@@ -38,6 +38,6 @@ IconButtonRef.displayName = 'IconButton'
 
 const ForwardedIconButton = forwardRef(IconButtonRef)
 
-ForwardedIconButton.propTypes = propTypes
+ForwardedIconButton.propTypes = iconButtonPropTypes
 
 export const IconButton = withHonorable<IconButtonProps>(ForwardedIconButton, 'IconButton')

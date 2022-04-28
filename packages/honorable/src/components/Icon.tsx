@@ -6,7 +6,7 @@ import { Span, SpanProps } from './tags'
 
 type IconProps = SpanProps
 
-const propTypes = {}
+export const iconPropTypes = {}
 
 function IconRef(props: IconProps, ref: Ref<any>) {
   return (
@@ -23,6 +23,6 @@ IconRef.displayName = 'Icon'
 
 const ForwardedIcon = forwardRef(IconRef)
 
-ForwardedIcon.propTypes = propTypes
+ForwardedIcon.propTypes = iconPropTypes
 
 export const Icon = withHonorable<IconProps>(ForwardedIcon, 'Icon')
