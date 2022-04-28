@@ -1,4 +1,4 @@
-import { Input, ThemeProvider } from 'honorable'
+import { ExtendTheme, Input } from 'honorable'
 
 const inputTheme = {
   input: {
@@ -13,13 +13,13 @@ const inputTheme = {
 function WhatsOnYourMind(props) {
 
   return (
-    <ThemeProvider.Extend theme={inputTheme}>
+    <ExtendTheme theme={inputTheme}>
       <Input
         {...props}
         display="inline-block"
         placeholder="What's on your mind?"
       />
-    </ThemeProvider.Extend>
+    </ExtendTheme>
   )
 }
 
