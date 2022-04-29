@@ -7,14 +7,21 @@ export default {
   component: Select,
 }
 
-function renderItem({ text, items }) {
+const items = [
+  { text: 'For', value: 'For' },
+  { text: 'CSS', value: 'CSS' },
+  { text: 'Lovers', value: 'Lovers' },
+  { text: 'And', value: 'And' },
+]
+
+function renderItem({ text, value, items }) {
   return (
     <MenuItem
       key={text}
-      value={text}
+      value={value}
     >
       {text}
-      {Array.isArray(items) && (
+      {Array.isArray(items) && items.length > 0 && (
         <Menu>
           {items.map(renderItem)}
         </Menu>
@@ -62,20 +69,65 @@ function Template2({ items, initialValue, ...args }) {
   )
 }
 
-const items = [
-  { text: 'For' },
-  { text: 'CSS' },
-  { text: 'Lovers' },
-  { text: 'And' },
-]
+function Template3({ items, initialValue, ...args }) {
+  const [value, setValue] = useState(initialValue)
+  const allValues = findAllValues(items)
+
+  console.log('value', value, allValues.length)
+
+  return (
+    <Div xflex="x1">
+      <Select
+        {...args}
+        value={value}
+        onChange={event => setValue(event.target.value)}
+      >
+        {items.map(renderItem)}
+      </Select>
+      <Button
+        ml={1}
+        onClick={() => {
+          setValue(x => {
+            const index = allValues.indexOf(x)
+
+            console.log('index', index)
+
+            return allValues[index === -1 ? 0 : (index + 1) % allValues.length]
+          })
+        }}
+      >
+        Change value
+      </Button>
+      <Button
+        ml={1}
+        onClick={() => setValue('nonsense')}
+      >
+        Change to invalid value
+      </Button>
+    </Div>
+  )
+}
 
 function makeItems(items, depth = 1) {
   if (depth <= 0) return items
 
   return items.map((item, i) => ({
     ...item,
+    value: item.text + depth,
     items: i % 2 === depth % 2 ? null : makeItems(items, depth - 1),
   }))
+}
+
+function findAllValues(items) {
+  return items.reduce((acc, item) => {
+    acc.push(item.value)
+
+    if (Array.isArray(item.items)) {
+      acc.push(...findAllValues(item.items))
+    }
+
+    return acc
+  }, [])
 }
 
 export const Default = Template.bind({})
@@ -103,4 +155,14 @@ SubMenu.args = {
 export const Controlled = Template2.bind({})
 Controlled.args = {
   items,
+}
+
+export const ControlledChanging = Template3.bind({})
+ControlledChanging.args = {
+  items,
+}
+
+export const ControlledChangingSubMenu = Template3.bind({})
+ControlledChangingSubMenu.args = {
+  items: makeItems(items, 6),
 }

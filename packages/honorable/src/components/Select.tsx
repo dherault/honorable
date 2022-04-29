@@ -78,6 +78,10 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   }, [open, previousOpen, handleOpen])
 
   useEffect(() => {
+    setMenuState(x => ({ ...x, value, shouldSyncWithChild: true }))
+  }, [value])
+
+  useEffect(() => {
     if (event && previousEvent !== event && typeof onChange === 'function') {
       onChange(enhanceEventTarget(event, { value: currentValue }))
       handleOpen(false)

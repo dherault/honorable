@@ -9,6 +9,7 @@ export type MenuStateType = {
   active?: boolean
   isSubMenuVisible?: boolean
   shouldSyncWithParent?: boolean
+  shouldSyncWithChild?: boolean
   shouldFocus?: boolean
 }
 

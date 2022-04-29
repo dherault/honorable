@@ -6,7 +6,6 @@ import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../contexts/MenuContext'
 import useForkedRef from '../hooks/useForkedRef'
-import usePrevious from '../hooks/usePrevious'
 import useOutsideClick from '../hooks/useOutsideClick'
 import useRegisterProps from '../hooks/useRegisterProps'
 
@@ -27,27 +26,9 @@ export const menuPropTypes = {
   fade: PropTypes.bool,
 }
 
-const sortEntries = ([keyA]: string[], [keyB]: string[]) => keyA.localeCompare(keyB)
-
-function areEntriesIdentical(a: object, b: object) {
-  if (!(a && b)) return false
-  if (a === b) return true
-
-  const aEntries = Object.entries(a)
-  const bEntries = Object.entries(b)
-
-  if (aEntries.length !== bEntries.length) {
-    return false
-  }
-
-  aEntries.sort(sortEntries)
-  bEntries.sort(sortEntries)
-
-  return aEntries.every(([key, value], i) => bEntries[i][0] === key && bEntries[i][1] === value)
-}
-
 const defaultMenuState: MenuStateType = {
   activeItemIndex: -1,
+  defaultActiveItemIndex: -1,
   active: false,
   event: null,
   value: null,
@@ -55,11 +36,16 @@ const defaultMenuState: MenuStateType = {
   renderedItem: null,
   shouldFocus: false,
   shouldSyncWithParent: false,
+  shouldSyncWithChild: false,
+}
+
+function enhanceWithDefault(menuState: MenuStateType) {
+  return { ...defaultMenuState, ...menuState }
 }
 
 function MenuRef({
   honorableId,
-  menuState: initialMenuState = {},
+  menuState: initialMenuState,
   setMenuState: setInitialMenuState,
   fade,
   isSubMenu,
@@ -71,87 +57,74 @@ ref: Ref<any>
   const menuRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, menuRef)
   const [parentMenuState, setParentMenuState] = useContext(MenuContext)
-  const [menuState, setMenuState] = useState<MenuStateType>({ ...defaultMenuState, ...initialMenuState })
-  const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, parentMenuState, setParentMenuState])
-  const previousMenuState = usePrevious(menuState) || menuState
-  const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
+  const [menuState, setMenuState] = useState<MenuStateType>({})
+  // const previousMenuState = usePrevious(menuState) || menuState
+  // const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
+
+  const actualMenuState = useMemo(() => enhanceWithDefault(initialMenuState ?? menuState), [initialMenuState, menuState])
+  const setActualMenuState = useMemo(() => setInitialMenuState ?? setMenuState, [setInitialMenuState, setMenuState])
+  const menuValue = useMemo<MenuContextType>(() => [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState], [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState])
 
   // Give `active` and `activeItemIndex` and other props to customProps
-  useRegisterProps('Menu', menuState, honorableId)
+  useRegisterProps('Menu', actualMenuState, honorableId)
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {
-    setMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
+    setActualMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
   })
 
   useEffect(() => {
-    if (menuState.shouldFocus) {
+    if (actualMenuState.shouldFocus) {
       menuRef.current.focus()
 
-      setMenuState(x => ({
+      setActualMenuState(x => ({
         ...x,
         active: true,
         shouldFocus: false,
         // activeItemIndex: typeof x.activeItemIndex === 'number' ? x.activeItemIndex : -1,
       }))
     }
-  }, [menuState.shouldFocus])
-
-  // Sync parent menu state with menu state
-  useEffect(() => {
-    if (typeof setInitialMenuState === 'function' && !areEntriesIdentical(previousMenuState, menuState)) {
-      setInitialMenuState(x => ({
-        ...x,
-        ...menuState,
-      }))
-    }
-    else if (typeof initialMenuState === 'object' && initialMenuState && !areEntriesIdentical(previousInitialMenuState, initialMenuState)) {
-      setMenuState(x => ({
-        ...x,
-        ...initialMenuState,
-      }))
-    }
-  }, [previousInitialMenuState, initialMenuState, setInitialMenuState, previousMenuState, menuState])
+  }, [actualMenuState.shouldFocus, setActualMenuState])
 
   // Sync menu state with grand parent menu state
   useEffect(() => {
-    if (typeof setParentMenuState === 'function' && menuState.shouldSyncWithParent) {
+    if (typeof setParentMenuState === 'function' && actualMenuState.shouldSyncWithParent) {
       setParentMenuState(x => ({
         ...x,
-        value: menuState.value,
-        event: menuState.event,
-        renderedItem: menuState.renderedItem,
+        value: actualMenuState.value,
+        event: actualMenuState.event,
+        renderedItem: actualMenuState.renderedItem,
         shouldSyncWithParent: true,
       }))
-      setMenuState(x => ({
+      setActualMenuState(x => ({
         ...x,
         shouldSyncWithParent: false,
         activeItemIndex: -1,
       }))
     }
-  }, [menuState, parentMenuState, setParentMenuState])
+  }, [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState])
 
   // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
-    if (!menuState.active) return
+    if (!actualMenuState.active) return
 
     switch (event.key) {
       case 'ArrowUp': {
-        const nextActiveItemIndex = Math.max(0, menuState.activeItemIndex - 1)
+        const nextActiveItemIndex = Math.max(0, actualMenuState.activeItemIndex - 1)
 
-        if (menuState.activeItemIndex !== nextActiveItemIndex) {
-          setMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
+        if (actualMenuState.activeItemIndex !== nextActiveItemIndex) {
+          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
         }
 
         break
       }
       case 'ArrowDown': {
-        const nextActiveItemIndex = Math.min(Children.count(children) - 1, menuState.activeItemIndex + 1)
+        const nextActiveItemIndex = Math.min(Children.count(children) - 1, actualMenuState.activeItemIndex + 1)
 
-        if (menuState.activeItemIndex !== nextActiveItemIndex) {
-          setMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
+        if (actualMenuState.activeItemIndex !== nextActiveItemIndex) {
+          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
         }
 
         break
@@ -162,7 +135,7 @@ ref: Ref<any>
   // On mouse leave, unset the active item
   // Give it a timeout to allow mouse rip
   function handleMouseLeave() {
-    setMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
+    setActualMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
   }
 
   function wrapFade(element: ReactElement) {
@@ -224,9 +197,9 @@ ref: Ref<any>
                 isSubMenuItem: isSubMenu,
                 itemIndex: index,
                 active: index === (
-                  menuState.defaultActiveItemIndex > -1 && menuState.activeItemIndex === -1
-                    ? menuState.defaultActiveItemIndex
-                    : menuState.activeItemIndex
+                  actualMenuState.defaultActiveItemIndex > -1 && actualMenuState.activeItemIndex === -1
+                    ? actualMenuState.defaultActiveItemIndex
+                    : actualMenuState.activeItemIndex
                 ),
                 ...child.props,
               })

@@ -113,12 +113,31 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   // Set renderedItem if value matches menuState.value
   // Used by selects with value set on
   useEffect(() => {
+    if (menuState.value === value) console.log('foo', value)
     if (menuState.value === value && menuState.renderedItem !== children) {
-      setMenuState(x => ({
-        ...x, renderedItem: children,
-      }))
+
+      setMenuState(x => ({ ...x, renderedItem: children }))
     }
   }, [menuState, setMenuState, value, children])
+
+  // Sync with child menu to propagate new value
+  useEffect(() => {
+    if (menuState.shouldSyncWithChild) {
+      console.log('sync child')
+
+      setSubMenuState(x => ({
+        ...x,
+        value: menuState.value,
+        event: menuState.event,
+        renderedItem: menuState.renderedItem,
+        shouldSyncWithChild: true,
+      }))
+      setTimeout(() => {
+        console.log('sync child off')
+        setMenuState(x => ({ ...x, shouldSyncWithChild: false }))
+      }, 1)
+    }
+  }, [menuState, setMenuState, setSubMenuState])
 
   // On right key, focus subMenu
   // On left key, unfocus menu
@@ -170,6 +189,12 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
         renderedItem: children,
         shouldSyncWithParent: true,
       }))
+      setSubMenuState(x => ({
+        ...x,
+        active: false,
+        isSubMenuVisible: false,
+        activeItemIndex: -1,
+      }))
     }
   }
 
@@ -202,7 +227,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
           }))
         }}
         onMouseMove={() => {
-          if (!(active && menuState.active)) {
+          if (!(active && menuState.active && menuState.activeItemIndex === itemIndex)) {
             setMenuState(x => ({
               ...x,
               active: true,
@@ -233,7 +258,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
           </>
         )}
       </Div>
-      {active && subMenu && menuState.isSubMenuVisible && (
+      {active && subMenu && (
         <>
           <MenuItemTriangle
             isTop
@@ -241,6 +266,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             position="absolute"
             top={-height}
             right={0}
+            display={menuState.isSubMenuVisible ? 'block' : 'none'}
           />
           <MenuContext.Provider value={menuValue}>
             {cloneElement(subMenu, {
@@ -251,6 +277,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
               position: 'absolute',
               top: 0,
               left: '100%',
+              display: menuState.isSubMenuVisible ? 'block' : 'none',
               ...subMenu.props,
             })}
           </MenuContext.Provider>
@@ -259,6 +286,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             position="absolute"
             bottom={-height}
             right={0}
+            display={menuState.isSubMenuVisible ? 'block' : 'none'}
           />
         </>
       )}
