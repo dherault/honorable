@@ -16,6 +16,13 @@ Default.args = {
   disabled: false,
 }
 
+export const Width100 = Template.bind({})
+Width100.args = {
+  children: 'Button',
+  width: '100%',
+  disabled: false,
+}
+
 export const StartIcon = Template.bind({})
 StartIcon.args = {
   children: 'Button',

@@ -191,6 +191,10 @@ export default {
   ButtonBase: {
     defaultProps: {
       cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignContent: 'center',
     },
   },
   ButtonGroup: {
