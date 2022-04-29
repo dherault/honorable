@@ -34,6 +34,12 @@ Width100.args = {
   width: '100%',
 }
 
+export const Placeholder = Template.bind({})
+Placeholder.args = {
+  disabled: false,
+  placeholder: 'Type me if you can!',
+}
+
 export const DefaultValue = Template.bind({})
 DefaultValue.args = {
   defaultValue: 'Text me if you can',

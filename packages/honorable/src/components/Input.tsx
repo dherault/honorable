@@ -12,10 +12,12 @@ import { Div, DivProps, InputBase } from './tags'
 export type ValueType = (string | number | readonly string[]) & string | number
 
 // TODO v1 readOnly
+// TODO v1 generate props based on type
 export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & {
   type?: string
   value?: ValueType
   defaultValue?: ValueType
+  placeholder?: string
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   onBlur?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
@@ -34,6 +36,7 @@ export const inputPropTypes = {
   type: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  placeholder: PropTypes.string,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
@@ -54,6 +57,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     type,
     value,
     defaultValue,
+    placeholder,
     onChange,
     onFocus,
     onBlur,
@@ -107,6 +111,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           disabled={disabled}
           value={actualValue}
           onChange={handleChange}
+          placeholder={placeholder}
           onFocus={event => {
             setActive(true)
             if (typeof onFocus === 'function') onFocus(event)
@@ -127,6 +132,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           disabled={disabled}
           value={actualValue}
           onChange={handleChange}
+          placeholder={placeholder}
           onFocus={event => {
             setActive(true)
             if (typeof onFocus === 'function') onFocus(event)
