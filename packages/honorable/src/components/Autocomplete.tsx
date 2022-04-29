@@ -1,11 +1,11 @@
-import { ChangeEvent, ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
 import usePrevious from '../hooks/usePrevious'
-import usePreviousWithDefault from '../hooks/usePreviousWithDefault'
+// import usePreviousWithDefault from '../hooks/usePreviousWithDefault'
 import useForkedRef from '../hooks/useForkedRef'
 import usePartProps from '../hooks/usePartProps'
 import useOutsideClick from '../hooks/useOutsideClick'
@@ -65,33 +65,47 @@ function filterOptions(options: AutocompleteOptionType[], search: string): Autoc
   })
 }
 
+function findInOptions(options: AutocompleteOptionType[], value: string): AutocompleteOptionType {
+  if (!Array.isArray(options)) return null
+
+  return options.find(option => {
+    if (typeof option === 'string') return option === value
+    if (typeof option === 'object') return option.value === value
+
+    // @ts-expect-error
+    return option.toString() === value
+  })
+}
+
 function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const {
     honorableId,
     options = [],
     endIcon,
     onOpen,
+    value, // TODO
     onChange,
     renderOption = defaultRenderOption,
     noOptionsNode = 'No options',
+    autoHighlight,
   } = props
   const [inputProps, divProps]: [InputProps, DivProps] = pickProps(props, inputPropTypes)
   const autocompleteRef = useRef()
   const forkedRef = useForkedRef(autocompleteRef, ref)
   const [focused, setFocused] = useState(false)
-  const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
-  const [menuState, setMenuState] = useState<MenuStateType>({})
-  const { value, event } = menuState
+  const [menuState, setMenuState] = useState<MenuStateType>({ defaultActiveItemIndex: autoHighlight ? 0 : -1 })
+  const { value: currentOptionValue, event } = menuState
   const previousEvent = usePrevious(event)
-  const previousSearch = usePreviousWithDefault(search)
+  // const previousSearch = usePreviousWithDefault(search)
   const filteredOptions = filterOptions(options, search)
 
-  useRegisterProps('Autocomplete', { open, value, search }, honorableId)
+  console.log('filteredOptions', filteredOptions.length)
+
+  useRegisterProps('Autocomplete', { focused, search }, honorableId)
 
   useOutsideClick(autocompleteRef, () => {
     setFocused(false)
-    setOpen(false)
   })
 
   const extendInput = usePartProps('Autocomplete', 'Input', props)
@@ -100,23 +114,52 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const extendNoOption = usePartProps('Autocomplete', 'NoOption', props)
 
   useEffect(() => {
-    if (typeof onOpen === 'function') onOpen(open)
-  }, [onOpen, open])
-
-  useEffect(() => {
-    if (!open && focused && (previousSearch || search)) setOpen(true)
-  }, [open, focused, previousSearch, search])
+    if (typeof onOpen === 'function') onOpen(focused)
+  }, [onOpen, focused])
 
   useEffect(() => {
     if (event && previousEvent !== event) {
-      setOpen(false)
-      setMenuState(x => ({ ...x, activeItemIndex: -1 }))
-    }
-  }, [previousEvent, event])
+      setFocused(false)
+      setMenuState(x => ({ ...x, defaultActiveItemIndex: autoHighlight ? 0 : -1 }))
 
-  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+      const option = findInOptions(options, currentOptionValue)
+      const optionLabel = typeof option === 'string'
+        ? option
+        : typeof option === 'object'
+          ? option.label
+          // @ts-expect-error
+          : option.toString()
+
+      setSearch(optionLabel)
+    }
+  }, [previousEvent, event, options, currentOptionValue, autoHighlight])
+
+  function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setSearch(event.target.value)
     if (typeof onChange === 'function') onChange(event)
+  }
+
+  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    switch (event.key) {
+      case 'ArrowUp': {
+        const nextDefaultActiveItemIndex = Math.max(0, menuState.defaultActiveItemIndex - 1)
+
+        if (menuState.defaultActiveItemIndex !== nextDefaultActiveItemIndex) {
+          setMenuState(x => ({ ...x, defaultActiveItemIndex: nextDefaultActiveItemIndex }))
+        }
+
+        break
+      }
+      case 'ArrowDown': {
+        const nextDefaultActiveItemIndex = Math.min(filteredOptions.length - 1, menuState.defaultActiveItemIndex + 1)
+
+        if (menuState.defaultActiveItemIndex !== nextDefaultActiveItemIndex) {
+          setMenuState(x => ({ ...x, defaultActiveItemIndex: nextDefaultActiveItemIndex }))
+        }
+
+        break
+      }
+    }
   }
 
   return (
@@ -128,16 +171,18 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     >
       <Input
         {...inputProps}
-        onChange={handleChange}
-        endIcon={endIcon || <Caret rotation={open ? 180 : 0} />}
+        value={search}
+        onChange={handleInputChange}
+        endIcon={endIcon || <Caret rotation={focused ? 180 : 0} />}
         onFocus={event => {
           setFocused(true)
-          setOpen(true)
           if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
         }}
+        onKeyDown={handleInputKeyDown}
         extend={extendInput}
       />
       <Menu
+        noFocus
         menuState={menuState}
         setMenuState={setMenuState}
         position="absolute"
@@ -145,7 +190,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         right={0}
         left={0}
         zIndex={100}
-        display={open ? 'block' : 'none'}
+        display={focused ? 'block' : 'none'}
         extend={extendMenu}
       >
         {filteredOptions.length > 0 && filteredOptions.map(option => (
@@ -159,8 +204,9 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         ))}
         {filteredOptions.length === 0 && (
           <MenuItem
+            disabled
             value={honorableNoValue}
-            extend={extendMenuItem}
+            extend={extendNoOption}
           >
             {noOptionsNode}
           </MenuItem>

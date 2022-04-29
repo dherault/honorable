@@ -114,6 +114,15 @@ export default {
       },
     },
   },
+  Autocomplete: {
+    partProps: {
+      NoOption: {
+        defaultProps: {
+          userSelect: 'none',
+        },
+      },
+    },
+  },
   Button: {
     defaultProps: {
       color: 'white',
@@ -422,6 +431,13 @@ export default {
             ({ active }) => active,
             {
               backgroundColor: 'background-light',
+            },
+          ],
+          [
+            ({ disabled }) => disabled,
+            {
+              backgroundColor: 'none',
+              text: 'text-light',
             },
           ],
         ]),

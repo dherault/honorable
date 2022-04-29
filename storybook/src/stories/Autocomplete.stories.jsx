@@ -226,3 +226,10 @@ MultilineControlled.args = {
   options: top100Films,
   disabled: false,
 }
+
+export const AutoHighlight = Template.bind({})
+AutoHighlight.args = {
+  autoHighlight: true,
+  options: top100Films,
+  disabled: false,
+}

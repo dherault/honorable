@@ -5,6 +5,7 @@ export type MenuStateType = {
   renderedItem?: ReactNode
   event?: MouseEvent | KeyboardEvent
   activeItemIndex?: number
+  defaultActiveItemIndex?: number
   active?: boolean
   isSubMenuVisible?: boolean
   shouldSyncWithParent?: boolean

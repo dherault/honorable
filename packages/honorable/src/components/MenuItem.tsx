@@ -17,6 +17,7 @@ export type MenuItemProps = DivProps & {
   active?: boolean
   isSubMenuItem?: boolean
   fade?: boolean
+  disabled?: boolean
 }
 
 export const menuItemPropTypes = {
@@ -26,6 +27,7 @@ export const menuItemPropTypes = {
   isSubMenuItem: PropTypes.bool,
   fade: PropTypes.bool,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 }
 
 // A triangle to smooth the user interaction with the submenus
@@ -70,6 +72,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     itemIndex,
     isSubMenuItem,
     fade,
+    disabled,
     ...otherProps
   } = props
   const menuItemRef = useRef<HTMLDivElement>()
@@ -157,7 +160,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
         }, 0)
       }
     }
-    else if (event.key === 'Enter') {
+    else if (!disabled && event.key === 'Enter') {
       setMenuState(x => ({
         ...x,
         value,
@@ -184,6 +187,8 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
         userSelect="none"
         xflex="x4"
         onClick={event => {
+          if (disabled) return
+
           setMenuState(x => ({
             ...x,
             value,

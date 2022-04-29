@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, ReactNode, Ref, forwardRef, useState } from 'react'
+import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
@@ -12,13 +12,15 @@ import { Div, DivProps, InputBase } from './tags'
 export type ValueType = (string | number | readonly string[]) & string | number
 
 // TODO v1 readOnly
-export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur'> & {
+export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & {
   type?: string
   value?: ValueType
   defaultValue?: ValueType
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   onBlur?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onKeyUp?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   startIcon?: ReactNode
   endIcon?: ReactNode
   disabled?: boolean
@@ -33,6 +35,10 @@ export const inputPropTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onKeyUp: PropTypes.func,
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
   disabled: PropTypes.bool,
@@ -51,6 +57,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     onChange,
     onFocus,
     onBlur,
+    onKeyDown,
+    onKeyUp,
     startIcon,
     endIcon,
     disabled,
@@ -107,6 +115,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
             setActive(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
+          onKeyDown={onKeyDown}
+          onKeyUp={onKeyUp}
           extend={extendInputBase}
         />
       )}
@@ -124,6 +134,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
             setActive(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
+          onKeyDown={onKeyDown}
+          onKeyUp={onKeyUp}
           minRows={minRows}
           maxRows={maxRows}
           style={extendTextArea}

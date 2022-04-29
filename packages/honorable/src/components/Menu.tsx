@@ -223,7 +223,11 @@ ref: Ref<any>
                 fade,
                 isSubMenuItem: isSubMenu,
                 itemIndex: index,
-                active: index === menuState.activeItemIndex,
+                active: index === (
+                  menuState.defaultActiveItemIndex > -1 && menuState.activeItemIndex === -1
+                    ? menuState.defaultActiveItemIndex
+                    : menuState.activeItemIndex
+                ),
                 ...child.props,
               })
             }

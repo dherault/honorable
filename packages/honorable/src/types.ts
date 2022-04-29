@@ -222,6 +222,7 @@ export type HonorableTheme = {
   Wbr?: ComponentProps
   // Components
   Accordion?: ComponentProps
+  Autocomplete?: ComponentProps
   Button?: ComponentProps
   ButtonGroup?: ComponentProps
   Caret?: ComponentProps

@@ -55,7 +55,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
 
   useEffect(() => {
     setChildrenHeight(childrenRef.current.offsetHeight)
-  }, [])
+  }, [children])
 
   return (
     <Div
