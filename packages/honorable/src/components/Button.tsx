@@ -10,15 +10,27 @@ import { ButtonBase, ButtonBaseProps, Span } from './tags'
 export type ButtonProps = ButtonBaseProps & {
   startIcon?: ReactNode
   endIcon?: ReactNode
+  loading?: boolean
+  loadingIndicator?: ReactNode
 }
 
 export const buttonPropTypes = {
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
+  loading: PropTypes.bool,
+  loadingIndicator: PropTypes.node,
 }
 
+// TODO v1 loading
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
-  const { startIcon, endIcon, children, ...otherProps } = props
+  const {
+    startIcon,
+    endIcon,
+    children,
+    loading,
+    loadingIndicator,
+    ...otherProps
+  } = props
 
   const extendStartIcon = usePartProps('Button', 'StartIcon', props)
   const extendEndIcon = usePartProps('Button', 'EndIcon', props)

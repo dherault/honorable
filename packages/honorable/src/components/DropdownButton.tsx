@@ -17,6 +17,7 @@ import { Caret } from './Caret'
 import { Menu } from './Menu'
 import { Div, DivProps } from './tags'
 
+// TODO v1 ButtonProps
 export type DropdownButtonProps = DivProps & {
   open?: boolean
   defaultOpen?: boolean
@@ -57,6 +58,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
 
   const extendButton = usePartProps('DropdownButton', 'Button', props)
   const extendMenu = usePartProps('DropdownButton', 'Menu', props)
+  const extendEndIcon = usePartProps('DropdownButton', 'EndIcon', props)
 
   useEffect(() => {
     if (event && previousEvent !== event) {
@@ -91,7 +93,14 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       {...otherProps}
     >
       <Button
-        endIcon={<Caret rotation={actualOpen ? 180 : 0} />}
+        endIcon={(
+          <Div
+            flex="x5"
+            extend={extendEndIcon}
+          >
+            <Caret rotation={actualOpen ? 180 : 0} />
+          </Div>
+        )}
         onClick={() => {
           if (actualOpen) handleClose()
           else handleOpen()
