@@ -106,3 +106,10 @@ EndIcon2.args = {
     </svg>
   ),
 }
+
+export const Loading = Template.bind({})
+Loading.args = {
+  children: 'Button',
+  loading: true,
+  disabled: false,
+}

@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, Ref, forwardRef, useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
@@ -10,28 +10,31 @@ import useEscapeKey from '../hooks/useEscapeKey'
 import useForkedRef from '../hooks/useForkedRef'
 import useOutsideClick from '../hooks/useOutsideClick'
 import useRegisterProps from '../hooks/useRegisterProps'
+import pickProps from '../utils/pickProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 
-import { Button } from './Button'
+import { Button, ButtonProps, buttonPropTypes } from './Button'
 import { Caret } from './Caret'
 import { Menu } from './Menu'
 import { Div, DivProps } from './tags'
 
-// TODO v1 ButtonProps
-export type DropdownButtonProps = DivProps & {
+export type DropdownButtonProps = DivProps & ButtonProps & {
   open?: boolean
   defaultOpen?: boolean
   label?: string
   fade?: boolean
   onChange?: (event: MouseEvent | KeyboardEvent) => void
+  onOpen?: (open: boolean) => void
 }
 
 export const dropdownButtonPropTypes = {
+  ...buttonPropTypes,
   open: PropTypes.bool,
   defaultOpen: PropTypes.bool,
   label: PropTypes.string,
   fade: PropTypes.bool,
   onChange: PropTypes.func,
+  onOpen: PropTypes.func,
 }
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
@@ -42,15 +45,32 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     label,
     fade,
     onChange,
+    onOpen,
     children,
-    ...otherProps
   } = props
+  console.log('props', props)
+  const [buttonProps, divProps]: [ButtonProps, DivProps] = pickProps(props, buttonPropTypes)
   const dropdownButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
-  const [actualOpen, setActualOpen] = useState(open ?? defaultOpen ?? false)
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const [menuState, setMenuState] = useState<MenuStateType>({})
   const { value, event } = menuState
   const previousEvent = usePrevious(event)
+  const actualOpen = open ?? defaultOpen ?? uncontrolledOpen
+
+  console.log('buttonProps', buttonProps)
+  const handleOpen = useCallback(() => {
+    setUncontrolledOpen(true)
+    setMenuState(x => ({ ...x, shouldFocus: true, isSubMenuVisible: true, activeItemIndex: -1 }))
+    if (typeof onOpen === 'function') onOpen(true)
+  }, [onOpen])
+
+  const handleClose = useCallback(() => {
+    console.log('handleClose')
+    setUncontrolledOpen(false)
+    setMenuState(x => ({ ...x, activeItemIndex: -1 }))
+    if (typeof onOpen === 'function') onOpen(false)
+  }, [onOpen])
 
   useRegisterProps('DropdownButton', { open: actualOpen }, honorableId)
   useEscapeKey(handleClose)
@@ -65,34 +85,25 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { value }))
       handleClose()
     }
-  }, [previousEvent, event, value, onChange])
+  }, [previousEvent, event, value, onChange, handleClose])
 
   useEffect(() => {
     // Prevents initial handleClose
     if (!previousEvent) return
 
-    if (open || defaultOpen) handleOpen()
+    if (actualOpen) handleOpen()
     else handleClose()
-  }, [open, defaultOpen, previousEvent])
-
-  function handleOpen() {
-    setActualOpen(true)
-    setMenuState(x => ({ ...x, shouldFocus: true, isSubMenuVisible: true, activeItemIndex: -1 }))
-  }
-
-  function handleClose() {
-    setActualOpen(false)
-    setMenuState(x => ({ ...x, activeItemIndex: -1 }))
-  }
+  }, [actualOpen, previousEvent, handleOpen, handleClose])
 
   return (
     <Div
       ref={forkedRef}
       position="relative"
       display="inline-block"
-      {...otherProps}
+      {...divProps}
     >
       <Button
+        {...buttonProps}
         endIcon={(
           <Div
             flex="x5"
@@ -101,9 +112,13 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
             <Caret rotation={actualOpen ? 180 : 0} />
           </Div>
         )}
-        onClick={() => {
+        onClick={event => {
+          if (buttonProps.disabled) return
+
           if (actualOpen) handleClose()
           else handleOpen()
+
+          if (typeof buttonProps.onClick === 'function')buttonProps.onClick(event)
         }}
         extend={extendButton}
       >

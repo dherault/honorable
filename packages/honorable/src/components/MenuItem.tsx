@@ -113,7 +113,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   // Set renderedItem if value matches menuState.value
   // Used by selects with value set on
   useEffect(() => {
-    if (menuState.value === value) console.log('foo', value)
     if (menuState.value === value && menuState.renderedItem !== children) {
 
       setMenuState(x => ({ ...x, renderedItem: children }))

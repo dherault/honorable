@@ -35,7 +35,6 @@ export const selectPropTypes = {
   fade: PropTypes.bool,
 }
 
-// TODO v1 move styles to theme
 function SelectRef(props: SelectProps, ref: Ref<any>) {
   const {
     honorableId,

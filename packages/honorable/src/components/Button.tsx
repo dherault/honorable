@@ -12,6 +12,7 @@ export type ButtonProps = ButtonBaseProps & {
   endIcon?: ReactNode
   loading?: boolean
   loadingIndicator?: ReactNode
+  disabled?: boolean
 }
 
 export const buttonPropTypes = {
@@ -19,6 +20,7 @@ export const buttonPropTypes = {
   endIcon: PropTypes.node,
   loading: PropTypes.bool,
   loadingIndicator: PropTypes.node,
+  disabled: PropTypes.bool,
 }
 
 // TODO v1 loading

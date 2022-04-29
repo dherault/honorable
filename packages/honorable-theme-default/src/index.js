@@ -132,7 +132,7 @@ export default {
       borderRadius: 4,
       userSelect: 'none',
       textDecoration: 'none',
-      transition: 'color 150ms ease, background-color 150ms ease',
+      transition: 'color 150ms ease, background-color 150ms ease, border 150ms ease',
       flexShrink: 0,
       ':hover': {
         backgroundColor: 'darken(primary, 10)',
