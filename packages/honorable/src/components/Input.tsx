@@ -118,6 +118,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
           extend={extendInputBase}
+          flexGrow={1}
         />
       )}
       {multiline && (
@@ -138,7 +139,10 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onKeyUp={onKeyUp}
           minRows={minRows}
           maxRows={maxRows}
-          style={extendTextArea}
+          style={{
+            flexGrow: 1,
+            ...extendTextArea,
+          }}
         />
       )}
       {!!endIcon && (

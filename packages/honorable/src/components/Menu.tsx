@@ -76,8 +76,6 @@ ref: Ref<any>
   const previousMenuState = usePrevious(menuState) || menuState
   const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
 
-  console.log('menuState.activeItemIndex', menuState.activeItemIndex, isSubMenu)
-
   // Give `active` and `activeItemIndex` and other props to customProps
   useRegisterProps('Menu', menuState, honorableId)
 

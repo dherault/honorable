@@ -298,7 +298,6 @@ export default {
   },
   Input: {
     defaultProps: {
-      backgroundColor: 'background',
       border: '1px solid border',
       borderRadius: 4,
       overflow: 'hidden',
@@ -360,6 +359,7 @@ export default {
     defaultProps: {
       padding: '0.5rem 0',
       color: 'text',
+      backgroundColor: 'transparent',
       border: 'none',
       '&:focus': {
         outline: 'none',

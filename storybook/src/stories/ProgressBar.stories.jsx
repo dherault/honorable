@@ -5,9 +5,6 @@ import { ProgressBar } from 'honorable'
 export default {
   title: 'ProgressBar',
   component: ProgressBar,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function Template(args) {

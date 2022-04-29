@@ -3,9 +3,6 @@ import { Menu, MenuItem } from 'honorable'
 export default {
   title: 'Menu',
   component: Menu,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function Template({ items, ...args }) {

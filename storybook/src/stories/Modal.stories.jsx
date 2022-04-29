@@ -5,9 +5,6 @@ import { Modal } from 'honorable'
 export default {
   title: 'Modal',
   component: Modal,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function Template(args) {

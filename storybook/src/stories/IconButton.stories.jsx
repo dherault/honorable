@@ -3,9 +3,6 @@ import { IconButton } from 'honorable'
 export default {
   title: 'IconButton',
   component: IconButton,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function Template(args) {

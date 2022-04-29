@@ -5,9 +5,6 @@ import { Input, P } from 'honorable'
 export default {
   title: 'Input',
   component: Input,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function Template(args) {
@@ -29,6 +26,12 @@ function TemplateControlled(args) {
 export const Default = Template.bind({})
 Default.args = {
   disabled: false,
+}
+
+export const Width100 = Template.bind({})
+Width100.args = {
+  disabled: false,
+  width: '100%',
 }
 
 export const DefaultValue = Template.bind({})

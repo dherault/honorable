@@ -5,9 +5,6 @@ import { Checkbox, Div } from 'honorable'
 export default {
   title: 'Checkbox',
   component: Checkbox,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function Template(args) {

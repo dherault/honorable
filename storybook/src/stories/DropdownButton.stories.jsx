@@ -5,9 +5,6 @@ import { Button, Div, DropdownButton, Menu, MenuItem } from 'honorable'
 export default {
   title: 'DropdownButton',
   component: DropdownButton,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function renderItem({ text, items }) {

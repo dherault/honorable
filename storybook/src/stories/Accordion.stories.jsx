@@ -6,9 +6,6 @@ import { Accordion, Div } from 'honorable'
 export default {
   title: 'Accordion',
   component: Accordion,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 }
 
 function Template(args) {
