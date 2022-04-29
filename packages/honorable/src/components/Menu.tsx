@@ -76,6 +76,8 @@ ref: Ref<any>
   const previousMenuState = usePrevious(menuState) || menuState
   const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
 
+  console.log('menuState.activeItemIndex', menuState.activeItemIndex, isSubMenu)
+
   // Give `active` and `activeItemIndex` and other props to customProps
   useRegisterProps('Menu', menuState, honorableId)
 
@@ -92,7 +94,7 @@ ref: Ref<any>
         ...x,
         active: true,
         shouldFocus: false,
-        activeItemIndex: typeof x.activeItemIndex === 'number' ? x.activeItemIndex : -1,
+        // activeItemIndex: typeof x.activeItemIndex === 'number' ? x.activeItemIndex : -1,
       }))
     }
   }, [menuState.shouldFocus])

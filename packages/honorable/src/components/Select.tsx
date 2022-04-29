@@ -35,6 +35,7 @@ export const selectPropTypes = {
   fade: PropTypes.bool,
 }
 
+// TODO v1 move styles to theme
 function SelectRef(props: SelectProps, ref: Ref<any>) {
   const {
     honorableId,
@@ -68,8 +69,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   useOutsideClick(selectRef, () => handleOpen(false))
 
   const extendCaret = usePartProps('Select', 'Caret', props)
-  const extendInner = usePartProps('Select', 'Inner', props)
-  const extendSelected = usePartProps('Select', 'Selected', props)
+  const extendInput = usePartProps('Select', 'Input', props)
   const extendMenu = usePartProps('Select', 'Menu', props)
 
   useEffect(() => {
@@ -116,29 +116,20 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     <Div
       ref={forkedRef}
       minWidth={128 + 32 + 8 + 2}
-      display="inline-block"
-      borderRadius={4}
       position="relative"
       {...otherProps}
     >
       <Div
         xflex="x4"
-        cursor="pointer"
         onClick={event => {
           handleOpen(!actualOpen)
           setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
-        extend={extendInner}
+        extend={extendInput}
       >
-        <Div
-          py={0.5}
-          pl={0.5}
-          extend={extendSelected}
-        >
-          {renderSelected()}
-        </Div>
-        <Span flexGrow={1} />
+        {renderSelected()}
+        <Div flexGrow={1} />
         {renderCaret()}
       </Div>
       <Menu

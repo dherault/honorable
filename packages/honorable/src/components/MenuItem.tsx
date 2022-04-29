@@ -197,19 +197,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             shouldSyncWithParent: true,
           }))
         }}
-        onMouseEnter={() => {
-          if (!(active && menuState.active)) {
-            setMenuState(x => ({
-              ...x,
-              active: true,
-              activeItemIndex: itemIndex,
-              isSubMenuVisible: true,
-            }))
-            setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
-            setParentMenuState(x => ({ ...x, active: false }))
-            menuItemRef.current.focus()
-          }
-        }}
         onMouseMove={() => {
           if (!(active && menuState.active)) {
             setMenuState(x => ({

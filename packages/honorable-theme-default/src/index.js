@@ -406,7 +406,7 @@ export default {
       elevation: 1,
       backgroundColor: 'background',
       borderRadius: 4,
-      outline: 'none',
+      // outline: 'none',
     },
     customProps: new Map([
       [
@@ -419,7 +419,7 @@ export default {
   },
   MenuItem: {
     defaultProps: {
-      outline: 'none',
+      // outline: 'none',
     },
     partProps: {
       Inner: {
@@ -477,9 +477,19 @@ export default {
   },
   Select: {
     defaultProps: {
+      display: 'inline-block',
+      borderRadius: 4,
       border: '1px solid border',
       '&:hover': {
         border: '1px solid primary',
+      },
+    },
+    partProps: {
+      Input: {
+        defaultProps: {
+          padding: '0.25rem 0rem 0.25rem 0.5rem',
+          cursor: 'pointer',
+        },
       },
     },
   },
