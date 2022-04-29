@@ -161,6 +161,8 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       }
     }
     else if (!disabled && event.key === 'Enter') {
+      event.persist()
+
       setMenuState(x => ({
         ...x,
         value,
@@ -188,6 +190,8 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
         xflex="x4"
         onClick={event => {
           if (disabled) return
+
+          event.persist()
 
           setMenuState(x => ({
             ...x,
