@@ -10,6 +10,11 @@ Here is what a theme should look like:
 const theme = {
   // Set the mode of your theme, either light or dark or any other string
   mode: 'light',
+  // Describe your own conventions
+  aliases: {
+    w: 'width',
+    bg: 'backgroundColor',
+  },
   // Set the breakpoints
   breakpoints: {
     mobile: 600,
@@ -167,7 +172,7 @@ They are applied to the `*` selector by `CssBaseline`.  See `[Component]` for mo
 
 ### `html`
 
-These props are applied to the `<html>` tag by `CssBaseline`.  See `[Component]` for more info.
+These props are applied to the `<html>` tag by `CssBaseline`.  It behaves like a direct `defaultProps` (without the need for the `defaultProps` key). See `[Component]` for more info.
 
 ### `[Component]`
 
