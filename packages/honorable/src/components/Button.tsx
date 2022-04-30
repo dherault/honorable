@@ -1,10 +1,14 @@
-import { ReactNode, Ref, forwardRef } from 'react'
+import { ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
-import usePartProps from '../hooks/usePartProps'
+import useTheme from '../hooks/useTheme'
+import useForkedRef from '../hooks/useForkedRef'
 
+import resolvePartProps from '../utils/resolvePartProps'
+
+import { Spinner } from './Spinner'
 import { ButtonBase, ButtonBaseProps, Span } from './tags'
 
 export type ButtonProps = ButtonBaseProps & {
@@ -13,6 +17,11 @@ export type ButtonProps = ButtonBaseProps & {
   loading?: boolean
   loadingIndicator?: ReactNode
   disabled?: boolean
+}
+
+type ButtonDimensionsState = {
+  width: number | 'auto'
+  height: number | 'auto'
 }
 
 export const buttonPropTypes = {
@@ -26,6 +35,7 @@ export const buttonPropTypes = {
 // TODO v1 loading
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const {
+    honorableOverridenProps,
     startIcon,
     endIcon,
     children,
@@ -33,29 +43,61 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
     loadingIndicator,
     ...otherProps
   } = props
+  const theme = useTheme()
+  const buttonRef = useRef<HTMLButtonElement>()
+  const forkedRef = useForkedRef(ref, buttonRef)
+  const [height, setHeight] = useState<number | 'auto'>('auto')
 
-  const extendStartIcon = usePartProps('Button', 'StartIcon', props)
-  const extendEndIcon = usePartProps('Button', 'EndIcon', props)
+  useEffect(() => {
+    if (!buttonRef.current) return
+
+    setHeight(buttonRef.current.offsetHeight)
+  }, [])
 
   return (
     <ButtonBase
-      ref={ref}
+      ref={forkedRef}
       xflex="x4"
       {...otherProps}
+      position="relative"
+      disabled={props.disabled || loading}
     >
       {!!startIcon && (
         <Span
           xflex="x5"
-          extend={extendStartIcon}
+          {...resolvePartProps('Button', 'StartIcon', props, honorableOverridenProps, theme)}
         >
           {startIcon}
         </Span>
       )}
-      {children}
+      {loading && (
+        <Span
+          xflex="x5"
+          position="absolute"
+          left={0}
+          right={0}
+          top={0}
+          bottom={0}
+          {...resolvePartProps('Button', 'LoadingIndicator', props, honorableOverridenProps, theme)}
+        >
+          {(loadingIndicator || (
+            <Spinner
+              size={typeof height === 'number' ? height * 3 / 5 : 16}
+              {...resolvePartProps('Button', 'Spinner', props, honorableOverridenProps, theme)}
+            />
+          ))}
+        </Span>
+      )}
+      <Span
+        visibility={loading ? 'hidden' : 'visible'}
+        {...resolvePartProps('Button', 'Children', props, honorableOverridenProps, theme)}
+      >
+        {children}
+      </Span>
       {!!endIcon && (
         <Span
           xflex="x5"
-          extend={extendEndIcon}
+          {...resolvePartProps('Button', 'EndIcon', props, honorableOverridenProps, theme)}
         >
           {endIcon}
         </Span>

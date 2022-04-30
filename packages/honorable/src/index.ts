@@ -17,6 +17,7 @@ export * from './components/MenuItem'
 export * from './components/Modal'
 export * from './components/ProgressBar'
 export * from './components/Select'
+export * from './components/Spinner'
 export * from './components/Switch'
 // Hooks
 export { default as useTheme } from './hooks/useTheme'

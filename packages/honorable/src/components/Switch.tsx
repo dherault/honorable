@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
-import usePartProps from '../hooks/usePartProps'
+import useTheme from '../hooks/useTheme'
+import useOverridenProps from '../hooks/useOverridenProps'
+
+import resolvePartProps from '../utils/resolvePartProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from './tags'
@@ -28,6 +31,8 @@ export const switchPropTypes = {
 // TODO v1 decide weither to use actualChecked or uncontrolledChecked
 function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const {
+    honorableOverridenProps,
+    honorableSetOverridenProps,
     defaultChecked,
     checked,
     disabled,
@@ -36,10 +41,11 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
     uncheckedBackground = null,
     ...otherProps
   } = props
+  const theme = useTheme()
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
 
-  const extendHandle = usePartProps('Switch', 'Handle', props)
+  useOverridenProps(honorableSetOverridenProps, { checked: actualChecked })
 
   function handleKeyDown(event: KeyboardEvent) {
     if (event.code === 'Enter' || event.code === 'Space') {
@@ -101,7 +107,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
         top={2}
         left={actualChecked ? 'calc(100% - 22px)' : 2}
         transition="left 150ms ease"
-        extend={extendHandle}
+        {...resolvePartProps('Switch', 'Handle', props, honorableOverridenProps, theme)}
       />
     </Div>
   )

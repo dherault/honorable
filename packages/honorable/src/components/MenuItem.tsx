@@ -4,8 +4,11 @@ import PropTypes from 'prop-types'
 import withHonorable from '../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateType } from '../contexts/MenuContext'
-import usePartProps from '../hooks/usePartProps'
+
+import useTheme from '../hooks/useTheme'
 import useForkedRef from '../hooks/useForkedRef'
+
+import resolvePartProps from '../utils/resolvePartProps'
 
 import { Div, DivProps, Span } from './tags'
 import { Menu } from './Menu'
@@ -38,8 +41,6 @@ function MenuItemTriangle(props: any) {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>()
   const [displayed, setDisplayed] = useState(true)
 
-  const extendTriangle = usePartProps('MenuItem', 'Triangle', props)
-
   if (!displayed) return null
 
   return (
@@ -59,13 +60,13 @@ function MenuItemTriangle(props: any) {
       // onMouseMove={handleMouseMove}
       zIndex={100}
       {...otherProps}
-      extend={extendTriangle}
     />
   )
 }
 
 function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const {
+    honorableOverridenProps,
     value,
     children,
     active,
@@ -75,6 +76,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     disabled,
     ...otherProps
   } = props
+  const theme = useTheme()
   const menuItemRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, menuItemRef)
   const [menuState, setMenuState, parentMenuState, setParentMenuState] = useContext(MenuContext)
@@ -82,9 +84,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const [subMenuState, setSubMenuState] = useState<MenuStateType>({ active: false, isSubMenuVisible: false })
   const menuValue = useMemo<MenuContextType>(() => [menuState, setMenuState, parentMenuState, setParentMenuState], [menuState, setMenuState, parentMenuState, setParentMenuState])
   const [height, setHeight] = useState(0)
-
-  const extendInner = usePartProps('MenuItem', 'Inner', props)
-  const extendCaret = usePartProps('MenuItem', 'Caret', props)
 
   // Set height for the submenu's triangle
   useEffect(() => {
@@ -238,7 +237,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             menuItemRef.current.focus()
           }
         }}
-        extend={extendInner}
+        {...resolvePartProps('MenuItem', 'Children', props, honorableOverridenProps, theme)}
       >
         {Children.map(children, (child: ReactElement) => {
           if (child?.type === Menu) return null
@@ -252,7 +251,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
               ml={0.5}
               mr={-0.5}
               rotation={-90}
-              extend={extendCaret}
+              {...resolvePartProps('MenuItem', 'Caret', props, honorableOverridenProps, theme)}
             />
           </>
         )}

@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-spaces */
-import { ComponentType, Ref, forwardRef, useContext, useRef } from 'react'
+import { ComponentType, Ref, forwardRef, useCallback, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import isPropValid from '@emotion/is-prop-valid'
 import merge from 'lodash.merge'
@@ -23,7 +23,6 @@ import convertXflex from './utils/convertXflex'
 import resolveAll from './utils/resolveAll'
 import resolveAliases from './utils/resolveAliases'
 import resolveCustomProps from './utils/resolveCustomProps'
-import RegisterPropsContext from './contexts/RegisterPropsContext'
 
 const allStylesProperties = [
   ...stylesProperties,
@@ -48,17 +47,21 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
       // TODO v1 check the necessity of every member (especially isPropValid)
-      shouldForwardProp: prop =>  isPropValid(prop) || (typeof ComponentOrTag !== 'string' && prop === 'honorableId') || propTypeKeys.includes(prop as string),
+      shouldForwardProp: prop =>  (
+        isPropValid(prop)
+        || (typeof ComponentOrTag !== 'string' && (prop === 'honorableOverridenProps' || prop === 'honorableSetOverridenProps'))
+        || propTypeKeys.includes(prop as string)
+      ),
     }
   )(props => props.honorable)
 
   function Honorable(props: HonorableProps<P>, ref: Ref<any>) {
     // TODO v1 replace with uuid?
-    const honorableId = useRef(Math.random()).current
     const theme = useTheme()
-    const [registeredProps] = useContext(RegisterPropsContext)
+    const [overridenProps, setOverridenProps] = useState({})
 
-    const overridenProps = registeredProps[name]?.[honorableId] || {}
+    console.log(name, overridenProps)
+
     const { defaultProps = {}, customProps } = theme[name] || {}
     const {
       extend = {},
@@ -72,7 +75,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const mpProps: MpProps = {}
     const otherProps = {} as P
     const resolvedProps = resolveAliases(nextProps, theme)
-    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps) as StylesProps, theme)
+    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps), theme)
     const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridenProps }
     const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
@@ -92,7 +95,8 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       <HonorableStyle
         ref={ref}
         theme={theme}
-        honorableId={honorableId}
+        honorableOverridenProps={overridenProps}
+        honorableSetOverridenProps={setOverridenProps}
         honorable={(
           resolveAll(
             merge(

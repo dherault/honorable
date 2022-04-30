@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
-import usePartProps from '../hooks/usePartProps'
-import useRegisterProps from '../hooks/useRegisterProps'
+import useTheme from '../hooks/useTheme'
+import useOverridenProps from '../hooks/useOverridenProps'
+
+import resolvePartProps from '../utils/resolvePartProps'
 
 import { Div, DivProps } from './tags'
 import { Caret } from './Caret'
@@ -27,7 +29,8 @@ export const accordionPropTypes = {
 
 function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const {
-    honorableId,
+    honorableOverridenProps,
+    honorableSetOverridenProps,
     expanded,
     defaultExpanded,
     onExpand,
@@ -36,17 +39,13 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
     children,
     ...otherProps
   } = props
+  const theme = useTheme()
   const childrenRef = useRef<HTMLDivElement>()
   const [childrenHeight, setChildrenHeight] = useState<number | 'auto'>('auto')
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
 
-  useRegisterProps('Accordion', { expanded: actualExpanded }, honorableId)
-
-  const extendTitle = usePartProps('Accordion', 'Title', props)
-  const extendExpandIcon = usePartProps('Accordion', 'ExpandIcon', props)
-  const extendChildren = usePartProps('Accordion', 'Children', props)
-  const extendChildrenInner = usePartProps('Accordion', 'ChildrenInner', props)
+  useOverridenProps(honorableSetOverridenProps, { expanded: actualExpanded })
 
   const handleExpand = useCallback(() => {
     setUncontrolledExpanded(!actualExpanded)
@@ -65,25 +64,25 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       <Div
         xflex="x4"
         cursor="pointer"
-        extend={extendTitle}
+        {...resolvePartProps('Accordion', 'Title', props, honorableOverridenProps, theme)}
         onClick={handleExpand}
       >
         {title}
         <Div flexGrow={1} />
         <Div
           xflex="x5"
-          extend={extendExpandIcon}
+          {...resolvePartProps('Accordion', 'ExpandIcon', props, honorableOverridenProps, theme)}
         >
           {expandIcon || <Caret />}
         </Div>
       </Div>
       <Div
         height={actualExpanded ? childrenHeight : 0}
-        extend={extendChildren}
+        {...resolvePartProps('Accordion', 'Children', props, honorableOverridenProps, theme)}
       >
         <Div
           ref={childrenRef}
-          extend={extendChildrenInner}
+          {...resolvePartProps('Accordion', 'ChildrenInner', props, honorableOverridenProps, theme)}
         >
           {children}
         </Div>

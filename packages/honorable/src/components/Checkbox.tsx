@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
+import useOverridenProps from '../hooks/useOverridenProps'
+
 import enhanceEventTarget from '../utils/enhanceEventTarget'
-import useRegisterProps from '../hooks/useRegisterProps'
 
 import { Span, SpanProps } from './tags'
 
@@ -40,8 +41,10 @@ const defaultIcon = (
   </svg>
 )
 
+// TODO v1 FormControlLabel
+// TODO v1 uncontrolledChecked
 function CheckboxRef({
-  honorableId,
+  honorableSetOverridenProps,
   defaultChecked,
   checked,
   disabled = false,
@@ -54,7 +57,7 @@ ref: Ref<any>
   const [actualChecked, setActualChecked] = useState(checked || defaultChecked)
 
   // Override `checked` prop in customProps
-  useRegisterProps('Checkbox', { checked: actualChecked }, honorableId)
+  useOverridenProps(honorableSetOverridenProps, { checked: actualChecked })
 
   const style = {
     '&:hover': {

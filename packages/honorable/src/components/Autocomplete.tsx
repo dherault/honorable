@@ -4,13 +4,15 @@ import PropTypes from 'prop-types'
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
+
+import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
-// import usePreviousWithDefault from '../hooks/usePreviousWithDefault'
 import useForkedRef from '../hooks/useForkedRef'
-import usePartProps from '../hooks/usePartProps'
 import useOutsideClick from '../hooks/useOutsideClick'
-import useRegisterProps from '../hooks/useRegisterProps'
+import useOverridenProps from '../hooks/useOverridenProps'
+
 import pickProps from '../utils/pickProps'
+import resolvePartProps from '../utils/resolvePartProps'
 
 import { Caret } from './Caret'
 import { Menu } from './Menu'
@@ -79,7 +81,8 @@ function findInOptions(options: AutocompleteOptionType[], value: string): Autoco
 
 function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const {
-    honorableId,
+    honorableOverridenProps,
+    honorableSetOverridenProps,
     options = [],
     endIcon,
     onOpen,
@@ -89,6 +92,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     noOptionsNode = 'No options',
     autoHighlight,
   } = props
+  const theme = useTheme()
   const [inputProps, divProps]: [InputProps, DivProps] = pickProps(props, inputPropTypes)
   const autocompleteRef = useRef()
   const forkedRef = useForkedRef(autocompleteRef, ref)
@@ -102,16 +106,11 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
   console.log('filteredOptions', filteredOptions.length)
 
-  useRegisterProps('Autocomplete', { focused, search }, honorableId)
+  useOverridenProps(honorableSetOverridenProps, { focused, search })
 
   useOutsideClick(autocompleteRef, () => {
     setFocused(false)
   })
-
-  const extendInput = usePartProps('Autocomplete', 'Input', props)
-  const extendMenu = usePartProps('Autocomplete', 'Menu', props)
-  const extendMenuItem = usePartProps('Autocomplete', 'MenuItem', props)
-  const extendNoOption = usePartProps('Autocomplete', 'NoOption', props)
 
   useEffect(() => {
     if (typeof onOpen === 'function') onOpen(focused)
@@ -179,7 +178,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
         }}
         onKeyDown={handleInputKeyDown}
-        extend={extendInput}
+        {...resolvePartProps('Autocomplete', 'Input', props, honorableOverridenProps, theme)}
       />
       <Menu
         noFocus
@@ -191,13 +190,13 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         left={0}
         zIndex={100}
         display={focused ? 'block' : 'none'}
-        extend={extendMenu}
+        {...resolvePartProps('Autocomplete', 'Menu', props, honorableOverridenProps, theme)}
       >
         {filteredOptions.length > 0 && filteredOptions.map(option => (
           <MenuItem
             key={typeof option === 'object' ? option.value : option}
             value={typeof option === 'object' ? option.value : option}
-            extend={extendMenuItem}
+            {...resolvePartProps('Autocomplete', 'MenuItem', props, honorableOverridenProps, theme)}
           >
             {renderOption(option)}
           </MenuItem>
@@ -206,7 +205,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           <MenuItem
             disabled
             value={honorableNoValue}
-            extend={extendNoOption}
+            {...resolvePartProps('Autocomplete', 'NoOption', props, honorableOverridenProps, theme)}
           >
             {noOptionsNode}
           </MenuItem>

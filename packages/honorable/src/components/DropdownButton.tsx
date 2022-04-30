@@ -4,13 +4,16 @@ import PropTypes from 'prop-types'
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
+
+import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
-import usePartProps from '../hooks/usePartProps'
 import useEscapeKey from '../hooks/useEscapeKey'
 import useForkedRef from '../hooks/useForkedRef'
 import useOutsideClick from '../hooks/useOutsideClick'
-import useRegisterProps from '../hooks/useRegisterProps'
+import useOverridenProps from '../hooks/useOverridenProps'
+
 import pickProps from '../utils/pickProps'
+import resolvePartProps from '../utils/resolvePartProps'
 import enhanceEventTarget from '../utils/enhanceEventTarget'
 
 import { Button, ButtonProps, buttonPropTypes } from './Button'
@@ -39,7 +42,8 @@ export const dropdownButtonPropTypes = {
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const {
-    honorableId,
+    honorableOverridenProps,
+    honorableSetOverridenProps,
     open,
     defaultOpen,
     label,
@@ -48,7 +52,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     onOpen,
     children,
   } = props
-  console.log('props', props)
+  const theme = useTheme()
   const [buttonProps, divProps]: [ButtonProps, DivProps] = pickProps(props, buttonPropTypes)
   const dropdownButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
@@ -58,7 +62,6 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const previousEvent = usePrevious(event)
   const actualOpen = open ?? defaultOpen ?? uncontrolledOpen
 
-  console.log('buttonProps', buttonProps)
   const handleOpen = useCallback(() => {
     setUncontrolledOpen(true)
     setMenuState(x => ({ ...x, shouldFocus: true, isSubMenuVisible: true, activeItemIndex: -1 }))
@@ -66,19 +69,15 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   }, [onOpen])
 
   const handleClose = useCallback(() => {
-    console.log('handleClose')
     setUncontrolledOpen(false)
     setMenuState(x => ({ ...x, activeItemIndex: -1 }))
     if (typeof onOpen === 'function') onOpen(false)
   }, [onOpen])
 
-  useRegisterProps('DropdownButton', { open: actualOpen }, honorableId)
+  useOverridenProps(honorableSetOverridenProps, { open: actualOpen })
+
   useEscapeKey(handleClose)
   useOutsideClick(dropdownButtonRef, handleClose)
-
-  const extendButton = usePartProps('DropdownButton', 'Button', props)
-  const extendMenu = usePartProps('DropdownButton', 'Menu', props)
-  const extendEndIcon = usePartProps('DropdownButton', 'EndIcon', props)
 
   useEffect(() => {
     if (event && previousEvent !== event) {
@@ -107,7 +106,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
         endIcon={(
           <Div
             flex="x5"
-            extend={extendEndIcon}
+            {...resolvePartProps('DropdownButton', 'EndIcon', props, honorableOverridenProps, theme)}
           >
             <Caret rotation={actualOpen ? 180 : 0} />
           </Div>
@@ -120,7 +119,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
 
           if (typeof buttonProps.onClick === 'function')buttonProps.onClick(event)
         }}
-        extend={extendButton}
+        {...resolvePartProps('DropdownButton', 'Button', props, honorableOverridenProps, theme)}
       >
         {label}
       </Button>
@@ -134,7 +133,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
         left={0}
         zIndex={100}
         display={actualOpen ? 'block' : 'none'}
-        extend={extendMenu}
+        {...resolvePartProps('DropdownButton', 'Menu', props, honorableOverridenProps, theme)}
       >
         {children}
       </Menu>

@@ -1,16 +1,17 @@
 import '@emotion/react'
-import React, { PropsWithRef, Ref } from 'react'
+import React, { Dispatch, PropsWithRef, Ref, SetStateAction } from 'react'
 
 import stylesProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
 
 // TODO v1 use CSSProperties from react
 
-export type HonorableIdProps = {
-  honorableId?: number
+export type HonorableOverridenProps = {
+  honorableOverridenProps?: object
+  honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
 
-export type ElementProps<Tag> = HonorableIdProps & PropsWithRef<
+export type ElementProps<Tag> = HonorableOverridenProps & PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
@@ -58,11 +59,10 @@ export type ExtendProps = {
 
 export type HonorableProps<P> = P & StylesProps & MpProps & XflexProps & ExtendProps & AnyProps
 
-export type StyledHonorableProps = {
+export type StyledHonorableProps = HonorableOverridenProps & {
   ref: Ref<any>
   theme: HonorableTheme
   honorable: StylesProps
-  honorableId: number
 }
 
 export type Mode = 'light' | 'dark' | string

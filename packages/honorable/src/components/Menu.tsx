@@ -7,7 +7,7 @@ import withHonorable from '../withHonorable'
 import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../contexts/MenuContext'
 import useForkedRef from '../hooks/useForkedRef'
 import useOutsideClick from '../hooks/useOutsideClick'
-import useRegisterProps from '../hooks/useRegisterProps'
+import useOverridenProps from '../hooks/useOverridenProps'
 
 import { Div, DivProps } from './tags'
 import { MenuItem } from './MenuItem'
@@ -44,7 +44,7 @@ function enhanceWithDefault(menuState: MenuStateType) {
 }
 
 function MenuRef({
-  honorableId,
+  honorableSetOverridenProps,
   menuState: initialMenuState,
   setMenuState: setInitialMenuState,
   fade,
@@ -58,15 +58,13 @@ ref: Ref<any>
   const forkedRef = useForkedRef(ref, menuRef)
   const [parentMenuState, setParentMenuState] = useContext(MenuContext)
   const [menuState, setMenuState] = useState<MenuStateType>({})
-  // const previousMenuState = usePrevious(menuState) || menuState
-  // const previousInitialMenuState = usePrevious(initialMenuState) || initialMenuState
 
   const actualMenuState = useMemo(() => enhanceWithDefault(initialMenuState ?? menuState), [initialMenuState, menuState])
   const setActualMenuState = useMemo(() => setInitialMenuState ?? setMenuState, [setInitialMenuState, setMenuState])
   const menuValue = useMemo<MenuContextType>(() => [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState], [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState])
 
   // Give `active` and `activeItemIndex` and other props to customProps
-  useRegisterProps('Menu', actualMenuState, honorableId)
+  useOverridenProps(honorableSetOverridenProps, actualMenuState)
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {

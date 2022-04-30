@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
-import usePartProps from '../hooks/usePartProps'
-import useRegisterProps from '../hooks/useRegisterProps'
+import useTheme from '../hooks/useTheme'
+import useOverridenProps from '../hooks/useOverridenProps'
+
+import resolvePartProps from '../utils/resolvePartProps'
 
 import { Div, DivProps, InputBase } from './tags'
 
@@ -53,7 +55,8 @@ export const inputPropTypes = {
 
 function InputRef(props: InputProps, ref: Ref<any>) {
   const {
-    honorableId,
+    honorableOverridenProps,
+    honorableSetOverridenProps,
     type,
     value,
     defaultValue,
@@ -72,16 +75,12 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     maxRows,
     ...otherProps
   } = props
+  const theme = useTheme()
   const [active, setActive] = useState(false)
   const [uncontrolledValue, setUncontrolledValue] = useState<ValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
 
-  useRegisterProps('Input', { active, value: actualValue }, honorableId)
-
-  const extendInputBase = usePartProps('Input', 'InputBase', props)
-  const extendStartIcon = usePartProps('Input', 'StartIcon', props)
-  const extendEndIcon = usePartProps('Input', 'EndIcon', props)
-  const extendTextArea = usePartProps('Input', 'TextArea', props)
+  useOverridenProps(honorableSetOverridenProps, { active, value: actualValue })
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUncontrolledValue(event.target.value)
@@ -99,7 +98,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       {!!startIcon && (
         <Div
           xflex="x5"
-          extend={extendStartIcon}
+          {...resolvePartProps('Input', 'StartIcon', props, honorableOverridenProps, theme)}
         >
           {startIcon}
         </Div>
@@ -122,7 +121,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           }}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
-          extend={extendInputBase}
+          {...resolvePartProps('Input', 'InputBase', props, honorableOverridenProps, theme)}
           flexGrow={1}
         />
       )}
@@ -147,14 +146,14 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           maxRows={maxRows}
           style={{
             flexGrow: 1,
-            ...extendTextArea,
+            ...resolvePartProps('Input', 'TextArea', props, honorableOverridenProps, theme),
           }}
         />
       )}
       {!!endIcon && (
         <Div
           xflex="x5"
-          extend={extendEndIcon}
+          {...resolvePartProps('Input', 'EndIcon', props, honorableOverridenProps, theme)}
         >
           {endIcon}
         </Div>
