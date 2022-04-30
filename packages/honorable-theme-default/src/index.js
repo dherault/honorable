@@ -1,5 +1,10 @@
+import { keyframes } from '@emotion/react'
+
 import createElevation from './createElevation'
 
+const spinner = keyframes`
+  to {transform: rotate(360deg);}
+`
 export default {
   name: 'Default',
   mode: 'light',
@@ -184,6 +189,11 @@ export default {
         defaultProps: {
           marginLeft: '0.5rem',
           marginRight: 'calc(-0.5rem + 2px)',
+        },
+      },
+      Spinner: {
+        defaultProps: {
+          color: 'white',
         },
       },
     },
@@ -426,7 +436,7 @@ export default {
       // outline: 'none',
     },
     partProps: {
-      Inner: {
+      Children: {
         defaultProps: {
           padding: '0.5rem 1rem',
         },
@@ -470,7 +480,7 @@ export default {
   },
   ProgressBar: {
     partProps: {
-      Inner: {
+      Bar: {
         defaultProps: {
           borderRadius: 4,
           backgroundColor: 'primary',
@@ -496,6 +506,33 @@ export default {
         },
       },
     },
+  },
+  Spinner: {
+    customProps: new Map([
+      [
+        () => true,
+        ({ size = 24, color = 'primary' }) => ({
+          width: size,
+          height: size,
+          position: 'relative',
+          display: 'inline-block',
+          '&:before': {
+            content: "''",
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: (size - 4),
+            height: (size - 4),
+            marginTop: -(size - 2) / 2,
+            marginLeft: -(size - 2) / 2,
+            borderRadius: '50%',
+            borderTop: `2px solid ${color}`,
+            borderRight: '2px solid transparent',
+            animation: `${spinner} 666ms linear infinite`,
+          },
+        }),
+      ],
+    ]),
   },
   Switch: {
     defaultProps: {

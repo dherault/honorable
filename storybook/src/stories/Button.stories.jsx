@@ -113,3 +113,27 @@ Loading.args = {
   loading: true,
   disabled: false,
 }
+
+export const Loading100 = Template.bind({})
+Loading100.args = {
+  children: 'Button',
+  loading: true,
+  disabled: false,
+  width: '100%',
+}
+
+export const LoadingIndicator = Template.bind({})
+LoadingIndicator.args = {
+  children: 'Button',
+  loading: true,
+  disabled: false,
+  loadingIndicator: 'Loading...',
+}
+
+export const LoadingWonky = Template.bind({})
+LoadingWonky.args = {
+  children: 'x',
+  loading: true,
+  disabled: false,
+  loadingIndicator: 'Loading...',
+}
