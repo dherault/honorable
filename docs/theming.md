@@ -13,7 +13,7 @@ const theme = {
   // Describe your own conventions
   aliases: {
     w: 'width',
-    bg: 'backgroundColor',
+    bg: 'background',
   },
   // Set the breakpoints
   breakpoints: {
