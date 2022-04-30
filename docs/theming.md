@@ -71,7 +71,6 @@ const theme = {
       ],
     ]),
   },
-  // These props are applied to the <Modal /> component
   Modal: {
     // partProps allow you to customize any inner part of a component
     // See the component's documentation for naming conventions
