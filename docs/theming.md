@@ -119,7 +119,7 @@ See the following documentation for more:
 
 ### `mode`
 
-Can be any string, typically `light` or `dark`. Corresponds to any global variation you want to express on your theme. Available in customProps under the `mode` key.
+Can be any string, typically `light` or `dark`. Corresponds to any global variation you want to express on your theme.
 
 ### `breakpoints`
 
