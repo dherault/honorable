@@ -26,9 +26,8 @@ In your main `App` file:
 import { ThemeProvider, CssBaseline, mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
-// Define a theme, see the theming section
 const theme = mergeTheme(defaultTheme, {
-  mode: 'light',
+  // Define a theme, see the theming section
 })
 
 function App() {
@@ -50,7 +49,7 @@ function App() {
 Any valid HTML component can be imported, capitalised:
 
 ```jsx
-import { Div, P, A, Button, Input } from 'honorable'
+import { A, Button, Div, Input, P } from 'honorable'
 ```
 
 They can then be added CSS properties, directly to them
@@ -65,16 +64,16 @@ They can then be added CSS properties, directly to them
 
 ## Customize your theme
 
-Give a look and feel to your application by editing your theme.
+Give a look and feel to your application by editing your theme. This is also where you declare your conventions.
 
 ```jsx
-const theme = {
+const theme = mergeTheme(defaultTheme, {
   mode: 'dark',
   colors: {
     primary: '#0070f3', 
   },
   // ...
-}
+})
 ```
 
 For more info, see:
@@ -85,11 +84,10 @@ For more info, see:
 
 ## Learn about the `xflex` and `mp` props
 
-They compose the opinionated part of honorable, and are super useful to build application even faster.
+They are opinionated aliases that ship by default with Honorable.
 
-`xflex` allow for super quick flexbox layouts.
-
-`mp` props set margins and paddings.
+* `xflex` allow for super quick flexbox layouts.
+* `mp` props set margins and paddings.
 
 ```jsx
 <Div 

@@ -8,7 +8,7 @@ Here is what a theme should look like:
 
 ```javascript
 const theme = {
-  // Set the mode of your theme, either light or dark
+  // Set the mode of your theme, either light or dark or any other string
   mode: 'light',
   // Set the breakpoints
   breakpoints: {
@@ -16,36 +16,32 @@ const theme = {
     tablet: 900,
     desktop: 1200,
   },
-  // Give some colors to your theme, according to the mode
+  // Give some colors to your theme
   colors: {
-    primary: '#2196f3',
-    background: {
+    primary: '#2196f3', // Directly
+    background: {       // According to the mode
       light: 'white',
       dark: '#333',
     },
+    focus: 'primary'    // Reference other colors anywhere
     text: {
-      light: '#111',
-      dark: 'white',
-    },
-    border: {
-      light: '#ddd',
-      dark: '#222',
+      light: 'lighten(black, 10)', // Use some color helpers along the way
+      dark: 'darken(white, 10)', 
     },
   },
   // Global props are applied to the * selector
   global: {
     defaultProps: {
-      fontFamily: 'Roboto',
       boxSizing: 'border-box',
     },
   },
-  // Props that are passed to the HTML tag by CssBaseline
+  // html props are passed to the HTML tag by CssBaseline
   html: {
     fontFamily: 'Roboto',
     color: 'text',
   },
   // These props are applied to the <A /> component
-  a: {
+  A: {
     // defaultProps are applied to any instance of the component
     defaultProps: {
       color: 'primary',
@@ -56,41 +52,28 @@ const theme = {
       },
     },
   },
-  input: {
-    defaultProps: {
-      padding: '0.5rem',
-      border: '1px solid border',
-      borderRadius: 4,
-      '&:focus': {
-        borderColor: 'primary',
-      },
-    },
+  Input: {
     // customProps are applied whenever the key function on props returns truthy
     customProps: new Map([
       [
+        // If this function returns truthy
         ({ variant }) => variant === 'underlined',
+        // Then this applies to <Input variant="underlined" />
         {
-          // Applies to <Input variant="underlined" />
           borderWidth: 0,
-          borderRadius: 0,
           borderBottom: '1px solid border',
-          backgroundColor: 'transparent',
-          color: 'text',
         },
       ],
     ]),
   },
   // These props are applied to the <Modal /> component
-  modal: {
-    defaultProps: {
-      borderRadius: 4,
-    },
-    // partProps allow you to customize **any** part of a component
+  Modal: {
+    // partProps allow you to customize any inner part of a component
     // See the component's documentation for naming conventions
     partProps: {
-      backdrop: {
+      Backdrop: {
         defaultProps: {
-          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          backgroundColor: 'transparency(black, 80)',
         },
       },
     },
@@ -102,7 +85,7 @@ const theme = {
 
 ## Using a preset
 
-You can either start a theme from scratch, or start with the [theme editor](https://design.honorable.design), or use a preset.
+You can either start a theme from scratch, or start with the [theme editor](https://design.honorable.design), or use a preferably use a  preset.
 
 Available presets are:
 
@@ -131,11 +114,17 @@ See the following documentation for more:
 
 ### `mode`
 
-Can be any string, typically `light` or `dark`. Corresponds to any global variation you want to express on your theme.
+Can be any string, typically `light` or `dark`. Corresponds to any global variation you want to express on your theme. Available in customProps under the `mode` key.
 
 ### `breakpoints`
 
-...
+For the v1 three breakpoints are available:
+
+* `mobile`&#x20;
+* `tablet`
+* `desktop`
+
+You can set the values of these keys to any number.
 
 ### `colors`
 
@@ -173,7 +162,71 @@ See also:
 
 ### `global`
 
-### `[component]`
+These props follow the `defaultProps` and `customProps` pattern (but not `partProps`). \
+They are applied to the `*` selector by `CssBaseline`.  See `[Component]` for more info.
+
+### `html`
+
+These props are applied to the `<html>` tag by `CssBaseline`.  See `[Component]` for more info.
+
+### `[Component]`
+
+Components theme keys are always capitalized and are applied to the corresponding component. For example props under `Accordion` are passed to your `<Accordion />` components.
+
+They comprise three keys:
+
+* `defaultProps`: accepts an object of styles, conventions and props that are applied to every instance of the component.
+* `customProps`: accepts a \
+  `Map<(props: object, theme: HonorableTheme) => boolean, (styles & conventions & props) | ((props: object, theme: HonorableTheme) => styles & conventions & props)>`. The values of the Map are applied to your component instance if the corresponding key function on props returns truthy.
+* `partProps`: accepts an object of inner parts names a keys (see the component's documentation for a list of the available part names) and a `defaultProps` and `customProps` values.
+
+Here's a complete example:
+
+```javascript
+Accordion: {
+    defaultProps: {
+      backgroundColor: 'background', // Style props
+      radius: 0,                     // Conventions
+      expandIcon: ...                // Props
+    },
+    customProps: new Map([
+      [
+        ({ disabled }) => disabled,
+        {
+          // Style, conventions, or props
+          cursor: 'not-allowed', 
+        },
+      ],
+      [
+        ({ variant }) => variant === 'contrast',
+        (props, theme) => ({
+          // Style, conventions, or props
+          backgroundColor: theme.mode === 'light' 
+            ? 'background-light' 
+            : 'background-dark',
+        }),
+      ],
+    ]),
+    partProps: {
+      // Style the title of the Accordion
+      Title: {
+        defaultProps: {
+          // Style, conventions, or props
+          color: 'primary',
+        },
+        customProps: new Map([
+          [
+            ({ disabled }) => disabled,
+            {
+              // Style, conventions, or props
+              color: 'text-light',
+            },
+          ],
+        ]),
+      },
+    },
+  },
+```
 
 ## Theme serialization
 
