@@ -7,6 +7,40 @@ A React UI library for 2022 and beyond.
 - [Storybook](https://storybook.honorable.design)
 - [Theme Designer](https://design.honorable.design)
 
+## Motivation
+
+Built with speed and developer experience in mind, \
+Honorable offers a **non-opinionated API** yet extensible with **your own conventions**, for creating React apps with ease. It comes with x+ components that are entirely and easily **themable**.
+
+```jsx
+// Import any HTML tag, capitalized
+import { Div } from 'honorable'
+
+function App() {
+  // Apply styles directly to the component
+  // Nothing to remember, appart from good old CSS
+  return (
+    <Div
+      width="2rem"
+      height="2rem"
+      backgroundColor="success"
+    />
+  )
+}
+```
+
+The point is to create a front-end library that fits to your coding style by extending it your way:
+
+```jsx
+// You can declare your own conventions to create your own style:
+return (
+  <Div
+    size="2rem"
+    bg="success"
+  />
+)
+```
+
 ## Installation
 
 `npm i --save honorable honorable-theme-default @emotion/react @emotion/styled`

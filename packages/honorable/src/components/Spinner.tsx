@@ -17,8 +17,6 @@ export const spinnerPropTypes = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SpinnerRef({ size, color, ...props }: SpinnerProps, ref: Ref<any>) {
-  console.log('color', color)
-
   return (
     <Span
       ref={ref}

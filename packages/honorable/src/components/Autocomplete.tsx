@@ -101,10 +101,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const [menuState, setMenuState] = useState<MenuStateType>({ defaultActiveItemIndex: autoHighlight ? 0 : -1 })
   const { value: currentOptionValue, event } = menuState
   const previousEvent = usePrevious(event)
-  // const previousSearch = usePreviousWithDefault(search)
   const filteredOptions = filterOptions(options, search)
-
-  console.log('filteredOptions', filteredOptions.length)
 
   useOverridenProps(honorableSetOverridenProps, { focused, search })
 

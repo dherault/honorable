@@ -121,8 +121,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   // Sync with child menu to propagate new value
   useEffect(() => {
     if (menuState.shouldSyncWithChild) {
-      console.log('sync child')
-
       setSubMenuState(x => ({
         ...x,
         value: menuState.value,
@@ -131,7 +129,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
         shouldSyncWithChild: true,
       }))
       setTimeout(() => {
-        console.log('sync child off')
         setMenuState(x => ({ ...x, shouldSyncWithChild: false }))
       }, 1)
     }

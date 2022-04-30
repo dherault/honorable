@@ -73,8 +73,6 @@ function Template3({ items, initialValue, ...args }) {
   const [value, setValue] = useState(initialValue)
   const allValues = findAllValues(items)
 
-  console.log('value', value, allValues.length)
-
   return (
     <Div xflex="x1">
       <Select
@@ -89,8 +87,6 @@ function Template3({ items, initialValue, ...args }) {
         onClick={() => {
           setValue(x => {
             const index = allValues.indexOf(x)
-
-            console.log('index', index)
 
             return allValues[index === -1 ? 0 : (index + 1) % allValues.length]
           })

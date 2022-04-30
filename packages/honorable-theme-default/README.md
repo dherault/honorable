@@ -9,28 +9,18 @@ A React UI library for 2022 and beyond.
 
 ## Installation
 
-`npm i --save honorable honorable-theme-default @emotion/react @emotion/styled`
+`npm i --save honorable-theme-default`
 
 ## Usage
 
 ```jsx
-import { Button, CssBaseline, ThemeProvider, mergeTheme } from 'honorable'
+import { mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
 const theme = mergeTheme(defaultTheme, {
   // your theme goes here
 })
 
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Button>
-        Click me!
-      </Button>
-    </ThemeProvider>
-  )
-}
 ```
 
 ## Contributing
