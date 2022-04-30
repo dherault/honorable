@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-spaces */
-import { ComponentType, Ref, forwardRef, useCallback, useMemo, useState } from 'react'
+import { ComponentType, Ref, forwardRef, memo, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import isPropValid from '@emotion/is-prop-valid'
 import merge from 'lodash.merge'
@@ -56,40 +56,60 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   )(props => props.honorable)
 
   function Honorable(props: HonorableProps<P>, ref: Ref<any>) {
-    // TODO v1 replace with uuid?
     const theme = useTheme()
     const [overridenProps, setOverridenProps] = useState({})
 
-    console.log(name, overridenProps)
+    const [honorable, otherProps] = useMemo(() => {
+      const { defaultProps = {}, customProps } = theme[name] || {}
+      const {
+        extend = {},
+        xflex,
+        'xflex-mobile': xflexMobile,
+        'xflex-tablet': xflexTablet,
+        'xflex-desktop': xflexDesktop,
+        ...nextProps
+      } = props
+      const stylesProps: StylesProps = {}
+      const mpProps: MpProps = {}
+      const otherProps = {} as P
+      const resolvedProps = resolveAliases(nextProps, theme)
+      const resolvedDefaultProps = resolveAliases(filterObject(defaultProps), theme)
+      const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridenProps }
+      const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
 
-    const { defaultProps = {}, customProps } = theme[name] || {}
-    const {
-      extend = {},
-      xflex,
-      'xflex-mobile': xflexMobile,
-      'xflex-tablet': xflexTablet,
-      'xflex-desktop': xflexDesktop,
-      ...nextProps
-    } = props
-    const stylesProps: StylesProps = {}
-    const mpProps: MpProps = {}
-    const otherProps = {} as P
-    const resolvedProps = resolveAliases(nextProps, theme)
-    const resolvedDefaultProps = resolveAliases(filterObject(defaultProps), theme)
-    const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridenProps }
-    const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
+      Object.entries(resolvedProps).forEach(([key, value]) => {
+        if (allMpProperties.includes(key)) {
+          mpProps[key] = value
+        }
+        else if (allStylesProperties.includes(key) || isSelector(key)) {
+          stylesProps[key] = value
+        }
+        else {
+          otherProps[key] = value
+        }
+      })
 
-    Object.entries(resolvedProps).forEach(([key, value]) => {
-      if (allMpProperties.includes(key)) {
-        mpProps[key] = value
-      }
-      else if (allStylesProperties.includes(key) || isSelector(key)) {
-        stylesProps[key] = value
-      }
-      else {
-        otherProps[key] = value
-      }
-    })
+      return [
+        resolveAll(
+          merge(
+            {},
+            resolvedDefaultProps,                                                    // Component defaultProps
+            resolveCustomProps(                                                      // Global customProps
+              theme.global?.customProps,
+              { ...resolvedWorkingProps, ...resolvedCustomProps },
+              theme
+            ),
+            resolvedCustomProps,                                                     // Component customProps
+            convertMp(mpProps, theme),                                               // "mp" prop
+            convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
+            stylesProps,                                                             // Actual style from props
+            filterObject(extend),                                                    // "extend" prop
+          ),
+          theme
+        ),
+        otherProps,
+      ]
+    }, [props, overridenProps, theme])
 
     return (
       <HonorableStyle
@@ -97,25 +117,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         theme={theme}
         honorableOverridenProps={overridenProps}
         honorableSetOverridenProps={setOverridenProps}
-        honorable={(
-          resolveAll(
-            merge(
-              {},
-              resolvedDefaultProps,                                                    // Component defaultProps
-              resolveCustomProps(                                                      // Global customProps
-                theme.global?.customProps,
-                { ...resolvedWorkingProps, ...resolvedCustomProps },
-                theme
-              ),
-              resolvedCustomProps,                                                     // Component customProps
-              convertMp(mpProps, theme),                                               // "mp" prop
-              convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
-              stylesProps,                                                              // Actual style from props
-              filterObject(extend),                                                    // "extend" prop
-            ),
-            theme
-          )
-        )}
+        honorable={honorable}
         {...otherProps}
       />
     )
@@ -126,7 +128,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   ForwardedHonorable.displayName = `Honorable(${name})`
   ForwardedHonorable.propTypes = componentPropsTypes
 
-  return ForwardedHonorable
+  return memo(ForwardedHonorable)
 }
 
 export default withHonorable
