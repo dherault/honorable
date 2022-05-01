@@ -21,8 +21,7 @@ import isSelector from './utils/isSelector'
 import convertMp from './utils/convertMp'
 import convertXflex from './utils/convertXflex'
 import resolveAll from './utils/resolveAll'
-import resolveAliases from './utils/resolveAliases'
-import resolveCustomProps from './utils/resolveCustomProps'
+import resolveDefaultProps from './utils/resolveDefaultProps'
 
 const allStylesProperties = [
   ...stylesProperties,
@@ -38,18 +37,20 @@ const allMpProperties = [
   ...mpProperties.map(x => `${x}-desktop`),
 ]
 
+// TODO v1, make sure the honorable prop accepts anything and that its passed to the styled component
 // React HOC to support style props
 function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) {
-  const componentPropsTypes = typeof ComponentOrTag === 'string' ? {} : ComponentOrTag.propTypes || {}
+  const isTag = typeof ComponentOrTag === 'string'
+  const componentPropsTypes = isTag ? {} : ComponentOrTag.propTypes || {}
   const propTypeKeys = Object.keys(componentPropsTypes)
 
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
       // TODO v1 check the necessity of every member (especially isPropValid)
-      shouldForwardProp: prop =>  (
+      shouldForwardProp: prop => (
         isPropValid(prop)
-        || (typeof ComponentOrTag !== 'string' && (prop === 'honorableOverridenProps' || prop === 'honorableSetOverridenProps'))
+        || (!isTag && (prop === 'honorableOverridenProps' || prop === 'honorableSetOverridenProps'))
         || propTypeKeys.includes(prop as string)
       ),
     }
@@ -60,24 +61,21 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const [overridenProps, setOverridenProps] = useState({})
 
     const [honorable, otherProps] = useMemo(() => {
-      const { defaultProps = {}, customProps } = theme[name] || {}
       const {
-        extend = {},
+        extend,
         xflex,
         'xflex-mobile': xflexMobile,
         'xflex-tablet': xflexTablet,
         'xflex-desktop': xflexDesktop,
         ...nextProps
       } = props
+      const defaultProps = theme[name]?.defaultProps || {}
       const stylesProps: StylesProps = {}
       const mpProps: MpProps = {}
       const otherProps = {} as P
-      const resolvedProps = resolveAliases(nextProps, theme)
-      const resolvedDefaultProps = resolveAliases(filterObject(defaultProps), theme)
-      const resolvedWorkingProps = { ...resolvedDefaultProps, ...resolvedProps, ...overridenProps }
-      const resolvedCustomProps = resolveAliases(resolveCustomProps(customProps, resolvedWorkingProps, theme), theme)
+      const resolvedDefaultProps = resolveDefaultProps(defaultProps, { ...nextProps, ...overridenProps }, theme)
 
-      Object.entries(resolvedProps).forEach(([key, value]) => {
+      Object.entries(nextProps).forEach(([key, value]) => {
         if (allMpProperties.includes(key)) {
           mpProps[key] = value
         }
@@ -94,12 +92,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
           merge(
             {},
             resolvedDefaultProps,                                                    // Component defaultProps
-            resolveCustomProps(                                                      // Global customProps
-              theme.global?.customProps,
-              { ...resolvedWorkingProps, ...resolvedCustomProps },
-              theme
-            ),
-            resolvedCustomProps,                                                     // Component customProps
             convertMp(mpProps, theme),                                               // "mp" prop
             convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
             stylesProps,                                                             // Actual style from props

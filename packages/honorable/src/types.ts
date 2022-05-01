@@ -20,18 +20,19 @@ export type ElementProps<Tag> = HonorableOverridenProps & PropsWithRef<
 export type AnyProps = {
   [key: string]: any
 }
+
 export type ThemeProps = {
   theme: HonorableTheme
+}
+
+export type CssProps = {
+  css?: any
 }
 
 export type StylesProperties = typeof stylesProperties[number]
   | `${typeof stylesProperties[number]}-mobile`
   | `${typeof stylesProperties[number]}-tablet`
   | `${typeof stylesProperties[number]}-desktop`
-
-export type CssProps = {
-  css?: any
-}
 
 export type StylesProps = CssProps & {
   [stylesKey in StylesProperties]?: any
@@ -72,18 +73,13 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
-export type CustomPropsKeyFunction = (props: object, theme: HonorableTheme) => boolean
-export type CustomPropsValueFunction = (props: object, theme: HonorableTheme) => StylesProps
-export type CustomProps = Map<CustomPropsKeyFunction, StylesProps | CustomPropsValueFunction>
+export type DefaultPropsFunction = (props: object, theme: HonorableTheme) => StylesProps
+export type DefaultProps = StylesProps | DefaultPropsFunction | Array<StylesProps | DefaultPropsFunction>
 
 export type ComponentProps = {
-  defaultProps?: StylesProps
-  customProps?: CustomProps
+  defaultProps?: DefaultProps
   partProps?: {
-    [key: string]: {
-      defaultProps?: StylesProps
-      customProps?: CustomProps
-    }
+    [key: string]: DefaultProps
   }
 }
 
@@ -101,8 +97,8 @@ export type HonorableTheme = {
   aliases?: {
     [key: string]: string
   }
-  html?: StylesProps
-  global?: ComponentProps
+  html?: DefaultProps
+  global?: DefaultProps
   utils?: {
     resolveColor: (color: string | StylesProps) => string | StylesProps
   }
@@ -236,6 +232,7 @@ export type HonorableTheme = {
   Modal?: ComponentProps
   ProgressBar?: ComponentProps
   Select?: ComponentProps
+  Spinner?: ComponentProps
   Switch?: ComponentProps
 }
 

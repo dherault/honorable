@@ -46,20 +46,12 @@ export default {
     mozOsxFontSmoothing: 'grayscale',
     textRendering: 'optimizeLegibility',
   },
-  global: {
-    defaultProps: {
+  global: [
+    {
       boxSizing: 'border-box',
     },
-    customProps: new Map([
-      ...createElevation().map((styles, i) => [
-        assignToString(
-          (z => ({ elevation }) => elevation === z)(i),
-          `({ elevation }) => elevation === ${i}`
-        ),
-        styles,
-      ]),
-    ]),
-  },
+    ...createElevation().map((styles, i) => ({ elevation }) => elevation === i && styles), // TODO Might need a closure
+  ],
   A: {
     defaultProps: {
       display: 'inline-block',
@@ -90,41 +82,29 @@ export default {
     },
     partProps: {
       Title: {
-        defaultProps: {
-          padding: '1rem',
-        },
+        padding: '1rem',
       },
       Children: {
-        defaultProps: {
-          transition: 'height 200ms ease',
-        },
+        transition: 'height 200ms ease',
       },
       ChildrenInner: {
-        defaultProps: {
-          padding: '0rem 1rem 1rem 1rem',
-        },
+        padding: '0rem 1rem 1rem 1rem',
       },
-      ExpandIcon: {
-        defaultProps: {
+      ExpandIcon: [
+        {
           transition: 'transform 200ms ease',
         },
-        customProps: new Map([
-          [
-            ({ expanded }) => expanded,
-            {
-              transform: 'rotate(180deg)',
-            },
-          ],
-        ]),
-      },
+        ({ expanded }) => expanded && {
+          transform: 'rotate(180deg)',
+        },
+      ],
     },
   },
   Autocomplete: {
     partProps: {
       NoOption: {
-        defaultProps: {
-          userSelect: 'none',
-        },
+        userSelect: 'none',
+        color: 'text-light',
       },
     },
   },
@@ -156,45 +136,39 @@ export default {
         },
       },
     },
-    customProps: new Map([
-      [
-        assignToString(
-          ({ size }) => size === 'small',
-          "({ size }) => size === 'small'"
-        ),
-        {
-          fontSize: '0.85rem',
-          padding: '0.35rem 0.75rem 0.25rem 0.75rem',
-        },
-      ],
-      [
-        assignToString(
-          ({ size }) => size === 'large',
-          "({ size }) => size === 'large'"
-        ),
-        {
-          fontSize: '1.35rem',
-          padding: '0.85rem 1.25rem',
-        },
-      ],
-    ]),
+    // customProps: new Map([
+    //   [
+    //     assignToString(
+    //       ({ size }) => size === 'small',
+    //       "({ size }) => size === 'small'"
+    //     ),
+    //     {
+    //       fontSize: '0.85rem',
+    //       padding: '0.35rem 0.75rem 0.25rem 0.75rem',
+    //     },
+    //   ],
+    //   [
+    //     assignToString(
+    //       ({ size }) => size === 'large',
+    //       "({ size }) => size === 'large'"
+    //     ),
+    //     {
+    //       fontSize: '1.35rem',
+    //       padding: '0.85rem 1.25rem',
+    //     },
+    //   ],
+    // ]),
     partProps: {
       StartIcon: {
-        defaultProps: {
-          marginLeft: 'calc(-0.5rem + 2px)',
-          marginRight: '0.5rem',
-        },
+        marginLeft: 'calc(-0.5rem + 2px)',
+        marginRight: '0.5rem',
       },
       EndIcon: {
-        defaultProps: {
-          marginLeft: '0.5rem',
-          marginRight: 'calc(-0.5rem + 2px)',
-        },
+        marginLeft: '0.5rem',
+        marginRight: 'calc(-0.5rem + 2px)',
       },
       Spinner: {
-        defaultProps: {
-          color: 'white',
-        },
+        color: 'white',
       },
     },
   },
@@ -222,39 +196,32 @@ export default {
     },
   },
   Checkbox: {
-    defaultProps: {
-      width: 24,
-      height: 24,
-      color: 'white',
-      backgroundColor: 'transparent',
-      border: '1px solid border',
-      borderRadius: 2,
-      cursor: 'pointer',
-      userSelect: 'none',
-    },
-    customProps: new Map([
-      [
-        ({ disabled }) => disabled,
-        {
-          cursor: 'not-allowed',
-          backgroundColor: 'border',
-        },
-      ],
-      [
-        ({ checked }) => checked,
-        ({ disabled }) => ({
-          backgroundColor: 'primary',
-          borderColor: disabled ? 'border' : 'primary',
-        }),
-      ],
-    ]),
+    defaultProps: [
+      {
+        width: 24,
+        height: 24,
+        color: 'white',
+        backgroundColor: 'transparent',
+        border: '1px solid border',
+        borderRadius: 2,
+        cursor: 'pointer',
+        userSelect: 'none',
+      },
+      ({ checked }) => checked && {
+        backgroundColor: 'primary',
+        borderColor: 'primary',
+      },
+      ({ disabled }) => disabled && {
+        cursor: 'not-allowed',
+        backgroundColor: 'border',
+        borderColor: 'border',
+      },
+    ],
   },
   DropdownButton: {
     partProps: {
       menu: {
-        defaultProps: {
-          color: 'text',
-        },
+        color: 'text',
       },
     },
   },
@@ -311,61 +278,44 @@ export default {
     },
   },
   Input: {
-    defaultProps: {
-      border: '1px solid border',
-      borderRadius: 4,
-      overflow: 'hidden',
-      '& > textarea': {
-        padding: '0.5rem 0',
-        resize: 'none',
-        outline: 'none',
-        border: 'none',
-      },
-    },
-    customProps: new Map([
-      [
-        ({ active }) => active,
-        {
-          border: '1px solid primary',
+    defaultProps: [
+      {
+        border: '1px solid border',
+        borderRadius: 4,
+        overflow: 'hidden',
+        '& > textarea': {
+          padding: '0.5rem 0',
+          resize: 'none',
+          outline: 'none',
+          border: 'none',
         },
-      ],
-      [
-        ({ disabled }) => disabled,
-        {
+      },
+      ({ active }) => active && {
+        border: '1px solid primary',
+      },
+      ({ disabled }) => disabled && {
+        backgroundColor: 'background-light',
+        cursor: 'not-allowed',
+        '& > textarea': {
           backgroundColor: 'background-light',
           cursor: 'not-allowed',
-          '& > textarea': {
-            backgroundColor: 'background-light',
-            cursor: 'not-allowed',
-          },
         },
-      ],
-    ]),
+      },
+    ],
     partProps: {
-      InputBase: {
-        customProps: new Map([
-          [
-            ({ disabled }) => disabled,
-            {
-              cursor: 'not-allowed',
-              backgroundColor: 'background-light',
-            },
-          ],
-        ]),
+      InputBase: ({ disabled }) => disabled && {
+        cursor: 'not-allowed',
+        backgroundColor: 'background-light',
       },
       StartIcon: {
-        defaultProps: {
-          marginTop: '0.5rem',
-          marginRight: '0.5rem',
-          color: 'text',
-        },
+        marginTop: '0.5rem',
+        marginRight: '0.5rem',
+        color: 'text',
       },
       EndIcon: {
-        defaultProps: {
-          marginTop: '0.5rem',
-          marginLeft: '0.5rem',
-          color: 'text',
-        },
+        marginTop: '0.5rem',
+        marginLeft: '0.5rem',
+        color: 'text',
       },
     },
   },
@@ -415,47 +365,36 @@ export default {
     },
   },
   Menu: {
-    defaultProps: {
-      padding: '0.5rem 0',
-      elevation: 1,
-      backgroundColor: 'background',
-      borderRadius: 4,
-      // outline: 'none',
-    },
-    customProps: new Map([
-      [
-        ({ isSubMenu }) => isSubMenu,
-        {
-          marginTop: '-0.5rem',
-        },
-      ],
-    ]),
+    defaultProps: [
+      {
+        padding: '0.5rem 0',
+        elevation: 1,
+        backgroundColor: 'background',
+        borderRadius: 4,
+        outline: 'none',
+      },
+      ({ isSubMenu }) => isSubMenu && {
+        marginTop: '-0.5rem',
+      },
+    ],
   },
   MenuItem: {
     defaultProps: {
-      // outline: 'none',
+      outline: 'none',
     },
     partProps: {
-      Children: {
-        defaultProps: {
+      Children: [
+        {
           padding: '0.5rem 1rem',
         },
-        customProps: new Map([
-          [
-            ({ active }) => active,
-            {
-              backgroundColor: 'background-light',
-            },
-          ],
-          [
-            ({ disabled }) => disabled,
-            {
-              backgroundColor: 'none',
-              text: 'text-light',
-            },
-          ],
-        ]),
-      },
+        ({ active }) => active && {
+          backgroundColor: 'background-light',
+        },
+        ({ disabled }) => disabled && {
+          backgroundColor: 'none',
+          text: 'text-light',
+        },
+      ],
     },
   },
   Modal: {
@@ -481,11 +420,9 @@ export default {
   ProgressBar: {
     partProps: {
       Bar: {
-        defaultProps: {
-          borderRadius: 4,
-          backgroundColor: 'primary',
-          transition: 'width 150ms ease',
-        },
+        borderRadius: 4,
+        backgroundColor: 'primary',
+        transition: 'width 150ms ease',
       },
     },
   },
@@ -500,55 +437,45 @@ export default {
     },
     partProps: {
       Input: {
-        defaultProps: {
-          padding: '0.25rem 0rem 0.25rem 0.5rem',
-          cursor: 'pointer',
-        },
+        padding: '0.25rem 0rem 0.25rem 0.5rem',
+        cursor: 'pointer',
       },
     },
   },
   Spinner: {
-    customProps: new Map([
-      [
-        () => true,
-        ({ size = 24, color = 'primary' }) => ({
-          width: size,
-          height: size,
-          position: 'relative',
-          display: 'inline-block',
-          '&:before': {
-            content: "''",
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: (size - 4),
-            height: (size - 4),
-            marginTop: -(size - 2) / 2,
-            marginLeft: -(size - 2) / 2,
-            borderRadius: '50%',
-            borderTop: `2px solid ${color}`,
-            borderRight: '2px solid transparent',
-            animation: `${spinner} 666ms linear infinite`,
-          },
-        }),
-      ],
-    ]),
+    defaultProp: ({ size = 24, color = 'primary' }) => ({
+      width: size,
+      height: size,
+      position: 'relative',
+      display: 'inline-block',
+      '&:before': {
+        content: "''",
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: (size - 4),
+        height: (size - 4),
+        marginTop: -(size - 2) / 2,
+        marginLeft: -(size - 2) / 2,
+        borderRadius: '50%',
+        borderTop: `2px solid ${color}`,
+        borderRight: '2px solid transparent',
+        animation: `${spinner} 666ms linear infinite`,
+      },
+    }),
   },
   Switch: {
-    defaultProps: {
-      transition: 'background-color 150ms ease',
-      '&:hover': {
-        boxShadow: '0 0 0 2px border',
-      },
-    },
-    customProps: new Map([
-      [
-        ({ checked }) => checked,
-        {
-          backgroundColor: 'primary',
+    defaultProps: [
+      {
+        transition: 'background-color 150ms ease',
+        '&:hover': {
+          boxShadow: '0 0 0 2px border',
         },
-      ],
-    ]),
+      },
+      ({ checked }) => checked && {
+        backgroundColor: 'primary',
+      },
+    ],
   },
   Table: {
     defaultProps: {
@@ -580,9 +507,9 @@ export default {
   },
 }
 
-// Utility for the desgner to display the correct variation fn in production
-function assignToString(fn, string) {
-  fn.toString = () => string
+// Utility for the designer to display the correct variation fn in production
+// function assignToString(fn, string) {
+//   fn.toString = () => string
 
-  return fn
-}
+//   return fn
+// }

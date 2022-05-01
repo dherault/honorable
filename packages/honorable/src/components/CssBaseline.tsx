@@ -381,10 +381,10 @@ export function CssBaseline() {
           }}
         />
       )}
-      {typeof theme.global?.defaultProps === 'object' && theme.global?.defaultProps && (
+      {typeof theme.global === 'object' && theme.global && (
         <Global
           styles={{
-            '*': resolveAll(theme.global.defaultProps, theme),
+            '*': resolveAll(theme.global, theme),
           }}
         />
       )}
