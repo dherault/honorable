@@ -1,13 +1,12 @@
+import merge from 'lodash.merge'
+
 import { DefaultProps, HonorableTheme } from '../types'
 
 import filterObject from './filterObject'
 
 function resolveDefaultProps(defaultProps: DefaultProps, props: object, theme: HonorableTheme): object {
   if (Array.isArray(defaultProps)) {
-    return defaultProps.reduce((acc, x) => ({
-      ...acc,
-      ...resolveDefaultProps(x, props, theme),
-    }), {})
+    return defaultProps.reduce((acc, x) => merge(acc, resolveDefaultProps(x, props, theme)), {})
   }
 
   if (typeof defaultProps === 'function') {

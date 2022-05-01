@@ -50,7 +50,7 @@ export default {
     {
       boxSizing: 'border-box',
     },
-    ...createElevation().map((styles, i) => ({ elevation }) => elevation === i && styles), // TODO Might need a closure
+    ...createElevation().map((styles, i) => (z => (({ elevation }) => elevation === z && styles))(i)),
   ],
   A: {
     defaultProps: {
@@ -443,7 +443,7 @@ export default {
     },
   },
   Spinner: {
-    defaultProp: ({ size = 24, color = 'primary' }) => ({
+    defaultProps: ({ size = 24, color = 'primary' }) => ({
       width: size,
       height: size,
       position: 'relative',

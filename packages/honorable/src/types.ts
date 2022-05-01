@@ -97,7 +97,7 @@ export type HonorableTheme = {
   aliases?: {
     [key: string]: string
   }
-  html?: DefaultProps
+  html?: StylesProps
   global?: DefaultProps
   utils?: {
     resolveColor: (color: string | StylesProps) => string | StylesProps

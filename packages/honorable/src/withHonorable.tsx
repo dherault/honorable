@@ -69,11 +69,12 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         'xflex-desktop': xflexDesktop,
         ...nextProps
       } = props
-      const defaultProps = theme[name]?.defaultProps || {}
+      const defaultProps = theme[name]?.defaultProps
       const stylesProps: StylesProps = {}
       const mpProps: MpProps = {}
       const otherProps = {} as P
-      const resolvedDefaultProps = resolveDefaultProps(defaultProps, { ...nextProps, ...overridenProps }, theme)
+      const resolvedProps = { ...nextProps, ...overridenProps }
+      const resolvedDefaultProps = resolveDefaultProps(defaultProps, resolvedProps, theme)
 
       Object.entries(nextProps).forEach(([key, value]) => {
         if (allMpProperties.includes(key)) {
@@ -91,11 +92,12 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         resolveAll(
           merge(
             {},
-            resolvedDefaultProps,                                                    // Component defaultProps
-            convertMp(mpProps, theme),                                               // "mp" prop
-            convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),  // "xflex" prop
-            stylesProps,                                                             // Actual style from props
-            filterObject(extend),                                                    // "extend" prop
+            resolvedDefaultProps,                                                                    // Component defaultProps
+            resolveDefaultProps(theme.global, { ...resolvedProps, ...resolvedDefaultProps }, theme), // Global props
+            convertMp(mpProps, theme),                                                               // "mp" prop
+            convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),                  // "xflex" prop
+            stylesProps,                                                                             // Actual style from props
+            filterObject(extend),                                                                    // "extend" prop
           ),
           theme
         ),

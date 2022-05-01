@@ -107,7 +107,7 @@ export const EndIconKg = Template.bind({})
 EndIconKg.args = {
   disabled: false,
   endIcon: (
-    <P color="text-light">
+    <P color="darken(border, 15)">
       kg
     </P>
   ),

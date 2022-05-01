@@ -381,13 +381,6 @@ export function CssBaseline() {
           }}
         />
       )}
-      {typeof theme.global === 'object' && theme.global && (
-        <Global
-          styles={{
-            '*': resolveAll(theme.global, theme),
-          }}
-        />
-      )}
       <Global
         styles={css`
           :root {
