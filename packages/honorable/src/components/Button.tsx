@@ -19,11 +19,6 @@ export type ButtonProps = ButtonBaseProps & {
   disabled?: boolean
 }
 
-type ButtonDimensionsState = {
-  width: number | 'auto'
-  height: number | 'auto'
-}
-
 export const buttonPropTypes = {
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
@@ -65,6 +60,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       {!!startIcon && (
         <Span
           xflex="x5"
+          visibility={loading ? 'hidden' : 'visible'}
           {...resolvePartProps('Button', 'StartIcon', props, honorableOverridenProps, theme)}
         >
           {startIcon}
@@ -97,6 +93,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       {!!endIcon && (
         <Span
           xflex="x5"
+          visibility={loading ? 'hidden' : 'visible'}
           {...resolvePartProps('Button', 'EndIcon', props, honorableOverridenProps, theme)}
         >
           {endIcon}

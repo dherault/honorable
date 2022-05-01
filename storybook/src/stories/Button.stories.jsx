@@ -14,6 +14,7 @@ export const Default = Template.bind({})
 Default.args = {
   children: 'Button',
   disabled: false,
+  loading: false,
 }
 
 export const Width100 = Template.bind({})
@@ -21,12 +22,14 @@ Width100.args = {
   children: 'Button',
   width: '100%',
   disabled: false,
+  loading: false,
 }
 
 export const StartIcon = Template.bind({})
 StartIcon.args = {
   children: 'Button',
   disabled: false,
+  loading: false,
   startIcon: (
     <svg
       width={16}
@@ -48,6 +51,7 @@ export const StartIcon2 = Template.bind({})
 StartIcon2.args = {
   children: 'Button',
   disabled: false,
+  loading: false,
   startIcon: (
     <svg
       width={16}
@@ -69,6 +73,7 @@ export const EndIcon = Template.bind({})
 EndIcon.args = {
   children: 'Button',
   disabled: false,
+  loading: false,
   endIcon: (
     <svg
       width={16}
@@ -90,6 +95,7 @@ export const EndIcon2 = Template.bind({})
 EndIcon2.args = {
   children: 'Button',
   disabled: false,
+  loading: false,
   endIcon: (
     <svg
       width={16}
