@@ -48,7 +48,7 @@ return (
 ## Usage
 
 ```jsx
-import { Button, CssBaseline, ThemeProvider, mergeTheme } from 'honorable'
+import { CssBaseline, ThemeProvider, mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
 const theme = mergeTheme(defaultTheme, {
@@ -59,9 +59,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Button>
-        Click me!
-      </Button>
+      {/* Your application lives here */}
     </ThemeProvider>
   )
 }
