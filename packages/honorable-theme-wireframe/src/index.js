@@ -15,16 +15,11 @@ export default mergeTheme(defaultTheme, {
     },
     border: 'primary',
   },
-  global: {
-    customProps: new Map([
-      [
-        ({ elevation }) => elevation > 0,
-        {
-          boxShadow: 'none',
-          border: '1px solid border',
-          margin: -1,
-        },
-      ],
-    ]),
-  },
+  global: [
+    ({ elevation }) => elevation > 0 && {
+      boxShadow: 'none',
+      border: '1px solid border',
+      margin: -1,
+    },
+  ],
 })

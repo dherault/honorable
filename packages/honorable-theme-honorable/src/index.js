@@ -8,53 +8,29 @@ export default mergeTheme(defaultTheme, {
   breakpoints: {
     mobile,
   },
-  // aliases: {
-  //   keys: {
-  //     w: 'width',
-  //   },
-  //   values: {
-  //     width: {
-  //       full: '100%',
-  //     },
-  //   },
-  // },
   colors: {
     secondary: '#FFC547',
   },
-  global: {
-    customProps: new Map([
-      [
-        ({ text }) => text === 'small',
-        {
-          fontSize: '0.875rem',
-        },
-      ],
-      [
-        ({ text }) => text === 'normal',
-        {
-          fontSize: '1rem',
-        },
-      ],
-      [
-        ({ text }) => text === 'large',
-        {
-          fontSize: '1.5rem',
-          [`@media (max-width: ${mobile}px)`]: {
-            fontSize: '1.25rem',
-          },
-        },
-      ],
-      [
-        ({ text }) => text === 'xlarge',
-        {
-          fontSize: '2rem',
-          [`@media (max-width: ${mobile}px)`]: {
-            fontSize: '1.5rem',
-          },
-        },
-      ],
-    ]),
-  },
+  global: [
+    ({ text }) => text === 'small' && {
+      fontSize: '0.875rem',
+    },
+    ({ text }) => text === 'normal' && {
+      fontSize: '1rem',
+    },
+    ({ text }) => text === 'large' && {
+      fontSize: '1.5rem',
+      [`@media (max-width: ${mobile}px)`]: {
+        fontSize: '1.25rem',
+      },
+    },
+    ({ text }) => text === 'xlarge' && {
+      fontSize: '2rem',
+      [`@media (max-width: ${mobile}px)`]: {
+        fontSize: '1.5rem',
+      },
+    },
+  ],
   H1: {
     defaultProps: {
       fontSize: '5rem',
@@ -72,36 +48,30 @@ export default mergeTheme(defaultTheme, {
     },
   },
   Section: {
-    customProps: new Map([
-      [
-        ({ container }) => container,
-        {
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          maxWidth: 'calc(100% * 3 / 4)',
-          [`@media (max-width: ${mobile}px)`]: {
-            maxWidth: 'unset',
-          },
+    defaultProps: [
+      ({ container }) => container && {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        maxWidth: 'calc(100% * 3 / 4)',
+        [`@media (max-width: ${mobile}px)`]: {
+          maxWidth: 'unset',
         },
-      ],
-    ]),
+      },
+    ],
   },
   IconButton: {
-    customProps: new Map([
-      [
-        ({ variant }) => variant === 'ghost',
-        {
-          elevation: 0,
-          background: 'transparent',
-          '&:hover': {
-            backgroundColor: 'background',
-          },
-          '&:active': {
-            color: 'white',
-            backgroundColor: 'primary',
-          },
+    defaultProps: [
+      ({ variant }) => variant === 'ghost' && {
+        elevation: 0,
+        background: 'transparent',
+        '&:hover': {
+          backgroundColor: 'background',
         },
-      ],
-    ]),
+        '&:active': {
+          color: 'white',
+          backgroundColor: 'primary',
+        },
+      },
+    ],
   },
 })
