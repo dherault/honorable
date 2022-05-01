@@ -31,14 +31,12 @@ const theme = {
     focus: 'primary'    // Reference other colors anywhere
     text: {
       light: 'lighten(black, 10)', // Use some color helpers along the way
-      dark: 'darken(white, 10)', 
+      dark: 'darken(white, 10)',
     },
   },
-  // Global props are applied to the * selector
+  // Global props are applied to the every component
   global: {
-    defaultProps: {
-      boxSizing: 'border-box',
-    },
+    boxSizing: 'border-box',
   },
   // html props are passed to the HTML tag by CssBaseline
   html: {
@@ -58,18 +56,15 @@ const theme = {
     },
   },
   Input: {
-    // customProps are applied whenever the key function on props returns truthy
-    customProps: new Map([
-      [
-        // If this function returns truthy
-        ({ variant }) => variant === 'underlined',
-        // Then this applies to <Input variant="underlined" />
-        {
-          borderWidth: 0,
-          borderBottom: '1px solid border',
-        },
-      ],
-    ]),
+    // defaultProps can be an array of style props
+    // or functions that return style props
+    defaultProps: [
+      ({ variant }) => variant === 'underlined' && {
+        // This applies to <Input variant="underlined" />
+        borderWidth: 0,
+        borderBottom: '1px solid border',
+      },
+    ],
   },
   Modal: {
     // partProps allow you to customize any inner part of a component
@@ -124,7 +119,7 @@ Can be any string, typically `light` or `dark`. Corresponds to any global variat
 
 For the v1 three breakpoints are available:
 
-* `mobile`&#x20;
+* `mobile`
 * `tablet`
 * `desktop`
 
@@ -149,7 +144,7 @@ const theme = {
       dark: 'chartreuse', // CSS named colors
     },
     // You can use color helpers, see the corresponding section in the docs
-    'primary-light': 'lighten(primary)', 
+    'primary-light': 'lighten(primary)',
   },
 }
 ```
@@ -166,12 +161,12 @@ See also:
 
 ### `global`
 
-These props follow the `defaultProps` and `customProps` pattern (but not `partProps`). \
-They are applied to the `*` selector by `CssBaseline`.  See `[Component]` for more info.
+These props follow the `defaultProps` pattern. \
+They are applied to any component.  See `[Component]` for more info.
 
 ### `html`
 
-These props are applied to the `<html>` tag by `CssBaseline`.  It behaves like a direct `defaultProps` (without the need for the `defaultProps` key). See `[Component]` for more info.
+These props are applied to the `<html>` tag by `CssBaseline`. They follow the `defaultProps` pattern. See `[Component]` for more info.
 
 ### `[Component]`
 
@@ -179,57 +174,49 @@ Components theme keys are always capitalized and are applied to the correspondin
 
 They comprise three keys:
 
-* `defaultProps`: accepts an object of styles, conventions and props that are applied to every instance of the component.
-* `customProps`: accepts a \
-  `Map<(props: object, theme: HonorableTheme) => boolean, (styles & conventions & props) | ((props: object, theme: HonorableTheme) => styles & conventions & props)>`. The values of the Map are applied to your component instance if the corresponding key function on props returns truthy.
-* `partProps`: accepts an object of inner parts names a keys (see the component's documentation for a list of the available part names) and a `defaultProps` and `customProps` values.
+* `defaultProps`: accepts a `DefaultProps` object that will eventually be styles, conventions and props that are applied to every instance of the component.
+* `partProps`: accepts an object of inner parts names as keys and `defaultProps` values. see the component's documentation for a list of the available part names.
+
+```typescript
+type DefaultPropsFunction = (props: object, theme: HonorableTheme) => StylesProps
+type DefaultProps = StylesProps | DefaultPropsFunction | Array<StylesProps | DefaultPropsFunction>
+```
 
 Here's a complete example:
 
 ```javascript
 Accordion: {
-    defaultProps: {
+  defaultProps: [
+    {
       backgroundColor: 'background', // Style props
       radius: 0,                     // Conventions
       expandIcon: ...                // Props
     },
-    customProps: new Map([
-      [
-        ({ disabled }) => disabled,
-        {
-          // Style, conventions, or props
-          cursor: 'not-allowed', 
-        },
-      ],
-      [
-        ({ variant }) => variant === 'contrast',
-        (props, theme) => ({
-          // Style, conventions, or props
-          backgroundColor: theme.mode === 'light' 
-            ? 'background-light' 
-            : 'background-dark',
-        }),
-      ],
-    ]),
-    partProps: {
-      // Style the title of the Accordion
-      Title: {
-        defaultProps: {
-          // Style, conventions, or props
-          color: 'primary',
-        },
-        customProps: new Map([
-          [
-            ({ disabled }) => disabled,
-            {
-              // Style, conventions, or props
-              color: 'text-light',
-            },
-          ],
-        ]),
-      },
+    ({ disabled }) => disabled && {
+      // Style, conventions, or props
+      cursor: 'not-allowed',
     },
+    ({ variant }, theme) => variant === 'contrast' && {
+      // Style, conventions, or props
+      backgroundColor: theme.mode === 'light'
+        ? 'background-light'
+        : 'background-dark',
+    },
+  ],
+  partProps: {
+    // Style the title of the Accordion
+    Title: [
+      {
+        // Style, conventions, or props
+        color: 'primary',
+      },
+      ({ disabled }) => disabled && {
+        // Style, conventions, or props
+        color: 'text-light',
+      },
+    ],
   },
+},
 ```
 
 ## Theme serialization
@@ -252,4 +239,3 @@ See the following documentation for more:
 {% content-ref url="api-reference/theme-helpers/deserializetheme.md" %}
 [deserializetheme.md](api-reference/theme-helpers/deserializetheme.md)
 {% endcontent-ref %}
-
