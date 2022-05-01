@@ -43,7 +43,7 @@ const theme = {
     fontFamily: 'Roboto',
     color: 'text',
   },
-  // These props are applied to the <A /> component
+  // These props are applied to the <A /> component, that will be rendered as <a />
   A: {
     // defaultProps are applied to any instance of the component
     defaultProps: {
