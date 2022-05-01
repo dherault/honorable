@@ -30,13 +30,9 @@ const defaultMenuState: MenuStateType = {
   activeItemIndex: -1,
   defaultActiveItemIndex: -1,
   active: false,
-  event: null,
-  value: null,
   isSubMenuVisible: false,
-  renderedItem: null,
   shouldFocus: false,
   shouldSyncWithParent: false,
-  shouldSyncWithChild: false,
 }
 
 function enhanceWithDefault(menuState: MenuStateType) {
@@ -56,12 +52,15 @@ ref: Ref<any>
 ) {
   const menuRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, menuRef)
-  const [parentMenuState, setParentMenuState] = useContext(MenuContext)
   const [menuState, setMenuState] = useState<MenuStateType>({})
-
+  const [parentMenuState, setParentMenuState] = useContext(MenuContext)
   const actualMenuState = useMemo(() => enhanceWithDefault(initialMenuState ?? menuState), [initialMenuState, menuState])
   const setActualMenuState = useMemo(() => setInitialMenuState ?? setMenuState, [setInitialMenuState, setMenuState])
   const menuValue = useMemo<MenuContextType>(() => [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState], [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState])
+
+  const actualActiveItemIndex = actualMenuState.defaultActiveItemIndex > -1 && actualMenuState.activeItemIndex === -1
+    ? actualMenuState.defaultActiveItemIndex
+    : actualMenuState.activeItemIndex
 
   // Give `active` and `activeItemIndex` and other props to customProps
   useOverridenProps(honorableSetOverridenProps, actualMenuState)
@@ -79,28 +78,24 @@ ref: Ref<any>
         ...x,
         active: true,
         shouldFocus: false,
-        // activeItemIndex: typeof x.activeItemIndex === 'number' ? x.activeItemIndex : -1,
       }))
     }
   }, [actualMenuState.shouldFocus, setActualMenuState])
 
-  // Sync menu state with grand parent menu state
   useEffect(() => {
-    if (typeof setParentMenuState === 'function' && actualMenuState.shouldSyncWithParent) {
+    if (actualMenuState.shouldSyncWithParent) {
       setParentMenuState(x => ({
         ...x,
-        value: actualMenuState.value,
-        event: actualMenuState.event,
-        renderedItem: actualMenuState.renderedItem,
         shouldSyncWithParent: true,
       }))
       setActualMenuState(x => ({
         ...x,
-        shouldSyncWithParent: false,
+        active: false,
         activeItemIndex: -1,
+        shouldSyncWithParent: false,
       }))
     }
-  }, [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState])
+  }, [actualMenuState.shouldSyncWithParent, setActualMenuState, setParentMenuState])
 
   // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -110,18 +105,18 @@ ref: Ref<any>
 
     switch (event.key) {
       case 'ArrowUp': {
-        const nextActiveItemIndex = Math.max(0, actualMenuState.activeItemIndex - 1)
+        const nextActiveItemIndex = Math.max(0, actualActiveItemIndex - 1)
 
-        if (actualMenuState.activeItemIndex !== nextActiveItemIndex) {
+        if (actualActiveItemIndex !== nextActiveItemIndex) {
           setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
         }
 
         break
       }
       case 'ArrowDown': {
-        const nextActiveItemIndex = Math.min(Children.count(children) - 1, actualMenuState.activeItemIndex + 1)
+        const nextActiveItemIndex = Math.min(Children.count(children) - 1, actualActiveItemIndex + 1)
 
-        if (actualMenuState.activeItemIndex !== nextActiveItemIndex) {
+        if (actualActiveItemIndex !== nextActiveItemIndex) {
           setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
         }
 
@@ -131,7 +126,6 @@ ref: Ref<any>
   }
 
   // On mouse leave, unset the active item
-  // Give it a timeout to allow mouse rip
   function handleMouseLeave() {
     setActualMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
   }
@@ -194,11 +188,7 @@ ref: Ref<any>
                 fade,
                 isSubMenuItem: isSubMenu,
                 itemIndex: index,
-                active: index === (
-                  actualMenuState.defaultActiveItemIndex > -1 && actualMenuState.activeItemIndex === -1
-                    ? actualMenuState.defaultActiveItemIndex
-                    : actualMenuState.activeItemIndex
-                ),
+                active: index === actualActiveItemIndex,
                 ...child.props,
               })
             }

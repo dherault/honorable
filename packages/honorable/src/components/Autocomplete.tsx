@@ -1,9 +1,10 @@
-import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
+import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../contexts/MenuUsageContext'
 
 import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
@@ -99,7 +100,9 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const [focused, setFocused] = useState(false)
   const [search, setSearch] = useState('')
   const [menuState, setMenuState] = useState<MenuStateType>({ defaultActiveItemIndex: autoHighlight ? 0 : -1 })
-  const { value: currentOptionValue, event } = menuState
+  const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
+  const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState])
+  const { value: currentOptionValue, event } = menuUsageState
   const previousEvent = usePrevious(event)
   const filteredOptions = filterOptions(options, search)
 
@@ -177,37 +180,39 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         onKeyDown={handleInputKeyDown}
         {...resolvePartProps('Autocomplete', 'Input', props, honorableOverridenProps, theme)}
       />
-      <Menu
-        noFocus
-        menuState={menuState}
-        setMenuState={setMenuState}
-        position="absolute"
-        top="100%"
-        right={0}
-        left={0}
-        zIndex={100}
-        display={focused ? 'block' : 'none'}
-        {...resolvePartProps('Autocomplete', 'Menu', props, honorableOverridenProps, theme)}
-      >
-        {filteredOptions.length > 0 && filteredOptions.map(option => (
-          <MenuItem
-            key={typeof option === 'object' ? option.value : option}
-            value={typeof option === 'object' ? option.value : option}
-            {...resolvePartProps('Autocomplete', 'MenuItem', props, honorableOverridenProps, theme)}
-          >
-            {renderOption(option)}
-          </MenuItem>
-        ))}
-        {filteredOptions.length === 0 && (
-          <MenuItem
-            disabled
-            value={honorableNoValue}
-            {...resolvePartProps('Autocomplete', 'NoOption', props, honorableOverridenProps, theme)}
-          >
-            {noOptionsNode}
-          </MenuItem>
-        )}
-      </Menu>
+      <MenuUsageContext.Provider value={menuUsageValue}>
+        <Menu
+          noFocus
+          menuState={menuState}
+          setMenuState={setMenuState}
+          position="absolute"
+          top="100%"
+          right={0}
+          left={0}
+          zIndex={100}
+          display={focused ? 'block' : 'none'}
+          {...resolvePartProps('Autocomplete', 'Menu', props, honorableOverridenProps, theme)}
+        >
+          {filteredOptions.length > 0 && filteredOptions.map(option => (
+            <MenuItem
+              key={typeof option === 'object' ? option.value : option}
+              value={typeof option === 'object' ? option.value : option}
+              {...resolvePartProps('Autocomplete', 'MenuItem', props, honorableOverridenProps, theme)}
+            >
+              {renderOption(option)}
+            </MenuItem>
+          ))}
+          {filteredOptions.length === 0 && (
+            <MenuItem
+              disabled
+              value={honorableNoValue}
+              {...resolvePartProps('Autocomplete', 'NoOption', props, honorableOverridenProps, theme)}
+            >
+              {noOptionsNode}
+            </MenuItem>
+          )}
+        </Menu>
+      </MenuUsageContext.Provider>
     </Div>
   )
 }

@@ -1,16 +1,12 @@
-import { Dispatch, KeyboardEvent, MouseEvent, ReactNode, SetStateAction, createContext } from 'react'
+import { Dispatch, SetStateAction, createContext } from 'react'
 
 export type MenuStateType = {
-  value?: any
-  renderedItem?: ReactNode
-  event?: MouseEvent | KeyboardEvent
   activeItemIndex?: number
   defaultActiveItemIndex?: number
   active?: boolean
   isSubMenuVisible?: boolean
-  shouldSyncWithParent?: boolean
-  shouldSyncWithChild?: boolean
   shouldFocus?: boolean
+  shouldSyncWithParent?: boolean
 }
 
 export type MenuStateDispatcherType = Dispatch<SetStateAction<MenuStateType>>

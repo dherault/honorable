@@ -1,9 +1,10 @@
-import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
+import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../contexts/MenuUsageContext'
 
 import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
@@ -56,10 +57,14 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   const selectRef = useRef()
   const forkedRef = useForkedRef(ref, selectRef)
   const [actualOpen, setActualOpen] = useState(open ?? defaultOpen ?? false)
-  const [menuState, setMenuState] = useState<MenuStateType>({ value })
-  const { value: currentValue, renderedItem, event } = menuState
+  const [menuState, setMenuState] = useState<MenuStateType>({ })
+  const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
+  const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState, setMenuUsageState])
+  const { value: currentValue, renderedItem, event } = menuUsageState
   const previousEvent = usePrevious(event)
   const previousOpen = usePreviousWithDefault(open)
+
+  console.log('renderedItem', currentValue, renderedItem)
 
   const handleOpen = useCallback((nextOpen: boolean) => {
     if (actualOpen === nextOpen) return
@@ -79,7 +84,9 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   }, [open, previousOpen, handleOpen])
 
   useEffect(() => {
-    setMenuState(x => ({ ...x, value, shouldSyncWithChild: true }))
+    if (value === menuUsageState.value) return
+
+    setMenuUsageState(x => ({ ...x, value, renderedItem: null }))
   }, [value])
 
   useEffect(() => {
@@ -137,20 +144,22 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         <Div flexGrow={1} />
         {renderCaret()}
       </Div>
-      <Menu
-        fade={fade}
-        menuState={menuState}
-        setMenuState={setMenuState}
-        position="absolute"
-        top="100%"
-        right={0}
-        left={0}
-        zIndex={100}
-        display={actualOpen ? 'block' : 'none'}
-        {...resolvePartProps('Select', 'Menu', props, honorableOverridenProps, theme)}
-      >
-        {children}
-      </Menu>
+      <MenuUsageContext.Provider value={menuUsageValue}>
+        <Menu
+          fade={fade}
+          menuState={menuState}
+          setMenuState={setMenuState}
+          position="absolute"
+          top="100%"
+          right={0}
+          left={0}
+          zIndex={100}
+          display={actualOpen ? 'block' : 'none'}
+          {...resolvePartProps('Select', 'Menu', props, honorableOverridenProps, theme)}
+        >
+          {children}
+        </Menu>
+      </MenuUsageContext.Provider>
     </Div>
   )
 }

@@ -1,9 +1,10 @@
-import { KeyboardEvent, MouseEvent, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../withHonorable'
 
 import { MenuStateType } from '../contexts/MenuContext'
+import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../contexts/MenuUsageContext'
 
 import useTheme from '../hooks/useTheme'
 import usePrevious from '../hooks/usePrevious'
@@ -58,7 +59,9 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const [menuState, setMenuState] = useState<MenuStateType>({})
-  const { value, event } = menuState
+  const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({})
+  const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState, setMenuUsageState])
+  const { value, event } = menuUsageState
   const previousEvent = usePrevious(event)
   const actualOpen = open ?? defaultOpen ?? uncontrolledOpen
 
@@ -123,20 +126,22 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       >
         {label}
       </Button>
-      <Menu
-        fade={fade}
-        menuState={menuState}
-        setMenuState={setMenuState}
-        position="absolute"
-        top="100%"
-        right={0}
-        left={0}
-        zIndex={100}
-        display={actualOpen ? 'block' : 'none'}
-        {...resolvePartProps('DropdownButton', 'Menu', props, honorableOverridenProps, theme)}
-      >
-        {children}
-      </Menu>
+      <MenuUsageContext.Provider value={menuUsageValue}>
+        <Menu
+          fade={fade}
+          menuState={menuState}
+          setMenuState={setMenuState}
+          position="absolute"
+          top="100%"
+          right={0}
+          left={0}
+          zIndex={100}
+          display={actualOpen ? 'block' : 'none'}
+          {...resolvePartProps('DropdownButton', 'Menu', props, honorableOverridenProps, theme)}
+        >
+          {children}
+        </Menu>
+      </MenuUsageContext.Provider>
     </Div>
   )
 }
