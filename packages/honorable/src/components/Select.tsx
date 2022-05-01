@@ -87,7 +87,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     if (value === menuUsageState.value) return
 
     setMenuUsageState(x => ({ ...x, value, renderedItem: null }))
-  }, [value])
+  }, [value, menuUsageState.value])
 
   useEffect(() => {
     if (event && previousEvent !== event && typeof onChange === 'function') {
