@@ -172,7 +172,7 @@ These props are applied to the `<html>` tag by `CssBaseline`. They follow the `d
 
 Components theme keys are always capitalized and are applied to the corresponding component. For example props under `Accordion` are passed to your `<Accordion />` components.
 
-They comprise three keys:
+They comprise two keys:
 
 * `defaultProps`: accepts a `DefaultProps` object that will eventually be styles, conventions and props that are applied to every instance of the component.
 * `partProps`: accepts an object of inner parts names as keys and `defaultProps` values. see the component's documentation for a list of the available part names.
