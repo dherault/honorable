@@ -62,6 +62,20 @@ They can then be added CSS properties, directly to them
 />
 ```
 
+Any other component can be also be styled this way:
+
+```jsx
+import { Accordion } from 'honorable'
+
+<Accordion
+  marginLeft="2rem"
+  backgroundColor="blue"
+  title="An accordion"
+>
+  Some content
+</Accordion>
+```
+
 ## Customize your theme
 
 Give a look and feel to your application by editing your theme. This is also where you declare your conventions.
@@ -70,7 +84,7 @@ Give a look and feel to your application by editing your theme. This is also whe
 const theme = mergeTheme(defaultTheme, {
   mode: 'dark',
   colors: {
-    primary: '#0070f3', 
+    primary: '#0070f3',
   },
   // ...
 })
@@ -90,7 +104,7 @@ They are opinionated aliases that ship by default with Honorable.
 * `mp` props set margins and paddings.
 
 ```jsx
-<Div 
+<Div
   xflex="x5"  // All centered
   mt={1}      // margin-top: 1rem
   p={2}       // padding: 2rem

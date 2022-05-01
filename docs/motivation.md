@@ -20,8 +20,8 @@ The library was designed with almost zero learning curve required for the develo
 
 This means no obscure `margin={{ left: 'small' }}` or `weight="bold"` props is needed where you have to remember what a margin object is, what small stands for, and that `weight` is the alias for `fontWeight`.
 
-Instead, it uses common CSS in JS props, with the added bonus of the [`xflex`](xflex-property.md) and [`mp`](mp-properties.md) props, to solve the three most common props in a modern web app: flexbox, margin and padding.
+Instead, it uses common CSS in JS props and can be extended with your own conventions.
 
-## default and custom props over `style`
+## default props over `style`
 
 ...
