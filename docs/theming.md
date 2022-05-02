@@ -89,8 +89,8 @@ You can either start a theme from scratch, or start with the [theme editor](http
 
 Available presets are:
 
-* \`\`[`honorable-theme-default`](https://www.npmjs.com/package/honorable-theme-default) for a mainstream look and feel
-* \`\`[`honorable-theme-material`](https://www.npmjs.com/package/honorable-theme-material) for a Material design approach
+* [`honorable-theme-default`](https://www.npmjs.com/package/honorable-theme-default) for a mainstream look and feel
+* [`honorable-theme-material`](https://www.npmjs.com/package/honorable-theme-material) for a Material design approach
 
 If you create your own, feel free to add it to the list.
 
