@@ -19,7 +19,7 @@ const theme = {
   breakpoints: {
     mobile: 600,
     tablet: 900,
-    desktop: 1200,
+    desktop: Infinity,
   },
   // Give some colors to your theme
   colors: {
