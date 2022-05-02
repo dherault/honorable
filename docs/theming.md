@@ -46,14 +46,16 @@ const theme = {
   // These props are applied to the <A /> component, that will be rendered as <a />
   A: {
     // defaultProps are applied to any instance of the component
-    defaultProps: {
-      color: 'primary',
-      cursor: 'pointer',
-      textDecoration: 'none',
-      '&:hover': {
-        textDecoration: 'underline',
+    defaultProps: [
+      {
+        color: 'primary',
+        cursor: 'pointer',
+        textDecoration: 'none',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
       },
-    },
+    ],
   },
   Input: {
     // defaultProps can be an array of style props
@@ -70,26 +72,25 @@ const theme = {
     // partProps allow you to customize any inner part of a component
     // See the component's documentation for naming conventions
     partProps: {
-      Backdrop: {
-        defaultProps: {
+      Backdrop: [
+        {
           backgroundColor: 'transparency(black, 80)',
         },
-      },
+      ],
     },
   },
   // And so on
 }
-
 ```
 
 ## Using a preset
 
-You can either start a theme from scratch, or start with the [theme editor](https://design.honorable.design), or use a preferably use a  preset.
+You can either start a theme from scratch, or start with the [theme editor](https://design.honorable.design), or use a preferably use a preset.
 
 Available presets are:
 
-* ``[`honorable-theme-default`](https://www.npmjs.com/package/honorable-theme-default) for a mainstream look and feel
-* ``[`honorable-theme-material`](https://www.npmjs.com/package/honorable-theme-material) for a Material design approach
+* \`\`[`honorable-theme-default`](https://www.npmjs.com/package/honorable-theme-default) for a mainstream look and feel
+* \`\`[`honorable-theme-material`](https://www.npmjs.com/package/honorable-theme-material) for a Material design approach
 
 If you create your own, feel free to add it to the list.
 
@@ -161,8 +162,8 @@ See also:
 
 ### `global`
 
-These props follow the `defaultProps` pattern. \
-They are applied to any component.  See `[Component]` for more info.
+These props follow the `defaultProps` pattern.\
+They are applied to any component. See `[Component]` for more info.
 
 ### `html`
 
@@ -179,7 +180,7 @@ They comprise two keys:
 
 ```typescript
 type DefaultPropsFunction = (props: object, theme: HonorableTheme) => StylesProps
-type DefaultProps = StylesProps | DefaultPropsFunction | Array<StylesProps | DefaultPropsFunction>
+type DefaultProps = (StylesProps | DefaultPropsFunction)[]
 ```
 
 Here's a complete example:
@@ -191,10 +192,6 @@ Accordion: {
       backgroundColor: 'background', // Style props
       radius: 0,                     // Conventions
       expandIcon: ...                // Props
-    },
-    ({ disabled }) => disabled && {
-      // Style, conventions, or props
-      cursor: 'not-allowed',
     },
     ({ variant }, theme) => variant === 'contrast' && {
       // Style, conventions, or props
@@ -209,10 +206,6 @@ Accordion: {
       {
         // Style, conventions, or props
         color: 'primary',
-      },
-      ({ disabled }) => disabled && {
-        // Style, conventions, or props
-        color: 'text-light',
       },
     ],
   },
