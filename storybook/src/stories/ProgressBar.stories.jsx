@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ProgressBar } from 'honorable'
+import { A, ProgressBar } from 'honorable'
 
 export default {
   title: 'ProgressBar',
@@ -12,12 +12,12 @@ function Template(args) {
 
   return (
     <>
-      <button
+      <A
         onClick={() => setProgress(x => (x + 0.25) % 1.0001)}
-        type="button"
+        userSelect="none"
       >
         Progress
-      </button>
+      </A>
       <ProgressBar
         mt={1}
         value={progress}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Switch } from 'honorable'
+import { Div, Switch } from 'honorable'
 
 export default {
   title: 'Switch',
@@ -11,11 +11,13 @@ function Template(args) {
   const [checked, setChecked] = useState(null)
 
   return (
-    <Switch
-      checked={checked}
-      onChange={event => setChecked(event.target.checked)}
-      {...args}
-    />
+    <Div xflex="y2">
+      <Switch
+        checked={checked}
+        onChange={event => setChecked(event.target.checked)}
+        {...args}
+      />
+    </Div>
   )
 }
 

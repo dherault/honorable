@@ -10,10 +10,7 @@ export default {
 
 function Template(args) {
   return (
-    <Div
-      p={2}
-      backgroundColor="background-light"
-    >
+    <Div height="100%">
       <Accordion {...args} />
       <Accordion {...args} />
       <Accordion {...args} />
@@ -23,10 +20,7 @@ function Template(args) {
 
 function TemplateSolo(args) {
   return (
-    <Div
-      p={2}
-      backgroundColor="background-light"
-    >
+    <Div height="100%">
       <Accordion {...args} />
     </Div>
   )
@@ -36,10 +30,7 @@ function TemplateControlled(args) {
   const [expanded, setExpanded] = useState(null)
 
   return (
-    <Div
-      p={2}
-      backgroundColor="background-light"
-    >
+    <Div height="100%">
       <Accordion
         {...args}
         onExpand={() => setExpanded(expanded === 1 ? null : 1)}

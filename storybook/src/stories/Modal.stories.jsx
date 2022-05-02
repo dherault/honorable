@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Modal } from 'honorable'
+import { A, Div, Modal } from 'honorable'
 
 export default {
   title: 'Modal',
@@ -11,13 +11,13 @@ function Template(args) {
   const [open, setOpen] = useState(false)
 
   return (
-    <>
-      <button
+    <Div xflex="y2">
+      <A
         onClick={() => setOpen(true)}
-        type="button"
+        userSelect="none"
       >
         Open
-      </button>
+      </A>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -25,7 +25,7 @@ function Template(args) {
       >
         Content
       </Modal>
-    </>
+    </Div>
   )
 }
 

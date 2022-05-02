@@ -1,4 +1,4 @@
-import { Spinner } from 'honorable'
+import { Div, Spinner } from 'honorable'
 
 export default {
   title: 'Spinner',
@@ -7,9 +7,11 @@ export default {
 
 function Template(args) {
   return (
-    <Spinner
-      {...args}
-    />
+    <Div xflex="y2">
+      <Spinner
+        {...args}
+      />
+    </Div>
   )
 }
 

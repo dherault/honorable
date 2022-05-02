@@ -1,6 +1,6 @@
 // Icons from https://icons.modulz.app/
 import { useState } from 'react'
-import { Input, P } from 'honorable'
+import { Div, Input, P } from 'honorable'
 
 export default {
   title: 'Input',
@@ -8,18 +8,24 @@ export default {
 }
 
 function Template(args) {
-  return <Input {...args} />
+  return (
+    <Div xflex="y2">
+      <Input {...args} />
+    </Div>
+  )
 }
 
 function TemplateControlled(args) {
   const [value, setValue] = useState('')
 
   return (
-    <Input
-      value={value}
-      onChange={event => setValue(event.target.value)}
-      {...args}
-    />
+    <Div xflex="y2">
+      <Input
+        value={value}
+        onChange={event => setValue(event.target.value)}
+        {...args}
+      />
+    </Div>
   )
 }
 

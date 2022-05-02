@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Div, DropdownButton, Menu, MenuItem } from 'honorable'
+import { A, Div, DropdownButton, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'DropdownButton',
@@ -32,9 +32,11 @@ function renderItem({ text, items }) {
 
 function Template({ items, ...args }) {
   return (
-    <DropdownButton {...args}>
-      {items.map(renderItem)}
-    </DropdownButton>
+    <Div xflex="y2">
+      <DropdownButton {...args}>
+        {items.map(renderItem)}
+      </DropdownButton>
+    </Div>
   )
 }
 
@@ -42,19 +44,22 @@ function Template2({ items, ...args }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <Div xflex="x4">
-      <DropdownButton
-        open={open}
-        {...args}
-      >
-        {items.map(renderItem)}
-      </DropdownButton>
-      <Button
-        ml={1}
-        onClick={() => setOpen(x => !x)}
-      >
-        Toggle
-      </Button>
+    <Div xflex="y2">
+      <Div xflex="x4">
+        <DropdownButton
+          open={open}
+          {...args}
+        >
+          {items.map(renderItem)}
+        </DropdownButton>
+        <A
+          ml={1}
+          userSelect="none"
+          onClick={() => setOpen(x => !x)}
+        >
+          Toggle
+        </A>
+      </Div>
     </Div>
   )
 }

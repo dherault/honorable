@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Div, Menu, MenuItem, Select } from 'honorable'
+import { A, Div, Menu, MenuItem, Select } from 'honorable'
 
 export default {
   title: 'Select',
@@ -34,13 +34,15 @@ function Template({ items, initialValue, ...args }) {
   const [value, setValue] = useState(initialValue)
 
   return (
-    <Select
-      {...args}
-      value={value}
-      onChange={event => setValue(event.target.value)}
-    >
-      {items.map(renderItem)}
-    </Select>
+    <Div xflex="y2">
+      <Select
+        {...args}
+        value={value}
+        onChange={event => setValue(event.target.value)}
+      >
+        {items.map(renderItem)}
+      </Select>
+    </Div>
   )
 }
 
@@ -49,22 +51,25 @@ function Template2({ items, initialValue, ...args }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <Div xflex="x4">
-      <Select
-        {...args}
-        open={open}
-        onOpen={setOpen}
-        value={value}
-        onChange={event => setValue(event.target.value)}
-      >
-        {items.map(renderItem)}
-      </Select>
-      <Button
-        ml={1}
-        onClick={() => setOpen(x => !x)}
-      >
-        Toggle
-      </Button>
+    <Div xflex="y2">
+      <Div xflex="x4">
+        <Select
+          {...args}
+          open={open}
+          onOpen={setOpen}
+          value={value}
+          onChange={event => setValue(event.target.value)}
+        >
+          {items.map(renderItem)}
+        </Select>
+        <A
+          ml={1}
+          onClick={() => setOpen(x => !x)}
+          userSelect="none"
+        >
+          Toggle
+        </A>
+      </Div>
     </Div>
   )
 }
@@ -74,32 +79,36 @@ function Template3({ items, initialValue, ...args }) {
   const allValues = findAllValues(items)
 
   return (
-    <Div xflex="x1">
-      <Select
-        {...args}
-        value={value}
-        onChange={event => setValue(event.target.value)}
-      >
-        {items.map(renderItem)}
-      </Select>
-      <Button
-        ml={1}
-        onClick={() => {
-          setValue(x => {
-            const index = allValues.indexOf(x)
+    <Div xflex="y2">
+      <Div xflex="x4">
+        <Select
+          {...args}
+          value={value}
+          onChange={event => setValue(event.target.value)}
+        >
+          {items.map(renderItem)}
+        </Select>
+        <A
+          ml={1}
+          userSelect="none"
+          onClick={() => {
+            setValue(x => {
+              const index = allValues.indexOf(x)
 
-            return allValues[index === -1 ? 0 : (index + 1) % allValues.length]
-          })
-        }}
-      >
-        Change value
-      </Button>
-      <Button
-        ml={1}
-        onClick={() => setValue('nonsense')}
-      >
-        Change to invalid value
-      </Button>
+              return allValues[index === -1 ? 0 : (index + 1) % allValues.length]
+            })
+          }}
+        >
+          Change value
+        </A>
+        <A
+          ml={1}
+          userSelect="none"
+          onClick={() => setValue('nonsense')}
+        >
+          Change to invalid value
+        </A>
+      </Div>
     </Div>
   )
 }

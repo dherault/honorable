@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from 'honorable'
+import { Div, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'Menu',
@@ -30,9 +30,11 @@ function Template({ items, ...args }) {
   }
 
   return (
-    <Menu {...args}>
-      {items.map(renderItem)}
-    </Menu>
+    <Div xflex="y2">
+      <Menu {...args}>
+        {items.map(renderItem)}
+      </Menu>
+    </Div>
   )
 }
 

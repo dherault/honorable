@@ -1,26 +1,59 @@
 import { useState } from 'react'
-import { A, CssBaseline, Div, ThemeProvider, mergeTheme } from 'honorable'
+import { CssBaseline, Div, Span, Switch, ThemeProvider, mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
-function HonorableDecorator(Story) {
+const theme = mergeTheme(defaultTheme, {
+  // Fix storybook body padding
+  html: {
+    '& > body': {
+      padding: '0 !important',
+    },
+  },
+})
+
+const titleToBackgroundColor = {
+  Accordion: 'background-light',
+}
+
+function HonorableDecorator(Story, { title }) {
   const [mode, setMode] = useState('light')
 
   return (
-    <ThemeProvider theme={mergeTheme(defaultTheme, { mode })}>
+    <ThemeProvider theme={mergeTheme(theme, { mode })}>
       <CssBaseline />
       <Div
-        height="calc(100vh - 2rem)"
+        py={3}
+        px={4}
+        height="calc(100vh)"
         position="relative"
+        backgroundColor={titleToBackgroundColor[title]}
       >
-        <A
+        <Switch
+          checkedBackground={(
+            <Span
+              paddingLeft={4}
+              paddingTop={1}
+              fontSize={18}
+            >
+              🌜
+            </Span>
+          )}
+          uncheckedBackground={(
+            <Span
+              paddingRight={4}
+              paddingTop={1}
+              fontSize={18}
+            >
+              🌞
+            </Span>
+          )}
+          checked={mode === 'dark'}
+          onChange={event => setMode(event.target.checked ? 'dark' : 'light')}
+          backgroundColor="primary"
           position="absolute"
-          bottom={0}
-          right={0}
-          userSelect="none"
-          onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
-        >
-          {mode === 'light' ? 'Dark' : 'Light'}
-        </A>
+          top="1rem"
+          right="1rem"
+        />
         <Story />
       </Div>
     </ThemeProvider>

@@ -1,5 +1,5 @@
 // Icons from https://icons.modulz.app/
-import { Button } from 'honorable'
+import { Button, Div } from 'honorable'
 
 export default {
   title: 'Button',
@@ -7,7 +7,11 @@ export default {
 }
 
 function Template(args) {
-  return <Button {...args} />
+  return (
+    <Div xflex="y2">
+      <Button {...args} />
+    </Div>
+  )
 }
 
 export const Default = Template.bind({})

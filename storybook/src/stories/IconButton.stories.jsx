@@ -1,4 +1,4 @@
-import { IconButton } from 'honorable'
+import { Div, IconButton } from 'honorable'
 
 export default {
   title: 'IconButton',
@@ -6,7 +6,11 @@ export default {
 }
 
 function Template(args) {
-  return <IconButton {...args} />
+  return (
+    <Div xflex="y2">
+      <IconButton {...args} />
+    </Div>
+  )
 }
 
 export const Default = Template.bind({})
