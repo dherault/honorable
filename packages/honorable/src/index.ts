@@ -1,10 +1,11 @@
 // Components
-
 export * from './components/tags'
 export * from './components/ThemeProvider'
 export * from './components/CssBaseline'
 export * from './components/Accordion'
 export * from './components/Autocomplete'
+export * from './components/Avatar'
+export * from './components/Box'
 export * from './components/Button'
 export * from './components/ButtonGroup'
 export * from './components/Checkbox'
@@ -19,6 +20,7 @@ export * from './components/ProgressBar'
 export * from './components/Select'
 export * from './components/Spinner'
 export * from './components/Switch'
+export * from './components/Text'
 // Hooks
 export { default as useTheme } from './hooks/useTheme'
 export { default as useMediaQuery } from './hooks/useMediaQuery'

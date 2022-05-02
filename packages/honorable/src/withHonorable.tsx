@@ -80,7 +80,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         if (allMpProperties.includes(key)) {
           mpProps[key] = value
         }
-        else if (allStylesProperties.includes(key) || isSelector(key)) {
+        else if ((allStylesProperties.includes(key) || isSelector(key)) && !propTypeKeys.includes(key)) {
           stylesProps[key] = value
         }
         else {

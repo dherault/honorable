@@ -32,20 +32,24 @@ export default mergeTheme(defaultTheme, {
     },
   ],
   H1: {
-    defaultProps: {
-      fontSize: '5rem',
-      [`@media (max-width: ${mobile}px)`]: {
-        fontSize: '3rem',
+    defaultProps: [
+      {
+        fontSize: '5rem',
+        [`@media (max-width: ${mobile}px)`]: {
+          fontSize: '3rem',
+        },
       },
-    },
+    ],
   },
   H2: {
-    defaultProps: {
-      fontSize: '2rem',
-      [`@media (max-width: ${mobile}px)`]: {
-        fontSize: '1.5rem',
+    defaultProps: [
+      {
+        fontSize: '2rem',
+        [`@media (max-width: ${mobile}px)`]: {
+          fontSize: '1.5rem',
+        },
       },
-    },
+    ],
   },
   Section: {
     defaultProps: [

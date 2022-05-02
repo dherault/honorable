@@ -74,7 +74,7 @@ export type ColorValue = string | ColorKey | {
 }
 
 export type DefaultPropsFunction = (props: object, theme: HonorableTheme) => StylesProps
-export type DefaultProps = StylesProps | DefaultPropsFunction | Array<StylesProps | DefaultPropsFunction>
+export type DefaultProps = Array<StylesProps | DefaultPropsFunction>
 
 export type ComponentProps = {
   defaultProps?: DefaultProps
@@ -97,7 +97,7 @@ export type HonorableTheme = {
   aliases?: {
     [key: string]: string
   }
-  html?: StylesProps
+  html?: DefaultProps
   global?: DefaultProps
   utils?: {
     resolveColor: (color: string | StylesProps) => string | StylesProps
@@ -219,6 +219,8 @@ export type HonorableTheme = {
   // Components
   Accordion?: ComponentProps
   Autocomplete?: ComponentProps
+  Avatar?: ComponentProps
+  Box?: ComponentProps
   Button?: ComponentProps
   ButtonGroup?: ComponentProps
   Caret?: ComponentProps
@@ -234,6 +236,7 @@ export type HonorableTheme = {
   Select?: ComponentProps
   Spinner?: ComponentProps
   Switch?: ComponentProps
+  Text?: ComponentProps
 }
 
 // Redecalare forwardRef

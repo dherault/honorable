@@ -4,11 +4,13 @@ import defaultTheme from 'honorable-theme-default'
 
 const theme = mergeTheme(defaultTheme, {
   // Fix storybook body padding
-  html: {
-    '& > body': {
-      padding: '0 !important',
+  html: [
+    {
+      '& > body': {
+        padding: '0 !important',
+      },
     },
-  },
+  ],
 })
 
 const titleToBackgroundColor = {
@@ -22,7 +24,7 @@ function HonorableDecorator(Story, { title }) {
     <ThemeProvider theme={mergeTheme(theme, { mode })}>
       <CssBaseline />
       <Div
-        py={3}
+        py={2}
         px={4}
         height="calc(100vh)"
         position="relative"
@@ -51,8 +53,8 @@ function HonorableDecorator(Story, { title }) {
           onChange={event => setMode(event.target.checked ? 'dark' : 'light')}
           backgroundColor="primary"
           position="absolute"
-          top="1rem"
-          right="1rem"
+          top="0.5rem"
+          right="0.5rem"
         />
         <Story />
       </Div>
