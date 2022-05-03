@@ -59,12 +59,6 @@ ref: Ref<any>
   // Override `checked` prop in defaultProps
   useOverridenProps(honorableSetOverridenProps, { checked: actualChecked })
 
-  const style = {
-    '&:hover': {
-      border: `1px solid ${disabled ? 'border' : 'primary'}`,
-    },
-  }
-
   function handleChange(event: MouseEvent | KeyboardEvent) {
     if (disabled) return
     if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
@@ -84,7 +78,6 @@ ref: Ref<any>
       xflex="x5"
       display="inline-flex"
       tabIndex={0}
-      {...style}
       {...props}
       onClick={event => {
         handleChange(event)

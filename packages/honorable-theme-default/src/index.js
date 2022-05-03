@@ -247,6 +247,9 @@ export default {
         borderRadius: 2,
         cursor: 'pointer',
         userSelect: 'none',
+        '&:hover': {
+          border: '1px solid primary',
+        },
       },
       ({ checked }) => checked && {
         backgroundColor: 'primary',
@@ -256,6 +259,9 @@ export default {
         cursor: 'not-allowed',
         backgroundColor: 'border',
         borderColor: 'border',
+        '&:hover': {
+          border: '1px solid border',
+        },
       },
     ],
   },

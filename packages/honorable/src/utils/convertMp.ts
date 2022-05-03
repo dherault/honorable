@@ -27,7 +27,7 @@ function convertMpValue(value: any) {
 
   if (parsedValue !== parsedValue) return value
 
-  return `${parsedValue}rem`
+  return parsedValue * 16
 }
 
 // Convert a series of mp props (whose keys are m, p, mx, ...) into a style object
