@@ -94,7 +94,7 @@ export default {
     partProps: {
       Title: [
         {
-          padding: '1rem',
+          padding: 1,
         },
       ],
       Children: [
@@ -104,7 +104,7 @@ export default {
       ],
       ChildrenInner: [
         {
-          padding: '0rem 1rem 1rem 1rem',
+          padding: '0 16px 16px 16px',
         },
       ],
       ExpandIcon: [
@@ -142,7 +142,7 @@ export default {
       {
         color: 'white',
         backgroundColor: 'primary',
-        padding: '0.5rem 1rem',
+        padding: '8px 16px',
         border: '1px solid primary',
         borderRadius: 4,
         userSelect: 'none',
@@ -167,39 +167,17 @@ export default {
         },
       },
     ],
-    // customProps: new Map([
-    //   [
-    //     assignToString(
-    //       ({ size }) => size === 'small',
-    //       "({ size }) => size === 'small'"
-    //     ),
-    //     {
-    //       fontSize: '0.85rem',
-    //       padding: '0.35rem 0.75rem 0.25rem 0.75rem',
-    //     },
-    //   ],
-    //   [
-    //     assignToString(
-    //       ({ size }) => size === 'large',
-    //       "({ size }) => size === 'large'"
-    //     ),
-    //     {
-    //       fontSize: '1.35rem',
-    //       padding: '0.85rem 1.25rem',
-    //     },
-    //   ],
-    // ]),
     partProps: {
       StartIcon: [
         {
-          marginLeft: 'calc(-0.5rem + 2px)',
-          marginRight: '0.5rem',
+          marginLeft: '-6px',
+          marginRight: '8px',
         },
       ],
       EndIcon: [
         {
-          marginLeft: '0.5rem',
-          marginRight: 'calc(-0.5rem + 2px)',
+          marginLeft: '8px',
+          marginRight: '-6px',
         },
       ],
       Spinner: [
@@ -310,7 +288,7 @@ export default {
   Hr: {
     defaultProps: [
       {
-        borderWidth: '0px',
+        borderWidth: 0,
         borderTop: '1px solid border',
       },
     ],
@@ -318,7 +296,7 @@ export default {
   IconButton: {
     defaultProps: [
       {
-        padding: '0.5rem',
+        padding: 8,
         border: 'none',
         borderRadius: '50%',
         background: 'background',
@@ -340,7 +318,7 @@ export default {
         borderRadius: 4,
         overflow: 'hidden',
         '& > textarea': {
-          padding: '0.5rem 0',
+          padding: '8px 0',
           resize: 'none',
           outline: 'none',
           border: 'none',
@@ -367,15 +345,15 @@ export default {
       ],
       StartIcon: [
         {
-          marginTop: '0.5rem',
-          marginRight: '0.5rem',
+          marginTop: 8,
+          marginRight: 8,
           color: 'text',
         },
       ],
       EndIcon: [
         {
-          marginTop: '0.5rem',
-          marginLeft: '0.5rem',
+          marginTop: 8,
+          marginLeft: 8,
           color: 'text',
         },
       ],
@@ -384,7 +362,7 @@ export default {
   InputBase: {
     defaultProps: [
       {
-        padding: '0.5rem 0',
+        padding: '8px 0',
         color: 'text',
         backgroundColor: 'transparent',
         border: 'none',
@@ -401,12 +379,12 @@ export default {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '1rem',
-          height: '1rem',
+          width: 16,
+          height: 16,
           '&::before': {
             content: '""',
-            width: '0.75rem',
-            height: '0.75rem',
+            width: 12,
+            height: 12,
             transform: 'scale(0)',
             boxShadow: 'inset 1em 1em primary',
             transformUrigin: 'bottom left',
@@ -426,21 +404,21 @@ export default {
     defaultProps: [
       {
         display: 'block',
-        marginBottom: '0.25rem',
+        marginBottom: 4,
       },
     ],
   },
   Menu: {
     defaultProps: [
       {
-        padding: '0.5rem 0',
+        padding: '8px 0',
         elevation: 1,
         backgroundColor: 'background',
         borderRadius: 4,
         outline: 'none',
       },
       ({ isSubMenu }) => isSubMenu && {
-        marginTop: '-0.5rem',
+        marginTop: -8,
       },
     ],
   },
@@ -453,7 +431,7 @@ export default {
     partProps: {
       Children: [
         {
-          padding: '0.5rem 1rem',
+          padding: '8px 16px',
         },
         ({ active }) => active && {
           backgroundColor: 'background-light',
@@ -468,7 +446,7 @@ export default {
   Modal: {
     defaultProps: [
       {
-        padding: '2rem',
+        padding: 32,
         borderRadius: 4,
       },
     ],
@@ -516,7 +494,7 @@ export default {
     partProps: {
       Input: [
         {
-          padding: '0.25rem 0rem 0.25rem 0.5rem',
+          padding: '4px 0 4px 8px',
           cursor: 'pointer',
         },
       ],
@@ -573,14 +551,14 @@ export default {
   Td: {
     defaultProps: [
       {
-        padding: '1rem',
+        padding: 16,
       },
     ],
   },
   Th: {
     defaultProps: [
       {
-        padding: '1rem',
+        padding: 16,
       },
     ],
   },
