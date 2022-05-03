@@ -74,7 +74,7 @@ export type ColorValue = string | ColorKey | {
 }
 
 export type DefaultPropsFunction = (props: object, theme: HonorableTheme) => StylesProps
-export type DefaultProps = Array<StylesProps | DefaultPropsFunction>
+export type DefaultProps = (StylesProps | DefaultPropsFunction)[]
 
 export type ComponentProps = {
   defaultProps?: DefaultProps
@@ -218,6 +218,7 @@ export type HonorableTheme = {
   Wbr?: ComponentProps
   // Components
   Accordion?: ComponentProps
+  AdjacentLabel?: ComponentProps
   Autocomplete?: ComponentProps
   Avatar?: ComponentProps
   Box?: ComponentProps

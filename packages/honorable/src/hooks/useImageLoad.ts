@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 // TODO
-function useImageLoad(src: string) {
+function useImageLoad(src: string): [boolean, boolean] {
   const [loaded, setloaded] = useState(false)
   const [error, setError] = useState(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!src) return
+
     const img = document.createElement('img')
 
     img.onload = () => {
@@ -16,7 +18,11 @@ function useImageLoad(src: string) {
       setloaded(true)
       setError(true)
     }
-  }, [])
+
+    img.src = src
+  }, [src])
+
+  return [loaded, error]
 }
 
 export default useImageLoad
