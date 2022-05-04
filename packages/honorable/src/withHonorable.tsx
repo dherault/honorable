@@ -6,31 +6,27 @@ import merge from 'lodash.merge'
 
 import {
   HonorableProps,
-  MpProps,
   StyledHonorableProps,
   StylesProps,
 } from './types'
 
-import stylesProperties from './data/stylesProperties'
+import styleProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
 
 import useTheme from './hooks/useTheme'
 
 import filterObject from './utils/filterObject'
 import isSelector from './utils/isSelector'
-import convertMp from './utils/convertMp'
-import convertXflex from './utils/convertXflex'
 import resolveAll from './utils/resolveAll'
 import resolveDefaultProps from './utils/resolveDefaultProps'
 
-const allMpProperties = [
+const allStyleProperties = [
+  'xflex',
   ...mpProperties,
-  ...mpProperties.map(x => `${x}-mobile`),
-  ...mpProperties.map(x => `${x}-tablet`),
-  ...mpProperties.map(x => `${x}-desktop`),
+  ...styleProperties,
 ]
 
-const suffixedStylesProperties = stylesProperties.map(x => `${x}-`)
+const suffixedAllStyleProperties = allStyleProperties.map(x => `${x}-`)
 
 // TODO v1, make sure the honorable prop accepts anything and that its passed to the styled component
 // React HOC to support style props
@@ -57,29 +53,18 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
 
     // TODO v1 extract convertMp and xflex to resolveAll
     const [honorable, otherProps] = useMemo(() => {
-      const {
-        extend,
-        xflex,
-        'xflex-mobile': xflexMobile,
-        'xflex-tablet': xflexTablet,
-        'xflex-desktop': xflexDesktop,
-        ...nextProps
-      } = props
+      const { extend, ...nextProps } = props
       const defaultProps = theme[name]?.defaultProps
       const stylesProps: StylesProps = {}
-      const mpProps: MpProps = {}
       const otherProps = {} as P
       const resolvedProps = { ...nextProps, ...overridenProps }
       const resolvedDefaultProps = resolveDefaultProps(defaultProps, resolvedProps, theme)
 
       Object.entries(nextProps).forEach(([key, value]) => {
-        if (allMpProperties.includes(key)) {
-          mpProps[key] = value
-        }
-        else if (
+        if (
           (
-            stylesProperties.includes(key as typeof stylesProperties[number])
-            || suffixedStylesProperties.some(x => key.startsWith(x))
+            allStyleProperties.includes(key)
+            || suffixedAllStyleProperties.some(x => key.startsWith(x))
             || isSelector(key)
           )
           && !propTypeKeys.includes(key)
@@ -97,8 +82,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
             {},
             resolvedDefaultProps,                                                                    // Component defaultProps
             resolveDefaultProps(theme.global, { ...resolvedProps, ...resolvedDefaultProps }, theme), // Global props
-            convertMp(mpProps, theme),                                                               // "mp" prop
-            convertXflex({ xflex, xflexMobile, xflexTablet, xflexDesktop }, theme),                  // "xflex" prop
             stylesProps,                                                                             // Actual style from props
             filterObject(extend),                                                                    // "extend" prop
           ),
