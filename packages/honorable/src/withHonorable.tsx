@@ -38,7 +38,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
-      // TODO v1 check the necessity of every member (especially isPropValid)
       shouldForwardProp: prop => (
         isPropValid(prop)
         || (!isTag && (prop === 'honorableOverridenProps' || prop === 'honorableSetOverridenProps'))

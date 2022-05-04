@@ -19,7 +19,6 @@ export default mergeTheme(defaultTheme, {
     ({ elevation }) => elevation > 0 && {
       boxShadow: 'none',
       border: '1px solid border',
-      margin: -1,
     },
   ],
 })
