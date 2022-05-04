@@ -40,7 +40,7 @@ function Home() {
             zIndex={10}
             flexBasis="calc(100vw - 100vh * 3 / 4)"
             flexShrink={1}
-            flexGrow-tablet-down={1}
+            flexGrow-desktop-down={1}
             position="relative"
             maxWidth="100%"
           >
@@ -62,7 +62,7 @@ function Home() {
             position="relative"
             flexGrow={1}
             backgroundColor="background-light"
-            display-tablet-down="none"
+            display-desktop-down="none"
           >
             <Div
               position="sticky"
@@ -273,7 +273,7 @@ function DemoSection() {
           {`<Div
   width={64}
   height={64}
-  borderRadius={4}
+  background="primary"
 />`}
         </CodeBlock>
         <P
@@ -281,13 +281,12 @@ function DemoSection() {
           text="large"
           textAlign="center"
         >
-          Use variables and custom props<br />from your theme anywhere:
+          Use your own conventions anywhere:
         </P>
         <CodeBlock mt={1}>
           {`<Div
-  // ...
-  backgroundColor="primary"
-  elevation={2}
+  size={64}
+  bg="primary"
 />`}
         </CodeBlock>
       </Div>

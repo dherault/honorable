@@ -16,12 +16,12 @@ function createMediaQuery(breakpointName: string, upOrDownOrExact: 'up' | 'down'
       return `@media (max-width: ${breakpointEntries[index][1]}px)`
     }
     case 'exact': {
-      const mediaQuery = `@media (min-width: ${breakpointEntries[index][1]}px`
+      const mediaQuery = `@media (min-width: ${breakpointEntries[index][1]}px)`
       const nextEntry = breakpointEntries[index + 1]
 
-      if (!nextEntry) return `${mediaQuery})`
+      if (!nextEntry) return mediaQuery
 
-      return `${mediaQuery} and max-width: ${nextEntry[1]}px)`
+      return `${mediaQuery} and (max-width: ${nextEntry[1]}px)`
     }
     default: {
       return null

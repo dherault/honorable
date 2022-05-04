@@ -111,9 +111,7 @@ function SquareShowcase() {
             mx={4}
             width={64}
             height={64}
-            borderRadius={4}
             backgroundColor="primary"
-            elevation={2}
           />
           <P
             text="xlarge"
@@ -166,20 +164,15 @@ function DefaultDesignShowcase() {
 }
 
 const pillCode = `const theme = {
-  span: {
-    customProps: new Map([
-      [
-        // If this function on props returns truthy
-        ({ pill }) => pill,
-        // Then these props will be applied
-        {
-          color: 'white',
-          backgroundColor: 'primary',
-          padding: '0.5rem 1rem',
-          borderRadius: 1000,
-        },
-      ],
-    ]),
+  Span: {
+    defaultProps: [
+      ({ pill }) => pill && {
+        color: 'white',
+        backgroundColor: 'primary',
+        padding: '0.5rem 1rem',
+        borderRadius: 1000,
+      },
+    ],
   },
 }
 
@@ -190,18 +183,15 @@ const pillCode = `const theme = {
 
 function PillShowcase() {
   const extendedTheme = mergeTheme(honorableTheme, {
-    span: {
-      customProps: new Map([
-        [
-          ({ pill }) => pill,
-          {
-            color: 'white',
-            backgroundColor: 'primary',
-            padding: '0.5rem 1rem',
-            borderRadius: 1000,
-          },
-        ],
-      ]),
+    Span: {
+      defaultProps: [
+        ({ pill }) => pill && {
+          color: 'white',
+          backgroundColor: 'primary',
+          padding: '0.5rem 1rem',
+          borderRadius: 1000,
+        },
+      ],
     },
   })
 
@@ -248,7 +238,6 @@ function AliasesShowcase() {
   const extendedTheme = mergeTheme(honorableTheme, {
     aliases: {
       bg: 'background',
-      radius: 'borderRadius',
     },
   })
 
@@ -312,23 +301,21 @@ const theme = mergeTheme(defaultTheme, {
       dark: 'white',
     },
   },
-  html: {
-    color: 'text', // Reference colors anywhere
-    fontFamily: 'Roboto',
-  },
+  html: [
+    {
+      color: 'text', // Reference colors anywhere
+      fontFamily: 'Roboto',
+    }
+  ],
   // Customize components
-  div: {
-    customProps: new Map([
-      [
-        // If this function on props returns truthy
-        ({ container }) => container,
-        // Then these props will be applied
-        {
-          width: 'calc(100% * 3 / 4)',
-          margin: '0 auto',
-        },
-      ],
-    ]),
+  Div: {
+    defaultProps:[
+      ({ container }) => container && {
+        // Applied to <Div container />
+        width: 'calc(100% * 3 / 4)',
+        margin: '0 auto',
+      },
+    ],
   },
 })
 
@@ -367,8 +354,8 @@ function AccessibilityShowcase() {
 
 const mobileCode = `<Div
   marginTop="1rem"
-  marginTop-tablet="0.5rem"
   marginTop-mobile={0}
+  marginTop-tablet="0.5rem"
   display-desktop="flex"
 />
 `
@@ -377,7 +364,7 @@ function MobileShowcase() {
   return (
     <WithTheme theme={honorableTheme}>
       <P text="large">
-        Mobile ready code is simple:
+        Mobile-ready code is simple:
       </P>
       <CodeBlock
         mt={1}

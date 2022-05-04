@@ -25,10 +25,8 @@ const allStyleProperties = [
   ...mpProperties,
   ...styleProperties,
 ]
-
 const suffixedAllStyleProperties = allStyleProperties.map(x => `${x}-`)
 
-// TODO v1, make sure the honorable prop accepts anything and that its passed to the styled component
 // React HOC to support style props
 function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) {
   const isTag = typeof ComponentOrTag === 'string'
@@ -50,8 +48,9 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const theme = useTheme()
     const [overridenProps, setOverridenProps] = useState({})
 
-    // TODO v1 extract convertMp and xflex to resolveAll
     const [honorable, otherProps] = useMemo(() => {
+      const aliases = Object.keys(theme.aliases || {})
+      const suffixedAliases = aliases.map(x => `${x}-`)
       const { extend, ...nextProps } = props
       const defaultProps = theme[name]?.defaultProps
       const stylesProps: StylesProps = {}
@@ -64,6 +63,8 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
           (
             allStyleProperties.includes(key)
             || suffixedAllStyleProperties.some(x => key.startsWith(x))
+            || aliases.includes(key)
+            || suffixedAliases.some(x => key.startsWith(x))
             || isSelector(key)
           )
           && !propTypeKeys.includes(key)
