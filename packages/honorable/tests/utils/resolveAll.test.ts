@@ -20,6 +20,11 @@ describe('resolveAll', () => {
           'bg-tablet-up': 'secondary',
           webkitOpacity: 0.5,
         },
+        '& > div': {
+          ml: 2,
+          pt: '2rem',
+          xflex: 'x1',
+        },
       }, theme)
     ).toStrictEqual(
       {
@@ -33,6 +38,13 @@ describe('resolveAll', () => {
             backgroundColor: '#ff0000',
           },
           WebkitOpacity: 0.5,
+        },
+        '& > div': {
+          marginLeft: 32,
+          paddingTop: '2rem',
+          display: 'flex',
+          alignContent: 'flex-start',
+          alignItems: 'flex-start',
         },
       }
     )
