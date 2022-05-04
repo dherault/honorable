@@ -23,19 +23,14 @@ import convertXflex from './utils/convertXflex'
 import resolveAll from './utils/resolveAll'
 import resolveDefaultProps from './utils/resolveDefaultProps'
 
-const allStylesProperties = [
-  ...stylesProperties,
-  ...stylesProperties.map(x => `${x}-mobile`),
-  ...stylesProperties.map(x => `${x}-tablet`),
-  ...stylesProperties.map(x => `${x}-desktop`),
-]
-
 const allMpProperties = [
   ...mpProperties,
   ...mpProperties.map(x => `${x}-mobile`),
   ...mpProperties.map(x => `${x}-tablet`),
   ...mpProperties.map(x => `${x}-desktop`),
 ]
+
+const suffixedStylesProperties = stylesProperties.map(x => `${x}-`)
 
 // TODO v1, make sure the honorable prop accepts anything and that its passed to the styled component
 // React HOC to support style props
@@ -60,6 +55,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const theme = useTheme()
     const [overridenProps, setOverridenProps] = useState({})
 
+    // TODO v1 extract convertMp and xflex to resolveAll
     const [honorable, otherProps] = useMemo(() => {
       const {
         extend,
@@ -80,7 +76,14 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         if (allMpProperties.includes(key)) {
           mpProps[key] = value
         }
-        else if ((allStylesProperties.includes(key) || isSelector(key)) && !propTypeKeys.includes(key)) {
+        else if (
+          (
+            stylesProperties.includes(key as typeof stylesProperties[number])
+            || suffixedStylesProperties.some(x => key.startsWith(x))
+            || isSelector(key)
+          )
+          && !propTypeKeys.includes(key)
+        ) {
           stylesProps[key] = value
         }
         else {

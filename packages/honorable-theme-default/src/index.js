@@ -94,7 +94,7 @@ export default {
     partProps: {
       Title: [
         {
-          padding: 1,
+          padding: 16,
         },
       ],
       Children: [

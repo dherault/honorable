@@ -18,7 +18,7 @@ function createXflexMediaQuery(xflex: string, breakpointName: string, theme: Hon
   if (!xflex) return {}
 
   return {
-    [createMediaQuery(breakpointName, theme)]: {
+    [createMediaQuery(breakpointName, 'exact', theme)]: {
       ...fp(xflex),
     },
   }

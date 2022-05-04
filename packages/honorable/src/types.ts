@@ -30,18 +30,12 @@ export type CssProps = {
 }
 
 export type StylesProperties = typeof stylesProperties[number]
-  | `${typeof stylesProperties[number]}-mobile`
-  | `${typeof stylesProperties[number]}-tablet`
-  | `${typeof stylesProperties[number]}-desktop`
 
 export type StylesProps = CssProps & {
   [stylesKey in StylesProperties]?: any
 }
 
 export type MpProperties = typeof mpProperties[number]
-  | `${typeof mpProperties[number]}-mobile`
-  | `${typeof mpProperties[number]}-tablet`
-  | `${typeof mpProperties[number]}-desktop`
 
 export type MpProps = {
   [mpKey in MpProperties]?: number | string | 'auto'
@@ -49,9 +43,6 @@ export type MpProps = {
 
 export type XflexProps = {
   xflex?: string
-  'xflex-mobile'?: string
-  'xflex-tablet'?: string
-  'xflex-desktop'?: string
 }
 
 export type ExtendProps = {
@@ -87,9 +78,7 @@ export type HonorableTheme = {
   name?: string
   mode?: Mode
   breakpoints?: {
-    mobile?: number
-    tablet?: number
-    desktop?: number
+    [key: string]: number
   }
   colors?: {
     [key: ColorKey]: ColorValue
@@ -100,7 +89,8 @@ export type HonorableTheme = {
   html?: DefaultProps
   global?: DefaultProps
   utils?: {
-    resolveColor: (color: string | StylesProps) => string | StylesProps
+    resolveColorString: (color: string) => string
+    resolveColorObject: (color: object) => object
   }
   // Tags
   ButtonBase?: ComponentProps

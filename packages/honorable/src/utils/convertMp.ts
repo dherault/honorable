@@ -55,7 +55,7 @@ function convertMp(mpProps: object, theme: HonorableTheme): StylesProps {
       return
     }
 
-    const query = createMediaQuery(mediaKey, theme)
+    const query = createMediaQuery(mediaKey, 'exact', theme)
 
     if (!query) {
       Object.assign(convertedStyle, unmediatedConvertedStyle)

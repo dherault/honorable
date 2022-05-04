@@ -3,6 +3,7 @@ import resolveColor from '../../src/utils/resolveColor'
 import { theme } from '../theme'
 
 describe('Color resolution', () => {
+
   test('it resolves an hex color', () => {
     expect(resolveColor('#ffffff', theme)).toBe('#ffffff')
   })
@@ -43,9 +44,11 @@ describe('Color resolution', () => {
     expect(resolveColor('aliasModedColor', theme)).toBe(theme.colors.primary)
     expect(resolveColor('aliasModedColor', { ...theme, mode: 'dark' })).toBe(theme.colors.secondary)
   })
+
 })
 
 describe('lighten and darken', () => {
+
   test('it returns a lightened hex color', () => {
     expect(resolveColor('lighten(#000000)', theme)).toBe('#404040')
   })
@@ -102,9 +105,11 @@ describe('lighten and darken', () => {
   //   expect(resolveColor('lighten(rgba(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
   //   expect(resolveColor('lighten(rgba(0, 0, 0, 128), 10)', theme)).toBe('#1a1a1a80')
   // })
+
 })
 
 describe('transparencify', () => {
+
   test('it returns a transparencified hex color', () => {
     expect(resolveColor('transparency(#000000)', theme)).toBe('#00000080')
   })
@@ -141,4 +146,5 @@ describe('transparencify', () => {
   //   expect(resolveColor('transparency(rgba(0, 0, 0), 10)', theme)).toBe('#000000e6')
   //   expect(resolveColor('transparency(rgba(0, 0, 0, 128), 10)', theme)).toBe('#00000066')
   // })
+
 })

@@ -1,13 +1,11 @@
-import { StylesProps } from '../types'
-
 import capitalize from './capitalize'
+import reduceDeep from './reduceDeep'
 
-function resolveWebkitProperties(styles: StylesProps): StylesProps {
-  return Object.entries(styles).reduce((acc, [key, value]) => {
-    acc[key.startsWith('webkit') || key.startsWith('moz') ? capitalize(key) : key] = value
-
-    return acc
-  }, {})
+function resolveWebkitProperties(styles: object): object {
+  return reduceDeep(styles, (acc, key, value) => ({
+    ...acc,
+    [key.startsWith('webkit') || key.startsWith('moz') ? capitalize(key) : key]: value,
+  }))
 }
 
 export default resolveWebkitProperties

@@ -386,7 +386,7 @@ export function CssBaseline() {
       <Global
         styles={css`
           :root {
-            ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColor(colorName)};\n`)}
+            ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColorString(colorName)};\n`)}
           }
         `}
       />

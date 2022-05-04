@@ -2,6 +2,7 @@ import { HonorableTheme } from '../types'
 
 import namedColors from '../data/namedColors'
 
+import reduceDeep from './reduceDeep'
 import isSelector from './isSelector'
 import { darken, lighten } from './lightenAndDarken'
 import transparency from './transparency'
@@ -40,26 +41,27 @@ const colorProperties = [
   'textShadow',
 ]
 
-function resolveColor<T>(value: T, theme: HonorableTheme = {}): T {
+export default function resolveColor<T>(value: T, theme: HonorableTheme = {}): T {
   return resolveColorEntry(null, value, theme)
 }
 
-function resolveColorEntry<T>(key: string | null, value: T, theme: HonorableTheme = {}): T {
+export function resolveColorString(value: string, theme: HonorableTheme = {}): string {
+  return applyColorHelpers(convertThemeColors(value, theme))
+}
+
+function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme = {}): any {
   if (key && !(isSelector(key) || colorProperties.includes(key))) return value
 
-  if (typeof value === 'object') {
-    const resolvedObject = {} as T
-
-    Object.keys(value).forEach(key => {
-      resolvedObject[key] = resolveColorEntry(key, value[key], theme)
-    })
-
-    return resolvedObject
+  if (value && typeof value === 'object') {
+    return reduceDeep(value, (accumulator, key, value) => ({
+      ...accumulator,
+      [key]: resolveColorEntry(key, value, theme),
+    }))
   }
 
-  if (typeof value !== 'string') return value
+  if (typeof value === 'string') return resolveColorString(value, theme)
 
-  return applyColorHelpers(convertThemeColors(value, theme)) as any as T
+  return value
 }
 
 /*
@@ -180,5 +182,3 @@ function applyColorHelpers(colorString: string, i = 0): string {
 function convertNamedColor(value: string) {
   return namedColors[value] || value
 }
-
-export default resolveColor

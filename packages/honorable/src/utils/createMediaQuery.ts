@@ -1,35 +1,30 @@
 import { HonorableTheme } from '../types'
 
-function isMediaQueryKey(key: any) {
-  return key === 'mobile' || key === 'tablet' || key === 'desktop'
-}
-
-function pixelify(value: number | string): string {
-  if (typeof value === 'number') {
-    return `${value}px`
-  }
-
-  return value
-}
-
-function createMediaQuery(breakpointName: string, theme: HonorableTheme) {
-  if (!isMediaQueryKey(breakpointName)) {
+function createMediaQuery(breakpointName: string, upOrDownOrExact: 'up' | 'down' |'exact', theme: HonorableTheme) {
+  if (typeof theme.breakpoints?.[breakpointName] !== 'number') {
     return null
   }
 
-  switch (breakpointName) {
-    case 'mobile': {
-      return `@media (max-width: ${pixelify(theme.breakpoints?.mobile)})`
-    }
-    case 'tablet': {
-      return `@media (min-width: ${pixelify(theme.breakpoints?.mobile)}) and (max-width: ${pixelify(theme.breakpoints?.tablet)})`
-    }
-    case 'desktop': {
-      if (theme.breakpoints?.desktop === Infinity) {
-        return `@media (min-width: ${pixelify(theme.breakpoints?.tablet)})`
-      }
+  const breakpointEntries = Object.entries(theme.breakpoints).sort(([, valueA], [, valueB]) => valueA - valueB)
+  const index = breakpointEntries.findIndex(([key]) => key === breakpointName)
 
-      return `@media (min-width: ${pixelify(theme.breakpoints?.tablet)} and max-width: ${pixelify(theme.breakpoints?.desktop)})`
+  switch (upOrDownOrExact) {
+    case 'up': {
+      return `@media (min-width: ${breakpointEntries[index][1]}px)`
+    }
+    case 'down': {
+      return `@media (max-width: ${breakpointEntries[index][1]}px)`
+    }
+    case 'exact': {
+      const mediaQuery = `@media (min-width: ${breakpointEntries[index][1]}px`
+      const nextEntry = breakpointEntries[index + 1]
+
+      if (!nextEntry) return `${mediaQuery})`
+
+      return `${mediaQuery} and max-width: ${nextEntry[1]}px)`
+    }
+    default: {
+      return null
     }
   }
 }
