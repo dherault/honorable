@@ -11,8 +11,8 @@ describe('createMediaQuery', () => {
     expect(createMediaQuery('mobile', 'down', theme)).toBe('@media (max-width: 0px)')
     expect(createMediaQuery('tablet', 'down', theme)).toBe('@media (max-width: 600px)')
     expect(createMediaQuery('desktop', 'down', theme)).toBe('@media (max-width: 1000px)')
-    expect(createMediaQuery('mobile', 'exact', theme)).toBe('@media (min-width: 0px and max-width: 600px)')
-    expect(createMediaQuery('tablet', 'exact', theme)).toBe('@media (min-width: 600px and max-width: 1000px)')
+    expect(createMediaQuery('mobile', 'exact', theme)).toBe('@media (min-width: 0px) and (max-width: 600px)')
+    expect(createMediaQuery('tablet', 'exact', theme)).toBe('@media (min-width: 600px) and (max-width: 1000px)')
     expect(createMediaQuery('desktop', 'exact', theme)).toBe('@media (min-width: 1000px)')
   })
 

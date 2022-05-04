@@ -1,6 +1,6 @@
 {
   "name": "honorable-theme-material",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A material-styled honorable theme",
   "main": "dist/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.15",
+    "nodemon": "^2.0.16",
     "rimraf": "^3.0.2"
   },
   "dependencies": {

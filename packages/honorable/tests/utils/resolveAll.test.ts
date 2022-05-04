@@ -31,7 +31,7 @@ describe('resolveAll', () => {
         width: 128,
         backgroundColor: '#0000ff',
         '&:hover': {
-          '@media (min-width: 0px and max-width: 600px)': {
+          '@media (min-width: 0px) and (max-width: 600px)': {
             width: 64,
           },
           '@media (min-width: 600px)': {
