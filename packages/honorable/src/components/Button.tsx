@@ -30,7 +30,8 @@ export const buttonPropTypes = {
 // TODO v1 loading
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const {
-    honorableOverridenProps,
+    __honorableOrigin,
+    __honorableOverridenProps,
     startIcon,
     endIcon,
     children,
@@ -61,7 +62,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         <Span
           xflex="x5"
           visibility={loading ? 'hidden' : 'visible'}
-          {...resolvePartProps('Button', 'StartIcon', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.StartIcon`, props, __honorableOverridenProps, theme)}
         >
           {startIcon}
         </Span>
@@ -74,19 +75,20 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
           right={0}
           top={0}
           bottom={0}
-          {...resolvePartProps('Button', 'LoadingIndicator', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.LoadingIndicator`, props, __honorableOverridenProps, theme)}
         >
           {(loadingIndicator || (
             <Spinner
+              __honorableOrigin={`${__honorableOrigin}.Spinner`}
               size={typeof height === 'number' ? height * 3 / 5 : 16}
-              {...resolvePartProps('Button', 'Spinner', props, honorableOverridenProps, theme)}
+              {...resolvePartProps(`${__honorableOrigin}.Spinner`, props, __honorableOverridenProps, theme)}
             />
           ))}
         </Span>
       )}
       <Span
         visibility={loading ? 'hidden' : 'visible'}
-        {...resolvePartProps('Button', 'Children', props, honorableOverridenProps, theme)}
+        {...resolvePartProps(`${__honorableOrigin}.Children`, props, __honorableOverridenProps, theme)}
       >
         {children}
       </Span>
@@ -94,7 +96,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         <Span
           xflex="x5"
           visibility={loading ? 'hidden' : 'visible'}
-          {...resolvePartProps('Button', 'EndIcon', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.EndIcon`, props, __honorableOverridenProps, theme)}
         >
           {endIcon}
         </Span>

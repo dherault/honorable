@@ -43,7 +43,7 @@ const defaultIcon = (
 
 // TODO v1 FormControlLabel
 function CheckboxRef({
-  honorableSetOverridenProps,
+  __honorableSetOverridenProps,
   defaultChecked,
   checked,
   disabled = false,
@@ -57,7 +57,7 @@ ref: Ref<any>
   const actualChecked = checked ?? uncontrolledChecked ?? false
 
   // Override `checked` prop in defaultProps
-  useOverridenProps(honorableSetOverridenProps, { checked: actualChecked })
+  useOverridenProps(__honorableSetOverridenProps, { checked: actualChecked })
 
   function handleChange(event: MouseEvent | KeyboardEvent) {
     if (disabled) return

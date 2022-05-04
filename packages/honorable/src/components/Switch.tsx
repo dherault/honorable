@@ -32,8 +32,9 @@ export const switchPropTypes = {
 // TODO v1 move styles to theme
 function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const {
-    honorableOverridenProps,
-    honorableSetOverridenProps,
+    __honorableOrigin,
+    __honorableOverridenProps,
+    __honorableSetOverridenProps,
     defaultChecked,
     checked,
     disabled,
@@ -46,7 +47,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
 
-  useOverridenProps(honorableSetOverridenProps, { checked: actualChecked })
+  useOverridenProps(__honorableSetOverridenProps, { checked: actualChecked })
 
   function handleKeyDown(event: KeyboardEvent) {
     if (event.code === 'Enter' || event.code === 'Space') {
@@ -108,7 +109,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
         top={2}
         left={actualChecked ? 'calc(100% - 22px)' : 2}
         transition="left 150ms ease"
-        {...resolvePartProps('Switch', 'Handle', props, honorableOverridenProps, theme)}
+        {...resolvePartProps(`${__honorableOrigin}.Handle`, props, __honorableOverridenProps, theme)}
       />
     </Div>
   )

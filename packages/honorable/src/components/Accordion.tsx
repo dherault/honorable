@@ -29,8 +29,9 @@ export const accordionPropTypes = {
 
 function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const {
-    honorableOverridenProps,
-    honorableSetOverridenProps,
+    __honorableOrigin,
+    __honorableOverridenProps,
+    __honorableSetOverridenProps,
     expanded,
     defaultExpanded,
     onExpand,
@@ -45,7 +46,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
 
-  useOverridenProps(honorableSetOverridenProps, { expanded: actualExpanded })
+  useOverridenProps(__honorableSetOverridenProps, { expanded: actualExpanded })
 
   const handleExpand = useCallback(() => {
     setUncontrolledExpanded(!actualExpanded)
@@ -64,25 +65,25 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       <Div
         xflex="x4"
         cursor="pointer"
-        {...resolvePartProps('Accordion', 'Title', props, honorableOverridenProps, theme)}
+        {...resolvePartProps(`${__honorableOrigin}.Title`, props, __honorableOverridenProps, theme)}
         onClick={handleExpand}
       >
         {title}
         <Div flexGrow={1} />
         <Div
           xflex="x5"
-          {...resolvePartProps('Accordion', 'ExpandIcon', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.ExpandIcon`, props, __honorableOverridenProps, theme)}
         >
           {expandIcon || <Caret />}
         </Div>
       </Div>
       <Div
         height={actualExpanded ? childrenHeight : 0}
-        {...resolvePartProps('Accordion', 'Children', props, honorableOverridenProps, theme)}
+        {...resolvePartProps(`${__honorableOrigin}.Children`, props, __honorableOverridenProps, theme)}
       >
         <Div
           ref={childrenRef}
-          {...resolvePartProps('Accordion', 'ChildrenInner', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.ChildrenInner`, props, __honorableOverridenProps, theme)}
         >
           {children}
         </Div>

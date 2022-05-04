@@ -43,8 +43,9 @@ export const dropdownButtonPropTypes = {
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const {
-    honorableOverridenProps,
-    honorableSetOverridenProps,
+    __honorableOrigin,
+    __honorableOverridenProps,
+    __honorableSetOverridenProps,
     open,
     defaultOpen,
     label,
@@ -77,7 +78,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     if (typeof onOpen === 'function') onOpen(false)
   }, [onOpen])
 
-  useOverridenProps(honorableSetOverridenProps, { open: actualOpen })
+  useOverridenProps(__honorableSetOverridenProps, { open: actualOpen })
 
   useEscapeKey(handleClose)
   useOutsideClick(dropdownButtonRef, handleClose)
@@ -106,13 +107,9 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     >
       <Button
         {...buttonProps}
+        __honorableOrigin={`${__honorableOrigin}.Button`}
         endIcon={(
-          <Div
-            flex="x5"
-            {...resolvePartProps('DropdownButton', 'EndIcon', props, honorableOverridenProps, theme)}
-          >
-            <Caret rotation={actualOpen ? 180 : 0} />
-          </Div>
+          <Caret rotation={actualOpen ? 180 : 0} />
         )}
         onClick={event => {
           if (buttonProps.disabled) return
@@ -120,14 +117,15 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
           if (actualOpen) handleClose()
           else handleOpen()
 
-          if (typeof buttonProps.onClick === 'function')buttonProps.onClick(event)
+          if (typeof buttonProps.onClick === 'function') buttonProps.onClick(event)
         }}
-        {...resolvePartProps('DropdownButton', 'Button', props, honorableOverridenProps, theme)}
+        {...resolvePartProps(`${__honorableOrigin}.Button`, props, __honorableOverridenProps, theme)}
       >
         {label}
       </Button>
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
+          __honorableOrigin={`${__honorableOrigin}.Menu`}
           fade={fade}
           menuState={menuState}
           setMenuState={setMenuState}
@@ -137,7 +135,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={actualOpen ? 'block' : 'none'}
-          {...resolvePartProps('DropdownButton', 'Menu', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.Menu`, props, __honorableOverridenProps, theme)}
         >
           {children}
         </Menu>

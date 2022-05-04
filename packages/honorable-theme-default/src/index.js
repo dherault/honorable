@@ -243,6 +243,18 @@ export default {
       },
     ],
   },
+  DropdownButton: {
+    partProps: {
+      Button: {
+        EndIcon: [
+          {
+            marginLeft: '8px',
+            marginRight: '-6px',
+          },
+        ],
+      },
+    },
+  },
   H1: {
     defaultProps: [
       {

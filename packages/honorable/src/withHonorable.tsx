@@ -36,10 +36,10 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
-      shouldForwardProp: prop => (
+      shouldForwardProp: (prop: string) => (
         isPropValid(prop)
-        || (!isTag && (prop === 'honorableOverridenProps' || prop === 'honorableSetOverridenProps'))
-        || propTypeKeys.includes(prop as string)
+        || (!isTag && prop.startsWith('__honorable'))
+        || propTypeKeys.includes(prop)
       ),
     }
   )(props => props.honorable)
@@ -51,14 +51,13 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const [honorable, otherProps] = useMemo(() => {
       const aliases = Object.keys(theme.aliases || {})
       const suffixedAliases = aliases.map(x => `${x}-`)
-      const { extend, ...nextProps } = props
       const defaultProps = theme[name]?.defaultProps
       const stylesProps: StylesProps = {}
       const otherProps = {} as P
-      const resolvedProps = { ...nextProps, ...overridenProps }
+      const resolvedProps = { ...props, ...overridenProps }
       const resolvedDefaultProps = resolveDefaultProps(defaultProps, resolvedProps, theme)
 
-      Object.entries(nextProps).forEach(([key, value]) => {
+      Object.entries(props).forEach(([key, value]) => {
         if (
           (
             allStyleProperties.includes(key)
@@ -83,7 +82,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
             resolvedDefaultProps,                                                                    // Component defaultProps
             resolveDefaultProps(theme.global, { ...resolvedProps, ...resolvedDefaultProps }, theme), // Global props
             stylesProps,                                                                             // Actual style from props
-            filterObject(extend),                                                                    // "extend" prop
           ),
           theme
         ),
@@ -95,8 +93,9 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       <HonorableStyle
         ref={ref}
         theme={theme}
-        honorableOverridenProps={overridenProps}
-        honorableSetOverridenProps={setOverridenProps}
+        __honorableOrigin={name}
+        __honorableOverridenProps={overridenProps}
+        __honorableSetOverridenProps={setOverridenProps}
         honorable={honorable}
         {...otherProps}
       />

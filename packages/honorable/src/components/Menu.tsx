@@ -40,7 +40,7 @@ function enhanceWithDefault(menuState: MenuStateType) {
 }
 
 function MenuRef({
-  honorableSetOverridenProps,
+  __honorableSetOverridenProps,
   menuState: initialMenuState,
   setMenuState: setInitialMenuState,
   fade,
@@ -63,7 +63,7 @@ ref: Ref<any>
     : actualMenuState.activeItemIndex
 
   // Give `active` and `activeItemIndex` and other props to customProps
-  useOverridenProps(honorableSetOverridenProps, actualMenuState)
+  useOverridenProps(__honorableSetOverridenProps, actualMenuState)
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {

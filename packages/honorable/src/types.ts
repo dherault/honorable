@@ -6,12 +6,13 @@ import mpProperties from './data/mpProperties'
 
 // TODO v1 use CSSProperties from react
 
-export type HonorableOverridenProps = {
-  honorableOverridenProps?: object
-  honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
+export type HonorableOptionnalProps = {
+  __honorableOrigin?: string
+  __honorableOverridenProps?: object
+  __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
 
-export type ElementProps<Tag> = HonorableOverridenProps & PropsWithRef<
+export type ElementProps<Tag> = HonorableOptionnalProps & PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
@@ -30,13 +31,11 @@ export type CssProps = {
 }
 
 export type StylesProperties = typeof stylesProperties[number]
-
-export type StylesProps = CssProps & {
+export type StylesProps = AnyProps & CssProps & {
   [stylesKey in StylesProperties]?: any
 }
 
 export type MpProperties = typeof mpProperties[number]
-
 export type MpProps = {
   [mpKey in MpProperties]?: number | string | 'auto'
 }
@@ -45,13 +44,9 @@ export type XflexProps = {
   xflex?: string
 }
 
-export type ExtendProps = {
-  extend?: object
-}
+export type HonorableProps<P> = P & StylesProps & MpProps & XflexProps
 
-export type HonorableProps<P> = P & StylesProps & MpProps & XflexProps & ExtendProps & AnyProps
-
-export type StyledHonorableProps = HonorableOverridenProps & {
+export type StyledHonorableProps = HonorableOptionnalProps & {
   ref: Ref<any>
   theme: HonorableTheme
   honorable: StylesProps
@@ -67,11 +62,13 @@ export type ColorValue = string | ColorKey | {
 export type DefaultPropsFunction = (props: object, theme: HonorableTheme) => StylesProps
 export type DefaultProps = (StylesProps | DefaultPropsFunction)[]
 
+export type PartProps = {
+  [partName: string]: DefaultProps | PartProps
+}
+
 export type ComponentProps = {
   defaultProps?: DefaultProps
-  partProps?: {
-    [key: string]: DefaultProps
-  }
+  partProps?: PartProps
 }
 
 export type HonorableTheme = {

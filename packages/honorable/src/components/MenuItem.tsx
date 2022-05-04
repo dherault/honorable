@@ -9,7 +9,6 @@ import MenuUsageContext from '../contexts/MenuUsageContext'
 import useTheme from '../hooks/useTheme'
 import useForkedRef from '../hooks/useForkedRef'
 import useDebounce from '../hooks/useDebounce'
-import usePreviousWithDefault from '../hooks/usePreviousWithDefault'
 
 import resolvePartProps from '../utils/resolvePartProps'
 
@@ -38,7 +37,8 @@ export const menuItemPropTypes = {
 
 function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const {
-    honorableOverridenProps,
+    __honorableOrigin,
+    __honorableOverridenProps,
     value,
     children,
     active,
@@ -184,7 +184,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             menuItemRef.current.focus()
           }
         }}
-        {...resolvePartProps('MenuItem', 'Children', props, honorableOverridenProps, theme)}
+        {...resolvePartProps(`${__honorableOrigin}.Children`, props, __honorableOverridenProps, theme)}
       >
         {Children.map(children, (child: ReactElement) => {
           if (child?.type === Menu) return null
@@ -195,10 +195,11 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
           <>
             <Span flexGrow={1} />
             <Caret
+              __honorableOrigin={`${__honorableOrigin}.Caret`}
               ml={0.5}
               mr={-0.5}
               rotation={-90}
-              {...resolvePartProps('MenuItem', 'Caret', props, honorableOverridenProps, theme)}
+              {...resolvePartProps(`${__honorableOrigin}.Caret`, props, __honorableOverridenProps, theme)}
             />
           </>
         )}

@@ -23,8 +23,9 @@ export const AdjacentLabelPropTypes = {
 }
 
 function AdjacentLabelRef({
-  honorableOverridenProps,
-  honorableSetOverridenProps,
+  __honorableOrigin,
+  __honorableOverridenProps,
+  __honorableSetOverridenProps,
   label,
   control,
   ...props
@@ -35,11 +36,11 @@ ref: Ref<any>
   // Determine wether control is checked
   const isControlChecked = useCallback(() => {
     let checked = false
-    if (typeof control?.props?.honorableOverridenProps?.defaultChecked !== 'undefined') {
-      checked = control.props.honorableOverridenProps.defaultChecked
+    if (typeof control?.props?.__honorableOverridenProps?.defaultChecked !== 'undefined') {
+      checked = control.props.__honorableOverridenProps.defaultChecked
     }
-    if (typeof control?.props?.honorableOverridenProps?.checked !== 'undefined') {
-      checked = control.props.honorableOverridenProps.checked
+    if (typeof control?.props?.__honorableOverridenProps?.checked !== 'undefined') {
+      checked = control.props.__honorableOverridenProps.checked
     }
 
     return checked
@@ -48,7 +49,7 @@ ref: Ref<any>
   const [uncontrolledChecked, setUncontrolledChecked] = useState(isControlChecked())
 
   // Override `checked` prop in defaultProps
-  useOverridenProps(honorableSetOverridenProps, { checked: uncontrolledChecked })
+  useOverridenProps(__honorableSetOverridenProps, { checked: uncontrolledChecked })
 
   useEffect(() => {
     setUncontrolledChecked(isControlChecked())
@@ -68,7 +69,7 @@ ref: Ref<any>
         checked: uncontrolledChecked,
       })}
       <Div
-        {...resolvePartProps('AdjacentLabel', 'Label', props, honorableOverridenProps, theme)}
+        {...resolvePartProps(`${__honorableOrigin}.Label`, props, __honorableOverridenProps, theme)}
       >
         {label}
       </Div>

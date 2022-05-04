@@ -55,8 +55,9 @@ export const inputPropTypes = {
 
 function InputRef(props: InputProps, ref: Ref<any>) {
   const {
-    honorableOverridenProps,
-    honorableSetOverridenProps,
+    __honorableOrigin,
+    __honorableOverridenProps,
+    __honorableSetOverridenProps,
     type,
     value,
     defaultValue,
@@ -80,7 +81,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   const [uncontrolledValue, setUncontrolledValue] = useState<ValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
 
-  useOverridenProps(honorableSetOverridenProps, { active, value: actualValue })
+  useOverridenProps(__honorableSetOverridenProps, { active, value: actualValue })
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUncontrolledValue(event.target.value)
@@ -98,7 +99,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       {!!startIcon && (
         <Div
           xflex="x5"
-          {...resolvePartProps('Input', 'StartIcon', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.StartIcon`, props, __honorableOverridenProps, theme)}
         >
           {startIcon}
         </Div>
@@ -121,7 +122,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           }}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
-          {...resolvePartProps('Input', 'InputBase', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.InputBase`, props, __honorableOverridenProps, theme)}
           flexGrow={1}
         />
       )}
@@ -146,14 +147,14 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           maxRows={maxRows}
           style={{
             flexGrow: 1,
-            ...resolvePartProps('Input', 'TextArea', props, honorableOverridenProps, theme),
+            ...resolvePartProps(`${__honorableOrigin}.TextArea`, props, __honorableOverridenProps, theme),
           }}
         />
       )}
       {!!endIcon && (
         <Div
           xflex="x5"
-          {...resolvePartProps('Input', 'EndIcon', props, honorableOverridenProps, theme)}
+          {...resolvePartProps(`${__honorableOrigin}.EndIcon`, props, __honorableOverridenProps, theme)}
         >
           {endIcon}
         </Div>
