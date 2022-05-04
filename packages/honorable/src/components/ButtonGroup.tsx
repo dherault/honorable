@@ -12,8 +12,8 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      display="inline-flex"
       xflex="x4"
+      display="inline-flex"
       {...props}
     />
   )

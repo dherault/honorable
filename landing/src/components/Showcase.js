@@ -24,11 +24,10 @@ import CodeBlock from './CodeBlock'
 const themes = [
   defaultTheme,
   materialTheme,
-  {
-    ...defaultTheme,
+  mergeTheme(defaultTheme, {
     name: 'Unicorn lovers',
     colors: { ...defaultTheme.colors, primary: '#FF1493' },
-  },
+  }),
   wireframeTheme,
 ]
 const themeTransitionPeriod = 3300
@@ -36,11 +35,11 @@ const themeTransitionPeriod = 3300
 function prepareTheme(theme, mode) {
   return mergeTheme(theme, {
     mode,
-    global: {
-      defaultProps: {
+    global: [
+      {
         transition: 'all 330ms ease',
       },
-    },
+    ],
   })
 }
 
@@ -49,13 +48,13 @@ function WithRotatingTheme({ children }) {
   const [currentTheme, setCurrentTheme] = useState(themes[0])
   const nextTheme = useMemo(() => themes[(themes.indexOf(currentTheme) + 1) % themes.length], [currentTheme])
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     setCurrentTheme(nextTheme)
-  //   }, themeTransitionPeriod)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setCurrentTheme(nextTheme)
+    }, themeTransitionPeriod)
 
-  //   return () => clearTimeout(timeoutId)
-  // }, [nextTheme])
+    return () => clearTimeout(timeoutId)
+  }, [nextTheme])
 
   return (
     <ThemeProvider theme={prepareTheme(currentTheme, mode)}>

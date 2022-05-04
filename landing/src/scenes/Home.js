@@ -40,8 +40,7 @@ function Home() {
             zIndex={10}
             flexBasis="calc(100vw - 100vh * 3 / 4)"
             flexShrink={1}
-            flexGrow-tablet={1}
-            flexGrow-mobile={1}
+            flexGrow-tablet-down={1}
             position="relative"
             maxWidth="100%"
           >
@@ -63,8 +62,7 @@ function Home() {
             position="relative"
             flexGrow={1}
             backgroundColor="background-light"
-            display-tablet="none"
-            display-mobile="none"
+            display-tablet-down="none"
           >
             <Div
               position="sticky"

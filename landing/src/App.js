@@ -14,26 +14,22 @@ function App() {
 
   return (
     <ThemeModeContext.Provider value={themeModeContextValue}>
-      <ThemeModeContext.Consumer>
-        {([mode]) => (
-          <ThemeProvider theme={{ ...theme, mode }}>
-            <CssBaseline />
-            <BrowserRouter>
-              <Routes>
-                <Route
-                  exact
-                  path="/xflex"
-                  element={<Xflex />}
-                />
-                <Route
-                  path="*"
-                  element={<Home />}
-                />
-              </Routes>
-            </BrowserRouter>
-          </ThemeProvider>
-        )}
-      </ThemeModeContext.Consumer>
+      <ThemeProvider theme={{ ...theme, mode: themeMode }}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              exact
+              path="/xflex"
+              element={<Xflex />}
+            />
+            <Route
+              path="*"
+              element={<Home />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </ThemeModeContext.Provider>
   )
 }

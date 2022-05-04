@@ -64,8 +64,6 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   const previousEvent = usePrevious(event)
   const previousOpen = usePreviousWithDefault(open)
 
-  console.log('renderedItem', currentValue, renderedItem)
-
   const handleOpen = useCallback((nextOpen: boolean) => {
     if (actualOpen === nextOpen) return
     setActualOpen(nextOpen)

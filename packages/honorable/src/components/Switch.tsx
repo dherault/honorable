@@ -29,6 +29,7 @@ export const switchPropTypes = {
 }
 
 // TODO v1 decide weither to use actualChecked or uncontrolledChecked
+// TODO v1 move styles to theme
 function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const {
     honorableOverridenProps,

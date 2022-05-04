@@ -22,13 +22,6 @@ import {
 import Karaoke from './Karaoke'
 import WhatsOnYourMind from './WhatsOnYourMind'
 
-const items = [
-  { text: 'For' },
-  { text: 'CSS' },
-  { text: 'Lovers' },
-  { text: 'And' },
-]
-
 function ComponentsShowcase() {
   return (
     <Div mt={2}>
@@ -68,48 +61,8 @@ function ComponentsShowcase() {
       <Div xflex="x4">
         <UserCard mt={2} />
       </Div>
-      <ControlledSelect items={makeItems(items, 6)} />
       <Karaoke mt={2} />
     </Div>
-  )
-}
-
-function makeItems(items, depth = 1) {
-  if (depth <= 0) return items
-
-  return items.map((item, i) => ({
-    ...item,
-    items: i % 2 === depth % 2 ? null : makeItems(items, depth - 1),
-  }))
-}
-
-function ControlledSelect({ items, initialValue, ...args }) {
-  const [value, setValue] = useState(initialValue)
-
-  function renderItem({ text, items }) {
-    return (
-      <MenuItem
-        key={text}
-        value={text}
-      >
-        {text}
-        {Array.isArray(items) && (
-          <Menu>
-            {items.map(renderItem)}
-          </Menu>
-        )}
-      </MenuItem>
-    )
-  }
-
-  return (
-    <Select
-      {...args}
-      value={value}
-      onChange={event => setValue(event.target.value)}
-    >
-      {items.map(renderItem)}
-    </Select>
   )
 }
 
