@@ -31,6 +31,14 @@ export default mergeTheme(defaultTheme, {
       },
     },
   ],
+  Button: {
+    defaultProps: [
+      ({ size }) => size === 'large' && {
+        fontSize: '1.25rem',
+        padding: '0.75rem 1.5rem',
+      },
+    ],
+  },
   H1: {
     defaultProps: [
       {

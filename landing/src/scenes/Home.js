@@ -174,7 +174,7 @@ function HeroSection() {
         mt={-8}
         mt-mobile={-4}
         xflex="y2s"
-        maxWidth="100%"
+        maxWidth="65%"
       >
         <H1>
           <Span
@@ -199,9 +199,15 @@ function HeroSection() {
           <br />
           in React
         </H1>
+        <P
+          mt={1}
+          text="large"
+        >
+          Create your own theme conventions,<br />and be the master of your components.
+        </P>
         <Div
           xflex="x4s"
-          display-mobile="block"
+          display-tablet-down="block"
           mt={2}
         >
           <A
@@ -215,11 +221,11 @@ function HeroSection() {
           </A>
           <CommandLinePre
             ml={2}
-            ml-mobile={0}
-            mt-mobile={1}
+            ml-tablet-down={0}
+            mt-tablet-down={1}
             flexGrow={1}
             maxWidth={360}
-            width-mobile="100%"
+            width-tablet-down="100%"
           >
             npm i --save honorable honorable-theme-default @emotion/react @emotion/styled
           </CommandLinePre>
