@@ -1,6 +1,6 @@
 # Honorable
 
-A React UI library for 2022 and beyond.
+🙏 Implement any design system in React
 
 - [Website](https://honorable.design)
 - [Documentation](https://docs.honorable.design)
