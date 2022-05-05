@@ -107,7 +107,6 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     >
       <Button
         {...buttonProps}
-        __honorableOrigin={`${__honorableOrigin}.Button`}
         endIcon={(
           <Caret rotation={actualOpen ? 180 : 0} />
         )}
@@ -125,7 +124,6 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       </Button>
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
-          __honorableOrigin={`${__honorableOrigin}.Menu`}
           fade={fade}
           menuState={menuState}
           setMenuState={setMenuState}

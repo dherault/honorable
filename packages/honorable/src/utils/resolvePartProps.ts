@@ -24,7 +24,10 @@ function resolvePartProps(origin: string, props: object, honorableOverridenProps
 
   if (!partTheme) return {}
 
-  return resolveDefaultProps(partTheme, { ...props, ...honorableOverridenProps }, theme)
+  return {
+    ...resolveDefaultProps(partTheme, { ...props, ...honorableOverridenProps }, theme),
+    __honorableOrigin: origin,
+  }
 }
 
 export default resolvePartProps

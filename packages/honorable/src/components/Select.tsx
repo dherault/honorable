@@ -145,7 +145,6 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
       </Div>
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
-          __honorableOrigin={`${__honorableOrigin}.Menu`}
           fade={fade}
           menuState={menuState}
           setMenuState={setMenuState}

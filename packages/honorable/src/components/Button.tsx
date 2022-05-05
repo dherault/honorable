@@ -79,7 +79,6 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         >
           {(loadingIndicator || (
             <Spinner
-              __honorableOrigin={`${__honorableOrigin}.Spinner`}
               size={typeof height === 'number' ? height * 3 / 5 : 16}
               {...resolvePartProps(`${__honorableOrigin}.Spinner`, props, __honorableOverridenProps, theme)}
             />

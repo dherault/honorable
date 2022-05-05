@@ -195,7 +195,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
           <>
             <Span flexGrow={1} />
             <Caret
-              __honorableOrigin={`${__honorableOrigin}.Caret`}
               ml={0.5}
               mr={-0.5}
               rotation={-90}

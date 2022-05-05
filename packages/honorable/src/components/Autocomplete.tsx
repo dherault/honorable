@@ -171,7 +171,6 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     >
       <Input
         {...inputProps}
-        __honorableOrigin={`${__honorableOrigin}.Input`}
         value={search}
         onChange={handleInputChange}
         endIcon={endIcon || <Caret rotation={focused ? 180 : 0} />}
@@ -184,7 +183,6 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       />
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
-          __honorableOrigin={`${__honorableOrigin}.Menu`}
           noFocus
           menuState={menuState}
           setMenuState={setMenuState}
@@ -198,7 +196,6 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         >
           {filteredOptions.length > 0 && filteredOptions.map(option => (
             <MenuItem
-              __honorableOrigin={`${__honorableOrigin}.MenuItem`}
               key={typeof option === 'object' ? option.value : option}
               value={typeof option === 'object' ? option.value : option}
               {...resolvePartProps(`${__honorableOrigin}.MenuItem`, props, __honorableOverridenProps, theme)}
@@ -208,7 +205,6 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           ))}
           {filteredOptions.length === 0 && (
             <MenuItem
-              __honorableOrigin={`${__honorableOrigin}.NoOption`}
               disabled
               value={honorableNoValue}
               {...resolvePartProps(`${__honorableOrigin}.NoOption`, props, __honorableOverridenProps, theme)}
