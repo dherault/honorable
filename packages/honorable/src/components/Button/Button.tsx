@@ -30,8 +30,6 @@ export const buttonPropTypes = {
 // TODO v1 loading
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
     startIcon,
     endIcon,
     children,
@@ -62,7 +60,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         <Span
           xflex="x5"
           visibility={loading ? 'hidden' : 'visible'}
-          {...resolvePartProps(`${__honorableOrigin}.StartIcon`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('StartIcon', props, theme)}
         >
           {startIcon}
         </Span>
@@ -75,19 +73,19 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
           right={0}
           top={0}
           bottom={0}
-          {...resolvePartProps(`${__honorableOrigin}.LoadingIndicator`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('LoadingIndicator', props, theme)}
         >
           {(loadingIndicator || (
             <Spinner
               size={typeof height === 'number' ? height * 3 / 5 : 16}
-              {...resolvePartProps(`${__honorableOrigin}.Spinner`, props, __honorableOverridenProps, theme)}
+              {...resolvePartProps('Spinner', props, theme)}
             />
           ))}
         </Span>
       )}
       <Span
         visibility={loading ? 'hidden' : 'visible'}
-        {...resolvePartProps(`${__honorableOrigin}.Children`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Children', props, theme)}
       >
         {children}
       </Span>
@@ -95,7 +93,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         <Span
           xflex="x5"
           visibility={loading ? 'hidden' : 'visible'}
-          {...resolvePartProps(`${__honorableOrigin}.EndIcon`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('EndIcon', props, theme)}
         >
           {endIcon}
         </Span>

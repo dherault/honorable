@@ -22,16 +22,13 @@ export const AdjacentLabelPropTypes = {
   defaultChecked: PropTypes.bool,
 }
 
-function AdjacentLabelRef({
-  __honorableOrigin,
-  __honorableOverridenProps,
-  __honorableSetOverridenProps,
-  label,
-  control,
-  ...props
-}: AdjacentLabelProps,
-ref: Ref<any>
-) {
+// TODO Edit this
+function AdjacentLabelRef(props: AdjacentLabelProps, ref: Ref<any>) {
+  const {
+    label,
+    control,
+    ...otherProps
+  } = props
   const theme = useTheme()
   // Determine wether control is checked
   const isControlChecked = useCallback(() => {
@@ -49,7 +46,7 @@ ref: Ref<any>
   const [uncontrolledChecked, setUncontrolledChecked] = useState(isControlChecked())
 
   // Override `checked` prop in defaultProps
-  useOverridenProps(__honorableSetOverridenProps, { checked: uncontrolledChecked })
+  useOverridenProps(props, { checked: uncontrolledChecked })
 
   useEffect(() => {
     setUncontrolledChecked(isControlChecked())
@@ -59,7 +56,7 @@ ref: Ref<any>
     <Div
       ref={ref}
       xflex="x4"
-      {...props}
+      {...otherProps}
       onClick={event => {
         setUncontrolledChecked(x => !x)
         if (typeof props.onClick === 'function') props.onClick(event)
@@ -69,7 +66,7 @@ ref: Ref<any>
         checked: uncontrolledChecked,
       })}
       <Div
-        {...resolvePartProps(`${__honorableOrigin}.Label`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Label', props, theme)}
       >
         {label}
       </Div>

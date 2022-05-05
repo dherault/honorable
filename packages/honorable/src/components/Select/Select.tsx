@@ -41,9 +41,6 @@ export const selectPropTypes = {
 
 function SelectRef(props: SelectProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
-    __honorableSetOverridenProps,
     open,
     defaultOpen,
     value,
@@ -72,7 +69,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   }, [actualOpen, onOpen])
 
   // Override the `open` props in customProps
-  useOverridenProps(__honorableSetOverridenProps, { open: actualOpen })
+  useOverridenProps(props, { open: actualOpen })
 
   useEscapeKey(() => handleOpen(false))
   useOutsideClick(selectRef, () => handleOpen(false))
@@ -116,7 +113,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         p={0.5}
         xflex="x5"
         userSelect="none"
-        {...resolvePartProps(`${__honorableOrigin}.Caret`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Caret', props, theme)}
       >
         <Caret rotation={actualOpen ? 180 : 0} />
       </Span>
@@ -137,7 +134,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
-        {...resolvePartProps(`${__honorableOrigin}.Input`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Input', props, theme)}
       >
         {renderSelected()}
         <Div flexGrow={1} />
@@ -154,7 +151,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={actualOpen ? 'block' : 'none'}
-          {...resolvePartProps(`${__honorableOrigin}.Menu`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('Menu', props, theme)}
         >
           {children}
         </Menu>

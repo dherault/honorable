@@ -6,13 +6,13 @@ import mpProperties from './data/mpProperties'
 
 // TODO v1 use CSSProperties from react
 
-export type HonorableOptionnalProps = {
+export type HonorableCommonProps = {
   __honorableOrigin?: string
   __honorableOverridenProps?: object
   __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
 
-export type ElementProps<Tag> = HonorableOptionnalProps & PropsWithRef<
+export type ElementProps<Tag> = HonorableCommonProps & PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
@@ -46,7 +46,7 @@ export type XflexProps = {
 
 export type HonorableProps<P> = P & StylesProps & MpProps & XflexProps
 
-export type StyledHonorableProps = HonorableOptionnalProps & {
+export type StyledHonorableProps = HonorableCommonProps & {
   ref: Ref<any>
   theme: HonorableTheme
   honorable: StylesProps

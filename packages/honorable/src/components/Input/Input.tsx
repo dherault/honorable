@@ -55,9 +55,6 @@ export const inputPropTypes = {
 
 function InputRef(props: InputProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
-    __honorableSetOverridenProps,
     type,
     value,
     defaultValue,
@@ -81,7 +78,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   const [uncontrolledValue, setUncontrolledValue] = useState<ValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
 
-  useOverridenProps(__honorableSetOverridenProps, { active, value: actualValue })
+  useOverridenProps(props, { active, value: actualValue })
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUncontrolledValue(event.target.value)
@@ -99,7 +96,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       {!!startIcon && (
         <Div
           xflex="x5"
-          {...resolvePartProps(`${__honorableOrigin}.StartIcon`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('StartIcon', props, theme)}
         >
           {startIcon}
         </Div>
@@ -122,7 +119,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           }}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
-          {...resolvePartProps(`${__honorableOrigin}.InputBase`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('InputBase', props, theme)}
           flexGrow={1}
         />
       )}
@@ -147,14 +144,14 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           maxRows={maxRows}
           style={{
             flexGrow: 1,
-            ...resolvePartProps(`${__honorableOrigin}.TextArea`, props, __honorableOverridenProps, theme),
+            ...resolvePartProps('TextArea', props, theme),
           }}
         />
       )}
       {!!endIcon && (
         <Div
           xflex="x5"
-          {...resolvePartProps(`${__honorableOrigin}.EndIcon`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('EndIcon', props, theme)}
         >
           {endIcon}
         </Div>

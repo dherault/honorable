@@ -42,22 +42,20 @@ const defaultIcon = (
 )
 
 // TODO v1 FormControlLabel
-function CheckboxRef({
-  __honorableSetOverridenProps,
-  defaultChecked,
-  checked,
-  disabled = false,
-  icon = defaultIcon,
-  onChange,
-  ...props
-}: CheckboxProps,
-ref: Ref<any>
-) {
+function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
+  const {
+    defaultChecked,
+    checked,
+    disabled = false,
+    icon = defaultIcon,
+    onChange,
+    ...otherProps
+  } = props
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = checked ?? uncontrolledChecked ?? false
 
   // Override `checked` prop in defaultProps
-  useOverridenProps(__honorableSetOverridenProps, { checked: actualChecked })
+  useOverridenProps(props, { checked: actualChecked })
 
   function handleChange(event: MouseEvent | KeyboardEvent) {
     if (disabled) return
@@ -78,7 +76,7 @@ ref: Ref<any>
       xflex="x5"
       display="inline-flex"
       tabIndex={0}
-      {...props}
+      {...otherProps}
       onClick={event => {
         handleChange(event)
         if (typeof props.onClick === 'function') props.onClick(event)

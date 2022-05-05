@@ -16,8 +16,6 @@ export const progressBarPropTypes = {}
 
 function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
     value,
     ...otherProps
   } = props
@@ -33,7 +31,7 @@ function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
       <Div
         backgroundColor="black"
         width={`max(0%, min(100%, calc(${value} * 100%)))`}
-        {...resolvePartProps(`${__honorableOrigin}.Bar`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Bar', props, theme)}
       />
     </Div>
   )

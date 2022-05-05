@@ -39,17 +39,15 @@ function enhanceWithDefault(menuState: MenuStateType) {
   return { ...defaultMenuState, ...menuState }
 }
 
-function MenuRef({
-  __honorableSetOverridenProps,
-  menuState: initialMenuState,
-  setMenuState: setInitialMenuState,
-  fade,
-  isSubMenu,
-  children,
-  ...props
-}: MenuProps,
-ref: Ref<any>
-) {
+function MenuRef(props: MenuProps, ref: Ref<any>) {
+  const {
+    menuState: initialMenuState,
+    setMenuState: setInitialMenuState,
+    fade,
+    isSubMenu,
+    children,
+    ...otherProps
+  } = props
   const menuRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, menuRef)
   const [menuState, setMenuState] = useState<MenuStateType>({})
@@ -63,7 +61,7 @@ ref: Ref<any>
     : actualMenuState.activeItemIndex
 
   // Give `active` and `activeItemIndex` and other props to customProps
-  useOverridenProps(__honorableSetOverridenProps, actualMenuState)
+  useOverridenProps(props, actualMenuState)
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {
@@ -171,7 +169,7 @@ ref: Ref<any>
           ref={forkedRef}
           tabIndex={0}
           display="inline-block"
-          {...props}
+          {...otherProps}
           onKeyDown={event => {
             handleKeyDown(event)
             if (typeof props.onKeyDown === 'function') props.onKeyDown(event)

@@ -2,18 +2,38 @@ import { HonorableTheme, StylesProps } from '../types'
 
 import resolveDefaultProps from '../utils/resolveDefaultProps'
 
+function pickHonorableProps(props: object): [any, any] {
+  const honorableProps = {}
+  const otherProps = {}
+
+  Object.keys(props).forEach(key => {
+    if (key.startsWith('__honorable')) honorableProps[key] = props[key]
+    else otherProps[key] = props[key]
+  })
+
+  return [honorableProps, otherProps]
+}
+
 // Return the style object of applied partProps
-function resolvePartProps(origin: string, props: object, honorableOverridenProps: object, theme: HonorableTheme): StylesProps {
-  const originArray = origin.split('.')
+function resolvePartProps(partKey: string, props: object, theme: HonorableTheme): StylesProps {
+  const [{ __honorableOrigin, __honorableOverridenProps }, otherProps] = pickHonorableProps(props)
+
+  const originArray = [...__honorableOrigin.split('.'), partKey]
+  const nextHonorableOrigin = originArray.join('.')
   const originName = originArray.shift()
 
   const componentTheme = theme[originName]
 
-  if (!(componentTheme && typeof componentTheme === 'object')) return {}
+  if (__honorableOrigin.startsWith('DropdownButton')) {
+    console.log('nextHonorableOrigin', nextHonorableOrigin)
+    console.log('partKey', partKey)
+  }
+
+  if (!(componentTheme && typeof componentTheme === 'object')) return { __honorableOrigin: nextHonorableOrigin }
 
   let partTheme = componentTheme.partProps
 
-  if (!partTheme) return {}
+  if (!partTheme) return { __honorableOrigin: nextHonorableOrigin }
 
   // TODO v1 include theme from origin
   originArray.forEach(partName => {
@@ -22,11 +42,11 @@ function resolvePartProps(origin: string, props: object, honorableOverridenProps
     partTheme = partTheme[partName]
   })
 
-  if (!partTheme) return {}
+  if (!partTheme) return { __honorableOrigin: nextHonorableOrigin }
 
   return {
-    ...resolveDefaultProps(partTheme, { ...props, ...honorableOverridenProps }, theme),
-    __honorableOrigin: origin,
+    ...resolveDefaultProps(partTheme, { ...otherProps, ...__honorableOverridenProps }, theme),
+    __honorableOrigin: nextHonorableOrigin,
   }
 }
 

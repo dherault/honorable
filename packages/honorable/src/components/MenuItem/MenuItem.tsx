@@ -65,8 +65,6 @@ function MenuItemTriangle(props: any) {
 
 function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
     value,
     children,
     active,
@@ -215,7 +213,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             menuItemRef.current.focus()
           }
         }}
-        {...resolvePartProps(`${__honorableOrigin}.Children`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Children', props, theme)}
       >
         {Children.map(children, (child: ReactElement) => {
           if (child?.type === Menu) return null
@@ -229,7 +227,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
               ml={0.5}
               mr={-0.5}
               rotation={-90}
-              {...resolvePartProps(`${__honorableOrigin}.Caret`, props, __honorableOverridenProps, theme)}
+              {...resolvePartProps('Caret', props, theme)}
             />
           </>
         )}

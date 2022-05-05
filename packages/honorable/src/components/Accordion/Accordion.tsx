@@ -32,9 +32,6 @@ export const accordionPropTypes = {
 
 function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
-    __honorableSetOverridenProps,
     expanded,
     defaultExpanded,
     onExpand,
@@ -49,7 +46,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
 
-  useOverridenProps(__honorableSetOverridenProps, { expanded: actualExpanded })
+  useOverridenProps(props, { expanded: actualExpanded })
 
   const handleExpand = useCallback(() => {
     setUncontrolledExpanded(!actualExpanded)
@@ -68,25 +65,25 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       <Div
         xflex="x4"
         cursor="pointer"
-        {...resolvePartProps(`${__honorableOrigin}.Title`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Title', props, theme)}
         onClick={handleExpand}
       >
         {title}
         <Div flexGrow={1} />
         <Div
           xflex="x5"
-          {...resolvePartProps(`${__honorableOrigin}.ExpandIcon`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('ExpandIcon', props, theme)}
         >
           {expandIcon || <Caret />}
         </Div>
       </Div>
       <Div
         height={actualExpanded ? childrenHeight : 0}
-        {...resolvePartProps(`${__honorableOrigin}.Children`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Children', props, theme)}
       >
         <Div
           ref={childrenRef}
-          {...resolvePartProps(`${__honorableOrigin}.ChildrenInner`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('ChildrenInner', props, theme)}
         >
           {children}
         </Div>

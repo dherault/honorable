@@ -1,8 +1,12 @@
 import { Dispatch, SetStateAction, useEffect } from 'react'
 
-function useOverridenProps(honorableSetOverridenProps: Dispatch<SetStateAction<object>>, props: object) {
+type UseOverridenProps = {
+  __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
+}
+
+function useOverridenProps({ __honorableSetOverridenProps }: UseOverridenProps, props: object) {
   useEffect(() => {
-    honorableSetOverridenProps(props)
+    __honorableSetOverridenProps(props)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, Object.values(props))
 }

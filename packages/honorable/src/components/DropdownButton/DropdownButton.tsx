@@ -43,9 +43,6 @@ export const dropdownButtonPropTypes = {
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
-    __honorableSetOverridenProps,
     open,
     defaultOpen,
     label,
@@ -79,7 +76,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     if (typeof onOpen === 'function') onOpen(false)
   }, [onOpen])
 
-  useOverridenProps(__honorableSetOverridenProps, { open: actualOpen })
+  useOverridenProps(props, { open: actualOpen })
 
   useEscapeKey(handleClose)
   useOutsideClick(dropdownButtonRef, handleClose)
@@ -119,7 +116,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
 
           if (typeof buttonProps.onClick === 'function') buttonProps.onClick(event)
         }}
-        {...resolvePartProps(`${__honorableOrigin}.Button`, props, __honorableOverridenProps, theme)}
+        {...resolvePartProps('Button', props, theme)}
       >
         {label}
       </Button>
@@ -134,7 +131,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={actualOpen ? 'block' : 'none'}
-          {...resolvePartProps(`${__honorableOrigin}.Menu`, props, __honorableOverridenProps, theme)}
+          {...resolvePartProps('Menu', props, theme)}
         >
           {children}
         </Menu>

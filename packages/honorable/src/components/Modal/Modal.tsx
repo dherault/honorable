@@ -22,8 +22,6 @@ export const modalPropTypes = {
 
 function ModalRef(props: ModalProps, ref: Ref<any>) {
   const {
-    __honorableOrigin,
-    __honorableOverridenProps,
     open = false,
     onClose,
     ...otherProps
@@ -51,7 +49,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
       zIndex="1000"
       backgroundColor="rgba(0, 0, 0, 0.5)"
       onClick={handleBackdropClick}
-      {...resolvePartProps(`${__honorableOrigin}.Backdrop`, props, __honorableOverridenProps, theme)}
+      {...resolvePartProps('Backdrop', props, theme)}
     >
       <Div
         ref={ref}
