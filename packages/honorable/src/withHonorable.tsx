@@ -15,7 +15,6 @@ import mpProperties from './data/mpProperties'
 
 import useTheme from './hooks/useTheme'
 
-import filterObject from './utils/filterObject'
 import isSelector from './utils/isSelector'
 import resolveAll from './utils/resolveAll'
 import resolveDefaultProps from './utils/resolveDefaultProps'
