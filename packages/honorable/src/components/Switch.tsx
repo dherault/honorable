@@ -66,7 +66,6 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
       width={50}
       height={24}
       borderRadius={24 / 2}
-      backgroundColor="background-light"
       userSelect="none"
       cursor="pointer"
       role="button"

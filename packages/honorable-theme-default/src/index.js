@@ -217,8 +217,8 @@ export default {
   Checkbox: {
     defaultProps: [
       {
-        width: 24,
-        height: 24,
+        width: 20,
+        height: 20,
         color: 'white',
         backgroundColor: 'transparent',
         border: '1px solid border',
@@ -539,6 +539,7 @@ export default {
   Switch: {
     defaultProps: [
       {
+        backgroundColor: 'background-light',
         transition: 'background-color 150ms ease',
         '&:hover': {
           boxShadow: '0 0 0 2px border',
