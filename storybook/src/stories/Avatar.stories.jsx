@@ -16,38 +16,41 @@ function Template(args) {
 
 export const Default = Template.bind({})
 Default.args = {
-  children: 'AB',
 }
 
 export const SingleLetter = Template.bind({})
 SingleLetter.args = {
-  children: 'A',
+  name: 'Alexander',
 }
 
 export const FullName = Template.bind({})
 FullName.args = {
-  children: 'Adorian Bagela',
+  name: 'David Hérault',
+}
+
+export const LongName = Template.bind({})
+LongName.args = {
+  name: 'Edgard Alan Poe',
+}
+
+export const SrcAndName = Template.bind({})
+SrcAndName.args = {
+  name: 'David Hérault',
+  src: 'https://avatars.githubusercontent.com/u/4154003?v=4',
 }
 
 export const Src = Template.bind({})
 Src.args = {
   src: 'https://avatars.githubusercontent.com/u/4154003?v=4',
-  alt: 'David',
 }
 
-export const WonkySrcAlt = Template.bind({})
-WonkySrcAlt.args = {
-  src: 'https://wonky.src.image.tld',
-  alt: 'David',
-}
-
-export const WonkySrcNoAlt = Template.bind({})
-WonkySrcNoAlt.args = {
+export const WonkySrc = Template.bind({})
+WonkySrc.args = {
   src: 'https://wonky.src.image.tld',
 }
 
 export const Size = Template.bind({})
 Size.args = {
-  children: 'AB',
+  name: 'Julien Brothero',
   size: 64,
 }
