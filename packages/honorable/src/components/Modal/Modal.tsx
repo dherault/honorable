@@ -6,7 +6,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useEscapeKey from '../../hooks/useEscapeKey'
 
-import resolvePartProps from '../../utils/resolvePartProps'
+import resolvePartProps from '../../resolvers/resolvePartProps'
 
 import { Div, DivProps } from '../tags'
 

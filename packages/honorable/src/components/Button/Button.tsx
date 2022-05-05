@@ -6,7 +6,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 
-import resolvePartProps from '../../utils/resolvePartProps'
+import resolvePartProps from '../../resolvers/resolvePartProps'
 
 import { Spinner } from '../Spinner/Spinner'
 import { ButtonBase, ButtonBaseProps, Span } from '../tags'

@@ -14,7 +14,7 @@ import useEscapeKey from '../../hooks/useEscapeKey'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
-import resolvePartProps from '../../utils/resolvePartProps'
+import resolvePartProps from '../../resolvers/resolvePartProps'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'

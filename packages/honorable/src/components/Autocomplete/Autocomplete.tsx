@@ -13,7 +13,7 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
 import pickProps from '../../utils/pickProps'
-import resolvePartProps from '../../utils/resolvePartProps'
+import resolvePartProps from '../../resolvers/resolvePartProps'
 
 import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'

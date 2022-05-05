@@ -14,7 +14,7 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
 import pickProps from '../../utils/pickProps'
-import resolvePartProps from '../../utils/resolvePartProps'
+import resolvePartProps from '../../resolvers/resolvePartProps'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Button, ButtonProps, buttonPropTypes } from '../Button/Button'

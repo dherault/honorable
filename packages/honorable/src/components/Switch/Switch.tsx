@@ -6,7 +6,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
-import resolvePartProps from '../../utils/resolvePartProps'
+import resolvePartProps from '../../resolvers/resolvePartProps'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'

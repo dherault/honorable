@@ -9,7 +9,7 @@ import MenuUsageContext from '../../contexts/MenuUsageContext'
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 
-import resolvePartProps from '../../utils/resolvePartProps'
+import resolvePartProps from '../../resolvers/resolvePartProps'
 
 import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
