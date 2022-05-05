@@ -8,7 +8,6 @@ import MenuUsageContext from '../contexts/MenuUsageContext'
 
 import useTheme from '../hooks/useTheme'
 import useForkedRef from '../hooks/useForkedRef'
-import useDebounce from '../hooks/useDebounce'
 
 import resolvePartProps from '../utils/resolvePartProps'
 
@@ -35,6 +34,35 @@ export const menuItemPropTypes = {
   disabled: PropTypes.bool,
 }
 
+// A triangle to smooth the user interaction with the submenus
+// Prevents losing focus when hovering on a submenu
+function MenuItemTriangle(props: any) {
+  const { isTop = false, size = 0, ...otherProps } = props
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>()
+  const [displayed, setDisplayed] = useState(true)
+
+  if (!displayed) return null
+
+  return (
+    <Div
+      width={0}
+      height={0}
+      borderLeft={`${size}px solid transparent`}
+      borderBottom={isTop ? `${size}px solid transparent` : 'none'}
+      borderTop={!isTop ? `${size}px solid transparent` : 'none'}
+      cursor="pointer"
+      onMouseEnter={() => {
+        setTimeoutId(setTimeout(() => {
+          setDisplayed(false)
+        }, 200))
+      }}
+      onMouseLeave={() => clearTimeout(timeoutId)}
+      zIndex={100}
+      {...otherProps}
+    />
+  )
+}
+
 function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const {
     __honorableOrigin,
@@ -54,10 +82,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const [menuState, setMenuState,, setParentMenuState] = useContext(MenuContext)
   const [menuUsageState, setMenuUsageState] = useContext(MenuUsageContext)
   const [subMenuState, setSubMenuState] = useState<MenuStateType>({ active: false, isSubMenuVisible: false })
-  const debouncedActive = useDebounce(active, 1150) // TODO
-
-  // console.log('debouncedActive', debouncedActive, debouncedPreviousActive)
-  // console.log('MenuItem menuUsageState.value', menuUsageState.value)
+  const [height, setHeight] = useState(0)
 
   const subMenu = useMemo(() => {
     let subMenu: ReactElement
@@ -68,6 +93,12 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
 
     return subMenu
   }, [children])
+
+  // Set height for the submenu's triangle
+  // times 1.5 to make the triangle large enough
+  useEffect(() => {
+    setHeight(menuItemRef.current.offsetHeight * 1.5)
+  }, [])
 
   // Focus if active
   // Otherwise if subMenu is focused unfocus subMenu
@@ -203,18 +234,34 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
           </>
         )}
       </Div>
-      {(active || debouncedActive) && subMenu && (
-        cloneElement(subMenu, {
-          fade,
-          isSubMenu: true,
-          menuState: subMenuState,
-          setMenuState: setSubMenuState,
-          position: 'absolute',
-          top: 0,
-          left: '100%',
-          display: menuState.isSubMenuVisible ? 'block' : 'none',
-          ...subMenu.props,
-        })
+      {active && subMenu && (
+        <>
+          <MenuItemTriangle
+            isTop
+            size={height}
+            position="absolute"
+            top={-height}
+            right={0}
+          />
+          {cloneElement(subMenu, {
+            fade,
+            isSubMenu: true,
+            menuState: subMenuState,
+            setMenuState: setSubMenuState,
+            position: 'absolute',
+            top: 0,
+            left: '100%',
+            display: menuState.isSubMenuVisible ? 'block' : 'none',
+            ...subMenu.props,
+          })}
+          <MenuItemTriangle
+            size={height}
+            position="absolute"
+            bottom={-height}
+            right={0}
+          />
+        </>
+
       )}
     </Div>
   )
