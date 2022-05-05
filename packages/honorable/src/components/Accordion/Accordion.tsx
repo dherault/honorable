@@ -20,6 +20,9 @@ export type AccordionProps = Omit<DivProps, 'title'> & {
 }
 
 export const accordionPropTypes = {
+  /**
+   * Whether the accordion is expanded or not.
+   */
   expanded: PropTypes.bool,
   defaultExpanded: PropTypes.bool,
   onExpand: PropTypes.func,

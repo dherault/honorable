@@ -36,11 +36,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   const HonorableStyle = styled(
     ComponentOrTag as ComponentType<StyledHonorableProps & P>,
     {
-      shouldForwardProp: (prop: string) => (
-        isPropValid(prop)
-        || (!isTag && prop.startsWith('__honorable'))
-        || propTypeKeys.includes(prop)
-      ),
+      shouldForwardProp: (prop: string) => (!isTag && prop !== 'honorable') || isPropValid(prop),
     }
   )(props => props.honorable)
 

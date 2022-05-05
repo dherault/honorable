@@ -55,6 +55,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     children,
   } = props
   const theme = useTheme()
+  console.log('props', props)
   const [buttonProps, divProps]: [ButtonProps, DivProps] = pickProps(props, buttonPropTypes)
   const dropdownButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
