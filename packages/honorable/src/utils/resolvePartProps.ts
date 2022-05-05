@@ -16,24 +16,23 @@ function pickHonorableProps(props: object): [any, any] {
 
 // Return the style object of applied partProps
 function resolvePartProps(partKey: string, props: object, theme: HonorableTheme): StylesProps {
-  const [{ __honorableOrigin, __honorableOverridenProps }, otherProps] = pickHonorableProps(props)
+  const [{ __honorableOrigin, __honorableOverridenProps, __honorableOriginProps }, otherProps] = pickHonorableProps(props)
 
   const originArray = [...__honorableOrigin.split('.'), partKey]
-  const nextHonorableOrigin = originArray.join('.')
+  const nextHonorableProps = {
+    __honorableOrigin: originArray.join('.'),
+    __honorableOriginProps: otherProps,
+  }
+
   const originName = originArray.shift()
 
   const componentTheme = theme[originName]
 
-  if (__honorableOrigin.startsWith('DropdownButton')) {
-    console.log('nextHonorableOrigin', nextHonorableOrigin)
-    console.log('partKey', partKey)
-  }
-
-  if (!(componentTheme && typeof componentTheme === 'object')) return { __honorableOrigin: nextHonorableOrigin }
+  if (!(componentTheme && typeof componentTheme === 'object')) return nextHonorableProps
 
   let partTheme = componentTheme.partProps
 
-  if (!partTheme) return { __honorableOrigin: nextHonorableOrigin }
+  if (!partTheme) return nextHonorableProps
 
   // TODO v1 include theme from origin
   originArray.forEach(partName => {
@@ -42,11 +41,11 @@ function resolvePartProps(partKey: string, props: object, theme: HonorableTheme)
     partTheme = partTheme[partName]
   })
 
-  if (!partTheme) return { __honorableOrigin: nextHonorableOrigin }
+  if (!partTheme) return nextHonorableProps
 
   return {
-    ...resolveDefaultProps(partTheme, { ...otherProps, ...__honorableOverridenProps }, theme),
-    __honorableOrigin: nextHonorableOrigin,
+    ...resolveDefaultProps(partTheme, { ...(__honorableOriginProps || otherProps), ...__honorableOverridenProps }, theme),
+    ...nextHonorableProps,
   }
 }
 

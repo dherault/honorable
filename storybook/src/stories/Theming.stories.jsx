@@ -9,7 +9,7 @@ const extendedTheme = {
     partProps: {
       Button: {
         Children: [
-          props => console.log('xxx', props) || {
+          ({ install }) => install && {
             color: 'red',
           },
         ],

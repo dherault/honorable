@@ -8,6 +8,7 @@ import mpProperties from './data/mpProperties'
 
 export type HonorableCommonProps = {
   __honorableOrigin?: string
+  __honorableOriginProps?: object
   __honorableOverridenProps?: object
   __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
