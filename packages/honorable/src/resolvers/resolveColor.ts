@@ -2,10 +2,10 @@ import { HonorableTheme } from '../types'
 
 import namedColors from '../data/namedColors'
 
-import reduceDeep from './reduceDeep'
-import isSelector from './isSelector'
-import { darken, lighten } from './lightenAndDarken'
-import transparency from './transparency'
+import reduceDeep from '../utils/reduceDeep'
+import isSelector from '../utils/isSelector'
+import { darken, lighten } from '../utils/lightenAndDarken'
+import transparency from '../utils/transparency'
 
 /*
   resolveColor
@@ -53,10 +53,11 @@ function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme
   if (key && !(isSelector(key) || colorProperties.includes(key))) return value
 
   if (value && typeof value === 'object') {
-    return reduceDeep(value, (accumulator, key, value) => ({
-      ...accumulator,
-      [key]: resolveColorEntry(key, value, theme),
-    }))
+    return reduceDeep(value, (accumulator, key, value) => {
+      accumulator[key] = resolveColorEntry(key, value, theme)
+
+      return accumulator
+    })
   }
 
   if (typeof value === 'string') return resolveColorString(value, theme)

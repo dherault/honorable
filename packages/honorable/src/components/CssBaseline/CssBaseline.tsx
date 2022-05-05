@@ -2,8 +2,8 @@ import { Global, css } from '@emotion/react'
 
 import useTheme from '../../hooks/useTheme'
 
-import resolveAll from '../../utils/resolveAll'
-import resolveDefaultProps from '../../utils/resolveDefaultProps'
+import resolveAll from '../../resolvers/resolveAll'
+import resolveDefaultProps from '../../resolvers/resolveDefaultProps'
 
 const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 

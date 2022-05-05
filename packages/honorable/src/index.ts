@@ -30,7 +30,7 @@ export { default as useOutsideClick } from './hooks/useOutsideClick'
 // Utils
 export { default as withHonorable } from './withHonorable'
 export { default as mergeTheme } from './utils/mergeTheme'
-export { default as resolveColor } from './utils/resolveColor'
+export { default as resolveColor } from './resolvers/resolveColor'
 export { default as transparency } from './utils/transparency'
 export { lighten, darken } from './utils/lightenAndDarken'
 // Types

@@ -2,7 +2,7 @@ import merge from 'lodash.merge'
 
 import { DefaultProps, HonorableTheme } from '../types'
 
-import filterObject from './filterObject'
+import filterObject from '../utils/filterObject'
 
 function resolveDefaultProps(defaultProps: DefaultProps, props: object, theme: HonorableTheme): object {
   if (Array.isArray(defaultProps)) {

@@ -1,4 +1,4 @@
-import resolveBreakpoints from '../../src/utils/resolveBreakpoints'
+import resolveBreakpoints from '../../src/resolvers/resolveBreakpoints'
 
 import { theme } from '../theme'
 

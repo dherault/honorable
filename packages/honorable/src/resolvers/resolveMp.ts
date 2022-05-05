@@ -1,6 +1,6 @@
 import mpProperties from '../data/mpProperties'
 
-import reduceDeep from './reduceDeep'
+import reduceDeep from '../utils/reduceDeep'
 
 const mpConversion = {
   m: 'margin',
@@ -44,10 +44,18 @@ function decodeMp(key: string, value: any) {
 }
 
 function resolveMp(props: object) {
-  return reduceDeep(props, (accumulator, key, value) => ({
-    ...accumulator,
-    ...(mpProperties.includes(key as typeof mpProperties[number]) ? decodeMp(key, value) : { [key]: value }),
-  }))
+  return reduceDeep(props, (accumulator, key, value) => {
+    if (mpProperties.includes(key as typeof mpProperties[number])) {
+      return {
+        ...accumulator,
+        ...decodeMp(key, value),
+      }
+    }
+
+    accumulator[key] = value
+
+    return accumulator
+  })
 }
 
 export default resolveMp

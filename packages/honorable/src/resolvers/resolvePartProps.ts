@@ -1,6 +1,6 @@
 import { HonorableTheme, StylesProps } from '../types'
 
-import resolveDefaultProps from '../utils/resolveDefaultProps'
+import resolveDefaultProps from './resolveDefaultProps'
 
 function pickHonorableProps(props: object): [any, any] {
   const honorableProps = {}

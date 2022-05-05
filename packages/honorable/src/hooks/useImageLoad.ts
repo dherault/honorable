@@ -1,6 +1,5 @@
 import { useLayoutEffect, useState } from 'react'
 
-// TODO
 function useImageLoad(src: string): [boolean, boolean] {
   const [loaded, setloaded] = useState(false)
   const [error, setError] = useState(false)

@@ -1,4 +1,4 @@
-import resolveWebkitProperties from '../../src/utils/resolveWebkitProperties'
+import resolveWebkitProperties from '../../src/resolvers/resolveWebkitProperties'
 
 describe('resolveWebkitProperties', () => {
 

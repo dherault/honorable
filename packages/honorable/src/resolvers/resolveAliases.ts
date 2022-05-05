@@ -1,16 +1,17 @@
 import { HonorableTheme } from '../types'
 
-import reduceDeep from './reduceDeep'
+import reduceDeep from '../utils/reduceDeep'
 
 function resolveAliases(props: object, theme: HonorableTheme): object {
   const { aliases } = theme
 
   if (!(aliases && typeof aliases === 'object')) return props
 
-  return reduceDeep(props, (acc, key, value) => ({
-    ...acc,
-    [aliases[key] ?? key]: value,
-  }))
+  return reduceDeep(props, (accumulator, key, value) => {
+    accumulator[aliases[key] ?? key] = value
+
+    return accumulator
+  })
 }
 
 export default resolveAliases

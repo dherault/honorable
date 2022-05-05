@@ -1,4 +1,4 @@
-import resolveColor from '../../src/utils/resolveColor'
+import resolveColor from '../../src/resolvers/resolveColor'
 
 import { theme } from '../theme'
 

@@ -1,4 +1,4 @@
-import resolveAliases from '../../src/utils/resolveAliases'
+import resolveAliases from '../../src/resolvers/resolveAliases'
 
 import { theme } from '../theme'
 

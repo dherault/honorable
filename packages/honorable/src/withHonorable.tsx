@@ -16,8 +16,8 @@ import mpProperties from './data/mpProperties'
 import useTheme from './hooks/useTheme'
 
 import isSelector from './utils/isSelector'
-import resolveAll from './utils/resolveAll'
-import resolveDefaultProps from './utils/resolveDefaultProps'
+import resolveAll from './resolvers/resolveAll'
+import resolveDefaultProps from './resolvers/resolveDefaultProps'
 
 const allStyleProperties = [
   'xflex',

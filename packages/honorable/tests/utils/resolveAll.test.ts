@@ -1,4 +1,4 @@
-import resolveAll from '../../src/utils/resolveAll'
+import resolveAll from '../../src/resolvers/resolveAll'
 
 import { theme } from '../theme'
 

@@ -1,8 +1,8 @@
 import { HonorableTheme } from '../types'
 
-import reduceDeep from './reduceDeep'
-import filterObject from './filterObject'
-import createMediaQuery from './createMediaQuery'
+import reduceDeep from '../utils/reduceDeep'
+import filterObject from '../utils/filterObject'
+import createMediaQuery from '../utils/createMediaQuery'
 
 function resolveBreakpoints(props: object, theme: HonorableTheme): object {
   const breakpointKeys = Object.keys(filterObject(theme.breakpoints))
@@ -31,10 +31,9 @@ function resolveBreakpoints(props: object, theme: HonorableTheme): object {
       }
     }
 
-    return {
-      ...accumulator,
-      [key]: value,
-    }
+    accumulator[key] = value
+
+    return accumulator
   })
 }
 

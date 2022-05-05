@@ -3,7 +3,7 @@ import {
   StylesProps,
 } from '../types'
 
-import resolveColor, { resolveColorString } from './resolveColor'
+import resolveColor, { resolveColorString } from '../resolvers/resolveColor'
 
 // Add utils to the theme
 function enhanceTheme(theme: HonorableTheme) {
