@@ -15,14 +15,14 @@ export type ModalProps = DivProps & {
   open?: boolean
   onClose?: (event: MouseEvent | KeyboardEvent) => void
   fade?: boolean
-  transtionDuration?: number
+  transitionDuration?: number
 }
 
 export const modalPropTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   fade: PropTypes.bool,
-  transtionDuration: PropTypes.number,
+  transitionDuration: PropTypes.number,
 }
 
 function ModalRef(props: ModalProps, ref: Ref<any>) {
@@ -30,7 +30,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     open = false,
     onClose,
     fade = true,
-    transtionDuration = 200,
+    transitionDuration = 200,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -60,7 +60,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     if (event.target === backdropRef.current) {
       if (fade) {
         setActualOpen(false)
-        setTimeout(() => handleClose(event), transtionDuration)
+        setTimeout(() => handleClose(event), transitionDuration)
       }
       else {
         handleClose(event)
@@ -73,7 +73,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
 
     const defaultStyle = {
       opacity: 0,
-      transition: `opacity ${transtionDuration}ms ease`,
+      transition: `opacity ${transitionDuration}ms ease`,
       ...resolvePartProps('BackdropDefaultStyle', props, theme),
     }
 
@@ -88,7 +88,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     return (
       <Transition
         in={actualOpen}
-        timeout={transtionDuration}
+        timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {
           ...element.props,
@@ -104,7 +104,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
 
     const defaultStyle = {
       opacity: 0,
-      transition: `opacity ${transtionDuration}ms ease`,
+      transition: `opacity ${transitionDuration}ms ease`,
       ...resolvePartProps('InnerDefaultStyle', props, theme),
     }
 
@@ -119,7 +119,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     return (
       <Transition
         in={actualOpen}
-        timeout={transtionDuration}
+        timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {
           ...element.props,
