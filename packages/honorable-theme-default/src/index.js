@@ -217,31 +217,48 @@ export default {
   Checkbox: {
     defaultProps: [
       {
-        width: 20,
-        height: 20,
-        color: 'white',
-        backgroundColor: 'transparent',
-        border: '1px solid border',
-        borderRadius: 2,
         cursor: 'pointer',
-        userSelect: 'none',
-        '&:hover': {
-          border: '1px solid primary',
-        },
-      },
-      ({ checked }) => checked && {
-        backgroundColor: 'primary',
-        borderColor: 'primary',
-      },
-      ({ disabled }) => disabled && {
-        cursor: 'not-allowed',
-        backgroundColor: 'border',
-        borderColor: 'border',
-        '&:hover': {
-          border: '1px solid border',
-        },
       },
     ],
+    partProps: {
+      Control: [
+        {
+          width: 20,
+          height: 20,
+          color: 'white',
+          backgroundColor: 'transparent',
+          border: '1px solid border',
+          borderRadius: 2,
+          userSelect: 'none',
+          '&:hover': {
+            border: '1px solid primary',
+          },
+        },
+        ({ checked }) => checked && {
+          backgroundColor: 'primary',
+          borderColor: 'primary',
+        },
+        ({ disabled }) => disabled && {
+          cursor: 'not-allowed',
+          backgroundColor: 'border',
+          borderColor: 'border',
+          '&:hover': {
+            border: '1px solid border',
+          },
+        },
+      ],
+      Children: [
+        {
+          userSelect: 'none',
+        },
+        ({ labelPosition }) => ({
+          marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
+          marginRight: labelPosition === 'left' ? 8 : 0,
+          marginTop: labelPosition === 'bottom' ? 8 : 0,
+          marginBottom: labelPosition === 'top' ? 8 : 0,
+        }),
+      ],
+    },
   },
   DropdownButton: {
     partProps: {

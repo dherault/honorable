@@ -13,10 +13,6 @@ function Template(args) {
       <Checkbox
         {...args}
       />
-      <Checkbox
-        mt={0.5}
-        {...args}
-      />
     </Div>
   )
 }
@@ -51,4 +47,31 @@ Default.args = {
 export const Controlled = Template2.bind({})
 Controlled.args = {
   disabled: false,
+}
+
+export const Label = Template.bind({})
+Label.args = {
+  disabled: false,
+  children: 'A checkbox',
+}
+
+export const LabelPositionLeft = Template.bind({})
+LabelPositionLeft.args = {
+  disabled: false,
+  children: 'A checkbox',
+  labelPosition: 'left',
+}
+
+export const LabelPositionTop = Template.bind({})
+LabelPositionTop.args = {
+  disabled: false,
+  children: 'A checkbox',
+  labelPosition: 'top',
+}
+
+export const LabelPositionBottom = Template.bind({})
+LabelPositionBottom.args = {
+  disabled: false,
+  children: 'A checkbox',
+  labelPosition: 'bottom',
 }

@@ -3,18 +3,22 @@ import PropTypes from 'prop-types'
 
 import withHonorable from '../../withHonorable'
 
+import useTheme from '../../hooks/useTheme'
 import useOverridenProps from '../../hooks/useOverridenProps'
+
+import resolvePartProps from '../../resolvers/resolvePartProps'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
-import { Span, SpanProps } from '../tags'
+import { Div, DivProps, Span } from '../tags'
 
-export type CheckboxProps = SpanProps & {
+export type CheckboxProps = DivProps & {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
   icon?: ReactNode
   onChange?: (event: MouseEvent | KeyboardEvent | ChangeEvent) => void
+  labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
 export const checkboxPropTypes = {
@@ -23,6 +27,7 @@ export const checkboxPropTypes = {
   disabled: PropTypes.bool,
   icon: PropTypes.node,
   onChange: PropTypes.func,
+  labelPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
 }
 
 const defaultIcon = (
@@ -41,7 +46,7 @@ const defaultIcon = (
   </svg>
 )
 
-// TODO v1 FormControlLabel
+// TODO v1 indeterminate prop
 function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
   const {
     defaultChecked,
@@ -49,10 +54,23 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
     disabled = false,
     icon = defaultIcon,
     onChange,
+    children,
+    labelPosition = 'right',
     ...otherProps
   } = props
+  const theme = useTheme()
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = checked ?? uncontrolledChecked ?? false
+
+  const xflex = labelPosition === 'right'
+    ? 'x4'
+    : labelPosition === 'left'
+      ? 'x60'
+      : labelPosition === 'top'
+        ? 'y80'
+        : labelPosition === 'bottom'
+          ? 'y2'
+          : 'x4'
 
   // Override `checked` prop in defaultProps
   useOverridenProps(props, { checked: actualChecked })
@@ -71,10 +89,8 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
   }
 
   return (
-    <Span
-      ref={ref}
-      xflex="x5"
-      display="inline-flex"
+    <Div
+      xflex={xflex}
       tabIndex={0}
       {...otherProps}
       onClick={event => {
@@ -86,8 +102,20 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
         if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
       }}
     >
-      {actualChecked && icon}
-    </Span>
+      <Span
+        ref={ref}
+        xflex="x5"
+        display="inline-flex"
+        {...resolvePartProps('Control', props, theme)}
+      >
+        {actualChecked && icon}
+      </Span>
+      {!!children && (
+        <Div {...resolvePartProps('Children', props, theme)}>
+          {children}
+        </Div>
+      )}
+    </Div>
   )
 }
 
