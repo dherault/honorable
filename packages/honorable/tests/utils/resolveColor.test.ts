@@ -4,6 +4,11 @@ import { theme } from '../theme'
 
 describe('Color resolution', () => {
 
+  test('it resolves non-colors as identity', () => {
+    expect(resolveColor('nonsense', theme)).toBe('nonsense')
+    expect(resolveColor(123, theme)).toBe(123)
+  })
+
   test('it resolves an hex color', () => {
     expect(resolveColor('#ffffff', theme)).toBe('#ffffff')
   })
@@ -51,6 +56,8 @@ describe('lighten and darken', () => {
 
   test('it returns a lightened hex color', () => {
     expect(resolveColor('lighten(#000000)', theme)).toBe('#404040')
+    expect(resolveColor('lighten( #000000)', theme)).toBe('#404040')
+    expect(resolveColor('lighten( #000000  )', theme)).toBe('#404040')
   })
 
   test('it returns a darkened hex color', () => {
@@ -59,6 +66,8 @@ describe('lighten and darken', () => {
 
   test('it returns a lightened hex color, with second argument', () => {
     expect(resolveColor('lighten(#000000, 10)', theme)).toBe('#1a1a1a')
+    expect(resolveColor('lighten(#000000,10)', theme)).toBe('#1a1a1a')
+    expect(resolveColor('lighten( #000000,  10 )', theme)).toBe('#1a1a1a')
   })
 
   test('it returns a darkened hex color, with second argument', () => {
@@ -97,14 +106,16 @@ describe('lighten and darken', () => {
     expect(resolveColor('lighten(#00000080, 10)', theme)).toBe('#1a1a1a80')
   })
 
-  // test('it returns a resolved lightened color with rgb syntax', () => {
-  //   expect(resolveColor('lighten(rgb(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
-  // })
+  test('it returns a resolved lightened color with rgb syntax', () => {
+    expect(resolveColor('lighten(rgb(0,0,0), 10)', theme)).toBe('#1a1a1a')
+    expect(resolveColor('lighten(rgb(0, 0, 0) , 10)', theme)).toBe('#1a1a1a')
+    expect(resolveColor('lighten( rgb(0, 0, 0) , 10 )', theme)).toBe('#1a1a1a')
+  })
 
-  // test('it returns a resolved lighten color with rgba syntax', () => {
-  //   expect(resolveColor('lighten(rgba(0, 0, 0), 10)', theme)).toBe('#1a1a1a')
-  //   expect(resolveColor('lighten(rgba(0, 0, 0, 128), 10)', theme)).toBe('#1a1a1a80')
-  // })
+  test('it returns a resolved lighten color with rgba syntax', () => {
+    expect(resolveColor('lighten(rgba(0, 0, 0, 0), 10)', theme)).toBe('#1a1a1a00')
+    expect(resolveColor('lighten(rgba(0, 0, 0, 128), 10)', theme)).toBe('#1a1a1a80')
+  })
 
 })
 
@@ -138,13 +149,44 @@ describe('transparencify', () => {
     expect(resolveColor('transparency(#00000080, 10)', theme)).toBe('#00000066')
   })
 
-  // test('it returns a resolved transparencified color with rgb syntax', () => {
-  //   expect(resolveColor('transparency(rgb(0, 0, 0), 10)', theme)).toBe('#000000e6')
-  // })
+  test('it returns a resolved transparencified color with rgb syntax', () => {
+    expect(resolveColor('transparency(rgb(0, 0, 0), 10)', theme)).toBe('#000000e6')
+  })
 
-  // test('it returns a resolved transparencified color with rgba syntax', () => {
-  //   expect(resolveColor('transparency(rgba(0, 0, 0), 10)', theme)).toBe('#000000e6')
-  //   expect(resolveColor('transparency(rgba(0, 0, 0, 128), 10)', theme)).toBe('#00000066')
-  // })
+  test('it returns a resolved transparencified color with rgba syntax', () => {
+    expect(resolveColor('transparency(rgba(0, 0, 0, 0), 10)', theme)).toBe('#000000e6')
+    expect(resolveColor('transparency(rgba(0, 0, 0, 128), 10)', theme)).toBe('#00000066')
+  })
+
+})
+
+describe('complex color strings', () => {
+
+  test('it resolves an hex color', () => {
+    expect(resolveColor('1px solid #ffffff', theme)).toBe('1px solid #ffffff')
+  })
+
+  test('it resolves a shorten hex color', () => {
+    expect(resolveColor('1px solid #fff', theme)).toBe('1px solid #fff')
+  })
+
+  test('it resolves a named CSS color', () => {
+    expect(resolveColor('1px solid white', theme)).toBe('1px solid white')
+  })
+
+  test('it resolves a theme color', () => {
+    expect(resolveColor('1px solid primary', theme)).toBe(`1px solid ${theme.colors.primary}`)
+  })
+
+  test('it resolves a rgb color', () => {
+    expect(resolveColor('1px solid rgb(128, 0, 0)', theme)).toBe('1px solid rgb(128, 0, 0)')
+  })
+
+  test('it resolves a ligthened color', () => {
+    expect(resolveColor('1px solid lighten(#000000)', theme)).toBe('1px solid #404040')
+    expect(resolveColor('1px solid lighten(black)', theme)).toBe('1px solid #404040')
+    expect(resolveColor('1px solid lighten(rgb(0, 0, 0))', theme)).toBe('1px solid #404040')
+    expect(resolveColor('1px solid lighten(rgba(0, 0, 0, 0))', theme)).toBe('1px solid #40404000')
+  })
 
 })

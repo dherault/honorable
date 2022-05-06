@@ -161,7 +161,7 @@ function applyColorHelpers(colorString: string, i = 0): string {
           if (intensity !== intensity) intensity = undefined
 
           // Might be useful to do color.replaceAll(' ', '')
-          return fn(convertNamedColor(color.trim()), intensity)
+          return fn(convertRgbColor(convertNamedColor(color.trim())), intensity)
         }
       )
     }
@@ -170,6 +170,30 @@ function applyColorHelpers(colorString: string, i = 0): string {
   }, colorString)
 
   return appliedColor === colorString ? appliedColor : applyColorHelpers(appliedColor, i + 1)
+}
+
+/*
+  convertRgbColor
+  ------------
+  Convert a named CSS color function to its hex value.
+  eg: "rgb(255, 0, 0)" => "#ff0000"
+  Needed for applying helper functions on CSS colors
+*/
+
+const rgbRegexp = /rgba?\s*\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,?\s*?(\d{1,3})?\s*\)/
+
+function convertRgbColor(value: string) {
+  if (value.includes('rgb')) {
+    const match = value.match(rgbRegexp)
+
+    if (match) {
+      const alpha = parseInt(match[4])
+
+      return `#${parseInt(match[1]).toString(16).padEnd(2, '0')}${parseInt(match[2]).toString(16).padEnd(2, '0')}${parseInt(match[3]).toString(16).padEnd(2, '0')}${alpha === alpha ? alpha.toString(16).padEnd(2, '0') : ''}`
+    }
+  }
+
+  return value
 }
 
 /*

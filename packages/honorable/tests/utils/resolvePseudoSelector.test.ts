@@ -8,8 +8,6 @@ describe('resolvePseudoSelectors', () => {
   })
 
   test('Resolves pseudo selectors', () => {
-    console.log(resolvePseudoSelectors({ _hover: { width: 128 } }))
-
     expect(resolvePseudoSelectors({ _hover: { width: 128 } })).toStrictEqual({
       '&:hover': {
         width: 128,
