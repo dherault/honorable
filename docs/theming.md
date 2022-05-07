@@ -1,9 +1,5 @@
 # Theming
 
-{% hint style="info" %}
-**Did you know:** Honorable has its own [theme editor](https://designer.honorable.design). Try it out!
-{% endhint %}
-
 Here is what a theme should look like:
 
 ```javascript
@@ -85,7 +81,7 @@ const theme = {
 
 ## Using a preset
 
-You can either start a theme from scratch, or start with the [theme editor](https://design.honorable.design), or use a preferably use a preset.
+You can either start a theme from scratch (some components might not work then), or use a preferably use a preset.
 
 Available presets are:
 
