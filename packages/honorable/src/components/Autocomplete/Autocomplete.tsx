@@ -13,7 +13,7 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
 import pickProps from '../../utils/pickProps'
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'
@@ -177,7 +177,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
         }}
         onKeyDown={handleInputKeyDown}
-        {...resolvePartProps('Input', props, theme)}
+        {...resolvePartStyles('Input', props, theme)}
       />
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
@@ -190,13 +190,13 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={focused ? 'block' : 'none'}
-          {...resolvePartProps('Menu', props, theme)}
+          {...resolvePartStyles('Menu', props, theme)}
         >
           {filteredOptions.length > 0 && filteredOptions.map(option => (
             <MenuItem
               key={typeof option === 'object' ? option.value : option}
               value={typeof option === 'object' ? option.value : option}
-              {...resolvePartProps('MenuItem', props, theme)}
+              {...resolvePartStyles('MenuItem', props, theme)}
             >
               {renderOption(option)}
             </MenuItem>
@@ -205,7 +205,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
             <MenuItem
               disabled
               value={honorableNoValue}
-              {...resolvePartProps('NoOption', props, theme)}
+              {...resolvePartStyles('NoOption', props, theme)}
             >
               {noOptionsNode}
             </MenuItem>

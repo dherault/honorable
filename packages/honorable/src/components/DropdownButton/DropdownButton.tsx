@@ -14,7 +14,7 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
 import pickProps from '../../utils/pickProps'
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Button, ButtonProps, buttonPropTypes } from '../Button/Button'
@@ -115,7 +115,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
 
           if (typeof buttonProps.onClick === 'function') buttonProps.onClick(event)
         }}
-        {...resolvePartProps('Button', props, theme)}
+        {...resolvePartStyles('Button', props, theme)}
       >
         {label}
       </Button>
@@ -130,7 +130,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={actualOpen ? 'block' : 'none'}
-          {...resolvePartProps('Menu', props, theme)}
+          {...resolvePartStyles('Menu', props, theme)}
         >
           {children}
         </Menu>

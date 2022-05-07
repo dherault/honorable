@@ -4,7 +4,7 @@ import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -31,7 +31,7 @@ function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
       <Div
         backgroundColor="black"
         width={`max(0%, min(100%, calc(${value} * 100%)))`}
-        {...resolvePartProps('Bar', props, theme)}
+        {...resolvePartStyles('Bar', props, theme)}
       />
     </Div>
   )

@@ -165,7 +165,7 @@ function DefaultDesignShowcase() {
 
 const pillCode = `const theme = {
   Span: {
-    defaultProps: [
+    defaultStyles: [
       ({ pill }) => pill && {
         color: 'white',
         backgroundColor: 'primary',
@@ -184,7 +184,7 @@ const pillCode = `const theme = {
 function PillShowcase() {
   const extendedTheme = mergeTheme(honorableTheme, {
     Span: {
-      defaultProps: [
+      defaultStyles: [
         ({ pill }) => pill && {
           color: 'white',
           backgroundColor: 'primary',
@@ -309,7 +309,7 @@ const theme = mergeTheme(defaultTheme, {
   ],
   // Customize components
   Div: {
-    defaultProps:[
+    defaultStyles:[
       ({ container }) => container && {
         // Applied to <Div container />
         width: 'calc(100% * 3 / 4)',

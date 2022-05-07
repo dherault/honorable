@@ -7,7 +7,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps, InputBase } from '../tags'
 
@@ -96,7 +96,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       {!!startIcon && (
         <Div
           xflex="x5"
-          {...resolvePartProps('StartIcon', props, theme)}
+          {...resolvePartStyles('StartIcon', props, theme)}
         >
           {startIcon}
         </Div>
@@ -119,7 +119,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           }}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
-          {...resolvePartProps('InputBase', props, theme)}
+          {...resolvePartStyles('InputBase', props, theme)}
           flexGrow={1}
         />
       )}
@@ -144,14 +144,14 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           maxRows={maxRows}
           style={{
             flexGrow: 1,
-            ...resolvePartProps('TextArea', props, theme),
+            ...resolvePartStyles('TextArea', props, theme),
           }}
         />
       )}
       {!!endIcon && (
         <Div
           xflex="x5"
-          {...resolvePartProps('EndIcon', props, theme)}
+          {...resolvePartStyles('EndIcon', props, theme)}
         >
           {endIcon}
         </Div>

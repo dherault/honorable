@@ -32,7 +32,7 @@ function Template(args) {
 const transitionDuration = 333
 const extendedTheme = {
   Modal: {
-    partProps: {
+    partStyles: {
       InnerDefaultStyle: [
         {
           position: 'relative',

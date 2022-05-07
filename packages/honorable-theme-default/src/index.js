@@ -60,7 +60,7 @@ export default {
     ...createElevation().map((styles, i) => (z => (({ elevation }) => elevation === z && styles))(i)),
   ],
   A: {
-    defaultProps: [
+    defaultStyles: [
       {
         display: 'inline-block',
         color: 'primary',
@@ -73,7 +73,7 @@ export default {
     ],
   },
   Accordion: {
-    defaultProps: [
+    defaultStyles: [
       {
         elevation: 1,
         backgroundColor: 'background',
@@ -91,7 +91,7 @@ export default {
         },
       },
     ],
-    partProps: {
+    partStyles: {
       Title: [
         {
           padding: 16,
@@ -118,7 +118,7 @@ export default {
     },
   },
   Autocomplete: {
-    partProps: {
+    partStyles: {
       NoOption: [
         {
           userSelect: 'none',
@@ -128,7 +128,7 @@ export default {
     },
   },
   Avatar: {
-    defaultProps: [
+    defaultStyles: [
       {
         backgroundColor: 'primary',
         color: 'white',
@@ -138,7 +138,7 @@ export default {
     ],
   },
   Button: {
-    defaultProps: [
+    defaultStyles: [
       {
         color: 'white',
         backgroundColor: 'primary',
@@ -167,7 +167,7 @@ export default {
         },
       },
     ],
-    partProps: {
+    partStyles: {
       StartIcon: [
         {
           marginLeft: '-6px',
@@ -188,7 +188,7 @@ export default {
     },
   },
   ButtonBase: {
-    defaultProps: [
+    defaultStyles: [
       {
         cursor: 'pointer',
         display: 'flex',
@@ -199,7 +199,7 @@ export default {
     ],
   },
   ButtonGroup: {
-    defaultProps: [
+    defaultStyles: [
       {
         border: '1px solid primary',
         borderRadius: 4,
@@ -215,7 +215,7 @@ export default {
     ],
   },
   Checkbox: {
-    defaultProps: [
+    defaultStyles: [
       {
         cursor: 'pointer',
         userSelect: 'none',
@@ -230,7 +230,7 @@ export default {
         },
       },
     ],
-    partProps: {
+    partStyles: {
       Control: [
         {
           width: 20,
@@ -263,7 +263,7 @@ export default {
     },
   },
   DropdownButton: {
-    partProps: {
+    partStyles: {
       Button: {
         EndIcon: [
           {
@@ -275,49 +275,49 @@ export default {
     },
   },
   H1: {
-    defaultProps: [
+    defaultStyles: [
       {
         margin: 0,
       },
     ],
   },
   H2: {
-    defaultProps: [
+    defaultStyles: [
       {
         margin: 0,
       },
     ],
   },
   H3: {
-    defaultProps: [
+    defaultStyles: [
       {
         margin: 0,
       },
     ],
   },
   H4: {
-    defaultProps: [
+    defaultStyles: [
       {
         margin: 0,
       },
     ],
   },
   H5: {
-    defaultProps: [
+    defaultStyles: [
       {
         margin: 0,
       },
     ],
   },
   H6: {
-    defaultProps: [
+    defaultStyles: [
       {
         margin: 0,
       },
     ],
   },
   Hr: {
-    defaultProps: [
+    defaultStyles: [
       {
         borderWidth: 0,
         borderTop: '1px solid border',
@@ -325,7 +325,7 @@ export default {
     ],
   },
   IconButton: {
-    defaultProps: [
+    defaultStyles: [
       {
         padding: 8,
         border: 'none',
@@ -343,7 +343,7 @@ export default {
     ],
   },
   Input: {
-    defaultProps: [
+    defaultStyles: [
       {
         border: '1px solid border',
         borderRadius: 4,
@@ -367,7 +367,7 @@ export default {
         },
       },
     ],
-    partProps: {
+    partStyles: {
       InputBase: [
         ({ disabled }) => disabled && {
           cursor: 'not-allowed',
@@ -391,7 +391,7 @@ export default {
     },
   },
   InputBase: {
-    defaultProps: [
+    defaultStyles: [
       {
         padding: '8px 0',
         color: 'text',
@@ -432,7 +432,7 @@ export default {
     ],
   },
   Label: {
-    defaultProps: [
+    defaultStyles: [
       {
         display: 'block',
         marginBottom: 4,
@@ -440,7 +440,7 @@ export default {
     ],
   },
   Menu: {
-    defaultProps: [
+    defaultStyles: [
       {
         padding: '8px 0',
         elevation: 1,
@@ -454,12 +454,12 @@ export default {
     ],
   },
   MenuItem: {
-    defaultProps: [
+    defaultStyles: [
       {
         outline: 'none',
       },
     ],
-    partProps: {
+    partStyles: {
       Children: [
         {
           padding: '8px 16px',
@@ -475,7 +475,7 @@ export default {
     },
   },
   Modal: {
-    defaultProps: [
+    defaultStyles: [
       {
         padding: 32,
         borderRadius: 4,
@@ -483,14 +483,14 @@ export default {
     ],
   },
   P: {
-    defaultProps: [
+    defaultStyles: [
       {
         margin: 0,
       },
     ],
   },
   Pre: {
-    defaultProps: [
+    defaultStyles: [
       {
         display: 'inline-block',
         margin: 0,
@@ -501,7 +501,7 @@ export default {
     ],
   },
   ProgressBar: {
-    partProps: {
+    partStyles: {
       Bar: [
         {
           borderRadius: 4,
@@ -512,7 +512,7 @@ export default {
     },
   },
   RadioButton: {
-    defaultProps: [
+    defaultStyles: [
       {
         cursor: 'pointer',
         userSelect: 'none',
@@ -527,7 +527,7 @@ export default {
         },
       },
     ],
-    partProps: {
+    partStyles: {
       Control: [
         {
           width: 20,
@@ -554,7 +554,7 @@ export default {
     },
   },
   Select: {
-    defaultProps: [
+    defaultStyles: [
       {
         display: 'inline-block',
         borderRadius: 4,
@@ -564,7 +564,7 @@ export default {
         },
       },
     ],
-    partProps: {
+    partStyles: {
       Input: [
         {
           padding: '4px 0 4px 8px',
@@ -574,7 +574,7 @@ export default {
     },
   },
   Spinner: {
-    defaultProps: [
+    defaultStyles: [
       ({ size = 24, color = 'primary' }) => ({
         width: size,
         height: size,
@@ -598,7 +598,7 @@ export default {
     ],
   },
   Switch: {
-    defaultProps: [
+    defaultStyles: [
       {
         backgroundColor: 'background-light',
         transition: 'background-color 150ms ease',
@@ -612,7 +612,7 @@ export default {
     ],
   },
   Table: {
-    defaultProps: [
+    defaultStyles: [
       {
         width: '100%',
         backgroundColor: 'background',
@@ -623,21 +623,21 @@ export default {
     ],
   },
   Td: {
-    defaultProps: [
+    defaultStyles: [
       {
         padding: 16,
       },
     ],
   },
   Th: {
-    defaultProps: [
+    defaultStyles: [
       {
         padding: 16,
       },
     ],
   },
   Tr: {
-    defaultProps: [
+    defaultStyles: [
       {
         textAlign: 'left',
         borderTop: '1px solid border',

@@ -32,7 +32,7 @@ export default mergeTheme(defaultTheme, {
     },
   ],
   Button: {
-    defaultProps: [
+    defaultStyles: [
       ({ size }) => size === 'large' && {
         fontSize: '1.25rem',
         padding: '0.75rem 1.5rem',
@@ -40,7 +40,7 @@ export default mergeTheme(defaultTheme, {
     ],
   },
   H1: {
-    defaultProps: [
+    defaultStyles: [
       {
         fontSize: '5rem',
         [`@media (max-width: ${mobile}px)`]: {
@@ -50,7 +50,7 @@ export default mergeTheme(defaultTheme, {
     ],
   },
   H2: {
-    defaultProps: [
+    defaultStyles: [
       {
         fontSize: '2rem',
         [`@media (max-width: ${mobile}px)`]: {
@@ -60,7 +60,7 @@ export default mergeTheme(defaultTheme, {
     ],
   },
   Section: {
-    defaultProps: [
+    defaultStyles: [
       ({ container }) => container && {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -72,7 +72,7 @@ export default mergeTheme(defaultTheme, {
     ],
   },
   IconButton: {
-    defaultProps: [
+    defaultStyles: [
       ({ variant }) => variant === 'ghost' && {
         elevation: 0,
         background: 'transparent',

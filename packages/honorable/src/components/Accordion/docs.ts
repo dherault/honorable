@@ -1,5 +1,5 @@
 export default {
-  partProps: {
+  partStyles: {
     Title: '',
     ExpandIcon: '',
     Children: '',

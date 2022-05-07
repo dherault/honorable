@@ -9,7 +9,7 @@ import MenuUsageContext from '../../contexts/MenuUsageContext'
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
@@ -213,7 +213,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             menuItemRef.current.focus()
           }
         }}
-        {...resolvePartProps('Children', props, theme)}
+        {...resolvePartStyles('Children', props, theme)}
       >
         {Children.map(children, (child: ReactElement) => {
           if (child?.type === Menu) return null
@@ -227,7 +227,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
               ml={0.5}
               mr={-0.5}
               rotation={-90}
-              {...resolvePartProps('Caret', props, theme)}
+              {...resolvePartStyles('Caret', props, theme)}
             />
           </>
         )}

@@ -6,7 +6,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
@@ -72,7 +72,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
           ? 'y2'
           : 'x4'
 
-  // Override `checked` prop in defaultProps
+  // Override `checked` prop in defaultStyles
   useOverridenProps(props, { checked: actualChecked })
 
   function handleChange(event: MouseEvent | KeyboardEvent) {
@@ -106,12 +106,12 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
         ref={ref}
         xflex="x5"
         display="inline-flex"
-        {...resolvePartProps('Control', props, theme)}
+        {...resolvePartStyles('Control', props, theme)}
       >
         {actualChecked && icon}
       </Span>
       {!!children && (
-        <Div {...resolvePartProps('Children', props, theme)}>
+        <Div {...resolvePartStyles('Children', props, theme)}>
           {children}
         </Div>
       )}

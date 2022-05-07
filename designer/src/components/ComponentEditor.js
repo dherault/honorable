@@ -36,8 +36,8 @@ function unstringifyCustomProps(customProps = '', defaultValue = new Map()) {
   }
 }
 
-function stringifyDefaultProps(defaultProps) {
-  if (!(defaultProps && typeof defaultProps === 'object')) {
+function stringifyDefaultStyles(defaultStyles) {
+  if (!(defaultStyles && typeof defaultStyles === 'object')) {
     return `({
 \t// Write some javascript styles here:
 \t// color: 'blue',
@@ -45,17 +45,17 @@ function stringifyDefaultProps(defaultProps) {
   }
 
   return `({
-${stringify(defaultProps).split('\n').filter((_, i, a) => !(i === 0 || i === a.length - 1)).join('\n')}
+${stringify(defaultStyles).split('\n').filter((_, i, a) => !(i === 0 || i === a.length - 1)).join('\n')}
 })`
 }
 
-function unstringifyDefaultProps(defaultProps = '', defaultValue = {}) {
-  if (!(defaultProps && typeof defaultProps === 'string')) {
+function unstringifyDefaultStyles(defaultStyles = '', defaultValue = {}) {
+  if (!(defaultStyles && typeof defaultStyles === 'string')) {
     return {}
   }
 
   try {
-    return eval(defaultProps)
+    return eval(defaultStyles)
   }
   catch (error) {
     return defaultValue
@@ -86,24 +86,24 @@ function ComponentEditor({ componentName }) {
   const enhancedTheme = useTheme()
   const [theme, setTheme,, onThemeReset] = useContext(UserThemeContext)
   const [open, setOpen] = useState(false)
-  const [defaultProps, setDefaultProps] = useState(stringifyDefaultProps(theme[componentName]?.defaultProps))
+  const [defaultStyles, setDefaultStyles] = useState(stringifyDefaultStyles(theme[componentName]?.defaultStyles))
   const [customProps, setCustomProps] = useState(stringifyCustomProps(theme[componentName]?.customProps))
-  const previousDefaultProps = usePrevious(defaultProps)
+  const previousDefaultStyles = usePrevious(defaultStyles)
   const previousCustomProps = usePrevious(customProps)
   const [isThemeRehydrated, setIsThemeRehydrated] = useState(false)
 
   useEffect(() => {
-    if (defaultProps === previousDefaultProps && customProps === previousCustomProps) return
+    if (defaultStyles === previousDefaultStyles && customProps === previousCustomProps) return
 
     try {
-      const resolvedDefaultProps = unstringifyDefaultProps(defaultProps, theme[componentName]?.defaultProps)
+      const resolvedDefaultStyles = unstringifyDefaultStyles(defaultStyles, theme[componentName]?.defaultStyles)
       const resolvedCustomProps = unstringifyCustomProps(customProps, theme[componentName]?.customProps)
 
       setTheme({
         ...theme,
         [componentName]: {
           ...theme[componentName],
-          defaultProps: resolvedDefaultProps && typeof resolvedDefaultProps === 'object' && Object.keys(resolvedDefaultProps).length ? resolvedDefaultProps : undefined,
+          defaultStyles: resolvedDefaultStyles && typeof resolvedDefaultStyles === 'object' && Object.keys(resolvedDefaultStyles).length ? resolvedDefaultStyles : undefined,
           customProps: resolvedCustomProps instanceof Map && resolvedCustomProps.size ? resolvedCustomProps : undefined,
         },
       })
@@ -111,23 +111,23 @@ function ComponentEditor({ componentName }) {
     catch (error) {
       //
     }
-  }, [defaultProps, previousDefaultProps, customProps, previousCustomProps, componentName, setTheme, theme])
+  }, [defaultStyles, previousDefaultStyles, customProps, previousCustomProps, componentName, setTheme, theme])
 
   useEffect(() => {
     if (theme.rehydrated && !isThemeRehydrated) {
-      setDefaultProps(stringifyDefaultProps(theme[componentName]?.defaultProps))
+      setDefaultStyles(stringifyDefaultStyles(theme[componentName]?.defaultStyles))
       setCustomProps(stringifyCustomProps(theme[componentName]?.customProps))
       setIsThemeRehydrated(true)
     }
   }, [componentName, theme, isThemeRehydrated])
 
   useEffect(() => onThemeReset(theme => {
-    setDefaultProps(stringifyDefaultProps(theme[componentName]?.defaultProps))
+    setDefaultStyles(stringifyDefaultStyles(theme[componentName]?.defaultStyles))
     setCustomProps(stringifyCustomProps(theme[componentName]?.customProps))
   }), [componentName, onThemeReset])
 
   function handleReset() {
-    setDefaultProps(stringifyDefaultProps(defaultTheme[componentName]?.defaultProps))
+    setDefaultStyles(stringifyDefaultStyles(defaultTheme[componentName]?.defaultStyles))
     setCustomProps(stringifyCustomProps(defaultTheme[componentName]?.customProps))
   }
 
@@ -203,7 +203,7 @@ function ComponentEditor({ componentName }) {
             mt={0.5}
           >
             <P>
-              defaultProps:
+              defaultStyles:
             </P>
           </Div>
           <Div
@@ -217,8 +217,8 @@ function ComponentEditor({ componentName }) {
               height="calc(2rem * 6)"
               language="javascript"
               theme={theme.mode === 'light' ? 'light' : 'vs-dark'}
-              value={defaultProps}
-              onChange={value => setDefaultProps(value)}
+              value={defaultStyles}
+              onChange={value => setDefaultStyles(value)}
               options={editorOptions}
             />
           </Div>

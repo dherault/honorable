@@ -6,7 +6,7 @@ export default {
 
 const extendedTheme1 = {
   DropdownButton: {
-    partProps: {
+    partStyles: {
       Button: {
         Children: [
           ({ install }) => install && {
@@ -37,7 +37,7 @@ Theming1.args = {
 
 const extendedTheme2 = {
   Checkbox: {
-    defaultProps: [
+    defaultStyles: [
       {
         icon: (
           <svg

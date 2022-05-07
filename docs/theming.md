@@ -45,8 +45,8 @@ const theme = {
   },
   // These props are applied to the <A /> component, that will be rendered as <a />
   A: {
-    // defaultProps are applied to any instance of the component
-    defaultProps: [
+    // defaultStyles are applied to any instance of the component
+    defaultStyles: [
       {
         color: 'primary',
         cursor: 'pointer',
@@ -58,9 +58,9 @@ const theme = {
     ],
   },
   Input: {
-    // defaultProps can be an array of style props
+    // defaultStyles can be an array of style props
     // or functions that return style props
-    defaultProps: [
+    defaultStyles: [
       ({ variant }) => variant === 'underlined' && {
         // This applies to <Input variant="underlined" />
         borderWidth: 0,
@@ -69,9 +69,9 @@ const theme = {
     ],
   },
   Modal: {
-    // partProps allow you to customize any inner part of a component
+    // partStyles allow you to customize any inner part of a component
     // See the component's documentation for naming conventions
-    partProps: {
+    partStyles: {
       Backdrop: [
         {
           backgroundColor: 'transparency(black, 80)',
@@ -162,12 +162,12 @@ See also:
 
 ### `global`
 
-These props follow the `defaultProps` pattern.\
+These props follow the `defaultStyles` pattern.\
 They are applied to any component. See `[Component]` for more info.
 
 ### `html`
 
-These props are applied to the `<html>` tag by `CssBaseline`. They follow the `defaultProps` pattern. See `[Component]` for more info.
+These props are applied to the `<html>` tag by `CssBaseline`. They follow the `defaultStyles` pattern. See `[Component]` for more info.
 
 ### `[Component]`
 
@@ -175,19 +175,19 @@ Components theme keys are always capitalized and are applied to the correspondin
 
 They comprise two keys:
 
-* `defaultProps`: accepts a `DefaultProps` object that will eventually be styles, conventions and props that are applied to every instance of the component.
-* `partProps`: accepts an object of inner parts names as keys and `defaultProps` values. see the component's documentation for a list of the available part names.
+* `defaultStyles`: accepts a `DefaultStyles` object that will eventually be styles, conventions and props that are applied to every instance of the component.
+* `partStyles`: accepts an object of inner parts names as keys and `defaultStyles` values. see the component's documentation for a list of the available part names.
 
 ```typescript
-type DefaultPropsFunction = (props: object, theme: HonorableTheme) => StylesProps
-type DefaultProps = (StylesProps | DefaultPropsFunction)[]
+type DefaultStylesFunction = (props: object, theme: HonorableTheme) => StylesProps
+type DefaultStyles = (StylesProps | DefaultStylesFunction)[]
 ```
 
 Here's a complete example:
 
 ```javascript
 Accordion: {
-  defaultProps: [
+  defaultStyles: [
     {
       backgroundColor: 'background', // Style props
       radius: 0,                     // Conventions
@@ -200,7 +200,7 @@ Accordion: {
         : 'background-dark',
     },
   ],
-  partProps: {
+  partStyles: {
     // Style the title of the Accordion
     Title: [
       {

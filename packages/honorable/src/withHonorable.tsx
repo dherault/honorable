@@ -17,7 +17,7 @@ import useTheme from './hooks/useTheme'
 
 import isSelector from './utils/isSelector'
 import resolveAll from './resolvers/resolveAll'
-import resolveDefaultProps from './resolvers/resolveDefaultProps'
+import resolveDefaultStyles from './resolvers/resolveDefaultStyles'
 
 const allStyleProperties = [
   'xflex',
@@ -46,11 +46,11 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const [honorable, otherProps] = useMemo(() => {
       const aliases = Object.keys(theme.aliases || {})
       const suffixedAliases = aliases.map(x => `${x}-`)
-      const defaultProps = theme[name]?.defaultProps
+      const defaultStyles = theme[name]?.defaultStyles
       const stylesProps: StylesProps = {}
       const otherProps = {} as P
       const resolvedProps = { ...props, ...overridenProps }
-      const resolvedDefaultProps = resolveDefaultProps(defaultProps, resolvedProps, theme)
+      const resolvedDefaultStyles = resolveDefaultStyles(defaultStyles, resolvedProps, theme)
 
       Object.entries(props).forEach(([key, value]) => {
         if (
@@ -74,8 +74,8 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         resolveAll(
           merge(
             {},
-            resolvedDefaultProps,                                                                    // Component defaultProps
-            resolveDefaultProps(theme.global, { ...resolvedProps, ...resolvedDefaultProps }, theme), // Global props
+            resolvedDefaultStyles,                                                                    // Component defaultStyles
+            resolveDefaultStyles(theme.global, { ...resolvedProps, ...resolvedDefaultStyles }, theme), // Global props
             stylesProps,                                                                             // Actual style from props
           ),
           theme

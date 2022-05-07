@@ -2,7 +2,7 @@ import { ExtendTheme, Input } from 'honorable'
 
 const inputTheme = {
   input: {
-    defaultProps: {
+    defaultStyles: {
       borderRadius: 1000,
       paddingLeft: '1rem',
       paddingRight: '1rem',

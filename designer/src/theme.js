@@ -9,24 +9,24 @@ export default mergeTheme(defaultTheme, {
     },
   },
   h1: {
-    defaultProps: {
+    defaultStyles: {
       margin: 0,
       fontSize: '1.5rem',
     },
   },
   h2: {
-    defaultProps: {
+    defaultStyles: {
       margin: 0,
       fontSize: '1.5rem',
     },
   },
   h3: {
-    defaultProps: {
+    defaultStyles: {
       margin: '0.5rem 0',
     },
   },
   sub: {
-    defaultProps: {
+    defaultStyles: {
       display: 'block',
       fontSize: '1rem',
       whiteSpace: 'break-spaces',
@@ -34,7 +34,7 @@ export default mergeTheme(defaultTheme, {
     },
   },
   switch: {
-    defaultProps: {
+    defaultStyles: {
       transition: 'background-color 150ms ease',
     },
     customProps: new Map([
@@ -47,12 +47,12 @@ export default mergeTheme(defaultTheme, {
     ]),
   },
   p: {
-    defaultProps: {
+    defaultStyles: {
       margin: 0,
     },
   },
   pre: {
-    defaultProps: {
+    defaultStyles: {
       margin: 0,
       padding: 0,
       backgroundColor: 'transparent',

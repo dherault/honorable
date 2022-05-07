@@ -14,7 +14,7 @@ import useEscapeKey from '../../hooks/useEscapeKey'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
@@ -113,7 +113,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         p={0.5}
         xflex="x5"
         userSelect="none"
-        {...resolvePartProps('Caret', props, theme)}
+        {...resolvePartStyles('Caret', props, theme)}
       >
         <Caret rotation={actualOpen ? 180 : 0} />
       </Span>
@@ -134,7 +134,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
-        {...resolvePartProps('Input', props, theme)}
+        {...resolvePartStyles('Input', props, theme)}
       >
         {renderSelected()}
         <Div flexGrow={1} />
@@ -151,7 +151,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={actualOpen ? 'block' : 'none'}
-          {...resolvePartProps('Menu', props, theme)}
+          {...resolvePartStyles('Menu', props, theme)}
         >
           {children}
         </Menu>

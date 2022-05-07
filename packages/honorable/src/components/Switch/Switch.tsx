@@ -6,7 +6,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
@@ -105,7 +105,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
         top={2}
         left={actualChecked ? 'calc(100% - 22px)' : 2}
         transition="left 150ms ease"
-        {...resolvePartProps('Handle', props, theme)}
+        {...resolvePartStyles('Handle', props, theme)}
       />
     </Div>
   )

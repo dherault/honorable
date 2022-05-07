@@ -6,7 +6,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 import { Caret } from '../Caret/Caret'
@@ -65,25 +65,25 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       <Div
         xflex="x4"
         cursor="pointer"
-        {...resolvePartProps('Title', props, theme)}
+        {...resolvePartStyles('Title', props, theme)}
         onClick={handleExpand}
       >
         {title}
         <Div flexGrow={1} />
         <Div
           xflex="x5"
-          {...resolvePartProps('ExpandIcon', props, theme)}
+          {...resolvePartStyles('ExpandIcon', props, theme)}
         >
           {expandIcon || <Caret />}
         </Div>
       </Div>
       <Div
         height={actualExpanded ? childrenHeight : 0}
-        {...resolvePartProps('Children', props, theme)}
+        {...resolvePartStyles('Children', props, theme)}
       >
         <Div
           ref={childrenRef}
-          {...resolvePartProps('ChildrenInner', props, theme)}
+          {...resolvePartStyles('ChildrenInner', props, theme)}
         >
           {children}
         </Div>

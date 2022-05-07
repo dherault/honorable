@@ -7,7 +7,7 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useEscapeKey from '../../hooks/useEscapeKey'
 
-import resolvePartProps from '../../resolvers/resolvePartProps'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -79,7 +79,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     const defaultStyle = {
       opacity: 0,
       transition: `opacity ${transitionDuration}ms ease`,
-      ...resolvePartProps('BackdropDefaultStyle', props, theme),
+      ...resolvePartStyles('BackdropDefaultStyle', props, theme),
     }
 
     const transitionStyles = {
@@ -87,7 +87,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
       entered: { opacity: 1 },
       exiting: { opacity: 0 },
       exited: { opacity: 0 },
-      ...resolvePartProps('BackdropTransitionStyle', props, theme),
+      ...resolvePartStyles('BackdropTransitionStyle', props, theme),
     }
 
     return (
@@ -110,7 +110,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     const defaultStyle = {
       opacity: 0,
       transition: `opacity ${transitionDuration}ms ease`,
-      ...resolvePartProps('InnerDefaultStyle', props, theme),
+      ...resolvePartStyles('InnerDefaultStyle', props, theme),
     }
 
     const transitionStyles = {
@@ -118,7 +118,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
       entered: { opacity: 1 },
       exiting: { opacity: 0 },
       exited: { opacity: 0 },
-      ...resolvePartProps('InnerTransitionStyle', props, theme),
+      ...resolvePartStyles('InnerTransitionStyle', props, theme),
     }
 
     return (
@@ -147,7 +147,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
       zIndex="1000"
       backgroundColor="rgba(0, 0, 0, 0.5)"
       onClick={handleBackdropClick}
-      {...resolvePartProps('Backdrop', props, theme)}
+      {...resolvePartStyles('Backdrop', props, theme)}
     >
       {wrapFadeInner(
         <Div
