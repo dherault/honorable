@@ -60,9 +60,6 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
-export type DefaultPropsFunction = (props: object, theme: HonorableTheme) => object
-export type DefaultProps = (object | DefaultPropsFunction)[]
-
 export type DefaultStylesFunction = (props: object, theme: HonorableTheme) => StylesProps
 export type DefaultStyles = (StylesProps | DefaultStylesFunction)[]
 
@@ -71,7 +68,6 @@ export type PartStyles = {
 }
 
 export type ComponentProps = {
-  defaultProps?: DefaultProps
   defaultStyles?: DefaultStyles
   partStyles?: PartStyles
 }
