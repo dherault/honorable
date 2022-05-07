@@ -1,6 +1,8 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { TargetWithValue } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -13,16 +15,18 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 import { Div, DivProps, Span } from '../tags'
 
 export type RadioProps = DivProps & {
+  value?: any
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
   iconUnchecked?: ReactNode
   iconChecked?: ReactNode
-  onChange?: (event: MouseEvent | KeyboardEvent | ChangeEvent) => void
+  onChange?: (event: TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>) => void
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
 export const radioPropTypes = {
+  value: PropTypes.any,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -71,6 +75,7 @@ const defaultIconChecked = (
 
 function RadioRef(props: RadioProps, ref: Ref<any>) {
   const {
+    value,
     defaultChecked,
     checked,
     disabled = false,
@@ -100,7 +105,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
 
   function handleChange(event: MouseEvent | KeyboardEvent) {
     if (disabled) return
-    if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))
+    if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked, value }))
     setUncontrolledChecked(!actualChecked)
   }
 
@@ -113,6 +118,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
 
   return (
     <Div
+      ref={ref}
       xflex={xflex}
       tabIndex={0}
       {...otherProps}
@@ -126,7 +132,6 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
       }}
     >
       <Span
-        ref={ref}
         xflex="x5"
         display="inline-flex"
         {...resolvePartStyles('Control', props, theme)}

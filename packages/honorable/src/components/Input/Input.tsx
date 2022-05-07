@@ -15,7 +15,7 @@ export type ValueType = (string | number | readonly string[]) & string | number
 
 // TODO v1 readOnly
 // TODO v1 generate props based on type
-export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & {
+export type InputProps = DivProps & {
   type?: string
   value?: ValueType
   defaultValue?: ValueType

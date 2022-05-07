@@ -516,6 +516,7 @@ export default {
       {
         cursor: 'pointer',
         userSelect: 'none',
+        outline: 'none',
         '&:hover > span': {
           color: 'primary',
         },
@@ -539,9 +540,6 @@ export default {
         ({ checked }) => checked && {
           color: 'primary',
         },
-        ({ disabled }) => disabled && {
-          backgroundColor: 'border',
-        },
       ],
       Children: [
         ({ labelPosition }) => ({
@@ -550,6 +548,27 @@ export default {
           marginTop: labelPosition === 'bottom' ? 8 : 0,
           marginBottom: labelPosition === 'top' ? 8 : 0,
         }),
+        ({ disabled }) => disabled && {
+          color: 'border',
+        },
+      ],
+    },
+  },
+  RadioGroup: {
+    partStyles: {
+      Radio: [
+        ({ row }) => row && {
+          marginRight: 8,
+          '&:last-of-type': {
+            marginRight: 0,
+          },
+        },
+        ({ row }) => !row && {
+          marginBottom: 8,
+          '&:last-of-type': {
+            marginBottom: 0,
+          },
+        },
       ],
     },
   },

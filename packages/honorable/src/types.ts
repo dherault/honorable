@@ -229,6 +229,15 @@ export type HonorableTheme = {
   Text?: ComponentProps
 }
 
+export type TargetWithValue<T> = T & {
+  target?: {
+    value?: any
+  }
+  currentTarget?: {
+    value?: any
+  }
+}
+
 // Redecalare forwardRef
 // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forward_and_create_ref/
 declare module 'react' {
