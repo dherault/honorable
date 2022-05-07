@@ -206,7 +206,6 @@ export type HonorableTheme = {
   Wbr?: ComponentProps
   // Components
   Accordion?: ComponentProps
-  AdjacentLabel?: ComponentProps
   Autocomplete?: ComponentProps
   Avatar?: ComponentProps
   Box?: ComponentProps
@@ -215,6 +214,7 @@ export type HonorableTheme = {
   Caret?: ComponentProps
   Checkbox?: ComponentProps
   DropdownButton?: ComponentProps
+  Flex?: ComponentProps
   Icon?: ComponentProps
   IconButton?: ComponentProps
   Input?: ComponentProps
@@ -222,6 +222,7 @@ export type HonorableTheme = {
   MenuItem?: ComponentProps
   Modal?: ComponentProps
   ProgressBar?: ComponentProps
+  RadioButton?: ComponentProps
   Select?: ComponentProps
   Spinner?: ComponentProps
   Switch?: ComponentProps

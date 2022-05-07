@@ -218,6 +218,16 @@ export default {
     defaultProps: [
       {
         cursor: 'pointer',
+        userSelect: 'none',
+        '&:hover > span': {
+          border: '1px solid primary',
+        },
+      },
+      ({ disabled }) => disabled && {
+        cursor: 'not-allowed',
+        '&:hover > span': {
+          border: '1px solid border',
+        },
       },
     ],
     partProps: {
@@ -229,17 +239,12 @@ export default {
           backgroundColor: 'transparent',
           border: '1px solid border',
           borderRadius: 2,
-          userSelect: 'none',
-          '&:hover': {
-            border: '1px solid primary',
-          },
         },
         ({ checked }) => checked && {
           backgroundColor: 'primary',
           borderColor: 'primary',
         },
         ({ disabled }) => disabled && {
-          cursor: 'not-allowed',
           backgroundColor: 'border',
           borderColor: 'border',
           '&:hover': {
@@ -248,9 +253,6 @@ export default {
         },
       ],
       Children: [
-        {
-          userSelect: 'none',
-        },
         ({ labelPosition }) => ({
           marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
           marginRight: labelPosition === 'left' ? 8 : 0,
@@ -506,6 +508,48 @@ export default {
           backgroundColor: 'primary',
           transition: 'width 150ms ease',
         },
+      ],
+    },
+  },
+  RadioButton: {
+    defaultProps: [
+      {
+        cursor: 'pointer',
+        userSelect: 'none',
+        '&:hover > span': {
+          color: 'primary',
+        },
+      },
+      ({ disabled }) => disabled && {
+        cursor: 'not-allowed',
+        '&:hover > span': {
+          color: 'border',
+        },
+      },
+    ],
+    partProps: {
+      Control: [
+        {
+          width: 20,
+          height: 20,
+          color: 'border',
+          borderRadius: '50%',
+          userSelect: 'none',
+        },
+        ({ checked }) => checked && {
+          color: 'primary',
+        },
+        ({ disabled }) => disabled && {
+          backgroundColor: 'border',
+        },
+      ],
+      Children: [
+        ({ labelPosition }) => ({
+          marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
+          marginRight: labelPosition === 'left' ? 8 : 0,
+          marginTop: labelPosition === 'bottom' ? 8 : 0,
+          marginBottom: labelPosition === 'top' ? 8 : 0,
+        }),
       ],
     },
   },
