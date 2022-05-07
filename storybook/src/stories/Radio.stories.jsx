@@ -1,16 +1,16 @@
 import { useState } from 'react'
 
-import { A, Div, RadioButton } from 'honorable'
+import { A, Div, Radio } from 'honorable'
 
 export default {
-  title: 'RadioButton',
-  component: RadioButton,
+  title: 'Radio',
+  component: Radio,
 }
 
 function Template(args) {
   return (
     <Div xflex="y1">
-      <RadioButton
+      <Radio
         {...args}
       />
     </Div>
@@ -22,7 +22,7 @@ function Template2(args) {
 
   return (
     <Div xflex="x4">
-      <RadioButton
+      <Radio
         checked={checked}
         onChange={event => setChecked(event.target.checked)}
         {...args}
@@ -52,32 +52,32 @@ Controlled.args = {
 export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
-  children: 'A RadioButton',
+  children: 'A Radio',
 }
 
 export const Label = Template.bind({})
 Label.args = {
   disabled: false,
-  children: 'A RadioButton',
+  children: 'A Radio',
 }
 
 export const LabelPositionLeft = Template.bind({})
 LabelPositionLeft.args = {
   disabled: false,
-  children: 'A RadioButton',
+  children: 'A Radio',
   labelPosition: 'left',
 }
 
 export const LabelPositionTop = Template.bind({})
 LabelPositionTop.args = {
   disabled: false,
-  children: 'A RadioButton',
+  children: 'A Radio',
   labelPosition: 'top',
 }
 
 export const LabelPositionBottom = Template.bind({})
 LabelPositionBottom.args = {
   disabled: false,
-  children: 'A RadioButton',
+  children: 'A Radio',
   labelPosition: 'bottom',
 }

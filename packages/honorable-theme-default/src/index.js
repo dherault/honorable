@@ -511,7 +511,7 @@ export default {
       ],
     },
   },
-  RadioButton: {
+  Radio: {
     defaultStyles: [
       {
         cursor: 'pointer',

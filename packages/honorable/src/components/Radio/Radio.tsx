@@ -12,7 +12,7 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
-export type RadioButtonProps = DivProps & {
+export type RadioProps = DivProps & {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
@@ -22,7 +22,7 @@ export type RadioButtonProps = DivProps & {
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
-export const radioButtonPropTypes = {
+export const radioPropTypes = {
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -69,7 +69,7 @@ const defaultIconChecked = (
   </svg>
 )
 
-function RadioButtonRef(props: RadioButtonProps, ref: Ref<any>) {
+function RadioRef(props: RadioProps, ref: Ref<any>) {
   const {
     defaultChecked,
     checked,
@@ -142,10 +142,10 @@ function RadioButtonRef(props: RadioButtonProps, ref: Ref<any>) {
   )
 }
 
-RadioButtonRef.displayName = 'RadioButton'
+RadioRef.displayName = 'Radio'
 
-const ForwaredRadioButton = forwardRef(RadioButtonRef)
+const ForwaredRadio = forwardRef(RadioRef)
 
-ForwaredRadioButton.propTypes = radioButtonPropTypes
+ForwaredRadio.propTypes = radioPropTypes
 
-export const RadioButton = withHonorable<RadioButtonProps>(ForwaredRadioButton, 'RadioButton')
+export const Radio = withHonorable<RadioProps>(ForwaredRadio, 'Radio')

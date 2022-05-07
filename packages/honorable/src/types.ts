@@ -222,7 +222,7 @@ export type HonorableTheme = {
   MenuItem?: ComponentProps
   Modal?: ComponentProps
   ProgressBar?: ComponentProps
-  RadioButton?: ComponentProps
+  Radio?: ComponentProps
   Select?: ComponentProps
   Spinner?: ComponentProps
   Switch?: ComponentProps
