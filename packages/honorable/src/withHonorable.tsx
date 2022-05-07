@@ -17,6 +17,7 @@ import useTheme from './hooks/useTheme'
 
 import isSelector from './utils/isSelector'
 import resolveAll from './resolvers/resolveAll'
+import resolveDefaultProps from './resolvers/resolveDefaultProps'
 import resolveDefaultStyles from './resolvers/resolveDefaultStyles'
 
 const allStyleProperties = [
@@ -46,11 +47,11 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const [honorable, otherProps] = useMemo(() => {
       const aliases = Object.keys(theme.aliases || {})
       const suffixedAliases = aliases.map(x => `${x}-`)
-      const defaultStyles = theme[name]?.defaultStyles
       const stylesProps: StylesProps = {}
       const otherProps = {} as P
       const resolvedProps = { ...props, ...overridenProps }
-      const resolvedDefaultStyles = resolveDefaultStyles(defaultStyles, resolvedProps, theme)
+      const resolvedDefaultProps = resolveDefaultProps(theme[name]?.defaultProps, theme)
+      const resolvedDefaultStyles = resolveDefaultStyles(theme[name]?.defaultStyles, resolvedProps, theme)
 
       Object.entries(props).forEach(([key, value]) => {
         if (
@@ -74,13 +75,19 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         resolveAll(
           merge(
             {},
-            resolvedDefaultStyles,                                                                    // Component defaultStyles
-            resolveDefaultStyles(theme.global, { ...resolvedProps, ...resolvedDefaultStyles }, theme), // Global props
-            stylesProps,                                                                             // Actual style from props
+            // Component defaultStyles
+            resolvedDefaultStyles,
+            // Global props
+            resolveDefaultStyles(theme.global, { ...resolvedProps, ...resolvedDefaultProps, ...resolvedDefaultStyles }, theme),
+            // Actual style from props
+            stylesProps,
           ),
           theme
         ),
-        otherProps,
+        {
+          ...otherProps,
+          ...resolvedDefaultProps,
+        },
       ]
     }, [props, overridenProps, theme])
 

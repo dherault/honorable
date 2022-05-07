@@ -1,4 +1,4 @@
-import { Div, DropdownButton, ExtendTheme } from 'honorable'
+import { Checkbox, Div, DropdownButton, ExtendTheme } from 'honorable'
 
 export default {
   title: 'Theming',
@@ -37,11 +37,11 @@ Theming1.args = {
 
 const extendedTheme2 = {
   Checkbox: {
-    defaultStyles: [
+    defaultProps: [
       {
         icon: (
           <svg
-            width={16}
+            width="100%"
             viewBox="0 0 15 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -63,10 +63,7 @@ function Template2() {
   return (
     <ExtendTheme theme={extendedTheme2}>
       <Div xflex="y2">
-        <DropdownButton
-          install
-          label="Install"
-        />
+        <Checkbox />
       </Div>
     </ExtendTheme>
   )
