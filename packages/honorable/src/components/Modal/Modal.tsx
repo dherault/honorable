@@ -16,6 +16,7 @@ export type ModalProps = DivProps & {
   onClose?: (event: MouseEvent | KeyboardEvent) => void
   fade?: boolean
   transitionDuration?: number
+  disableEscapeKey?: boolean
 }
 
 export const modalPropTypes = {
@@ -23,6 +24,7 @@ export const modalPropTypes = {
   onClose: PropTypes.func,
   fade: PropTypes.bool,
   transitionDuration: PropTypes.number,
+  disableEscapeKey: PropTypes.bool,
 }
 
 function ModalRef(props: ModalProps, ref: Ref<any>) {
@@ -30,41 +32,44 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     open = false,
     onClose,
     fade = true,
-    transitionDuration = 200,
+    transitionDuration = 250,
+    disableEscapeKey = false,
     ...otherProps
   } = props
   const theme = useTheme()
   const backdropRef = useRef()
-  const [actualOpen, setActualOpen] = useState(false)
+  const [transitionOpen, setTransitionOpen] = useState(false)
+  const [transitioning, setTransitioning] = useState(false)
 
-  useEscapeKey(onClose)
+  const workingOnClose = typeof onClose === 'function' ? onClose : () => {}
+
+  useEscapeKey(event => !disableEscapeKey && handleClose(event))
 
   useEffect(() => {
     if (fade) {
       setTimeout(() => {
-        setActualOpen(open)
+        setTransitionOpen(open)
+        setTimeout(() => {
+          setTransitioning(false)
+        }, transitionDuration)
       }, 0)
     }
     else {
-      setActualOpen(open)
+      setTransitionOpen(open)
     }
-  }, [fade, open])
+  }, [fade, open, transitionDuration])
 
-  if (!open) return null
+  if (!(open || transitioning)) return null
 
-  function handleClose(event: MouseEvent) {
-    if (typeof onClose === 'function') onClose(event)
+  function handleClose(event: MouseEvent | KeyboardEvent) {
+    if (fade) setTransitioning(true)
+
+    workingOnClose(event)
   }
 
   function handleBackdropClick(event: MouseEvent) {
     if (event.target === backdropRef.current) {
-      if (fade) {
-        setActualOpen(false)
-        setTimeout(() => handleClose(event), transitionDuration)
-      }
-      else {
-        handleClose(event)
-      }
+      handleClose(event)
     }
   }
 
@@ -87,7 +92,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
 
     return (
       <Transition
-        in={actualOpen}
+        in={transitionOpen}
         timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {
@@ -118,7 +123,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
 
     return (
       <Transition
-        in={actualOpen}
+        in={transitionOpen}
         timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {

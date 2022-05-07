@@ -75,6 +75,27 @@ function Template2(args) {
   )
 }
 
+function Template3(args) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Div xflex="y2">
+      <A
+        onClick={() => setOpen(x => !x)}
+        userSelect="none"
+      >
+        Open
+      </A>
+      <Modal
+        open={open}
+        {...args}
+      >
+        Content
+      </Modal>
+    </Div>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
 }
@@ -90,5 +111,19 @@ Open.args = {
 }
 
 export const Extended = Template2.bind({})
-Open.args = {
+Extended.args = {
+}
+
+export const NoOnClose = Template3.bind({})
+NoOnClose.args = {
+}
+
+export const OpenNoOnClose = Template3.bind({})
+OpenNoOnClose.args = {
+  open: true,
+}
+
+export const DisableEscapeKey = Template.bind({})
+DisableEscapeKey.args = {
+  disableEscapeKey: true,
 }
