@@ -17,7 +17,6 @@ import useTheme from './hooks/useTheme'
 
 import isSelector from './utils/isSelector'
 import resolveAll from './resolvers/resolveAll'
-import resolveDefaultProps from './resolvers/resolveDefaultProps'
 import resolveDefaultStyles from './resolvers/resolveDefaultStyles'
 
 const allStyleProperties = [
@@ -50,7 +49,6 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       const stylesProps: StylesProps = {}
       const otherProps = {} as P
       const resolvedProps = { ...props, ...overridenProps }
-      const resolvedDefaultProps = resolveDefaultProps(theme[name]?.defaultProps, theme)
       const resolvedDefaultStyles = resolveDefaultStyles(theme[name]?.defaultStyles, resolvedProps, theme)
 
       Object.entries(props).forEach(([key, value]) => {
@@ -78,16 +76,13 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
             // Component defaultStyles
             resolvedDefaultStyles,
             // Global props
-            resolveDefaultStyles(theme.global, { ...resolvedProps, ...resolvedDefaultProps, ...resolvedDefaultStyles }, theme),
+            resolveDefaultStyles(theme.global, { ...resolvedProps, ...resolvedDefaultStyles }, theme),
             // Actual style from props
             stylesProps,
           ),
           theme
         ),
-        {
-          ...otherProps,
-          ...resolvedDefaultProps,
-        },
+        otherProps,
       ]
     }, [props, overridenProps, theme])
 
