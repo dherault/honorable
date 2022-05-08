@@ -11,7 +11,7 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import { Spinner } from '../Spinner/Spinner'
 import { ButtonBase, ButtonBaseBaseProps, Span } from '../tags'
 
-export type ButtonProps = ButtonBaseBaseProps & {
+export type ButtonBaseProps = {
   /**
    * The icon at the left of the Button
    */
@@ -33,6 +33,8 @@ export type ButtonProps = ButtonBaseBaseProps & {
    */
   disabled?: boolean
 }
+
+export type ButtonProps = ButtonBaseBaseProps & ButtonBaseProps
 
 export const buttonPropTypes = {
   startIcon: PropTypes.node,
