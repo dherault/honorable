@@ -5,9 +5,14 @@ import withHonorable from '../../withHonorable'
 
 import { Svg, SvgProps } from '../tags'
 
-export type CaretProps = SvgProps & {
+export type CaretBaseProps = {
+  /**
+   * The rotation of the Caret
+   */
   rotation?: number
 }
+
+export type CaretProps = SvgProps & CaretBaseProps
 
 export const caretPropTypes = {
   rotation: PropTypes.number,

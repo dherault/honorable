@@ -12,10 +12,25 @@ import { Spinner } from '../Spinner/Spinner'
 import { ButtonBase, ButtonBaseBaseProps, Span } from '../tags'
 
 export type ButtonProps = ButtonBaseBaseProps & {
+  /**
+   * The icon at the left of the Button
+   */
   startIcon?: ReactNode
+  /**
+   * The icon at the right of the Button
+   */
   endIcon?: ReactNode
+  /**
+   * Weither the Button displays a loading state or not
+   */
   loading?: boolean
+  /**
+   * The node to display during the loading state if the Button
+   */
   loadingIndicator?: ReactNode
+  /**
+   * Weither the Button is disabled or not
+   */
   disabled?: boolean
 }
 

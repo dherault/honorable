@@ -4,7 +4,9 @@ import withHonorable from '../../withHonorable'
 
 import { Div, DivProps } from '../tags'
 
-export type ButtonGroupProps = DivProps
+export type ButtonGroupBaseProps = Record<string, never>
+
+export type ButtonGroupProps = DivProps & ButtonGroupBaseProps
 
 export const buttonGroupPropTypes = {}
 
