@@ -5,7 +5,7 @@ import withHonorable from '../../withHonorable'
 
 import { Div, DivProps } from '../tags'
 
-export type FlexProps = DivProps & {
+export type FlexBaseProps = {
   direction?: string
   wrap?: string
   basis?: string
@@ -14,6 +14,8 @@ export type FlexProps = DivProps & {
   align?: string
   justify?: string
 }
+
+export type FlexProps = DivProps & FlexBaseProps
 
 export const FlexPropTypes = {
   direction: PropTypes.string,

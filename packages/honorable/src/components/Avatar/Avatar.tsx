@@ -7,11 +7,13 @@ import useImageLoad from '../../hooks/useImageLoad'
 
 import { Div, DivProps, Img, ImgProps } from '../tags'
 
-export type AvatarProps = ImgProps & DivProps & {
+export type AvatarBaseProps = {
   src?: string
   size?: number
   name?: string
 }
+
+export type AvatarProps = ImgProps & DivProps & AvatarBaseProps
 
 export const AvatarPropTypes = {
   size: PropTypes.number,

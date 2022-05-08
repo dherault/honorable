@@ -2,14 +2,14 @@ import { ElementProps } from '../types'
 
 import withHonorable from '../withHonorable'
 
-export type ButtonBaseProps = ElementProps<'button'>
-export const ButtonBase = withHonorable<ButtonBaseProps>('button', 'ButtonBase')
-export type InputBaseProps = ElementProps<'input'>
-export const InputBase = withHonorable<InputBaseProps>('input', 'InputBase')
-export type MenuBaseProps = ElementProps<'menu'>
-export const MenuBase = withHonorable<MenuBaseProps>('menu', 'MenuBase')
-export type SelectBaseProps = ElementProps<'select'>
-export const SelectBase = withHonorable<SelectBaseProps>('select', 'SelectBase')
+export type ButtonBaseBaseProps = ElementProps<'button'>
+export const ButtonBase = withHonorable<ButtonBaseBaseProps>('button', 'ButtonBase')
+export type InputBaseBaseProps = ElementProps<'input'>
+export const InputBase = withHonorable<InputBaseBaseProps>('input', 'InputBase')
+export type MenuBaseBaseProps = ElementProps<'menu'>
+export const MenuBase = withHonorable<MenuBaseBaseProps>('menu', 'MenuBase')
+export type SelectBaseBaseProps = ElementProps<'select'>
+export const SelectBase = withHonorable<SelectBaseBaseProps>('select', 'SelectBase')
 
 export type AProps = ElementProps<'a'>
 export const A = withHonorable<AProps>('a', 'A')

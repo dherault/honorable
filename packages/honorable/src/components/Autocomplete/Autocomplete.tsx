@@ -18,12 +18,12 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'
 import { MenuItem } from '../MenuItem/MenuItem'
-import { Input, InputProps, inputPropTypes } from '../Input/Input'
+import { Input, InputBaseProps, inputPropTypes } from '../Input/Input'
 import { Div, DivProps } from '../tags'
 
 export type AutocompleteOptionType = string | { label?: string; value?: string }
 
-export type AutocompleteProps = InputProps & Omit<DivProps, 'onChange'> & {
+export type AutocompleteBaseProps = {
   options?: AutocompleteOptionType[],
   autoComplete?: boolean
   autoHighlight?: boolean
@@ -32,6 +32,8 @@ export type AutocompleteProps = InputProps & Omit<DivProps, 'onChange'> & {
   renderOption?: (option: any) => ReactNode
   noOptionsNode?: ReactNode
 }
+
+export type AutocompleteProps = InputBaseProps & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
 
 const autocompletePropTypes = {
   ...inputPropTypes,
@@ -93,7 +95,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const [inputProps, divProps]: [InputProps, DivProps] = pickProps(otherProps, inputPropTypes)
+  const [inputProps, divProps]: [any, DivProps] = pickProps(otherProps, inputPropTypes)
   const autocompleteRef = useRef()
   const forkedRef = useForkedRef(autocompleteRef, ref)
   const [focused, setFocused] = useState(false)
@@ -222,4 +224,4 @@ const ForwardedInput = forwardRef(AutocompleteRef)
 
 ForwardedInput.propTypes = autocompletePropTypes
 
-export const Autocomplete = withHonorable<InputProps>(ForwardedInput, 'Autocomplete')
+export const Autocomplete = withHonorable<AutocompleteProps>(ForwardedInput, 'Autocomplete')

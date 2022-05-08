@@ -13,9 +13,7 @@ import { Div, DivProps, InputBase } from '../tags'
 
 export type ValueType = (string | number | readonly string[]) & string | number
 
-// TODO v1 readOnly
-// TODO v1 generate props based on type
-export type InputProps = DivProps & {
+export type InputBaseProps = {
   type?: string
   value?: ValueType
   defaultValue?: ValueType
@@ -33,6 +31,9 @@ export type InputProps = DivProps & {
   minRows?: number
   maxRows?: number
 }
+
+// TODO v1 readOnly
+export type InputProps = DivProps & InputBaseProps
 
 export const inputPropTypes = {
   type: PropTypes.string,

@@ -11,18 +11,23 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import { Div, DivProps } from '../tags'
 import { Caret } from '../Caret/Caret'
 
-export type AccordionProps = Omit<DivProps, 'title'> & {
+export type AccordionBaseProps = {
+  /**
+   * Whether the accordion is expanded or not.
+   */
   expanded?: boolean
+  /**
+   * Whether the accordion is expanded by default or not.
+   */
   defaultExpanded?: boolean
   onExpand? (expanded: boolean): void
   title?: ReactNode
   expandIcon?: ReactNode
 }
 
+export type AccordionProps = Omit<DivProps, 'title'> & AccordionBaseProps
+
 export const accordionPropTypes = {
-  /**
-   * Whether the accordion is expanded or not.
-   */
   expanded: PropTypes.bool,
   defaultExpanded: PropTypes.bool,
   onExpand: PropTypes.func,

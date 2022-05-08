@@ -4,7 +4,9 @@ import withHonorable from '../../withHonorable'
 
 import { P, PProps } from '../tags'
 
-export type TextProps = PProps
+export type TextBaseProps = Record<string, never>
+
+export type TextProps = PProps & TextBaseProps
 
 export const TextPropTypes = {}
 
