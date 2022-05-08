@@ -8,8 +8,17 @@ import useImageLoad from '../../hooks/useImageLoad'
 import { Div, DivProps, Img, ImgProps } from '../tags'
 
 export type AvatarBaseProps = {
+  /**
+   * The source of the Avatar's image
+   */
   src?: string
+  /**
+   * The size of the Avatar
+   */
   size?: number
+  /**
+   * The name of that will be transformed into the Avatar's initials
+   */
   name?: string
 }
 

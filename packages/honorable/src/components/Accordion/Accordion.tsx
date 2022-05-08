@@ -13,15 +13,24 @@ import { Caret } from '../Caret/Caret'
 
 export type AccordionBaseProps = {
   /**
-   * Whether the accordion is expanded or not.
+   * Whether the accordion is expanded or not
    */
   expanded?: boolean
   /**
-   * Whether the accordion is expanded by default or not.
+   * Whether the accordion is expanded by default or not
    */
   defaultExpanded?: boolean
+  /**
+   * Callback called when the accordion is expanded or collapsed
+   */
   onExpand? (expanded: boolean): void
+  /**
+   * The Accordion's title node
+   */
   title?: ReactNode
+  /**
+   * The Accordion's expand icon node
+   */
   expandIcon?: ReactNode
 }
 
