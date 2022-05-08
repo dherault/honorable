@@ -5,9 +5,9 @@ import withHonorable from '../../withHonorable'
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 
-import { ButtonBase, ButtonBaseProps } from '../tags'
+import { ButtonBase, ButtonBaseBaseProps } from '../tags'
 
-export type IconButtonProps = ButtonBaseProps
+export type IconButtonProps = ButtonBaseBaseProps
 
 export const iconButtonPropTypes = {}
 

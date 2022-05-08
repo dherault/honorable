@@ -9,9 +9,9 @@ import useForkedRef from '../../hooks/useForkedRef'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Spinner } from '../Spinner/Spinner'
-import { ButtonBase, ButtonBaseProps, Span } from '../tags'
+import { ButtonBase, ButtonBaseBaseProps, Span } from '../tags'
 
-export type ButtonProps = ButtonBaseProps & {
+export type ButtonProps = ButtonBaseBaseProps & {
   startIcon?: ReactNode
   endIcon?: ReactNode
   loading?: boolean
