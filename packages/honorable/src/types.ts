@@ -224,9 +224,11 @@ export type HonorableTheme = {
   ProgressBar?: ComponentProps
   Radio?: ComponentProps
   Select?: ComponentProps
+  Slider?: ComponentProps
   Spinner?: ComponentProps
   Switch?: ComponentProps
   Text?: ComponentProps
+  Tooltip?: ComponentProps
 }
 
 export type TargetWithValue<T> = T & {

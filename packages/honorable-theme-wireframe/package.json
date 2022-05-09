@@ -1,6 +1,6 @@
 {
   "name": "honorable-theme-wireframe",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "A wireframe-styled honorable theme",
   "main": "dist/index.js",
   "scripts": {

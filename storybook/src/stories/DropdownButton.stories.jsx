@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { A, Div, DropdownButton, Menu, MenuItem } from 'honorable'
+import { A, Div, DropdownButton, ExtendTheme, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'DropdownButton',
@@ -64,6 +64,31 @@ function Template2({ items, ...args }) {
   )
 }
 
+const extendedTheme = {
+  DropdownButton: {
+    partStyles: {
+      Menu: [
+        {
+          width: 256,
+          left: 'unset',
+        },
+      ],
+    },
+  },
+}
+
+function Template3({ items, ...args }) {
+  return (
+    <Div xflex="y2">
+      <ExtendTheme theme={extendedTheme}>
+        <DropdownButton {...args}>
+          {items.map(renderItem)}
+        </DropdownButton>
+      </ExtendTheme>
+    </Div>
+  )
+}
+
 function makeItems(items, depth = 1) {
   if (depth <= 0) return items
 
@@ -104,4 +129,10 @@ Disabled.args = {
   label: 'Drop it!',
   items,
   disabled: true,
+}
+
+export const Extended = Template3.bind({})
+Extended.args = {
+  label: 'Drop it!',
+  items,
 }
