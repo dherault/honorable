@@ -240,6 +240,15 @@ export type TargetWithValue<T> = T & {
   }
 }
 
+export type TargetWithChecked<T> = T & {
+  target?: {
+    checked?: boolean
+  }
+  currentTarget?: {
+    checked?: boolean
+  }
+}
+
 // Redecalare forwardRef
 // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forward_and_create_ref/
 declare module 'react' {

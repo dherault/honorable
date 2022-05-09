@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { A, Div, ExtendTheme, Modal } from 'honorable'
 
@@ -7,7 +7,7 @@ export default {
   component: Modal,
 }
 
-function Template(args) {
+function Template(args: any) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -50,7 +50,7 @@ const extendedTheme = {
   },
 }
 
-function Template2(args) {
+function Template2(args: any) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -75,7 +75,7 @@ function Template2(args) {
   )
 }
 
-function Template3(args) {
+function Template3(args: any) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -96,7 +96,7 @@ function Template3(args) {
   )
 }
 
-function Template4(args) {
+function Template4(args: any) {
   const [value, setValue] = useState(null)
 
   return (

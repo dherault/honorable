@@ -1,5 +1,5 @@
 // Icons from https://icons.modulz.app/
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Div, Input, P } from 'honorable'
 
 export default {
@@ -7,7 +7,7 @@ export default {
   component: Input,
 }
 
-function Template(args) {
+function Template(args: any) {
   return (
     <Div xflex="y2">
       <Input {...args} />
@@ -15,13 +15,14 @@ function Template(args) {
   )
 }
 
-function TemplateControlled(args) {
+function TemplateControlled(args: any) {
   const [value, setValue] = useState('')
 
   return (
     <Div xflex="y2">
       <Input
         value={value}
+        // @ts-ignore
         onChange={event => setValue(event.target.value)}
         {...args}
       />

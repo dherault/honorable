@@ -1,29 +1,30 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-import { A, Checkbox, Div } from 'honorable'
+import { A, Div, Radio } from 'honorable'
 
 export default {
-  title: 'Checkbox',
-  component: Checkbox,
+  title: 'Radio',
+  component: Radio,
 }
 
-function Template(args) {
+function Template(args: any) {
   return (
     <Div xflex="y1">
-      <Checkbox
+      <Radio
         {...args}
       />
     </Div>
   )
 }
 
-function Template2(args) {
+function Template2(args: any) {
   const [checked, setChecked] = useState(false)
 
   return (
     <Div xflex="x4">
-      <Checkbox
+      <Radio
         checked={checked}
+        // @ts-ignore
         onChange={event => setChecked(event.target.checked)}
         {...args}
       />
@@ -52,32 +53,32 @@ Controlled.args = {
 export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
-  children: 'A checkbox',
+  children: 'A Radio',
 }
 
 export const Label = Template.bind({})
 Label.args = {
   disabled: false,
-  children: 'A checkbox',
+  children: 'A Radio',
 }
 
 export const LabelPositionLeft = Template.bind({})
 LabelPositionLeft.args = {
   disabled: false,
-  children: 'A checkbox',
+  children: 'A Radio',
   labelPosition: 'left',
 }
 
 export const LabelPositionTop = Template.bind({})
 LabelPositionTop.args = {
   disabled: false,
-  children: 'A checkbox',
+  children: 'A Radio',
   labelPosition: 'top',
 }
 
 export const LabelPositionBottom = Template.bind({})
 LabelPositionBottom.args = {
   disabled: false,
-  children: 'A checkbox',
+  children: 'A Radio',
   labelPosition: 'bottom',
 }

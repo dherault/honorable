@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { A, Div, Menu, MenuItem, Select } from 'honorable'
 
@@ -14,7 +14,7 @@ const items = [
   { text: 'And', value: 'And' },
 ]
 
-function renderItem({ text, value, items }) {
+function renderItem({ text, value, items }: any) {
   return (
     <MenuItem
       key={text}
@@ -30,7 +30,7 @@ function renderItem({ text, value, items }) {
   )
 }
 
-function Template({ items, initialValue, ...args }) {
+function Template({ items, initialValue, ...args }: any) {
   const [value, setValue] = useState(initialValue)
 
   return (
@@ -38,6 +38,7 @@ function Template({ items, initialValue, ...args }) {
       <Select
         {...args}
         value={value}
+        // @ts-ignore
         onChange={event => setValue(event.target.value)}
       >
         {items.map(renderItem)}
@@ -46,7 +47,7 @@ function Template({ items, initialValue, ...args }) {
   )
 }
 
-function Template2({ items, initialValue, ...args }) {
+function Template2({ items, initialValue, ...args }: any) {
   const [value, setValue] = useState(initialValue)
   const [open, setOpen] = useState(false)
 
@@ -58,6 +59,7 @@ function Template2({ items, initialValue, ...args }) {
           open={open}
           onOpen={setOpen}
           value={value}
+          // @ts-ignore
           onChange={event => setValue(event.target.value)}
         >
           {items.map(renderItem)}
@@ -74,7 +76,7 @@ function Template2({ items, initialValue, ...args }) {
   )
 }
 
-function Template3({ items, initialValue, ...args }) {
+function Template3({ items, initialValue, ...args }: any) {
   const [value, setValue] = useState(initialValue)
   const allValues = findAllValues(items)
 
@@ -84,6 +86,7 @@ function Template3({ items, initialValue, ...args }) {
         <Select
           {...args}
           value={value}
+          // @ts-ignore
           onChange={event => setValue(event.target.value)}
         >
           {items.map(renderItem)}
@@ -92,7 +95,7 @@ function Template3({ items, initialValue, ...args }) {
           ml={1}
           userSelect="none"
           onClick={() => {
-            setValue(x => {
+            setValue((x: any) => {
               const index = allValues.indexOf(x)
 
               return allValues[index === -1 ? 0 : (index + 1) % allValues.length]
@@ -113,7 +116,7 @@ function Template3({ items, initialValue, ...args }) {
   )
 }
 
-function makeItems(items, depth = 1) {
+function makeItems(items: any[], depth = 1): any[] {
   if (depth <= 0) return items
 
   return items.map((item, i) => ({
@@ -123,7 +126,7 @@ function makeItems(items, depth = 1) {
   }))
 }
 
-function findAllValues(items) {
+function findAllValues(items: any[]) {
   return items.reduce((acc, item) => {
     acc.push(item.value)
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { Div, Radio, RadioGroup } from 'honorable'
 
@@ -7,7 +7,7 @@ export default {
   component: RadioGroup,
 }
 
-function Template(args) {
+function Template(args: any) {
   return (
     <Div xflex="y1">
       <RadioGroup {...args}>
@@ -25,7 +25,7 @@ function Template(args) {
   )
 }
 
-function Template2(args) {
+function Template2(args: any) {
   const [value, setValue] = useState(null)
 
   return (
@@ -33,6 +33,7 @@ function Template2(args) {
       <RadioGroup
         {...args}
         value={value}
+        // @ts-ignore
         onChange={event => setValue(event.target.value)}
       >
         <Radio value={0}>
@@ -49,7 +50,7 @@ function Template2(args) {
   )
 }
 
-function Template3(args) {
+function Template3(args: any) {
   const [value, setValue] = useState(null)
 
   return (
@@ -57,6 +58,7 @@ function Template3(args) {
       <RadioGroup
         {...args}
         value={value}
+        // @ts-ignore
         onChange={event => setValue(event.target.value)}
       >
         <Radio value={0}>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { A, Div, DropdownButton, ExtendTheme, Menu, MenuItem } from 'honorable'
 
@@ -14,7 +14,7 @@ const items = [
   { text: 'And', value: 'And' },
 ]
 
-function renderItem({ text, items }) {
+function renderItem({ text, items }: any) {
   return (
     <MenuItem
       key={text}
@@ -30,7 +30,7 @@ function renderItem({ text, items }) {
   )
 }
 
-function Template({ items, ...args }) {
+function Template({ items, ...args }: any) {
   return (
     <Div xflex="y2">
       <DropdownButton {...args}>
@@ -40,7 +40,7 @@ function Template({ items, ...args }) {
   )
 }
 
-function Template2({ items, ...args }) {
+function Template2({ items, ...args }: any) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -77,7 +77,7 @@ const extendedTheme = {
   },
 }
 
-function Template3({ items, ...args }) {
+function Template3({ items, ...args }: any) {
   return (
     <Div xflex="y2">
       <ExtendTheme theme={extendedTheme}>
@@ -89,7 +89,7 @@ function Template3({ items, ...args }) {
   )
 }
 
-function makeItems(items, depth = 1) {
+function makeItems(items: any[], depth = 1): any[] {
   if (depth <= 0) return items
 
   return items.map((item, i) => ({

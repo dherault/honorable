@@ -1,4 +1,4 @@
-import { Div, Menu, MenuItem } from 'honorable'
+import React, { Div, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'Menu',
@@ -12,8 +12,8 @@ const items = [
   { text: 'And', value: 'And' },
 ]
 
-function Template({ items, ...args }) {
-  function renderItem({ text, value, items }) {
+function Template({ items, ...args }: any) {
+  function renderItem({ text, value, items }: any) {
     return (
       <MenuItem
         key={text}
@@ -38,7 +38,7 @@ function Template({ items, ...args }) {
   )
 }
 
-function makeItems(items, depth = 1) {
+function makeItems(items: any[], depth = 1): any[] {
   if (depth <= 0) return items
 
   return items.map((item, i) => ({

@@ -1,6 +1,8 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { TargetWithChecked } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -17,7 +19,7 @@ export type CheckboxProps = DivProps & {
   defaultChecked?: boolean
   disabled?: boolean
   icon?: ReactNode
-  onChange?: (event: MouseEvent | KeyboardEvent | ChangeEvent) => void
+  onChange?: (event: TargetWithChecked<MouseEvent | KeyboardEvent | ChangeEvent>) => void
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 

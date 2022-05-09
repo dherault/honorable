@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { A, ProgressBar } from 'honorable'
 
@@ -7,7 +7,7 @@ export default {
   component: ProgressBar,
 }
 
-function Template(args) {
+function Template(args: any) {
   const [progress, setProgress] = useState(0.25)
 
   return (

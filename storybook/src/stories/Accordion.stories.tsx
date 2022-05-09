@@ -1,5 +1,5 @@
 // Icons from https://icons.modulz.app/
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { Accordion, Div } from 'honorable'
 
@@ -8,7 +8,7 @@ export default {
   component: Accordion,
 }
 
-function Template(args) {
+function Template(args: any) {
   return (
     <Div height="100%">
       <Accordion {...args} />
@@ -18,7 +18,7 @@ function Template(args) {
   )
 }
 
-function TemplateSolo(args) {
+function TemplateSolo(args: any) {
   return (
     <Div height="100%">
       <Accordion {...args} />
@@ -26,7 +26,7 @@ function TemplateSolo(args) {
   )
 }
 
-function TemplateControlled(args) {
+function TemplateControlled(args: any) {
   const [expanded, setExpanded] = useState(null)
 
   return (

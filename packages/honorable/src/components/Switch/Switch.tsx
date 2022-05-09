@@ -1,6 +1,8 @@
 import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { TargetWithChecked } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -11,11 +13,11 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
-export type SwitchProps = DivProps & {
+export type SwitchProps = Omit<DivProps, 'onChange'> & {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
-  onChange?: (event: MouseEvent | KeyboardEvent) => void
+  onChange?: (event: TargetWithChecked<MouseEvent | KeyboardEvent>) => void
   checkedBackground?: ReactNode
   uncheckedBackground?: ReactNode
 }

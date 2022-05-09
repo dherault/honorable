@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+// eslint-disable-next-line
+import { Story as StoryType, StoryContext } from '@storybook/react'
 import { CssBaseline, Div, Span, Switch, ThemeProvider, mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
@@ -17,7 +19,7 @@ const titleToBackgroundColor = {
   Accordion: 'background-light',
 }
 
-function HonorableDecorator(Story, { title }) {
+function HonorableDecorator(Story: StoryType, { title }: StoryContext) {
   const [mode, setMode] = useState('light')
 
   return (
@@ -50,6 +52,7 @@ function HonorableDecorator(Story, { title }) {
             </Span>
           )}
           checked={mode === 'dark'}
+          // @ts-ignore
           onChange={event => setMode(event.target.checked ? 'dark' : 'light')}
           backgroundColor="primary"
           position="absolute"

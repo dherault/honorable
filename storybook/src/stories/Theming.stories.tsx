@@ -1,4 +1,5 @@
-import { Checkbox, Div, DropdownButton, ExtendTheme } from 'honorable'
+import React from 'react'
+import { Div, DropdownButton, ExtendTheme } from 'honorable'
 
 export default {
   title: 'Theming',
@@ -9,7 +10,7 @@ const extendedTheme1 = {
     partStyles: {
       Button: {
         Children: [
-          ({ install }) => install && {
+          ({ install }: any) => install && {
             color: 'red',
           },
         ],

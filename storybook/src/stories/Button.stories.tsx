@@ -1,12 +1,12 @@
 // Icons from https://icons.modulz.app/
-import { Button, Div } from 'honorable'
+import React, { Button, Div } from 'honorable'
 
 export default {
   title: 'Button',
   component: Button,
 }
 
-function Template(args) {
+function Template(args: any) {
   return (
     <Div xflex="y2">
       <Button {...args} />
