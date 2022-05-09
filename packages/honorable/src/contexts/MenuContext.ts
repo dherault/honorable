@@ -7,6 +7,7 @@ export type MenuStateType = {
   isSubMenuVisible?: boolean
   shouldFocus?: boolean
   shouldSyncWithParent?: boolean
+  locked?: boolean
 }
 
 export type MenuStateDispatcherType = Dispatch<SetStateAction<MenuStateType>>

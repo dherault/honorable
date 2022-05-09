@@ -121,7 +121,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
-    if (!(active && menuState.active)) return
+    if (!(active && menuState.active) || menuState.locked) return
 
     if (subMenu && event.key === 'ArrowRight') {
       if (menuState.isSubMenuVisible) {
@@ -162,7 +162,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   }
 
   function handleSelect(event: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>) {
-    if (disabled) return
+    if (disabled || menuState.locked) return
 
     event.persist()
 
@@ -201,17 +201,17 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
         xflex="x4"
         onClick={handleSelect}
         onMouseMove={() => {
-          if (!(active && menuState.active && menuState.activeItemIndex === itemIndex)) {
-            setMenuState(x => ({
-              ...x,
-              active: true,
-              activeItemIndex: itemIndex,
-              isSubMenuVisible: true,
-            }))
-            setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
-            setParentMenuState(x => ({ ...x, active: false }))
-            menuItemRef.current.focus()
-          }
+          if ((active && menuState.active && menuState.activeItemIndex === itemIndex) || menuState.locked) return
+
+          setMenuState(x => ({
+            ...x,
+            active: true,
+            activeItemIndex: itemIndex,
+            isSubMenuVisible: true,
+          }))
+          setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
+          setParentMenuState(x => ({ ...x, active: false }))
+          menuItemRef.current.focus()
         }}
         {...resolvePartStyles('Children', props, theme)}
       >

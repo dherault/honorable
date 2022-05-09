@@ -17,6 +17,7 @@ export type MenuProps = DivProps & {
   setMenuState?: MenuStateDispatcherType
   isSubMenu?: boolean
   fade?: boolean
+  open?: boolean
 }
 
 export const menuPropTypes = {
@@ -24,6 +25,7 @@ export const menuPropTypes = {
   setMenuState: PropTypes.func,
   isSubMenu: PropTypes.bool,
   fade: PropTypes.bool,
+  open: PropTypes.bool,
 }
 
 const defaultMenuState: MenuStateType = {
@@ -33,6 +35,7 @@ const defaultMenuState: MenuStateType = {
   isSubMenuVisible: false,
   shouldFocus: false,
   shouldSyncWithParent: false,
+  locked: false,
 }
 
 function enhanceWithDefault(menuState: MenuStateType) {
@@ -44,6 +47,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     menuState: initialMenuState,
     setMenuState: setInitialMenuState,
     fade,
+    open,
     isSubMenu,
     children,
     ...otherProps
@@ -59,6 +63,8 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const actualActiveItemIndex = actualMenuState.defaultActiveItemIndex > -1 && actualMenuState.activeItemIndex === -1
     ? actualMenuState.defaultActiveItemIndex
     : actualMenuState.activeItemIndex
+
+  const actualOpen = open ?? true
 
   // Give `active` and `activeItemIndex` and other props to customProps
   useOverridenProps(props, actualMenuState)
@@ -95,11 +101,13 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     }
   }, [actualMenuState.shouldSyncWithParent, setActualMenuState, setParentMenuState])
 
+  if (!fade && !actualOpen) return null
+
   // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     event.preventDefault()
 
-    if (!actualMenuState.active) return
+    if (!actualMenuState.active || actualMenuState.locked) return
 
     switch (event.key) {
       case 'ArrowUp': {
@@ -149,9 +157,11 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
 
     return (
       <Transition
-        in
+        in={actualOpen}
         appear
         timeout={duration}
+        onExit={() => setActualMenuState(x => ({ ...x, locked: true }))}
+        onExited={() => setActualMenuState(x => ({ ...x, locked: false }))}
       >
         {(state: string) => cloneElement(element, {
           ...element.props,

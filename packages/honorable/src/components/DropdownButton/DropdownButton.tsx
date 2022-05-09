@@ -122,6 +122,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
           fade={fade}
+          open={actualOpen}
           menuState={menuState}
           setMenuState={setMenuState}
           position="absolute"
@@ -129,7 +130,6 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
           right={0}
           left={0}
           zIndex={100}
-          display={actualOpen ? 'block' : 'none'}
           {...resolvePartStyles('Menu', props, theme)}
         >
           {children}

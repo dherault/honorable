@@ -136,3 +136,10 @@ Extended.args = {
   label: 'Drop it!',
   items,
 }
+
+export const Fade = Template.bind({})
+Fade.args = {
+  fade: true,
+  label: 'Drop it!',
+  items,
+}
