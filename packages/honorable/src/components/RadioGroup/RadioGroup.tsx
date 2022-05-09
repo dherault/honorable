@@ -16,12 +16,14 @@ import { Radio } from '../Radio/Radio'
 import { Flex, FlexProps } from '../Flex/Flex'
 import { Div } from '../tags'
 
-export type RadioGroupProps = FlexProps & {
+export type RadioGroupBaseProps = {
   value?: any
   defaultValue?: any
-  onChange?: (event: MouseEvent | KeyboardEvent | ChangeEvent) => void
+  onChange?: (event: TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>) => void
   row?: boolean
 }
+
+export type RadioGroupProps = Omit<FlexProps, 'onChange'> & RadioGroupBaseProps
 
 export const radioGroupPropTypes = {
   value: PropTypes.any,

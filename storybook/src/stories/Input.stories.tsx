@@ -22,7 +22,6 @@ function TemplateControlled(args: any) {
     <Div xflex="y2">
       <Input
         value={value}
-        // @ts-ignore
         onChange={event => setValue(event.target.value)}
         {...args}
       />

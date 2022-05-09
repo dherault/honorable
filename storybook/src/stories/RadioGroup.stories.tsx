@@ -33,7 +33,6 @@ function Template2(args: any) {
       <RadioGroup
         {...args}
         value={value}
-        // @ts-ignore
         onChange={event => setValue(event.target.value)}
       >
         <Radio value={0}>
@@ -58,7 +57,6 @@ function Template3(args: any) {
       <RadioGroup
         {...args}
         value={value}
-        // @ts-ignore
         onChange={event => setValue(event.target.value)}
       >
         <Radio value={0}>

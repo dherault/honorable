@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithValue } from '../../types'
+import { TargetWithChecked, TargetWithValue } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -14,14 +14,14 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
-export type RadioProps = DivProps & {
+export type RadioProps = Omit<DivProps, 'onChange'> & {
   value?: any
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
   iconUnchecked?: ReactNode
   iconChecked?: ReactNode
-  onChange?: (event: TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>) => void
+  onChange?: (event: TargetWithChecked<TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>>) => void
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 

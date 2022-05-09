@@ -14,14 +14,16 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
+      "honorable": ["node_modules/honorable"],
       "*": ["node_modules/*"]
     },
     "lib": [
       "ESNext",
       "DOM"
     ],
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "preserveSymlinks": true,
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/docs.ts"]
+  "exclude": ["src/**/docs.ts"],
 }

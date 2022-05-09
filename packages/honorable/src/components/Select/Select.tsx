@@ -1,6 +1,8 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { TargetWithValue } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import { MenuStateType } from '../../contexts/MenuContext'
@@ -15,17 +17,18 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
+
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
 
-export type SelectProps = DivProps & {
+export type SelectProps = Omit<DivProps, 'onChange'> & {
   open?: boolean
   defaultOpen?: boolean
   value?: any
-  onChange?: (event: MouseEvent | KeyboardEvent) => void
+  onChange?: (event: TargetWithValue<MouseEvent | KeyboardEvent>) => void
   onOpen?: (open: boolean) => void
   fade?: boolean
 }

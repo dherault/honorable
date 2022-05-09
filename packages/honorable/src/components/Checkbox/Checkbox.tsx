@@ -14,7 +14,7 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
-export type CheckboxProps = DivProps & {
+export type CheckboxProps = Omit<DivProps, 'onChange'> & {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean

@@ -9,6 +9,7 @@ import useTheme from '../../hooks/useTheme'
 import useOverridenProps from '../../hooks/useOverridenProps'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
+
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'

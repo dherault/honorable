@@ -22,7 +22,7 @@ import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'
 import { Div, DivProps } from '../tags'
 
-export type DropdownButtonProps = DivProps & ButtonProps & {
+export type DropdownButtonProps = Omit<DivProps & ButtonProps, 'onChange'> & {
   open?: boolean
   defaultOpen?: boolean
   label?: string

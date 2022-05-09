@@ -33,7 +33,7 @@ export type InputBaseProps = {
 }
 
 // TODO v1 readOnly
-export type InputProps = DivProps & InputBaseProps
+export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & InputBaseProps
 
 export const inputPropTypes = {
   type: PropTypes.string,

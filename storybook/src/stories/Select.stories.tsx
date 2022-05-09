@@ -38,7 +38,6 @@ function Template({ items, initialValue, ...args }: any) {
       <Select
         {...args}
         value={value}
-        // @ts-ignore
         onChange={event => setValue(event.target.value)}
       >
         {items.map(renderItem)}
@@ -59,7 +58,6 @@ function Template2({ items, initialValue, ...args }: any) {
           open={open}
           onOpen={setOpen}
           value={value}
-          // @ts-ignore
           onChange={event => setValue(event.target.value)}
         >
           {items.map(renderItem)}
@@ -86,7 +84,6 @@ function Template3({ items, initialValue, ...args }: any) {
         <Select
           {...args}
           value={value}
-          // @ts-ignore
           onChange={event => setValue(event.target.value)}
         >
           {items.map(renderItem)}

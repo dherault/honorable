@@ -28,7 +28,7 @@ function HonorableDecorator(Story: StoryType, { title }: StoryContext) {
       <Div
         py={2}
         px={4}
-        height="calc(100vh)"
+        height="100vh"
         position="relative"
         backgroundColor={titleToBackgroundColor[title]}
       >
@@ -52,7 +52,6 @@ function HonorableDecorator(Story: StoryType, { title }: StoryContext) {
             </Span>
           )}
           checked={mode === 'dark'}
-          // @ts-ignore
           onChange={event => setMode(event.target.checked ? 'dark' : 'light')}
           backgroundColor="primary"
           position="absolute"

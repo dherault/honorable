@@ -14,7 +14,6 @@ function Template(args: any) {
     <Div xflex="y2">
       <Switch
         checked={checked}
-        // @ts-ignore
         onChange={event => setChecked(event.target.checked)}
         {...args}
       />
