@@ -96,6 +96,33 @@ function Template3(args) {
   )
 }
 
+function Template4(args) {
+  const [value, setValue] = useState(null)
+
+  return (
+    <Div xflex="y2">
+      <A
+        onClick={() => {
+          setValue('value')
+          setTimeout(() => {
+            setValue(null)
+          }, 1000)
+        }}
+        userSelect="none"
+      >
+        Set value
+      </A>
+      <Modal
+        open={!!value}
+        onClose={() => setValue(null)}
+        {...args}
+      >
+        {value}
+      </Modal>
+    </Div>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
 }
@@ -126,4 +153,8 @@ OpenNoOnClose.args = {
 export const DisableEscapeKey = Template.bind({})
 DisableEscapeKey.args = {
   disableEscapeKey: true,
+}
+
+export const RealWorld = Template4.bind({})
+RealWorld.args = {
 }

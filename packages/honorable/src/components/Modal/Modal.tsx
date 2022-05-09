@@ -1,4 +1,4 @@
-import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useEffect, useRef, useState } from 'react'
+import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 
@@ -38,34 +38,37 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   } = props
   const theme = useTheme()
   const backdropRef = useRef()
-  const [transitionOpen, setTransitionOpen] = useState(false)
-  const [transitioning, setTransitioning] = useState(false)
-
-  const workingOnClose = typeof onClose === 'function' ? onClose : () => {}
+  const [isOpen, setIsOpen] = useState(false)
+  const [isClosing, setIsClosing] = useState(false)
 
   useEscapeKey(event => !disableEscapeKey && handleClose(event))
 
-  useEffect(() => {
-    if (fade) {
-      setTimeout(() => {
-        setTransitionOpen(open)
+  const handleClose = useCallback((event: MouseEvent | KeyboardEvent) => {
+    if (typeof onClose === 'function') {
+      if (fade) {
+        setIsClosing(true)
         setTimeout(() => {
-          setTransitioning(false)
+          setIsClosing(false)
+          onClose(event)
         }, transitionDuration)
-      }, 0)
+      }
+      else onClose(event)
+    }
+  }, [fade, transitionDuration, onClose])
+
+  useEffect(() => {
+    if (fade && open) {
+      setIsOpen(true)
+    }
+    else if (fade && !open) {
+      setIsOpen(false)
     }
     else {
-      setTransitionOpen(open)
+      setIsOpen(open)
     }
   }, [fade, open, transitionDuration])
 
-  if (!(open || transitioning)) return null
-
-  function handleClose(event: MouseEvent | KeyboardEvent) {
-    if (fade) setTransitioning(true)
-
-    workingOnClose(event)
-  }
+  if (!(open || isOpen || isClosing)) return null
 
   function handleBackdropClick(event: MouseEvent) {
     if (event.target === backdropRef.current) {
@@ -92,7 +95,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
 
     return (
       <Transition
-        in={transitionOpen}
+        in={isOpen && !isClosing}
         timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {
@@ -123,7 +126,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
 
     return (
       <Transition
-        in={transitionOpen}
+        in={isOpen && !isClosing}
         timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {
