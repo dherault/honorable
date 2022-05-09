@@ -1,3 +1,4 @@
+// Inspired from https://mui.com/material-ui/api/slider/
 import { ReactNode, Ref, SyntheticEvent, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
