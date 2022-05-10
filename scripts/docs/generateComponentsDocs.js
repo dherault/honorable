@@ -1,4 +1,6 @@
 // eslint-disable-next-line
+const fs = require('fs')
+// eslint-disable-next-line
 const path = require('path')
 
 // eslint-disable-next-line
@@ -8,25 +10,73 @@ const project = new Project({
   tsConfigFilePath: path.resolve(__dirname, '../../packages/honorable/tsconfig.json'),
 })
 
-const sourceFile = project.getSourceFileOrThrow('Accordion.tsx')
+async function main() {
+  const components = fs.readdirSync(path.resolve(__dirname, '../../packages/honorable/src/components'))
 
-// const type = sourceFile.getType('AccordionProps')
+  for (const component of components) {
+    try {
+      console.log('___', component, '\n')
 
-const props = sourceFile
-.getTypeAlias('AccordionBaseProps')
-.getChildAtIndex(4)
-.getChildAtIndex(1)
+      const sourceFile = project.getSourceFileOrThrow(`${component}.tsx`)
 
-for (let i = 0; i < props.getChildCount(); i++) {
-  const prop = props.getChildAtIndex(i)
+      // const type = sourceFile.getType('AccordionProps')
 
-  console.log(prop.getName(), prop.getType().getText())
+      const props = sourceFile
+      .getTypeAlias(`${component}BaseProps`)
+      .getChildAtIndex(4)
+      .getChildAtIndex(1)
 
-  const jsDoc = prop.getJsDocs()
+      for (let i = 0; i < props.getChildCount(); i++) {
+        const prop = props.getChildAtIndex(i)
 
-  if (jsDoc[0]) {
-    console.log(jsDoc[0].getDescription().trim())
+        const propType = prop.getType()
+
+        let propTypeText = propType.getText()
+
+        if (propTypeText.startsWith('import')) {
+          console.log('xxxxxxxxxxxxxxxxxxxxxxxxx')
+
+          console.log('propType.getType().getText()', propTypeText.split(').')[1])
+          let isArray = false
+          let subPropName = propTypeText.split(').')[1]
+
+          if (subPropName.endsWith('[]')) {
+            subPropName = subPropName.slice(0, -2)
+            isArray = true
+          }
+
+          console.log('subPropName', subPropName)
+
+          const subProps = sourceFile
+            .getTypeAlias(subPropName)
+            .getChildAtIndex(4)
+
+          console.log('subProps.getText()', subProps.getText(), isArray)
+
+          console.log('xxxxxxxxxxxxxxxxxxxxxxxxx')
+
+          propTypeText = subProps.getText()
+
+          if (isArray) {
+            propTypeText = `Array<${propTypeText}>`
+          }
+        }
+
+        console.log(prop.getName(), propTypeText)
+
+        const jsDoc = prop.getJsDocs()
+
+        if (jsDoc[0]) {
+          console.log(jsDoc[0].getDescription().trim())
+        }
+
+        console.log()
+      }
+    }
+    catch (error) {
+      console.warn('Error while generating docs for', component)
+    }
   }
-
-  console.log()
 }
+
+main()
