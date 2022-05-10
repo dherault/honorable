@@ -1,5 +1,6 @@
 // Icons from https://icons.modulz.app/
-import React, { Avatar, Div } from 'honorable'
+import React from 'react'
+import { Avatar, Div } from 'honorable'
 
 export default {
   title: 'Avatar',

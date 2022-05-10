@@ -3,7 +3,7 @@ import { keyframes } from '@emotion/react'
 import createElevation from './createElevation'
 
 const spinner = keyframes`
-  to {transform: rotate(360deg);}
+  to { transform: rotate(360deg); }
 `
 export default {
   name: 'Default',
@@ -60,7 +60,7 @@ export default {
     ...createElevation().map((styles, i) => (z => (({ elevation }) => elevation === z && styles))(i)),
   ],
   A: {
-    defaultStyles: [
+    Root: [
       {
         display: 'inline-block',
         color: 'primary',
@@ -73,7 +73,7 @@ export default {
     ],
   },
   Accordion: {
-    defaultStyles: [
+    Root: [
       {
         elevation: 1,
         backgroundColor: 'background',
@@ -91,44 +91,40 @@ export default {
         },
       },
     ],
-    partStyles: {
-      Title: [
-        {
-          padding: 16,
-        },
-      ],
-      Children: [
-        {
-          transition: 'height 200ms ease',
-        },
-      ],
-      ChildrenInner: [
-        {
-          padding: '0 16px 16px 16px',
-        },
-      ],
-      ExpandIcon: [
-        {
-          transition: 'transform 200ms ease',
-        },
-        ({ expanded }) => expanded && {
-          transform: 'rotate(180deg)',
-        },
-      ],
-    },
+    Title: [
+      {
+        padding: 16,
+      },
+    ],
+    Children: [
+      {
+        transition: 'height 200ms ease',
+      },
+    ],
+    ChildrenInner: [
+      {
+        padding: '0 16px 16px 16px',
+      },
+    ],
+    ExpandIcon: [
+      {
+        transition: 'transform 200ms ease',
+      },
+      ({ expanded }) => expanded && {
+        transform: 'rotate(180deg)',
+      },
+    ],
   },
   Autocomplete: {
-    partStyles: {
-      NoOption: [
-        {
-          userSelect: 'none',
-          color: 'text-light',
-        },
-      ],
-    },
+    NoOption: [
+      {
+        userSelect: 'none',
+        color: 'text-light',
+      },
+    ],
   },
   Avatar: {
-    defaultStyles: [
+    Root: [
       {
         backgroundColor: 'primary',
         color: 'white',
@@ -138,7 +134,7 @@ export default {
     ],
   },
   Button: {
-    defaultStyles: [
+    Root: [
       {
         color: 'white',
         backgroundColor: 'primary',
@@ -167,28 +163,26 @@ export default {
         },
       },
     ],
-    partStyles: {
-      StartIcon: [
-        {
-          marginLeft: '-6px',
-          marginRight: '8px',
-        },
-      ],
-      EndIcon: [
-        {
-          marginLeft: '8px',
-          marginRight: '-6px',
-        },
-      ],
-      Spinner: [
-        {
-          color: 'white',
-        },
-      ],
-    },
+    StartIcon: [
+      {
+        marginLeft: '-6px',
+        marginRight: '8px',
+      },
+    ],
+    EndIcon: [
+      {
+        marginLeft: '8px',
+        marginRight: '-6px',
+      },
+    ],
+    Spinner: [
+      {
+        color: 'white',
+      },
+    ],
   },
   ButtonBase: {
-    defaultStyles: [
+    Root: [
       {
         cursor: 'pointer',
         display: 'flex',
@@ -199,7 +193,7 @@ export default {
     ],
   },
   ButtonGroup: {
-    defaultStyles: [
+    Root: [
       {
         border: '1px solid primary',
         borderRadius: 4,
@@ -215,7 +209,7 @@ export default {
     ],
   },
   Checkbox: {
-    defaultStyles: [
+    Root: [
       {
         cursor: 'pointer',
         userSelect: 'none',
@@ -230,94 +224,90 @@ export default {
         },
       },
     ],
-    partStyles: {
-      Control: [
-        {
-          width: 20,
-          height: 20,
-          color: 'white',
-          backgroundColor: 'transparent',
+    Control: [
+      {
+        width: 20,
+        height: 20,
+        color: 'white',
+        backgroundColor: 'transparent',
+        border: '1px solid border',
+        borderRadius: 2,
+      },
+      ({ checked }) => checked && {
+        backgroundColor: 'primary',
+        borderColor: 'primary',
+      },
+      ({ disabled }) => disabled && {
+        backgroundColor: 'border',
+        borderColor: 'border',
+        '&:hover': {
           border: '1px solid border',
-          borderRadius: 2,
         },
-        ({ checked }) => checked && {
-          backgroundColor: 'primary',
-          borderColor: 'primary',
-        },
-        ({ disabled }) => disabled && {
-          backgroundColor: 'border',
-          borderColor: 'border',
-          '&:hover': {
-            border: '1px solid border',
-          },
-        },
-      ],
-      Children: [
-        ({ labelPosition }) => ({
-          marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
-          marginRight: labelPosition === 'left' ? 8 : 0,
-          marginTop: labelPosition === 'bottom' ? 8 : 0,
-          marginBottom: labelPosition === 'top' ? 8 : 0,
-        }),
-      ],
-    },
+      },
+    ],
+    Children: [
+      ({ labelPosition }) => ({
+        marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
+        marginRight: labelPosition === 'left' ? 8 : 0,
+        marginTop: labelPosition === 'bottom' ? 8 : 0,
+        marginBottom: labelPosition === 'top' ? 8 : 0,
+      }),
+    ],
   },
   DropdownButton: {
-    partStyles: {
-      Button: {
-        EndIcon: [
-          {
-            marginLeft: '8px',
-            marginRight: '-6px',
-          },
-        ],
-      },
+    Button: {
+      EndIcon: [
+        {
+          marginLeft: '8px',
+          marginRight: '-6px',
+        },
+      ],
     },
   },
   H1: {
-    defaultStyles: [
+    Root: [
       {
         margin: 0,
       },
     ],
   },
   H2: {
-    defaultStyles: [
+    Root: [
       {
         margin: 0,
       },
     ],
   },
   H3: {
-    defaultStyles: [
+    Root: [
       {
         margin: 0,
       },
     ],
   },
   H4: {
-    defaultStyles: [
+    Root: [
       {
         margin: 0,
       },
     ],
   },
   H5: {
-    defaultStyles: [
+    Root: [
       {
         margin: 0,
       },
     ],
   },
   H6: {
-    defaultStyles: [
+    Root: [
       {
         margin: 0,
       },
     ],
   },
   Hr: {
-    defaultStyles: [
+    Root: [
       {
         borderWidth: 0,
         borderTop: '1px solid border',
@@ -325,7 +315,7 @@ export default {
     ],
   },
   IconButton: {
-    defaultStyles: [
+    Root: [
       {
         padding: 8,
         border: 'none',
@@ -343,7 +333,7 @@ export default {
     ],
   },
   Input: {
-    defaultStyles: [
+    Root: [
       {
         border: '1px solid border',
         borderRadius: 4,
@@ -367,31 +357,29 @@ export default {
         },
       },
     ],
-    partStyles: {
-      InputBase: [
-        ({ disabled }) => disabled && {
-          cursor: 'not-allowed',
-          backgroundColor: 'background-light',
-        },
-      ],
-      StartIcon: [
-        {
-          marginTop: 8,
-          marginRight: 8,
-          color: 'text',
-        },
-      ],
-      EndIcon: [
-        {
-          marginTop: 8,
-          marginLeft: 8,
-          color: 'text',
-        },
-      ],
-    },
+    InputBase: [
+      ({ disabled }) => disabled && {
+        cursor: 'not-allowed',
+        backgroundColor: 'background-light',
+      },
+    ],
+    StartIcon: [
+      {
+        marginTop: 8,
+        marginRight: 8,
+        color: 'text',
+      },
+    ],
+    EndIcon: [
+      {
+        marginTop: 8,
+        marginLeft: 8,
+        color: 'text',
+      },
+    ],
   },
   InputBase: {
-    defaultStyles: [
+    Root: [
       {
         padding: '8px 0',
         color: 'text',
@@ -432,7 +420,7 @@ export default {
     ],
   },
   Label: {
-    defaultStyles: [
+    Root: [
       {
         display: 'block',
         marginBottom: 4,
@@ -440,7 +428,7 @@ export default {
     ],
   },
   Menu: {
-    defaultStyles: [
+    Root: [
       {
         padding: '8px 0',
         elevation: 1,
@@ -454,28 +442,26 @@ export default {
     ],
   },
   MenuItem: {
-    defaultStyles: [
+    Root: [
       {
         outline: 'none',
       },
     ],
-    partStyles: {
-      Children: [
-        {
-          padding: '8px 16px',
-        },
-        ({ active }) => active && {
-          backgroundColor: 'background-light',
-        },
-        ({ disabled }) => disabled && {
-          backgroundColor: 'none',
-          text: 'text-light',
-        },
-      ],
-    },
+    Children: [
+      {
+        padding: '8px 16px',
+      },
+      ({ active }) => active && {
+        backgroundColor: 'background-light',
+      },
+      ({ disabled }) => disabled && {
+        backgroundColor: 'none',
+        text: 'text-light',
+      },
+    ],
   },
   Modal: {
-    defaultStyles: [
+    Root: [
       {
         padding: 32,
         borderRadius: 4,
@@ -483,14 +469,14 @@ export default {
     ],
   },
   P: {
-    defaultStyles: [
+    Root: [
       {
         margin: 0,
       },
     ],
   },
   Pre: {
-    defaultStyles: [
+    Root: [
       {
         display: 'inline-block',
         margin: 0,
@@ -501,18 +487,16 @@ export default {
     ],
   },
   ProgressBar: {
-    partStyles: {
-      Bar: [
-        {
-          borderRadius: 4,
-          backgroundColor: 'primary',
-          transition: 'width 150ms ease',
-        },
-      ],
-    },
+    Bar: [
+      {
+        borderRadius: 4,
+        backgroundColor: 'primary',
+        transition: 'width 150ms ease',
+      },
+    ],
   },
   Radio: {
-    defaultStyles: [
+    Root: [
       {
         cursor: 'pointer',
         userSelect: 'none',
@@ -528,52 +512,48 @@ export default {
         },
       },
     ],
-    partStyles: {
-      Control: [
-        {
-          width: 20,
-          height: 20,
-          color: 'border',
-          borderRadius: '50%',
-          userSelect: 'none',
-        },
-        ({ checked }) => checked && {
-          color: 'primary',
-        },
-      ],
-      Children: [
-        ({ labelPosition }) => ({
-          marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
-          marginRight: labelPosition === 'left' ? 8 : 0,
-          marginTop: labelPosition === 'bottom' ? 8 : 0,
-          marginBottom: labelPosition === 'top' ? 8 : 0,
-        }),
-        ({ disabled }) => disabled && {
-          color: 'border',
-        },
-      ],
-    },
+    Control: [
+      {
+        width: 20,
+        height: 20,
+        color: 'border',
+        borderRadius: '50%',
+        userSelect: 'none',
+      },
+      ({ checked }) => checked && {
+        color: 'primary',
+      },
+    ],
+    Children: [
+      ({ labelPosition }) => ({
+        marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
+        marginRight: labelPosition === 'left' ? 8 : 0,
+        marginTop: labelPosition === 'bottom' ? 8 : 0,
+        marginBottom: labelPosition === 'top' ? 8 : 0,
+      }),
+      ({ disabled }) => disabled && {
+        color: 'border',
+      },
+    ],
   },
   RadioGroup: {
-    partStyles: {
-      Radio: [
-        ({ row }) => row && {
-          marginRight: 8,
-          '&:last-of-type': {
-            marginRight: 0,
-          },
+    Radio: [
+      ({ row }) => row && {
+        marginRight: 8,
+        '&:last-of-type': {
+          marginRight: 0,
         },
-        ({ row }) => !row && {
-          marginBottom: 8,
-          '&:last-of-type': {
-            marginBottom: 0,
-          },
+      },
+      ({ row }) => !row && {
+        marginBottom: 8,
+        '&:last-of-type': {
+          marginBottom: 0,
         },
-      ],
-    },
+      },
+    ],
   },
   Select: {
-    defaultStyles: [
+    Root: [
       {
         display: 'inline-block',
         borderRadius: 4,
@@ -583,17 +563,15 @@ export default {
         },
       },
     ],
-    partStyles: {
-      Input: [
-        {
-          padding: '4px 0 4px 8px',
-          cursor: 'pointer',
-        },
-      ],
-    },
+    Input: [
+      {
+        padding: '4px 0 4px 8px',
+        cursor: 'pointer',
+      },
+    ],
   },
   Spinner: {
-    defaultStyles: [
+    Root: [
       ({ size = 24, color = 'primary' }) => ({
         width: size,
         height: size,
@@ -617,7 +595,7 @@ export default {
     ],
   },
   Switch: {
-    defaultStyles: [
+    Root: [
       {
         backgroundColor: 'background-light',
         transition: 'background-color 150ms ease',
@@ -631,7 +609,7 @@ export default {
     ],
   },
   Table: {
-    defaultStyles: [
+    Root: [
       {
         width: '100%',
         backgroundColor: 'background',
@@ -642,27 +620,41 @@ export default {
     ],
   },
   Td: {
-    defaultStyles: [
+    Root: [
       {
         padding: 16,
       },
     ],
   },
   Th: {
-    defaultStyles: [
+    Root: [
       {
         padding: 16,
       },
     ],
   },
   Tr: {
-    defaultStyles: [
+    Root: [
       {
         textAlign: 'left',
         borderTop: '1px solid border',
         '&:first-of-type': {
           border: 'none',
         },
+      },
+    ],
+  },
+  Tooltip: {
+    Root: [
+      {
+        fontSize: 12,
+        fontWeight: 500,
+        borderRadius: 2,
+      },
+    ],
+    Label: [
+      {
+        padding: 4,
       },
     ],
   },
