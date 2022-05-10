@@ -3,7 +3,7 @@ import { Global, css } from '@emotion/react'
 import useTheme from '../../hooks/useTheme'
 
 import resolveAll from '../../resolvers/resolveAll'
-import resolveDefaultStyles from '../../resolvers/resolveDefaultStyles'
+import resolveStyles from '../../resolvers/resolveStyles'
 
 const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
@@ -379,7 +379,7 @@ export function CssBaseline() {
       {typeof theme.html === 'object' && theme.html && (
         <Global
           styles={{
-            html: assignDefaultFontFamily(resolveAll(resolveDefaultStyles(theme.html, {}, theme), theme)),
+            html: assignDefaultFontFamily(resolveAll(resolveStyles(theme.html, {}, theme), theme)),
           }}
         />
       )}

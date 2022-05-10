@@ -57,7 +57,7 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
     return childrenValues
   }, [children])
 
-  // Override `value` prop in defaultStyles
+  // Override `value` prop in styles
   useOverridenProps(props, { value: actualValue })
 
   function handleChange(event: TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>) {

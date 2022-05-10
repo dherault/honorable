@@ -1,6 +1,6 @@
 import { HonorableTheme, StylesProps } from '../types'
 
-import resolveDefaultStyles from './resolveDefaultStyles'
+import resolveStyles from './resolveStyles'
 
 function pickHonorableProps(props: object): [any, any] {
   const honorableProps = {}
@@ -14,7 +14,7 @@ function pickHonorableProps(props: object): [any, any] {
   return [honorableProps, otherProps]
 }
 
-// Return the style object of applied partStyles
+// Return the style object of applied part styles
 function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme): StylesProps {
   const [{ __honorableOrigin, __honorableOverridenProps, __honorableOriginProps }, otherProps] = pickHonorableProps(props)
 
@@ -26,13 +26,9 @@ function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme
 
   const originName = originArray.shift()
 
-  const componentTheme = theme[originName]
+  let partTheme = theme[originName]
 
-  if (!(componentTheme && typeof componentTheme === 'object')) return nextHonorableProps
-
-  let partTheme = componentTheme.partStyles
-
-  if (!partTheme) return nextHonorableProps
+  if (!(partTheme && typeof partTheme === 'object')) return nextHonorableProps
 
   // TODO v1 include theme from origin
   originArray.forEach(partName => {
@@ -44,7 +40,7 @@ function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme
   if (!partTheme) return nextHonorableProps
 
   return {
-    ...resolveDefaultStyles(partTheme, { ...(__honorableOriginProps || otherProps), ...__honorableOverridenProps }, theme),
+    ...resolveStyles(partTheme, { ...(__honorableOriginProps || otherProps), ...__honorableOverridenProps }, theme),
     ...nextHonorableProps,
   }
 }

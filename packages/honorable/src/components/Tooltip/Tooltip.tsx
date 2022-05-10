@@ -1,5 +1,6 @@
 // Inspired from https://mui.com/material-ui/api/Tooltip/
 import { Children, ReactElement, ReactNode, Ref, SyntheticEvent, cloneElement, forwardRef, useEffect, useRef, useState } from 'react'
+import { arrow as arrowMiddleware, offset, shift, useFloating } from '@floating-ui/react-dom'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../../withHonorable'
@@ -13,8 +14,9 @@ import { Div, DivProps } from '../tags'
 
 export type TooltipBaseProps = {
   children: ReactNode
-  title?: ReactNode
+  label?: ReactNode
   arrow?: boolean
+  arrowSize?: number
   displayOn?: ('hover' | 'focus' | 'click')[]
   transitionInDuration?: number
   transitionOutDuration?: number
@@ -39,8 +41,9 @@ export type TooltipProps = DivProps & TooltipBaseProps
 
 export const TooltipPropTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.node,
+  label: PropTypes.node,
   arrow: PropTypes.bool,
+  arrowSize: PropTypes.number,
   displayOn: PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'click'])),
   transitionInDuration: PropTypes.number,
   transitionOutDuration: PropTypes.number,
@@ -67,28 +70,86 @@ export const TooltipPropTypes = {
 function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   const {
     children,
-    title,
-    arrow,
-    displayOn,
-    transitionInDuration,
-    transitionOutDuration,
-    followCursor,
+    label = '',
+    arrow = false,
+    arrowSize = 8,
+    displayOn = ['hover', 'focus', 'click'],
+    transitionInDuration = 150,
+    transitionOutDuration = 150,
+    followCursor = false,
     onOpen,
     open,
-    placement,
+    placement = 'top',
     ...otherProps
   } = props
   const theme = useTheme()
-  const childRef = useRef()
+  const arrowRef = useRef()
+  const middleware = [offset(8), shift({ padding: 8 })]
 
-  const child = Children.only(children) as ReactElement
+  if (arrow) {
+    middleware.push(arrowMiddleware({ element: arrowRef, padding: 8 }))
+  }
+
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    strategy,
+    middlewareData: {
+      arrow: {
+        x: arrowX,
+        y: arrowY,
+      } = {},
+    },
+  } = useFloating({ placement, middleware })
+  const forkedRef = useForkedRef(ref, floating)
+
+  const staticSide = {
+    top: 'bottom',
+    right: 'left',
+    bottom: 'top',
+    left: 'right',
+  }[placement.split('-')[0]]
 
   return (
     <>
-      {cloneElement(child, {
+      {Children.map(Children.only(children), (child: ReactElement) => cloneElement(child, {
         ...child.props,
-        ref: childRef,
-      })}
+        ref: reference,
+      }))}
+      <Div
+        ref={forkedRef}
+        position={strategy}
+        top={y ?? ''}
+        left={x ?? ''}
+        backgroundColor="black"
+        color="white"
+        {...otherProps}
+      >
+        {!!arrow && (
+          <Div
+            ref={arrowRef}
+            position="absolute"
+            background="black"
+            width={arrowSize}
+            height={arrowSize}
+            top={arrowY ?? ''}
+            left={arrowX ?? ''}
+            transform="rotate(45deg)"
+            zIndex={0}
+            {...{ [staticSide]: -arrowSize / 2 }}
+            {...resolvePartStyles('Arrow', props, theme)}
+          />
+        )}
+        <Div
+          position="relative"
+          zIndex={1}
+          {...resolvePartStyles('Label', props, theme)}
+        >
+          {label}
+        </Div>
+      </Div>
     </>
   )
 }

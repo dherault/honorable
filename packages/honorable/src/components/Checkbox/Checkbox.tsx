@@ -74,7 +74,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
           ? 'y2'
           : 'x4'
 
-  // Override `checked` prop in defaultStyles
+  // Override `checked` prop in styles
   useOverridenProps(props, { checked: actualChecked })
 
   function handleChange(event: MouseEvent | KeyboardEvent) {

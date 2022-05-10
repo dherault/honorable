@@ -60,16 +60,14 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
-export type DefaultStylesFunction = (props: object, theme: HonorableTheme) => StylesProps
-export type DefaultStyles = (StylesProps | DefaultStylesFunction)[]
+export type StylesArrayFunction = (props: object, theme: HonorableTheme) => StylesProps
+export type StylesArray = (StylesProps | StylesArrayFunction)[]
 
-export type PartStyles = {
-  [partName: string]: DefaultStyles | PartStyles
+export type PartProps = {
+  [partName: string]: StylesArray | PartProps
 }
-
-export type ComponentProps = {
-  defaultStyles?: DefaultStyles
-  partStyles?: PartStyles
+export type ComponentProps = PartProps & {
+  Root: StylesArray
 }
 
 export type HonorableTheme = {
@@ -84,8 +82,8 @@ export type HonorableTheme = {
   aliases?: {
     [key: string]: string
   }
-  html?: DefaultStyles
-  global?: DefaultStyles
+  html?: StylesArray
+  global?: StylesArray
   utils?: {
     resolveColorString: (color: string) => string
     resolveColorObject: (color: object) => object

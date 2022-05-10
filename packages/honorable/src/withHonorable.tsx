@@ -17,7 +17,7 @@ import useTheme from './hooks/useTheme'
 
 import isSelector from './utils/isSelector'
 import resolveAll from './resolvers/resolveAll'
-import resolveDefaultStyles from './resolvers/resolveDefaultStyles'
+import resolveStyles from './resolvers/resolveStyles'
 
 const allStyleProperties = [
   'xflex',
@@ -49,7 +49,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
       const stylesProps: StylesProps = {}
       const otherProps = {} as P
       const resolvedProps = { ...props, ...overridenProps }
-      const resolvedDefaultStyles = resolveDefaultStyles(theme[name]?.defaultStyles, resolvedProps, theme)
+      const resolvedRootStyles = resolveStyles(theme[name]?.Root, resolvedProps, theme)
 
       Object.entries(props).forEach(([key, value]) => {
         if (
@@ -73,10 +73,10 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
         resolveAll(
           merge(
             {},
-            // Component defaultStyles
-            resolvedDefaultStyles,
+            // Component root styles
+            resolvedRootStyles,
             // Global props
-            resolveDefaultStyles(theme.global, { ...resolvedProps, ...resolvedDefaultStyles }, theme),
+            resolveStyles(theme.global, { ...resolvedProps, ...resolvedRootStyles }, theme),
             // Actual style from props
             stylesProps,
           ),
