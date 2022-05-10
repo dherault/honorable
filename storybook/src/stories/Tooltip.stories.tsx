@@ -7,18 +7,18 @@ export default {
 }
 
 const placements = [
-  'bottom-end',
-  'bottom-start',
-  'bottom',
-  'left-end',
-  'left-start',
-  'left',
-  'right-end',
-  'right-start',
-  'right',
-  'top-end',
-  'top-start',
   'top',
+  'top-start',
+  'top-end',
+  'bottom',
+  'bottom-start',
+  'bottom-end',
+  'left',
+  'left-start',
+  'left-end',
+  'right',
+  'right-start',
+  'right-end',
 ]
 
 function Template(args: any) {
@@ -46,6 +46,30 @@ function Template(args: any) {
   )
 }
 
+function Template2(args: any) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Div xflex="y2">
+      <Tooltip
+        {...args}
+        onOpen={(event, open) => setOpen(open)}
+      >
+        <Div
+          userSelect="none"
+          minWidth={128 + 64}
+          minHeight={128 + 64}
+          p={2}
+          xflex="x5"
+          backgroundColor="background-light"
+        >
+          {open ? 'open' : 'closed'}
+        </Div>
+      </Tooltip>
+    </Div>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
   label: 'Tooltip',
@@ -54,5 +78,17 @@ Default.args = {
 export const Arrow = Template.bind({})
 Arrow.args = {
   arrow: true,
+  label: 'Tooltip',
+}
+
+export const DisplayOnClick = Template.bind({})
+DisplayOnClick.args = {
+  arrow: true,
+  label: 'Tooltip',
+  displayOn: ['click'],
+}
+
+export const onOpen = Template2.bind({})
+onOpen.args = {
   label: 'Tooltip',
 }

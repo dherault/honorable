@@ -66,14 +66,12 @@ function Template2({ items, ...args }: any) {
 
 const extendedTheme = {
   DropdownButton: {
-    partStyles: {
-      Menu: [
-        {
-          width: 256,
-          left: 'unset',
-        },
-      ],
-    },
+    Menu: [
+      {
+        width: 256,
+        left: 'unset',
+      },
+    ],
   },
 }
 

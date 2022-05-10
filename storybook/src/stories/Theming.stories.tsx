@@ -7,14 +7,12 @@ export default {
 
 const extendedTheme1 = {
   DropdownButton: {
-    partStyles: {
-      Button: {
-        Children: [
-          ({ install }: any) => install && {
-            color: 'red',
-          },
-        ],
-      },
+    Button: {
+      Children: [
+        ({ install }: any) => install && {
+          color: 'red',
+        },
+      ],
     },
   },
 }

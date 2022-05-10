@@ -1,6 +1,6 @@
 import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
+import PropTypes from 'prop-types'
 
 import withHonorable from '../../withHonorable'
 

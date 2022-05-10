@@ -1,12 +1,14 @@
 // Inspired from https://mui.com/material-ui/api/Tooltip/
-import { Children, ReactElement, ReactNode, Ref, SyntheticEvent, cloneElement, forwardRef, useEffect, useRef, useState } from 'react'
+import { Children, ReactElement, ReactNode, Ref, SyntheticEvent, cloneElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { arrow as arrowMiddleware, offset, shift, useFloating } from '@floating-ui/react-dom'
+import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
+import useOutsideClick from '../../hooks/useOutsideClick'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
@@ -18,10 +20,11 @@ export type TooltipBaseProps = {
   arrow?: boolean
   arrowSize?: number
   displayOn?: ('hover' | 'focus' | 'click')[]
-  transitionInDuration?: number
-  transitionOutDuration?: number
+  transitionDuration?: number
+  enterDelay?: number
+  leaveDelay?: number
   followCursor?: boolean
-  onOpen?: (event: SyntheticEvent, open: boolean) => void
+  onOpen?: (event: MouseEvent | FocusEvent, open: boolean) => void
   open?: boolean
   placement?: 'bottom-end'
     | 'bottom-start'
@@ -45,8 +48,9 @@ export const TooltipPropTypes = {
   arrow: PropTypes.bool,
   arrowSize: PropTypes.number,
   displayOn: PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'click'])),
-  transitionInDuration: PropTypes.number,
-  transitionOutDuration: PropTypes.number,
+  transitionDuration: PropTypes.number,
+  enterDelay: PropTypes.number,
+  leaveDelay: PropTypes.number,
   followCursor: PropTypes.bool,
   onOpen: PropTypes.func,
   open: PropTypes.bool,
@@ -74,8 +78,9 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     arrow = false,
     arrowSize = 8,
     displayOn = ['hover', 'focus', 'click'],
-    transitionInDuration = 150,
-    transitionOutDuration = 150,
+    transitionDuration = 150,
+    enterDelay,
+    leaveDelay,
     followCursor = false,
     onOpen,
     open,
@@ -84,6 +89,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   } = props
   const theme = useTheme()
   const arrowRef = useRef()
+  const childRef = useRef<HTMLElement>()
   const middleware = [offset(8), shift({ padding: 8 })]
 
   if (arrow) {
@@ -103,7 +109,10 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
       } = {},
     },
   } = useFloating({ placement, middleware })
-  const forkedRef = useForkedRef(ref, floating)
+  const forkedChildRef = useForkedRef(childRef, reference)
+  const forkedTooltipRef = useForkedRef(ref, floating)
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
+  const actualOpen = open ?? uncontrolledOpen
 
   const staticSide = {
     top: 'bottom',
@@ -112,44 +121,152 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     left: 'right',
   }[placement.split('-')[0]]
 
+  const handleOutsideClick = useCallback((event: MouseEvent) => {
+    if (!uncontrolledOpen || !displayOn.includes('click')) return
+
+    setTimeout(() => {
+      setUncontrolledOpen(false)
+      if (typeof onOpen === 'function') onOpen(event, false)
+    }, leaveDelay)
+  }, [displayOn, uncontrolledOpen, leaveDelay, onOpen])
+
+  const handleClick = useCallback((event: MouseEvent) => {
+    if (uncontrolledOpen || !displayOn.includes('click')) return
+
+    setTimeout(() => {
+      setUncontrolledOpen(true)
+      if (typeof onOpen === 'function') onOpen(event, true)
+    }, enterDelay)
+  }, [displayOn, uncontrolledOpen, enterDelay, onOpen])
+
+  const handleMouseEnter = useCallback((event: MouseEvent) => {
+    if (uncontrolledOpen || !displayOn.includes('hover')) return
+
+    setTimeout(() => {
+      setUncontrolledOpen(true)
+      if (typeof onOpen === 'function') onOpen(event, true)
+    }, enterDelay)
+  }, [displayOn, uncontrolledOpen, enterDelay, onOpen])
+
+  const handleMouseLeave = useCallback((event: MouseEvent) => {
+    if (!uncontrolledOpen || !displayOn.includes('hover')) return
+
+    setTimeout(() => {
+      setUncontrolledOpen(false)
+      if (typeof onOpen === 'function') onOpen(event, false)
+    }, leaveDelay)
+  }, [displayOn, uncontrolledOpen, leaveDelay, onOpen])
+
+  const handleFocus = useCallback((event: FocusEvent) => {
+    if (uncontrolledOpen || !displayOn.includes('click')) return
+
+    setTimeout(() => {
+      setUncontrolledOpen(true)
+      if (typeof onOpen === 'function') onOpen(event, true)
+    }, enterDelay)
+  }, [displayOn, uncontrolledOpen, enterDelay, onOpen])
+
+  const handleBlur = useCallback((event: FocusEvent) => {
+    if (!uncontrolledOpen || !displayOn.includes('click')) return
+
+    setTimeout(() => {
+      setUncontrolledOpen(false)
+      if (typeof onOpen === 'function') onOpen(event, false)
+    }, leaveDelay)
+  }, [displayOn, uncontrolledOpen, leaveDelay, onOpen])
+
+  useOutsideClick(childRef, handleOutsideClick)
+
+  useEffect(() => {
+    if (!childRef.current) return
+
+    const { current } = childRef
+
+    current.addEventListener('click', handleClick)
+    current.addEventListener('mouseenter', handleMouseEnter)
+    current.addEventListener('mouseleave', handleMouseLeave)
+    current.addEventListener('focus', handleFocus)
+    current.addEventListener('blur', handleBlur)
+
+    return () => {
+      current.removeEventListener('click', handleClick)
+      current.removeEventListener('mouseenter', handleMouseEnter)
+      current.removeEventListener('mouseleave', handleMouseLeave)
+      current.removeEventListener('focus', handleFocus)
+      current.removeEventListener('blur', handleBlur)
+    }
+  }, [handleMouseEnter, handleMouseLeave, handleClick, handleFocus, handleBlur])
+
+  function wrapFade(element: ReactElement) {
+    const positionStyles = {
+      position: strategy,
+      top: y ?? '',
+      left: x ?? '',
+    }
+    const defaultStyle = {
+      opacity: 0,
+      transition: `opacity ${transitionDuration}ms ease`,
+    }
+
+    const transitionStyles = {
+      entering: { opacity: 1 },
+      entered: { opacity: 1 },
+      exiting: { opacity: 0 },
+      exited: { opacity: 0 },
+    }
+
+    return (
+      <Transition
+        in={actualOpen}
+        timeout={transitionDuration}
+      >
+        {(state: string) => cloneElement(element, {
+          ...element.props,
+          ...positionStyles,
+          ...defaultStyle,
+          ...transitionStyles[state],
+        })}
+      </Transition>
+    )
+  }
+
   return (
     <>
       {Children.map(Children.only(children), (child: ReactElement) => cloneElement(child, {
         ...child.props,
-        ref: reference,
+        ref: forkedChildRef,
       }))}
-      <Div
-        ref={forkedRef}
-        position={strategy}
-        top={y ?? ''}
-        left={x ?? ''}
-        backgroundColor="black"
-        color="white"
-        {...otherProps}
-      >
-        {!!arrow && (
-          <Div
-            ref={arrowRef}
-            position="absolute"
-            background="black"
-            width={arrowSize}
-            height={arrowSize}
-            top={arrowY ?? ''}
-            left={arrowX ?? ''}
-            transform="rotate(45deg)"
-            zIndex={0}
-            {...{ [staticSide]: -arrowSize / 2 }}
-            {...resolvePartStyles('Arrow', props, theme)}
-          />
-        )}
+      {wrapFade(
         <Div
-          position="relative"
-          zIndex={1}
-          {...resolvePartStyles('Label', props, theme)}
+          ref={forkedTooltipRef}
+          backgroundColor="black"
+          color="white"
+          {...otherProps}
         >
-          {label}
+          {!!arrow && (
+            <Div
+              ref={arrowRef}
+              position="absolute"
+              background="black"
+              width={arrowSize}
+              height={arrowSize}
+              top={arrowY ?? ''}
+              left={arrowX ?? ''}
+              transform="rotate(45deg)"
+              zIndex={0}
+              {...{ [staticSide]: -arrowSize / 2 }}
+              {...resolvePartStyles('Arrow', props, theme)}
+            />
+          )}
+          <Div
+            position="relative"
+            zIndex={1}
+            {...resolvePartStyles('Label', props, theme)}
+          >
+            {label}
+          </Div>
         </Div>
-      </Div>
+      )}
     </>
   )
 }

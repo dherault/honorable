@@ -67,7 +67,7 @@ export type PartProps = {
   [partName: string]: StylesArray | PartProps
 }
 export type ComponentProps = PartProps & {
-  Root: StylesArray
+  Root?: StylesArray
 }
 
 export type HonorableTheme = {

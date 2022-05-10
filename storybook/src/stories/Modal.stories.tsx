@@ -32,21 +32,19 @@ function Template(args: any) {
 const transitionDuration = 333
 const extendedTheme = {
   Modal: {
-    partStyles: {
-      InnerDefaultStyle: [
-        {
-          position: 'relative',
-          top: -12,
-          transition: `opacity ${transitionDuration}ms ease, top ${transitionDuration}ms ease`,
-        },
-      ],
-      InnerTransitionStyle: [
-        {
-          entering: { opacity: 1, top: 0 },
-          entered: { opacity: 1, top: 0 },
-        },
-      ],
-    },
+    InnerDefaultStyle: [
+      {
+        position: 'relative',
+        top: -12,
+        transition: `opacity ${transitionDuration}ms ease, top ${transitionDuration}ms ease`,
+      },
+    ],
+    InnerTransitionStyle: [
+      {
+        entering: { opacity: 1, top: 0 },
+        entered: { opacity: 1, top: 0 },
+      },
+    ],
   },
 }
 
