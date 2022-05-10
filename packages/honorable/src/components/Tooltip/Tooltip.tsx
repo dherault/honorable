@@ -203,6 +203,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
       top: y ?? '',
       left: x ?? '',
     }
+
     const defaultStyle = {
       opacity: 0,
       transition: `opacity ${transitionDuration}ms ease`,
