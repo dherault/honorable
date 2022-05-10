@@ -1,21 +1,14 @@
-import { useState } from 'react'
 import {
   A,
   Article,
   Button,
   ButtonGroup,
-  Checkbox,
   Div,
   H3,
   Icon,
   IconButton,
   Img,
-  Input,
-  Menu,
-  MenuItem,
   P,
-  ProgressBar,
-  Select,
   Span,
 } from 'honorable'
 
@@ -26,9 +19,11 @@ function ComponentsShowcase() {
   return (
     <Div mt={2}>
       <WhatsOnYourMind />
-      <Button mt={2}>
-        Button
-      </Button>
+      <Div mt={2}>
+        <Button>
+          Button
+        </Button>
+      </Div>
       <Div mt={2}>
         <IconButton color="primary">
           <svg

@@ -10,7 +10,9 @@ import {
 import defaultTheme from 'honorable-theme-default'
 import materialTheme from 'honorable-theme-material'
 import wireframeTheme from 'honorable-theme-wireframe'
-import honorableTheme from 'honorable-theme-honorable'
+
+import honorableTheme from '../extended-honorable-theme'
+import flexpadTheme from '../flexpad-theme'
 
 import ThemeModeContext from '../contexts/ThemeModeContext'
 import ShowcaseContext from '../contexts/ShowcaseContext'
@@ -22,14 +24,17 @@ import ComponentsShowcase from './ComponentsShowcase'
 import CodeBlock from './CodeBlock'
 
 const themes = [
-  defaultTheme,
-  materialTheme,
-  mergeTheme(defaultTheme, {
+  mergeTheme(defaultTheme, flexpadTheme),
+  mergeTheme(materialTheme, flexpadTheme),
+  mergeTheme(defaultTheme, flexpadTheme, {
     name: 'Unicorn lovers',
-    colors: { ...defaultTheme.colors, primary: '#FF1493' },
+    colors: {
+      primary: '#FF1493',
+    },
   }),
-  wireframeTheme,
+  mergeTheme(wireframeTheme, flexpadTheme),
 ]
+
 const themeTransitionPeriod = 3300
 
 function prepareTheme(theme, mode) {
@@ -37,7 +42,7 @@ function prepareTheme(theme, mode) {
     mode,
     global: [
       {
-        transition: 'all 330ms ease',
+        transition: 'all 200ms ease',
       },
     ],
   })
@@ -165,7 +170,7 @@ function DefaultDesignShowcase() {
 
 const pillCode = `const theme = {
   Span: {
-    defaultStyles: [
+    Root: [
       ({ pill }) => pill && {
         color: 'white',
         backgroundColor: 'primary',
@@ -184,7 +189,7 @@ const pillCode = `const theme = {
 function PillShowcase() {
   const extendedTheme = mergeTheme(honorableTheme, {
     Span: {
-      defaultStyles: [
+      Root: [
         ({ pill }) => pill && {
           color: 'white',
           backgroundColor: 'primary',
@@ -309,7 +314,7 @@ const theme = mergeTheme(defaultTheme, {
   ],
   // Customize components
   Div: {
-    defaultStyles:[
+    Root:[
       ({ container }) => container && {
         // Applied to <Div container />
         width: 'calc(100% * 3 / 4)',

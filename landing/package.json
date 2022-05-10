@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "firebase": "^9.8.1",
+    "flexpad": "^4.0.1",
     "honorable": "latest",
     "honorable-theme-default": "latest",
     "honorable-theme-honorable": "latest",
