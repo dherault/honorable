@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { A, Div, Flex, Tooltip } from 'honorable'
+import { Flex, Tooltip } from 'honorable'
 
 export default {
   title: 'Tooltip',
