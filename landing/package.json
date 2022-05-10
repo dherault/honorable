@@ -21,7 +21,7 @@
     ]
   },
   "dependencies": {
-    "firebase": "^9.7.0",
+    "firebase": "^9.8.1",
     "honorable": "latest",
     "honorable-theme-default": "latest",
     "honorable-theme-honorable": "latest",
