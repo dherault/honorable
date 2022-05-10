@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, Div, ExtendTheme, Modal } from 'honorable'
+import { A, ExtendTheme, Modal, P } from 'honorable'
 
 export default {
   title: 'Modal',
@@ -11,7 +11,7 @@ function Template(args: any) {
   const [open, setOpen] = useState(false)
 
   return (
-    <Div xflex="y2">
+    <>
       <A
         onClick={() => setOpen(true)}
         userSelect="none"
@@ -25,7 +25,7 @@ function Template(args: any) {
       >
         Content
       </Modal>
-    </Div>
+    </>
   )
 }
 
@@ -53,22 +53,20 @@ function Template2(args: any) {
 
   return (
     <ExtendTheme theme={extendedTheme}>
-      <Div xflex="y2">
-        <A
-          onClick={() => setOpen(true)}
-          userSelect="none"
-        >
-          Open
-        </A>
-        <Modal
-          open={open}
-          onClose={() => setOpen(false)}
-          transitionDuration={transitionDuration}
-          {...args}
-        >
-          Content
-        </Modal>
-      </Div>
+      <A
+        onClick={() => setOpen(true)}
+        userSelect="none"
+      >
+        Open
+      </A>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        transitionDuration={transitionDuration}
+        {...args}
+      >
+        Content
+      </Modal>
     </ExtendTheme>
   )
 }
@@ -77,7 +75,7 @@ function Template3(args: any) {
   const [open, setOpen] = useState(false)
 
   return (
-    <Div xflex="y2">
+    <>
       <A
         onClick={() => setOpen(x => !x)}
         userSelect="none"
@@ -90,7 +88,7 @@ function Template3(args: any) {
       >
         Content
       </Modal>
-    </Div>
+    </>
   )
 }
 
@@ -98,7 +96,7 @@ function Template4(args: any) {
   const [value, setValue] = useState(null)
 
   return (
-    <Div xflex="y2">
+    <>
       <A
         onClick={() => {
           setValue('value')
@@ -110,6 +108,9 @@ function Template4(args: any) {
       >
         Set value
       </A>
+      <P mt={1}>
+        {value ?? 'null'}
+      </P>
       <Modal
         open={!!value}
         onClose={() => setValue(null)}
@@ -117,7 +118,7 @@ function Template4(args: any) {
       >
         {value}
       </Modal>
-    </Div>
+    </>
   )
 }
 

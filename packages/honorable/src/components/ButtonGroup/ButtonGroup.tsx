@@ -14,8 +14,8 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      xflex="x4"
       display="inline-flex"
+      alignItems="center"
       {...props}
     />
   )

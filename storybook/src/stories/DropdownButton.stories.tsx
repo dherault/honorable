@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, Div, DropdownButton, ExtendTheme, Menu, MenuItem } from 'honorable'
+import { A, DropdownButton, ExtendTheme, Flex, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'DropdownButton',
@@ -32,11 +32,9 @@ function renderItem({ text, items }: any) {
 
 function Template({ items, ...args }: any) {
   return (
-    <Div xflex="y2">
-      <DropdownButton {...args}>
-        {items.map(renderItem)}
-      </DropdownButton>
-    </Div>
+    <DropdownButton {...args}>
+      {items.map(renderItem)}
+    </DropdownButton>
   )
 }
 
@@ -44,23 +42,21 @@ function Template2({ items, ...args }: any) {
   const [open, setOpen] = useState(false)
 
   return (
-    <Div xflex="y2">
-      <Div xflex="x4">
-        <DropdownButton
-          open={open}
-          {...args}
-        >
-          {items.map(renderItem)}
-        </DropdownButton>
-        <A
-          ml={1}
-          userSelect="none"
-          onClick={() => setOpen(x => !x)}
-        >
-          Toggle
-        </A>
-      </Div>
-    </Div>
+    <Flex align="center">
+      <DropdownButton
+        open={open}
+        {...args}
+      >
+        {items.map(renderItem)}
+      </DropdownButton>
+      <A
+        ml={1}
+        userSelect="none"
+        onClick={() => setOpen(x => !x)}
+      >
+        Toggle
+      </A>
+    </Flex>
   )
 }
 
@@ -77,13 +73,11 @@ const extendedTheme = {
 
 function Template3({ items, ...args }: any) {
   return (
-    <Div xflex="y2">
-      <ExtendTheme theme={extendedTheme}>
-        <DropdownButton {...args}>
-          {items.map(renderItem)}
-        </DropdownButton>
-      </ExtendTheme>
-    </Div>
+    <ExtendTheme theme={extendedTheme}>
+      <DropdownButton {...args}>
+        {items.map(renderItem)}
+      </DropdownButton>
+    </ExtendTheme>
   )
 }
 

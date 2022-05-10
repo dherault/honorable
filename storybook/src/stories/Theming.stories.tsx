@@ -1,5 +1,5 @@
 import React from 'react'
-import { Div, DropdownButton, ExtendTheme } from 'honorable'
+import { DropdownButton, ExtendTheme } from 'honorable'
 
 export default {
   title: 'Theming',
@@ -20,12 +20,10 @@ const extendedTheme1 = {
 function Template1() {
   return (
     <ExtendTheme theme={extendedTheme1}>
-      <Div xflex="y2">
-        <DropdownButton
-          install
-          label="Install"
-        />
-      </Div>
+      <DropdownButton
+        install
+        label="Install"
+      />
     </ExtendTheme>
   )
 }

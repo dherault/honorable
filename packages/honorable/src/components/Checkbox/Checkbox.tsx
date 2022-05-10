@@ -64,15 +64,15 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = checked ?? uncontrolledChecked ?? false
 
-  const xflex = labelPosition === 'right'
-    ? 'x4'
+  const flexProps = labelPosition === 'right'
+    ? { justifyContent: 'flex-start' }
     : labelPosition === 'left'
-      ? 'x60'
+      ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
       : labelPosition === 'top'
-        ? 'y80'
+        ? { justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column-reverse' }
         : labelPosition === 'bottom'
-          ? 'y2'
-          : 'x4'
+          ? { justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column' }
+          : { justifyContent: 'flex-start' }
 
   // Override `checked` prop in styles
   useOverridenProps(props, { checked: actualChecked })
@@ -92,8 +92,10 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
 
   return (
     <Div
-      xflex={xflex}
+      ref={ref}
       tabIndex={0}
+      display="flex"
+      {...flexProps}
       {...otherProps}
       onClick={event => {
         handleChange(event)
@@ -105,9 +107,9 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
       }}
     >
       <Span
-        ref={ref}
-        xflex="x5"
         display="inline-flex"
+        alignItems="center"
+        justifyContent="center"
         {...resolvePartStyles('Control', props, theme)}
       >
         {actualChecked && icon}

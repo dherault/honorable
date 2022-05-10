@@ -68,14 +68,17 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   return (
     <ButtonBase
       ref={forkedRef}
-      xflex="x4"
+      display="inline-flex"
+      alignItems="center"
       {...otherProps}
       position="relative"
       disabled={props.disabled || loading}
     >
       {!!startIcon && (
         <Span
-          xflex="x5"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           visibility={loading ? 'hidden' : 'visible'}
           {...resolvePartStyles('StartIcon', props, theme)}
         >
@@ -84,7 +87,9 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       )}
       {loading && (
         <Span
-          xflex="x5"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           position="absolute"
           left={0}
           right={0}
@@ -108,7 +113,9 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       </Span>
       {!!endIcon && (
         <Span
-          xflex="x5"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           visibility={loading ? 'hidden' : 'visible'}
           {...resolvePartStyles('EndIcon', props, theme)}
         >

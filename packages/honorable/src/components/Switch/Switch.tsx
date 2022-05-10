@@ -59,9 +59,9 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      xflex="y2s"
-      flexShrink={0}
       display="inline-flex"
+      flexDirection="column"
+      flexShrink={0}
       position="relative"
       width={50}
       height={24}
@@ -85,7 +85,9 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
     >
       {actualChecked && !!checkedBackground && (
         <Div
-          xflex="x4"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-start"
           flexGrow={1}
         >
           {checkedBackground}
@@ -93,7 +95,9 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
       )}
       {!actualChecked && !!uncheckedBackground && (
         <Div
-          xflex="x6"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
           flexGrow={1}
         >
           {uncheckedBackground}

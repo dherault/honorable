@@ -23,7 +23,6 @@ describe('resolveAll', () => {
         '& > div': {
           ml: 2,
           pt: '2rem',
-          xflex: 'x1',
         },
       }, theme)
     ).toStrictEqual(
@@ -42,9 +41,6 @@ describe('resolveAll', () => {
         '& > div': {
           marginLeft: 32,
           paddingTop: '2rem',
-          display: 'flex',
-          alignContent: 'flex-start',
-          alignItems: 'flex-start',
         },
       }
     )

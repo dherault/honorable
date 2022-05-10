@@ -91,7 +91,9 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      xflex="x5"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       width={size}
       height={size}
       backgroundColor={name ? `${nameToColor(name)} !important` : null}

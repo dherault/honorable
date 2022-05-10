@@ -141,7 +141,9 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   return wrapFadeOutter(
     <Div
       ref={backdropRef}
-      xflex="y5"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       position="fixed"
       top="0"
       left="0"

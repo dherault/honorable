@@ -8,8 +8,8 @@ import useOverridenProps from '../../hooks/useOverridenProps'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
-import { Div, DivProps } from '../tags'
 import { Caret } from '../Caret/Caret'
+import { Div, DivProps } from '../tags'
 
 export type AccordionBaseProps = {
   /**
@@ -77,7 +77,8 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       {...otherProps}
     >
       <Div
-        xflex="x4"
+        display="flex"
+        alignItems="center"
         cursor="pointer"
         {...resolvePartStyles('Title', props, theme)}
         onClick={handleExpand}
@@ -85,7 +86,9 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
         {title}
         <Div flexGrow={1} />
         <Div
-          xflex="x5"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           {...resolvePartStyles('ExpandIcon', props, theme)}
         >
           {expandIcon || <Caret />}

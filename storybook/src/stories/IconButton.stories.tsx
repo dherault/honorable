@@ -1,4 +1,4 @@
-import React, { Div, IconButton } from 'honorable'
+import React, { IconButton } from 'honorable'
 
 export default {
   title: 'IconButton',
@@ -7,9 +7,7 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div xflex="y2">
-      <IconButton {...args} />
-    </Div>
+    <IconButton {...args} />
   )
 }
 

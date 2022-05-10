@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { A, Div, Tooltip } from 'honorable'
+import { A, Div, Flex, Tooltip } from 'honorable'
 
 export default {
   title: 'Tooltip',
@@ -25,24 +25,23 @@ function Template(args: any) {
   const [placement, setPlacement] = useState(placements[0])
 
   return (
-    <Div xflex="y2">
-      <Tooltip
-        {...args}
-        placement={placement}
+    <Tooltip
+      {...args}
+      placement={placement}
+    >
+      <Flex
+        p={2}
+        align="center"
+        justify="center"
+        minWidth={128 + 64}
+        minHeight={128 + 64}
+        backgroundColor="background-light"
+        userSelect="none"
+        onClick={() => setPlacement(placements[(placements.indexOf(placement) + 1) % placements.length])}
       >
-        <Div
-          userSelect="none"
-          minWidth={128 + 64}
-          minHeight={128 + 64}
-          p={2}
-          xflex="x5"
-          backgroundColor="background-light"
-          onClick={() => setPlacement(placements[(placements.indexOf(placement) + 1) % placements.length])}
-        >
-          {placement}
-        </Div>
-      </Tooltip>
-    </Div>
+        {placement}
+      </Flex>
+    </Tooltip>
   )
 }
 
@@ -50,23 +49,22 @@ function Template2(args: any) {
   const [open, setOpen] = useState(false)
 
   return (
-    <Div xflex="y2">
-      <Tooltip
-        {...args}
-        onOpen={(event, open) => setOpen(open)}
+    <Tooltip
+      {...args}
+      onOpen={(event, open) => setOpen(open)}
+    >
+      <Flex
+        p={2}
+        align="center"
+        justify="center"
+        userSelect="none"
+        minWidth={128 + 64}
+        minHeight={128 + 64}
+        backgroundColor="background-light"
       >
-        <Div
-          userSelect="none"
-          minWidth={128 + 64}
-          minHeight={128 + 64}
-          p={2}
-          xflex="x5"
-          backgroundColor="background-light"
-        >
-          {open ? 'open' : 'closed'}
-        </Div>
-      </Tooltip>
-    </Div>
+        {open ? 'open' : 'closed'}
+      </Flex>
+    </Tooltip>
   )
 }
 

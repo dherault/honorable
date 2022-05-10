@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, Checkbox, Div } from 'honorable'
+import { A, Checkbox, Flex } from 'honorable'
 
 export default {
   title: 'Checkbox',
@@ -9,11 +9,9 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div xflex="y1">
-      <Checkbox
-        {...args}
-      />
-    </Div>
+    <Checkbox
+      {...args}
+    />
   )
 }
 
@@ -21,7 +19,7 @@ function Template2(args: any) {
   const [checked, setChecked] = useState(false)
 
   return (
-    <Div xflex="x4">
+    <Flex>
       <Checkbox
         checked={checked}
         onChange={event => setChecked(event.target.checked)}
@@ -34,8 +32,7 @@ function Template2(args: any) {
       >
         Toggle
       </A>
-
-    </Div>
+    </Flex>
   )
 }
 

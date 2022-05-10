@@ -196,9 +196,10 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       }}
     >
       <Div
+        display="flex"
+        alignItems="center"
         cursor="pointer"
         userSelect="none"
-        xflex="x4"
         onClick={handleSelect}
         onMouseMove={() => {
           if ((active && menuState.active && menuState.activeItemIndex === itemIndex) || menuState.locked) return

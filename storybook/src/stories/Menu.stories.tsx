@@ -1,4 +1,4 @@
-import React, { Div, Menu, MenuItem } from 'honorable'
+import React, { Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'Menu',
@@ -30,11 +30,9 @@ function Template({ items, ...args }: any) {
   }
 
   return (
-    <Div xflex="y2">
-      <Menu {...args}>
-        {items.map(renderItem)}
-      </Menu>
-    </Div>
+    <Menu {...args}>
+      {items.map(renderItem)}
+    </Menu>
   )
 }
 

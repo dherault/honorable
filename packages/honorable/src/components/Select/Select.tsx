@@ -114,7 +114,9 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     return (
       <Span
         p={0.5}
-        xflex="x5"
+        display="inline-flex"
+        alignItems="center"
+        justifyContent="center"
         userSelect="none"
         {...resolvePartStyles('Caret', props, theme)}
       >
@@ -131,7 +133,8 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
       {...otherProps}
     >
       <Div
-        xflex="x4"
+        display="flex"
+        alignItems="center"
         onClick={event => {
           handleOpen(!actualOpen)
           setMenuState(x => ({ ...x, shouldFocus: true }))

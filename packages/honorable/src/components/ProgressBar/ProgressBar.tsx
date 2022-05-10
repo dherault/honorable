@@ -24,7 +24,8 @@ function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      xflex="x4s"
+      display="flex"
+      justifyContent="flex-start"
       height={8}
       {...otherProps}
     >

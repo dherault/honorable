@@ -27,8 +27,9 @@ function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
     <ButtonBase
       ref={forkedRef}
       height={height}
-      xflex="x5"
       display="inline-flex"
+      alignItem="center"
+      justifyContent="center"
       {...props}
     />
   )

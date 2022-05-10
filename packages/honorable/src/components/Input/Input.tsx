@@ -89,14 +89,17 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      xflex="x1"
       display="inline-flex"
+      alignItems="flex-start"
+      justifyContent="flex-start"
       px={0.5}
       {...otherProps}
     >
       {!!startIcon && (
         <Div
-          xflex="x5"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           {...resolvePartStyles('StartIcon', props, theme)}
         >
           {startIcon}
@@ -151,7 +154,9 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       )}
       {!!endIcon && (
         <Div
-          xflex="x5"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           {...resolvePartStyles('EndIcon', props, theme)}
         >
           {endIcon}

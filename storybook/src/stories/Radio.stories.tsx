@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, Div, Radio } from 'honorable'
+import { A, Flex, Radio } from 'honorable'
 
 export default {
   title: 'Radio',
@@ -9,11 +9,9 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div xflex="y1">
-      <Radio
-        {...args}
-      />
-    </Div>
+    <Radio
+      {...args}
+    />
   )
 }
 
@@ -21,7 +19,7 @@ function Template2(args: any) {
   const [checked, setChecked] = useState(false)
 
   return (
-    <Div xflex="x4">
+    <Flex>
       <Radio
         checked={checked}
         onChange={event => setChecked(event.target.checked)}
@@ -34,8 +32,7 @@ function Template2(args: any) {
       >
         Toggle
       </A>
-
-    </Div>
+    </Flex>
   )
 }
 

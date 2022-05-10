@@ -1,6 +1,6 @@
 // Icons from https://icons.modulz.app/
 import React from 'react'
-import { Avatar, Div } from 'honorable'
+import { Avatar } from 'honorable'
 
 export default {
   title: 'Avatar',
@@ -9,9 +9,7 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div xflex="y2">
-      <Avatar {...args} />
-    </Div>
+    <Avatar {...args} />
   )
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Div, Radio, RadioGroup } from 'honorable'
+import { Radio, RadioGroup } from 'honorable'
 
 export default {
   title: 'RadioGroup',
@@ -9,19 +9,17 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div xflex="y1">
-      <RadioGroup {...args}>
-        <Radio value={0}>
-          Zero
-        </Radio>
-        <Radio value={1}>
-          One
-        </Radio>
-        <Radio value={2}>
-          Two
-        </Radio>
-      </RadioGroup>
-    </Div>
+    <RadioGroup {...args}>
+      <Radio value={0}>
+        Zero
+      </Radio>
+      <Radio value={1}>
+        One
+      </Radio>
+      <Radio value={2}>
+        Two
+      </Radio>
+    </RadioGroup>
   )
 }
 
@@ -29,23 +27,21 @@ function Template2(args: any) {
   const [value, setValue] = useState(null)
 
   return (
-    <Div xflex="x4">
-      <RadioGroup
-        {...args}
-        value={value}
-        onChange={event => setValue(event.target.value)}
-      >
-        <Radio value={0}>
-          Zero
-        </Radio>
-        <Radio value={1}>
-          One
-        </Radio>
-        <Radio value={2}>
-          Two
-        </Radio>
-      </RadioGroup>
-    </Div>
+    <RadioGroup
+      {...args}
+      value={value}
+      onChange={event => setValue(event.target.value)}
+    >
+      <Radio value={0}>
+        Zero
+      </Radio>
+      <Radio value={1}>
+        One
+      </Radio>
+      <Radio value={2}>
+        Two
+      </Radio>
+    </RadioGroup>
   )
 }
 
@@ -53,26 +49,24 @@ function Template3(args: any) {
   const [value, setValue] = useState(null)
 
   return (
-    <Div xflex="x4">
-      <RadioGroup
-        {...args}
-        value={value}
-        onChange={event => setValue(event.target.value)}
+    <RadioGroup
+      {...args}
+      value={value}
+      onChange={event => setValue(event.target.value)}
+    >
+      <Radio value={0}>
+        Zero
+      </Radio>
+      <Radio
+        disabled
+        value={1}
       >
-        <Radio value={0}>
-          Zero
-        </Radio>
-        <Radio
-          disabled
-          value={1}
-        >
-          One
-        </Radio>
-        <Radio value={2}>
-          Two
-        </Radio>
-      </RadioGroup>
-    </Div>
+        One
+      </Radio>
+      <Radio value={2}>
+        Two
+      </Radio>
+    </RadioGroup>
   )
 }
 

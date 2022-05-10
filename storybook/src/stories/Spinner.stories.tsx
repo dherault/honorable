@@ -1,4 +1,4 @@
-import React, { Div, Spinner } from 'honorable'
+import React, { Spinner } from 'honorable'
 
 export default {
   title: 'Spinner',
@@ -7,11 +7,7 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div xflex="y2">
-      <Spinner
-        {...args}
-      />
-    </Div>
+    <Spinner {...args} />
   )
 }
 

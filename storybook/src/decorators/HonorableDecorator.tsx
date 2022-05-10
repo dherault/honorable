@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 // eslint-disable-next-line
 import { Story as StoryType, StoryContext } from '@storybook/react'
-import { CssBaseline, Div, Span, Switch, ThemeProvider, mergeTheme } from 'honorable'
+import { CssBaseline, Div, Flex, Span, Switch, ThemeProvider, mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
 const theme = mergeTheme(defaultTheme, {
@@ -58,7 +58,12 @@ function HonorableDecorator(Story: StoryType, { title }: StoryContext) {
           top="0.5rem"
           right="0.5rem"
         />
-        <Story />
+        <Flex
+          direction="column"
+          align="center"
+        >
+          <Story />
+        </Flex>
       </Div>
     </ThemeProvider>
   )

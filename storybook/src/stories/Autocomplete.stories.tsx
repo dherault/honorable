@@ -1,7 +1,7 @@
 // Icons from https://icons.modulz.app/
 // Top 100 films from https://mui.com/material-ui/react-autocomplete/
 import React, { useState } from 'react'
-import { Autocomplete, Div } from 'honorable'
+import { Autocomplete } from 'honorable'
 
 export default {
   title: 'Autocomplete',
@@ -15,9 +15,7 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div xflex="y2s">
-      <Autocomplete {...args} />
-    </Div>
+    <Autocomplete {...args} />
   )
 }
 
@@ -25,13 +23,11 @@ function TemplateControlled(args: any) {
   const [value, setValue] = useState('')
 
   return (
-    <Div xflex="y2s">
-      <Autocomplete
-        value={value}
-        onChange={event => setValue(event.target.value)}
-        {...args}
-      />
-    </Div>
+    <Autocomplete
+      value={value}
+      onChange={event => setValue(event.target.value)}
+      {...args}
+    />
   )
 }
 

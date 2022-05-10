@@ -12,8 +12,9 @@ function IconRef(props: IconProps, ref: Ref<any>) {
   return (
     <Span
       ref={ref}
-      xflex="x5"
       display="inline-flex"
+      alignItems="center"
+      justifyContent="center"
       {...props}
     />
   )
