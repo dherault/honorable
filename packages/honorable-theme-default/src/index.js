@@ -650,11 +650,17 @@ export default {
         fontSize: 12,
         fontWeight: 500,
         borderRadius: 2,
+        backgroundColor: 'lighten(black, 33)',
       },
     ],
     Label: [
       {
         padding: 4,
+      },
+    ],
+    Arrow: [
+      {
+        backgroundColor: 'lighten(black, 33)',
       },
     ],
   },
