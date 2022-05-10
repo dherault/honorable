@@ -11,13 +11,15 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 
-export type ModalProps = DivProps & {
+export type ModalBaseProps = {
   open?: boolean
   onClose?: (event: MouseEvent | KeyboardEvent) => void
   fade?: boolean
   transitionDuration?: number
   disableEscapeKey?: boolean
 }
+
+export type ModalProps = DivProps & ModalBaseProps
 
 export const modalPropTypes = {
   open: PropTypes.bool,

@@ -15,7 +15,7 @@ import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
 
-export type MenuItemProps = DivProps & {
+export type MenuItemBaseProps = {
   value?: any
   itemIndex?: number
   active?: boolean
@@ -23,6 +23,8 @@ export type MenuItemProps = DivProps & {
   fade?: boolean
   disabled?: boolean
 }
+
+export type MenuItemProps = DivProps & MenuItemBaseProps
 
 export const menuItemPropTypes = {
   value: PropTypes.any,

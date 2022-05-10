@@ -6,12 +6,33 @@ import withHonorable from '../../withHonorable'
 import { Div, DivProps } from '../tags'
 
 export type FlexBaseProps = {
+  /**
+   * Alias for flexDirection
+   */
   direction?: string
+  /**
+   * wrap flex property
+   */
   wrap?: string
+  /**
+   * Alias for flexBasis
+   */
   basis?: string
+  /**
+   * Alias for flexGrow
+   */
   grow?: number
+  /**
+   * Alias for flexShrink
+   */
   shrink?: number
+  /**
+   * Alias for alignItems
+   */
   align?: string
+  /**
+   * Alias for justifyContent
+   */
   justify?: string
 }
 

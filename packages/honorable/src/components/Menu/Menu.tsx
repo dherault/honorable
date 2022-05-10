@@ -12,13 +12,15 @@ import useOverridenProps from '../../hooks/useOverridenProps'
 import { Div, DivProps } from '../tags'
 import { MenuItem } from '../MenuItem/MenuItem'
 
-export type MenuProps = DivProps & {
+export type MenuBaseProps = {
   menuState?: MenuStateType
   setMenuState?: MenuStateDispatcherType
   isSubMenu?: boolean
   fade?: boolean
   open?: boolean
 }
+
+export type MenuProps = DivProps & MenuBaseProps
 
 export const menuPropTypes = {
   menuState: PropTypes.object,

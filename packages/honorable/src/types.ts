@@ -23,10 +23,6 @@ export type AnyProps = {
   [key: string]: any
 }
 
-export type ThemeProps = {
-  theme: HonorableTheme
-}
-
 export type CssProps = {
   css?: any
 }

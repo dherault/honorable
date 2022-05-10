@@ -14,14 +14,34 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
-export type CheckboxProps = Omit<DivProps, 'onChange'> & {
+export type CheckboxBaseProps = {
+  /**
+   * Weither the Checkbox is checked or not
+   */
   checked?: boolean
+  /**
+   * Weither the Checkbox is checked by default or not
+   */
   defaultChecked?: boolean
+  /**
+   * Weither the Checkbox is disabled or not
+   */
   disabled?: boolean
+  /**
+   * The icon react node of the Checkbox
+   */
   icon?: ReactNode
+  /**
+   * Callback function called when the Checkbox checked state changes
+   */
   onChange?: (event: TargetWithChecked<MouseEvent | KeyboardEvent | ChangeEvent>) => void
+  /**
+   * The position of the label relative to the Checkbox
+   */
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
+
+export type CheckboxProps = Omit<DivProps, 'onChange'> & CheckboxBaseProps
 
 export const checkboxPropTypes = {
   checked: PropTypes.bool,

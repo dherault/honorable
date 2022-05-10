@@ -14,14 +14,36 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
-export type SwitchProps = Omit<DivProps, 'onChange'> & {
+export type SwitchBaseProps = {
+  /**
+   * Weither the Switch is checked or not
+   */
   checked?: boolean
+  /**
+   * Weither the Switch is checked by default or not
+   */
   defaultChecked?: boolean
+  /**
+   * Weither the Switch is disabled or not
+   */
   disabled?: boolean
+  /**
+   * Callback function called when the Switch checked state changes
+   */
   onChange?: (event: TargetWithChecked<MouseEvent | KeyboardEvent>) => void
+  /**
+   * The background react node of the Switch when it is checked.
+   * Useful to place an emoji like 🌜
+   */
   checkedBackground?: ReactNode
+  /**
+   * The background react node of the Switch when it not checked
+   * Useful to place an emoji like 🌞
+   */
   uncheckedBackground?: ReactNode
 }
+
+export type SwitchProps = Omit<DivProps, 'onChange'> & SwitchBaseProps
 
 export const switchPropTypes = {
   checked: PropTypes.bool,

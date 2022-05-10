@@ -5,6 +5,8 @@ import useTheme from '../../hooks/useTheme'
 import resolveAll from '../../resolvers/resolveAll'
 import resolveStyles from '../../resolvers/resolveStyles'
 
+export type CssBaselineBaseProps = Record<string, never>
+
 const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
 function assignDefaultFontFamily(object: any) {

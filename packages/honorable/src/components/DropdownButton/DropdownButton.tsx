@@ -22,14 +22,34 @@ import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'
 import { Div, DivProps } from '../tags'
 
-export type DropdownButtonProps = Omit<DivProps & ButtonProps, 'onChange'> & {
+export type DropdownButtonBaseProps = {
+  /**
+   * Whether the DropdownButton is open or not
+   */
   open?: boolean
+  /**
+   * Whether the DropdownButton is open by default or not
+   */
   defaultOpen?: boolean
+  /**
+   * The label of the DropdownButton
+   */
   label?: string
+  /**
+   * Whether the DropdownButton's menu should fade in and out or not
+   */
   fade?: boolean
+  /**
+   * Callback function called when the DropdownButton returns a value
+   */
   onChange?: (event: MouseEvent | KeyboardEvent) => void
+  /**
+   * Callback function called when the DropdownButton is opened or closed
+   */
   onOpen?: (open: boolean) => void
 }
+
+export type DropdownButtonProps = Omit<DivProps & ButtonProps, 'onChange'> & DropdownButtonBaseProps
 
 export const dropdownButtonPropTypes = {
   ...buttonPropTypes,

@@ -17,9 +17,21 @@ import { Flex, FlexProps } from '../Flex/Flex'
 import { Div } from '../tags'
 
 export type RadioGroupBaseProps = {
+  /**
+   * The value of the selected Radio.
+   */
   value?: any
+  /**
+   * The value of the selected Radio by default.
+   */
   defaultValue?: any
+  /**
+   * Callback function called when the RadioGroup returns a value
+   */
   onChange?: (event: TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>) => void
+  /**
+   * Whether the RadioGroup is in a row or not
+   */
   row?: boolean
 }
 

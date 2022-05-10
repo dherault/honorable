@@ -11,24 +11,72 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps, InputBase } from '../tags'
 
-export type ValueType = (string | number | readonly string[]) & string | number
+export type InputValueType = (string | number | readonly string[]) & string | number
 
 export type InputBaseProps = {
+  /**
+   * The type of the Input
+   */
   type?: string
-  value?: ValueType
-  defaultValue?: ValueType
+  /**
+   * The value of the Input
+   */
+  value?: InputValueType
+  /**
+   * The default value of the Input
+   */
+  defaultValue?: InputValueType
+  /**
+   * The placeholder of the Input
+   */
   placeholder?: string
+  /**
+   * Callback function called when the Input value changes
+   */
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  /**
+   * Callback function called when the Input gains focus
+   */
   onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  /**
+   * Callback function called when the Input looses focus
+   */
   onBlur?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  /**
+   * Callback function called when the Input received a keydown event
+   */
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  /**
+   * Callback function called when the Input received a keyup event
+   */
   onKeyUp?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  /**
+   * The icon react node at the start of the Input
+   */
   startIcon?: ReactNode
+  /**
+   * The icon react node at the end of the Input
+   */
   endIcon?: ReactNode
+  /**
+   * Weither the Input is disabled or not
+   */
   disabled?: boolean
+  /**
+   * Weither the Input should focus on mount or not
+   */
   autoFocus?: boolean
+  /**
+   * Weither the Input is mutliline or not. If so, a <textarea> is rendered
+   */
   multiline?: boolean
+  /**
+   * If multiline, the minimum number of rows to display
+   */
   minRows?: number
+  /**
+   * If multiline, the maximum number of rows to display
+   */
   maxRows?: number
 }
 
@@ -76,7 +124,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   } = props
   const theme = useTheme()
   const [active, setActive] = useState(false)
-  const [uncontrolledValue, setUncontrolledValue] = useState<ValueType>(defaultValue ?? '')
+  const [uncontrolledValue, setUncontrolledValue] = useState<InputValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
 
   useOverridenProps(props, { active, value: actualValue })

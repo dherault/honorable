@@ -5,10 +5,18 @@ import withHonorable from '../../withHonorable'
 
 import { Span, SpanProps } from '../tags'
 
-export type SpinnerProps = SpanProps & {
+export type SpinnerBaseProps = {
+  /**
+   * The size of the Spinner
+   */
   size?: number
+  /**
+   * The color of the Spinner
+   */
   color?: string
 }
+
+export type SpinnerProps = SpanProps & SpinnerBaseProps
 
 export const spinnerPropTypes = {
   size: PropTypes.number,

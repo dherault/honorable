@@ -8,9 +8,14 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 
-type ProgressBarProps = DivProps & {
+export type ProgressBarBaseProps = {
+  /**
+   * The value of the ProgressBar. Between 0 and 1
+   */
   value: number
 }
+
+export type ProgressBarProps = DivProps & ProgressBarBaseProps
 
 export const progressBarPropTypes = {}
 

@@ -15,17 +15,54 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import { Div, DivProps } from '../tags'
 
 export type TooltipBaseProps = {
+  /**
+   * The react node that the Tooltip will be displayed on
+   * Should be a unique ReactElement able to hold a ref
+   */
   children: ReactNode
+  /**
+   * The react node that will be displayed in the Tooltip
+   */
   label?: ReactNode
+  /**
+   * Weither the Tooltip should display an arrow or not
+   */
   arrow?: boolean
+  /**
+   * If `arrow`, the  size of the arrow
+   */
   arrowSize?: number
+  /**
+   * The states the Tooltip should be displayed with
+   */
   displayOn?: ('hover' | 'focus' | 'click')[]
+  /**
+   * The transition duration of the Tooltip's fade
+   */
   transitionDuration?: number
+  /**
+   * The enter delay of the Tooltip
+   */
   enterDelay?: number
+  /**
+   * The leave delay of the Tooltip
+   */
   leaveDelay?: number
+  /**
+   * Weither the tooltipshould follow the cursor or not
+   */
   followCursor?: boolean
+  /**
+   * Callback function called when the Tooltip is opened or closed
+   */
   onOpen?: (event: MouseEvent | FocusEvent, open: boolean) => void
+  /**
+   * Weither the Tooltip is open or not
+   */
   open?: boolean
+  /**
+   * The placement of the Tooltip relative to its child
+   */
   placement?: 'bottom-end'
     | 'bottom-start'
     | 'bottom'

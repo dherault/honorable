@@ -14,7 +14,7 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
-export type RadioProps = Omit<DivProps, 'onChange'> & {
+export type RadioBaseProps = {
   value?: any
   checked?: boolean
   defaultChecked?: boolean
@@ -24,6 +24,8 @@ export type RadioProps = Omit<DivProps, 'onChange'> & {
   onChange?: (event: TargetWithChecked<TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>>) => void
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
+
+export type RadioProps = Omit<DivProps, 'onChange'> & RadioBaseProps
 
 export const radioPropTypes = {
   value: PropTypes.any,

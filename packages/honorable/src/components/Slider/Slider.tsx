@@ -11,28 +11,30 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 
-type MarkType = {
+export type SliderMarkType = {
   label?: ReactNode
   value: number
 }
 
-type ValueType = number | number[]
+export type SliderValueType = number | number[]
 
-export type SliderProps = DivProps & {
+export type SliderBaseProps = {
   defaultValue?: number
   disabled?: boolean
   swapDisabled?: boolean
-  marks?: MarkType[]
+  marks?: SliderMarkType[]
   max?: number
   min?: number
   step?: number
   onChange?: (event: SyntheticEvent, value: number, activeThumb: number) => void
   onChangeCommited?: (event: SyntheticEvent, value: number, activeThumb: number) => void
   orientation?: 'horizontal' | 'vertical'
-  value?: ValueType
+  value?: SliderValueType
   // valueLabelDisplay
   // valueLabelFormat
 }
+
+export type SliderProps = DivProps & SliderBaseProps
 
 export const SliderPropTypes = {
   defaultValue: PropTypes.number,

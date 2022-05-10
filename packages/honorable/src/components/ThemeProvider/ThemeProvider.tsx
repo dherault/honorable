@@ -2,14 +2,18 @@ import { PropsWithChildren, useContext } from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 import PropTypes from 'prop-types'
 
-import { ThemeProps } from '../../types'
+import { HonorableTheme } from '../../types'
 
 import ThemeContext from '../../contexts/ThemeContext'
 import defaultTheme from '../../data/defaultTheme'
 import enhanceTheme from '../../utils/enhanceTheme'
 import mergeTheme from '../../utils/mergeTheme'
 
-export type ThemeProviderProps = PropsWithChildren<ThemeProps>
+export type ThemeProviderBaseProps = {
+  theme: HonorableTheme
+}
+
+export type ThemeProviderProps = PropsWithChildren<ThemeProviderBaseProps>
 
 export const themProviderPropTypes = {
   theme: PropTypes.object,

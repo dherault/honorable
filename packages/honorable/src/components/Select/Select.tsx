@@ -24,7 +24,7 @@ import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
 
-export type SelectProps = Omit<DivProps, 'onChange'> & {
+export type SelectBaseProps = {
   open?: boolean
   defaultOpen?: boolean
   value?: any
@@ -32,6 +32,8 @@ export type SelectProps = Omit<DivProps, 'onChange'> & {
   onOpen?: (open: boolean) => void
   fade?: boolean
 }
+
+export type SelectProps = Omit<DivProps, 'onChange'> & SelectBaseProps
 
 export const selectPropTypes = {
   open: PropTypes.bool,
