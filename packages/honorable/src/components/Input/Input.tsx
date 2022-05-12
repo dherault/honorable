@@ -54,6 +54,10 @@ export type InputBaseProps = {
    */
   onKeyUp?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   /**
+   * Callback function called when the Input received a "Enter" keydown event
+   */
+  onEnter?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  /**
    * The icon react node at the start of the Input
    */
   startIcon?: ReactNode
@@ -95,6 +99,7 @@ export const inputPropTypes = {
   onBlur: PropTypes.func,
   onKeyDown: PropTypes.func,
   onKeyUp: PropTypes.func,
+  onEnter: PropTypes.func,
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
   disabled: PropTypes.bool,
@@ -115,6 +120,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     onBlur,
     onKeyDown,
     onKeyUp,
+    onEnter,
     startIcon,
     endIcon,
     disabled,
@@ -134,6 +140,10 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUncontrolledValue(event.target.value)
     if (typeof onChange === 'function') onChange(event)
+  }
+
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    if (event.code === 'Enter' && typeof onEnter === 'function') onEnter(event)
   }
 
   return (
@@ -171,7 +181,10 @@ function InputRef(props: InputProps, ref: Ref<any>) {
             setActive(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
-          onKeyDown={onKeyDown}
+          onKeyDown={event => {
+            handleKeyDown(event)
+            if (typeof onKeyDown === 'function') onKeyDown(event)
+          }}
           onKeyUp={onKeyUp}
           {...resolvePartStyles('InputBase', props, theme)}
           flexGrow={1}
@@ -192,7 +205,10 @@ function InputRef(props: InputProps, ref: Ref<any>) {
             setActive(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
-          onKeyDown={onKeyDown}
+          onKeyDown={event => {
+            handleKeyDown(event)
+            if (typeof onKeyDown === 'function') onKeyDown(event)
+          }}
           onKeyUp={onKeyUp}
           minRows={minRows}
           maxRows={maxRows}

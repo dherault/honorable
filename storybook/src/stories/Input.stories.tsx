@@ -25,6 +25,22 @@ function TemplateControlled(args: any) {
   )
 }
 
+function TemplateCounter(args: any) {
+  const [counter, setCounter] = useState(0)
+
+  return (
+    <>
+      <Input
+        {...args}
+        onEnter={() => setCounter(x => x + 1)}
+      />
+      <P mt={1}>
+        {counter}
+      </P>
+    </>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
   disabled: false,
@@ -200,4 +216,10 @@ export const MultilineDisabled = Template.bind({})
 MultilineDisabled.args = {
   multiline: true,
   disabled: true,
+}
+
+export const OnEnter = TemplateCounter.bind({})
+OnEnter.args = {
+  multiline: false,
+  disabled: false,
 }
