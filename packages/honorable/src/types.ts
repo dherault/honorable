@@ -1,5 +1,5 @@
 import '@emotion/react'
-import React, { Dispatch, PropsWithRef, Ref, SetStateAction } from 'react'
+import React, { Dispatch, PropsWithChildren, PropsWithRef, Ref, SetStateAction } from 'react'
 
 import mpProperties from './data/mpProperties'
 import stylesProperties from './data/stylesProperties'
@@ -18,11 +18,11 @@ export type HonorableCommonProps = {
   __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
 
-export type ElementProps<Tag> = HonorableCommonProps & PropsWithRef<
+export type ElementProps<Tag> = HonorableCommonProps & PropsWithChildren<PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
->
+>>
 
 export type AnyProps = {
   [key: string]: any
