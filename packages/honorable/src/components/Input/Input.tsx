@@ -143,7 +143,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    if (event.code === 'Enter' && typeof onEnter === 'function') onEnter(event)
+    if (event.key === 'Enter' && typeof onEnter === 'function') onEnter(event)
   }
 
   return (
