@@ -18,6 +18,7 @@ export type MenuBaseProps = {
   isSubMenu?: boolean
   fade?: boolean
   open?: boolean
+  transtionDuration?: number
 }
 
 export type MenuProps = DivProps & MenuBaseProps
@@ -28,6 +29,7 @@ export const menuPropTypes = {
   isSubMenu: PropTypes.bool,
   fade: PropTypes.bool,
   open: PropTypes.bool,
+  transtionDuration: PropTypes.number,
 }
 
 const defaultMenuState: MenuStateType = {
@@ -51,6 +53,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     fade,
     open,
     isSubMenu,
+    transtionDuration = 300,
     children,
     ...otherProps
   } = props
@@ -67,6 +70,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     : actualMenuState.activeItemIndex
 
   const actualOpen = open ?? true
+  const [transtionOpen, setTranstionOpen] = useState(actualOpen)
 
   // Give `active` and `activeItemIndex` and other props to customProps
   useOverridenProps(props, actualMenuState)
@@ -103,7 +107,18 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     }
   }, [actualMenuState.shouldSyncWithParent, setActualMenuState, setParentMenuState])
 
-  if (!fade && !actualOpen) return null
+  useEffect(() => {
+    if (!actualOpen) {
+      setActualMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
+      setTimeout(() => {
+        setTranstionOpen(false)
+      }, transtionDuration)
+    }
+    else {
+      setActualMenuState(x => ({ ...x, active: true }))
+      setTranstionOpen(true)
+    }
+  }, [actualOpen, transtionDuration, setActualMenuState])
 
   // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -141,13 +156,11 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   function wrapFade(element: ReactElement) {
     if (!fade) return element
 
-    const duration = 330
-
     const defaultStyle = {
       position: 'relative',
       top: -4,
       opacity: 0,
-      transition: `opacity ${duration}ms ease, top ${duration}ms ease`,
+      transition: `opacity ${transtionDuration}ms ease, top ${transtionDuration}ms ease`,
     }
 
     const transitionStyles = {
@@ -161,9 +174,9 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
       <Transition
         in={actualOpen}
         appear
-        timeout={duration}
+        timeout={transtionDuration}
+        onEntered={() => setActualMenuState(x => ({ ...x, locked: false }))}
         onExit={() => setActualMenuState(x => ({ ...x, locked: true }))}
-        onExited={() => setActualMenuState(x => ({ ...x, locked: false }))}
       >
         {(state: string) => cloneElement(element, {
           ...element.props,
@@ -173,6 +186,8 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
       </Transition>
     )
   }
+
+  if (!(actualOpen || transtionOpen)) return null
 
   return (
     <MenuContext.Provider value={menuValue}>

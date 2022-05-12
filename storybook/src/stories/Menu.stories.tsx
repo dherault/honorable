@@ -1,4 +1,5 @@
-import React, { Menu, MenuItem } from 'honorable'
+import { useState } from 'react'
+import React, { A, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'Menu',
@@ -36,6 +37,39 @@ function Template({ items, ...args }: any) {
   )
 }
 
+function Template2({ items, ...args }: any) {
+  const [open, setOpen] = useState(false)
+
+  function renderItem({ text, value, items }: any) {
+    return (
+      <MenuItem
+        key={text}
+        value={value}
+      >
+        {text}
+        {Array.isArray(items) && (
+          <Menu>
+            {items.map(renderItem)}
+          </Menu>
+        )}
+      </MenuItem>
+    )
+  }
+
+  return (
+    <>
+      <A onClick={() => setOpen(x => !x)}>{open ? 'Close' : 'Open'}</A>
+      <Menu
+        mt={1}
+        open={open}
+        {...args}
+      >
+        {items.map(renderItem)}
+      </Menu>
+    </>
+  )
+}
+
 function makeItems(items: any[], depth = 1): any[] {
   if (depth <= 0) return items
 
@@ -60,4 +94,16 @@ export const Fade = Template.bind({})
 Fade.args = {
   fade: true,
   items: makeItems(items, 6),
+}
+
+export const Closed = Template.bind({})
+Closed.args = {
+  items,
+  open: false,
+}
+
+export const ClosedFade = Template2.bind({})
+ClosedFade.args = {
+  items,
+  fade: true,
 }
