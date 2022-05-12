@@ -1,5 +1,6 @@
 import { HonorableTheme, StylesProps } from '../types'
 
+import resolveAll from './resolveAll'
 import resolveStyles from './resolveStyles'
 
 function pickHonorableProps(props: object): [any, any] {
@@ -40,7 +41,7 @@ function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme
   if (!partTheme) return nextHonorableProps
 
   return {
-    ...resolveStyles(partTheme, { ...(__honorableOriginProps || otherProps), ...__honorableOverridenProps }, theme),
+    ...resolveAll(resolveStyles(partTheme, { ...(__honorableOriginProps || otherProps), ...__honorableOverridenProps }, theme), theme),
     ...nextHonorableProps,
   }
 }

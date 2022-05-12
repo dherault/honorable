@@ -335,15 +335,10 @@ export default {
   Input: {
     Root: [
       {
+        color: 'text',
         border: '1px solid border',
         borderRadius: 4,
         overflow: 'hidden',
-        '& > textarea': {
-          padding: '8px 0',
-          resize: 'none',
-          outline: 'none',
-          border: 'none',
-        },
       },
       ({ active }) => active && {
         border: '1px solid primary',
@@ -351,10 +346,6 @@ export default {
       ({ disabled }) => disabled && {
         backgroundColor: 'background-light',
         cursor: 'not-allowed',
-        '& > textarea': {
-          backgroundColor: 'background-light',
-          cursor: 'not-allowed',
-        },
       },
     ],
     InputBase: [
@@ -367,14 +358,22 @@ export default {
       {
         marginTop: 8,
         marginRight: 8,
-        color: 'text',
       },
     ],
     EndIcon: [
       {
         marginTop: 8,
         marginLeft: 8,
+      },
+    ],
+    TextArea: [
+      {
         color: 'text',
+        padding: '8px 0',
+        resize: 'none',
+        outline: 'none',
+        border: 'none',
+        backgroundColor: 'transparent',
       },
     ],
   },
