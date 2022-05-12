@@ -122,6 +122,72 @@ function Template4(args: any) {
   )
 }
 
+function Template5(args: any) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <A
+        onClick={() => setOpen(true)}
+        userSelect="none"
+      >
+        Open
+      </A>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        {...args}
+      >
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+        Content <br />
+      </Modal>
+    </>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
 }
@@ -156,4 +222,8 @@ DisableEscapeKey.args = {
 
 export const RealWorld = Template4.bind({})
 RealWorld.args = {
+}
+
+export const RealWorld2 = Template5.bind({})
+RealWorld2.args = {
 }

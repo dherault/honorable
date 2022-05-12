@@ -144,6 +144,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     <Div
       ref={backdropRef}
       display="flex"
+      flexDirection="column"
       alignItems="center"
       justifyContent="center"
       position="fixed"
@@ -161,7 +162,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
           ref={ref}
           backgroundColor="background"
           overflowY="auto"
-          m={6}
+          m={4}
           {...otherProps}
         />
       )}
