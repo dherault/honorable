@@ -4,7 +4,7 @@ import withHonorable from '../../withHonorable'
 
 import { Div, DivProps } from '../tags'
 
-export type BoxBaseProps = Record<string, never>
+export type BoxBaseProps = unknown
 
 export type BoxProps = DivProps & BoxBaseProps
 

@@ -7,7 +7,7 @@ import useForkedRef from '../../hooks/useForkedRef'
 
 import { ButtonBase, ButtonBaseBaseProps } from '../tags'
 
-export type IconButtonBaseProps = Record<string, never>
+export type IconButtonBaseProps = unknown
 
 export type IconButtonProps = ButtonBaseBaseProps & IconButtonBaseProps
 
