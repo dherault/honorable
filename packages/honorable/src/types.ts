@@ -18,11 +18,13 @@ export type HonorableCommonProps = {
   __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
 
-export type ElementProps<Tag> = HonorableCommonProps & PropsWithChildren<PropsWithRef<
-  Tag extends keyof JSX.IntrinsicElements
-  ? JSX.IntrinsicElements[Tag]
-  : never
->>
+export type ElementProps<Tag> = PropsWithChildren<
+  PropsWithRef<
+    Tag extends keyof JSX.IntrinsicElements
+    ? JSX.IntrinsicElements[Tag]
+    : never
+  >
+>
 
 export type AnyProps = {
   [key: string]: any
@@ -46,13 +48,13 @@ export type StylesProps = AnyProps & CssProps & PseudoSelectorProps & MpProps & 
   [stylesKey in StylesProperties]?: any
 }
 
-export type StyledHonorableProps = HonorableCommonProps & {
+export type StyledHonorableProps = {
   ref: Ref<any>
   theme: HonorableTheme
   honorable: StylesProps
 }
 
-export type HonorableProps<P> = P & StylesProps
+export type HonorableProps<P> = P & StylesProps & HonorableCommonProps
 
 /*
   THEME

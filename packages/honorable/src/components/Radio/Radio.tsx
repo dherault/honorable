@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithChecked, TargetWithValue } from '../../types'
+import { HonorableProps, TargetWithChecked, TargetWithValue } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -25,7 +25,7 @@ export type RadioBaseProps = {
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
-export type RadioProps = Omit<DivProps, 'onChange'> & RadioBaseProps
+export type RadioProps = HonorableProps<Omit<DivProps, 'onChange'> & RadioBaseProps>
 
 export const radioPropTypes = {
   value: PropTypes.any,

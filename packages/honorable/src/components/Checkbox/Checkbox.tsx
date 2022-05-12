@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithChecked } from '../../types'
+import { HonorableProps, TargetWithChecked } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -41,7 +41,7 @@ export type CheckboxBaseProps = {
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
-export type CheckboxProps = Omit<DivProps, 'onChange'> & CheckboxBaseProps
+export type CheckboxProps = HonorableProps<Omit<DivProps, 'onChange'> & CheckboxBaseProps>
 
 export const checkboxPropTypes = {
   checked: PropTypes.bool,

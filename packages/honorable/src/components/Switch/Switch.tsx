@@ -1,7 +1,7 @@
 import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithChecked } from '../../types'
+import { HonorableProps, TargetWithChecked } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -43,7 +43,7 @@ export type SwitchBaseProps = {
   uncheckedBackground?: ReactNode
 }
 
-export type SwitchProps = Omit<DivProps, 'onChange'> & SwitchBaseProps
+export type SwitchProps = HonorableProps<Omit<DivProps, 'onChange'> & SwitchBaseProps>
 
 export const switchPropTypes = {
   checked: PropTypes.bool,

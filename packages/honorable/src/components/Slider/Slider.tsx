@@ -2,6 +2,8 @@
 import { ReactNode, Ref, SyntheticEvent, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -34,7 +36,7 @@ export type SliderBaseProps = {
   // valueLabelFormat
 }
 
-export type SliderProps = DivProps & SliderBaseProps
+export type SliderProps = HonorableProps<DivProps & SliderBaseProps>
 
 type SliderKnobProps = DivProps & {
   position: string

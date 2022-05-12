@@ -5,7 +5,6 @@ import isPropValid from '@emotion/is-prop-valid'
 import merge from 'lodash.merge'
 
 import {
-  HonorableProps,
   StyledHonorableProps,
   StylesProps,
 } from './types'
@@ -41,7 +40,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     }
   )(props => props.honorable)
 
-  function Honorable(props: HonorableProps<P>, ref: Ref<any>) {
+  function Honorable(props: P, ref: Ref<any>) {
     const theme = useTheme()
     const [overridenProps, setOverridenProps] = useState({})
 

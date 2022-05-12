@@ -1,5 +1,7 @@
 import { Ref, forwardRef, useEffect, useRef, useState } from 'react'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -9,7 +11,7 @@ import { ButtonBase, ButtonBaseBaseProps } from '../tags'
 
 export type IconButtonBaseProps = unknown
 
-export type IconButtonProps = ButtonBaseBaseProps & IconButtonBaseProps
+export type IconButtonProps = HonorableProps<ButtonBaseBaseProps & IconButtonBaseProps>
 
 export const iconButtonPropTypes = {}
 

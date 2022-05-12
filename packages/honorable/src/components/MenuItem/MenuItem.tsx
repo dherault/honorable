@@ -1,6 +1,8 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import MenuContext, { MenuStateType } from '../../contexts/MenuContext'
@@ -24,7 +26,7 @@ export type MenuItemBaseProps = {
   disabled?: boolean
 }
 
-export type MenuItemProps = DivProps & MenuItemBaseProps
+export type MenuItemProps = HonorableProps<DivProps & MenuItemBaseProps>
 
 export const menuItemPropTypes = {
   value: PropTypes.any,

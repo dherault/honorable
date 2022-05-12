@@ -1,7 +1,7 @@
 import { ChangeEvent, Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithValue } from '../../types'
+import { HonorableProps, TargetWithValue } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -35,7 +35,7 @@ export type RadioGroupBaseProps = {
   row?: boolean
 }
 
-export type RadioGroupProps = Omit<FlexProps, 'onChange'> & RadioGroupBaseProps
+export type RadioGroupProps = HonorableProps<Omit<FlexProps, 'onChange'> & RadioGroupBaseProps>
 
 export const radioGroupPropTypes = {
   value: PropTypes.any,

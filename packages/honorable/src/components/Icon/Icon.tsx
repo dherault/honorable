@@ -1,12 +1,14 @@
 import { Ref, forwardRef } from 'react'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import { Span, SpanProps } from '../tags'
 
 export type IconBaseProps = unknown
 
-export type IconProps = SpanProps & IconBaseProps
+export type IconProps = HonorableProps<SpanProps & IconBaseProps>
 
 export const iconPropTypes = {}
 

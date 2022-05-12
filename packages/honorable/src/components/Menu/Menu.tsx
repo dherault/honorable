@@ -2,6 +2,8 @@ import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, u
 import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../../contexts/MenuContext'
@@ -21,7 +23,7 @@ export type MenuBaseProps = {
   transtionDuration?: number
 }
 
-export type MenuProps = DivProps & MenuBaseProps
+export type MenuProps = HonorableProps<DivProps & MenuBaseProps>
 
 export const menuPropTypes = {
   menuState: PropTypes.object,

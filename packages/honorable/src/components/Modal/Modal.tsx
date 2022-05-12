@@ -2,6 +2,8 @@ import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, u
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -19,7 +21,7 @@ export type ModalBaseProps = {
   disableEscapeKey?: boolean
 }
 
-export type ModalProps = DivProps & ModalBaseProps
+export type ModalProps = HonorableProps<DivProps & ModalBaseProps>
 
 export const modalPropTypes = {
   open: PropTypes.bool,

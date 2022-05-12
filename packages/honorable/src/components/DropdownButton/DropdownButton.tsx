@@ -1,6 +1,8 @@
 import { KeyboardEvent, MouseEvent, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import { MenuStateType } from '../../contexts/MenuContext'
@@ -49,7 +51,7 @@ export type DropdownButtonBaseProps = {
   onOpen?: (open: boolean) => void
 }
 
-export type DropdownButtonProps = Omit<DivProps & ButtonProps, 'onChange'> & DropdownButtonBaseProps
+export type DropdownButtonProps = HonorableProps<Omit<DivProps & ButtonProps, 'onChange'> & DropdownButtonBaseProps>
 
 export const dropdownButtonPropTypes = {
   ...buttonPropTypes,

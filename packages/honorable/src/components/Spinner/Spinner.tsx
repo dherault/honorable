@@ -1,6 +1,8 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
+import { HonorableProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import { Span, SpanProps } from '../tags'
@@ -16,7 +18,7 @@ export type SpinnerBaseProps = {
   color?: string
 }
 
-export type SpinnerProps = SpanProps & SpinnerBaseProps
+export type SpinnerProps = HonorableProps<SpanProps & SpinnerBaseProps>
 
 export const spinnerPropTypes = {
   size: PropTypes.number,
