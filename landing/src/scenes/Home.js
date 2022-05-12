@@ -206,19 +206,23 @@ function HeroSection() {
           Create your own theme conventions,<br />and be the master of your components.
         </P>
         <Div
+          mt={2}
           xflex="x4s"
           display-tablet-down="block"
-          mt={2}
         >
-          <A
+          <Button
+            as={A}
+            size="large"
             href="https://docs.honorable.design/quick-start"
             target="_blank"
             rel="noreferer noopener"
+            textDecoration="none"
+            _hover={{
+              textDecoration: 'none',
+            }}
           >
-            <Button size="large">
-              Get Started
-            </Button>
-          </A>
+            Get Started
+          </Button>
           <CommandLinePre
             ml={2}
             ml-tablet-down={0}

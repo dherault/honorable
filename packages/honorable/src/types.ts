@@ -1,19 +1,17 @@
 import '@emotion/react'
 import React, { Dispatch, PropsWithRef, Ref, SetStateAction } from 'react'
 
-import stylesProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
+import stylesProperties from './data/stylesProperties'
+import propToPseudoSelectors from './data/propToPseudoSelectors'
 
 // TODO v1 use CSSProperties from react
 
-export type HonorableCommonProps = {
-  __honorableOrigin?: string
-  __honorableOriginProps?: object
-  __honorableOverridenProps?: object
-  __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
-}
+/*
+  COMPONENTS
+*/
 
-export type ElementProps<Tag> = HonorableCommonProps & PropsWithRef<
+export type ElementProps<Tag> = PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
@@ -27,9 +25,8 @@ export type CssProps = {
   css?: any
 }
 
-export type StylesProperties = typeof stylesProperties[number]
-export type StylesProps = AnyProps & CssProps & {
-  [stylesKey in StylesProperties]?: any
+export type PseudoSelectorProps = {
+  [key in keyof typeof propToPseudoSelectors]?: object
 }
 
 export type MpProperties = typeof mpProperties[number]
@@ -37,17 +34,29 @@ export type MpProps = {
   [mpKey in MpProperties]?: number | string | 'auto'
 }
 
-export type XflexProps = {
-  xflex?: string
+export type StylesProperties = typeof stylesProperties[number]
+export type StylesProps = AnyProps & CssProps & PseudoSelectorProps & MpProps & {
+  [stylesKey in StylesProperties]?: any
 }
 
-export type HonorableProps<P> = P & StylesProps & MpProps & XflexProps
+export type HonorableCommonProps = {
+  __honorableOrigin?: string
+  __honorableOriginProps?: object
+  __honorableOverridenProps?: object
+  __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
+}
 
 export type StyledHonorableProps = HonorableCommonProps & {
   ref: Ref<any>
   theme: HonorableTheme
   honorable: StylesProps
 }
+
+export type HonorableProps<P> = P & StylesProps
+
+/*
+  THEME
+*/
 
 export type Mode = 'light' | 'dark' | string
 

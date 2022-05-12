@@ -10,8 +10,9 @@ import {
   StylesProps,
 } from './types'
 
-import styleProperties from './data/stylesProperties'
 import mpProperties from './data/mpProperties'
+import styleProperties from './data/stylesProperties'
+import propToPseudoSelectors from './data/propToPseudoSelectors'
 
 import useTheme from './hooks/useTheme'
 
@@ -25,6 +26,7 @@ const allStyleProperties = [
   ...styleProperties,
 ]
 const suffixedAllStyleProperties = allStyleProperties.map(x => `${x}-`)
+const pseudoSelectorPropKeys = Object.keys(propToPseudoSelectors)
 
 // React HOC to support style props
 function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) {
@@ -59,6 +61,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
             || aliases.includes(key)
             || suffixedAliases.some(x => key.startsWith(x))
             || isSelector(key)
+            || pseudoSelectorPropKeys.includes(key)
           )
           && !propTypeKeys.includes(key)
         ) {
