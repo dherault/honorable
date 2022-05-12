@@ -1,5 +1,5 @@
 // Inspired from https://mui.com/material-ui/api/slider/
-import { ReactNode, Ref, SyntheticEvent, forwardRef, useEffect, useRef, useState } from 'react'
+import { ReactNode, Ref, SyntheticEvent, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import withHonorable from '../../withHonorable'
@@ -36,6 +36,10 @@ export type SliderBaseProps = {
 
 export type SliderProps = DivProps & SliderBaseProps
 
+type SliderKnobProps = DivProps & {
+  position: string
+}
+
 export const SliderPropTypes = {
   defaultValue: PropTypes.number,
   disabled: PropTypes.bool,
@@ -56,16 +60,55 @@ export const SliderPropTypes = {
 // TODO v1 loading
 function SliderRef(props: SliderProps, ref: Ref<any>) {
   const {
+    defaultValue,
+    disabled,
+    swapDisabled,
+    marks,
+    max = 1,
+    min = 0,
+    step,
+    onChange,
+    onChangeCommited,
+    orientation = 'horizontal',
+    value,
     ...otherProps
   } = props
   const theme = useTheme()
+  const [uncontrolledValues, setUncontrolledValues] = useState<number[]>(Array.isArray(defaultValue) ? defaultValue : [defaultValue])
+  const actualValues = (value ? Array.isArray(value) ? value : [value] : null) ?? uncontrolledValues
+
+  const valueToPosition = useCallback((value: number) => `${(value - min) / (max - min) * 100}%`, [min, max])
+  const positionToValue = useCallback((position: string) => {
+    if (position.endsWith('%')) position = position.slice(0, -1)
+
+    return parseFloat(position) * (max - min) / 100 + min
+  }, [min, max])
 
   return (
     <Div
       ref={ref}
+      position="relative"
+      minHeight={8}
+      minWidth={256}
       {...otherProps}
     >
-      foo
+      <Div
+        height={8}
+        backgroundColor="black"
+      />
+      {actualValues.map((value, i) => (
+        <Div
+          key={i}
+          width={16}
+          height={16}
+          backgroundColor="blue"
+          position="absolute"
+          borderRadius="50%"
+          top="-50%"
+          left={`calc(${valueToPosition(value)} - 8px)`}
+          {...props}
+        />
+      ))}
     </Div>
   )
 }

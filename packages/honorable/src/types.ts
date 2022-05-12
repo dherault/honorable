@@ -11,7 +11,14 @@ import propToPseudoSelectors from './data/propToPseudoSelectors'
   COMPONENTS
 */
 
-export type ElementProps<Tag> = PropsWithRef<
+export type HonorableCommonProps = {
+  __honorableOrigin?: string
+  __honorableOriginProps?: object
+  __honorableOverridenProps?: object
+  __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
+}
+
+export type ElementProps<Tag> = HonorableCommonProps & PropsWithRef<
   Tag extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[Tag]
   : never
@@ -37,13 +44,6 @@ export type MpProps = {
 export type StylesProperties = typeof stylesProperties[number]
 export type StylesProps = AnyProps & CssProps & PseudoSelectorProps & MpProps & {
   [stylesKey in StylesProperties]?: any
-}
-
-export type HonorableCommonProps = {
-  __honorableOrigin?: string
-  __honorableOriginProps?: object
-  __honorableOverridenProps?: object
-  __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
 
 export type StyledHonorableProps = HonorableCommonProps & {
