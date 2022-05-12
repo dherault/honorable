@@ -36,6 +36,12 @@ function Template2(args: any) {
   )
 }
 
+function Template3(args: any) {
+  return (
+    <Slider {...args} />
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
   initialValue: 0,
@@ -49,13 +55,13 @@ Step.args = {
 
 export const Min = Template.bind({})
 Min.args = {
-  initialValue: 0,
+  initialValue: 0.6,
   min: 0.5,
 }
 
 export const Max = Template.bind({})
 Max.args = {
-  initialValue: 0,
+  initialValue: 0.1,
   max: 0.75,
 }
 
@@ -102,6 +108,12 @@ Multiple2.args = {
   initialValues: [0, 0.5],
 }
 
+export const Multiple2NoSwap = Template2.bind({})
+Multiple2NoSwap.args = {
+  initialValues: [0, 0.5],
+  noSwap: true,
+}
+
 export const Multiple2MinMaxStep = Template2.bind({})
 Multiple2MinMaxStep.args = {
   initialValues: [100, 150],
@@ -136,8 +148,30 @@ Multiple4MinMaxStep.args = {
   step: 10,
 }
 
+export const Multiple4MinMaxStepNoSwap = Template2.bind({})
+Multiple4MinMaxStepNoSwap.args = {
+  initialValues: [100, 150, 175, 185],
+  min: 100,
+  max: 200,
+  step: 10,
+  noSwap: true,
+}
+
+export const Uncontrolled = Template3.bind({})
+Uncontrolled.args = {
+}
+
+export const UncontrolledDefaultValue = Template3.bind({})
+Uncontrolled.args = {
+  defaultValue: 0.5,
+}
+
+export const UncontrolledDefaultValues = Template3.bind({})
+Uncontrolled.args = {
+  defaultValue: [0.25, 0.75],
+}
+
 export const Disabled = Template.bind({})
 Disabled.args = {
-  label: 'Slider',
-  min: 0.5,
+  disabled: true,
 }

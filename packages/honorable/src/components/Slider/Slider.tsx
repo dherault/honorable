@@ -1,5 +1,5 @@
 // Inspired from https://mui.com/material-ui/api/slider/
-import { ReactNode, Ref, SyntheticEvent, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { MouseEvent as ReactMouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { HonorableProps } from '../../types'
@@ -21,31 +21,26 @@ export type SliderMarkType = {
 export type SliderValueType = number | number[]
 
 export type SliderBaseProps = {
-  defaultValue?: number
-  disabled?: boolean
-  swapDisabled?: boolean
+  value?: SliderValueType
+  defaultValue?: SliderValueType
   marks?: SliderMarkType[]
   max?: number
   min?: number
   step?: number
-  onChange?: (event: SyntheticEvent, value: number, activeThumb: number) => void
-  onChangeCommited?: (event: SyntheticEvent, value: number, activeThumb: number) => void
+  noSwap?: boolean
   orientation?: 'horizontal' | 'vertical'
-  value?: SliderValueType
+  onChange?: (event: MouseEvent, value: number, knobIndex: number) => void
+  onChangeCommited?: (event: MouseEvent, value: number, knobIndex: number) => void
+  disabled?: boolean
   // valueLabelDisplay
   // valueLabelFormat
 }
 
 export type SliderProps = HonorableProps<DivProps & SliderBaseProps>
 
-type SliderKnobProps = DivProps & {
-  position: string
-}
-
 export const SliderPropTypes = {
   defaultValue: PropTypes.number,
   disabled: PropTypes.bool,
-  swapDisabled: PropTypes.bool,
   marks: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.node,
     value: PropTypes.number.isRequired,
@@ -57,14 +52,14 @@ export const SliderPropTypes = {
   onChangeCommited: PropTypes.func,
   orientation: PropTypes.oneOf(['horizontal', 'vertical']),
   value: PropTypes.number,
+  noSwap: PropTypes.bool,
 }
 
 // TODO v1 loading
 function SliderRef(props: SliderProps, ref: Ref<any>) {
   const {
-    defaultValue,
+    defaultValue = 0,
     disabled,
-    swapDisabled,
     marks,
     max = 1,
     min = 0,
@@ -72,23 +67,75 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
     onChange,
     onChangeCommited,
     orientation = 'horizontal',
+    noSwap = false,
     value,
     ...otherProps
   } = props
   const theme = useTheme()
+  const sliderRef = useRef<HTMLDivElement>()
+  const forkedRef = useForkedRef(ref, sliderRef)
+  const [currentKnobIndex, setCurrentKnobIndex] = useState(-1)
+  const [currentKnobValues, setCurrentKnobValues] = useState([0, 0, 0])
+  const [currentClientX, setCurrenClientX] = useState(0)
   const [uncontrolledValues, setUncontrolledValues] = useState<number[]>(Array.isArray(defaultValue) ? defaultValue : [defaultValue])
-  const actualValues = (value ? Array.isArray(value) ? value : [value] : null) ?? uncontrolledValues
+  const actualValues = useMemo(() => (value ? Array.isArray(value) ? value : [value] : null) ?? uncontrolledValues, [value, uncontrolledValues])
 
   const valueToPosition = useCallback((value: number) => `${(value - min) / (max - min) * 100}%`, [min, max])
-  const positionToValue = useCallback((position: string) => {
-    if (position.endsWith('%')) position = position.slice(0, -1)
 
-    return parseFloat(position) * (max - min) / 100 + min
-  }, [min, max])
+  const handleChange = useCallback((event: MouseEvent, value: number, knobIndex: number,) => {
+    setUncontrolledValues(values => {
+      const nextValues = [...values]
+
+      nextValues[knobIndex] = value
+
+      return nextValues
+    })
+
+    if (typeof onChange === 'function') onChange(event, value, knobIndex)
+  }, [onChange])
+
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    if (currentKnobIndex === -1) return
+
+    const delta = event.clientX - currentClientX
+    const { width } = sliderRef.current.getBoundingClientRect()
+
+    let nextValue = Math.max(min, Math.min(max, currentKnobValues[1] + delta / width * (max - min)))
+
+    if (typeof step === 'number' && step > 0) {
+      nextValue = Math.round(nextValue / step) * step
+    }
+
+    if (noSwap) {
+      nextValue = Math.max(currentKnobValues[0], Math.min(currentKnobValues[2], nextValue))
+    }
+
+    handleChange(event, nextValue, currentKnobIndex)
+  }, [currentKnobIndex, currentKnobValues, currentClientX, min, max, step, handleChange, noSwap])
+
+  function handleMouseUp() {
+    setCurrentKnobIndex(-1)
+  }
+
+  function handleKnobMouseDown(event: ReactMouseEvent<HTMLDivElement>, index: number) {
+    setCurrentKnobIndex(index)
+    setCurrentKnobValues([actualValues[index - 1] || min, actualValues[index], actualValues[index + 1] || max])
+    setCurrenClientX(event.clientX)
+  }
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [handleMouseMove])
 
   return (
     <Div
-      ref={ref}
+      ref={forkedRef}
       position="relative"
       minHeight={8}
       minWidth={256}
@@ -104,10 +151,12 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
           width={16}
           height={16}
           backgroundColor="blue"
+          userSelect="none"
           position="absolute"
           borderRadius="50%"
           top="-50%"
           left={`calc(${valueToPosition(value)} - 8px)`}
+          onMouseDown={event => handleKnobMouseDown(event, i)}
           {...props}
         />
       ))}
