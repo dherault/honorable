@@ -46,7 +46,6 @@ export const buttonPropTypes = {
   disabled: PropTypes.bool,
 }
 
-// TODO v1 loading
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const {
     startIcon,

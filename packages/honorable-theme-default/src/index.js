@@ -569,6 +569,29 @@ export default {
       },
     ],
   },
+  Slider: {
+    Root: [
+      ({ disabled }) => disabled && {
+        cursor: 'not-allowed',
+      },
+    ],
+    Track: [
+      {
+        backgroundColor: 'darken(background-light, 15)',
+        borderRadius: 4,
+      },
+    ],
+    Knob: [
+      {
+        backgroundColor: 'primary',
+      },
+    ],
+    Mark: [
+      {
+        color: 'text-light',
+      },
+    ],
+  },
   Spinner: {
     Root: [
       ({ size = 24, color = 'primary' }) => ({

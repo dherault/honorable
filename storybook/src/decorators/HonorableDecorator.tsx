@@ -61,6 +61,7 @@ function HonorableDecorator(Story: StoryType, { title }: StoryContext) {
         <Flex
           direction="column"
           align="center"
+          pt={2}
         >
           <Story />
         </Flex>

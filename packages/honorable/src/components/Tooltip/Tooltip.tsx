@@ -1,6 +1,6 @@
 // Inspired from https://mui.com/material-ui/api/Tooltip/
 import { Children, ReactElement, ReactNode, Ref, cloneElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
-import { arrow as arrowMiddleware, offset, shift, useFloating } from '@floating-ui/react-dom'
+import { arrow as arrowMiddleware, autoUpdate, offset, shift, useFloating } from '@floating-ui/react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
@@ -51,7 +51,7 @@ export type TooltipBaseProps = {
    */
   leaveDelay?: number
   /**
-   * Weither the tooltipshould follow the cursor or not
+   * Weither the Tooltip should follow the cursor or not
    */
   followCursor?: boolean
   /**
@@ -147,7 +147,11 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
         y: arrowY,
       } = {},
     },
-  } = useFloating({ placement, middleware })
+  } = useFloating({
+    placement,
+    middleware,
+    whileElementsMounted: autoUpdate,
+  })
   const forkedChildRef = useForkedRef(childRef, reference)
   const forkedTooltipRef = useForkedRef(ref, floating)
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
