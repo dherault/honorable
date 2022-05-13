@@ -15,7 +15,7 @@ Honorable offers a **non-opinionated API** yet extensible with **your own conven
 // Import any HTML tag, capitalized
 import { Div } from 'honorable'
 
-function App() {
+function Component() {
   // Apply styles directly to the component
   // Nothing to remember, appart from good old CSS
   return (

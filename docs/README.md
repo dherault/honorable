@@ -11,15 +11,15 @@ Honorable offers a **non-opinionated API** yet extensible with **your own conven
 // Import any HTML tag, capitalized
 import { Div } from 'honorable'
 
-function App() {
+function Component() {
   // Apply styles directly to the component
   // Nothing to remember, appart from good old CSS
   return (
-    <Div 
+    <Div
       width="2rem"
       height="2rem"
       backgroundColor="success"
-    />   
+    />
   )
 }
 ```
@@ -29,10 +29,10 @@ The point is to create a front-end library that fits to your coding style by ext
 ```jsx
 // You can declare your own conventions to create your own style:
 return (
-  <Div 
+  <Div
     size="2rem"
     bg="success"
-  />   
+  />
 )
 ```
 
