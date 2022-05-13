@@ -216,6 +216,7 @@ export type HonorableTheme = {
   Box?: ComponentProps
   Button?: ComponentProps
   ButtonGroup?: ComponentProps
+  Card?: ComponentProps
   Caret?: ComponentProps
   Checkbox?: ComponentProps
   DropdownButton?: ComponentProps

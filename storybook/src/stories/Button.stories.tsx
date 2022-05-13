@@ -1,5 +1,6 @@
 // Icons from https://icons.modulz.app/
-import React, { Button } from 'honorable'
+import React from 'react'
+import { Button } from 'honorable'
 
 export default {
   title: 'Button',

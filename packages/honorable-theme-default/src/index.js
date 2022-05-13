@@ -37,7 +37,7 @@ export default {
     },
     shadow: {
       light: 'rgba(0, 0, 0, 0.2)',
-      dark: 'rgba(64, 64, 64, 0.2)',
+      dark: 'rgba(96, 96, 96, 0.5)',
     },
     success: '#64db5c',
     error: '#ff4d4d',
@@ -206,6 +206,14 @@ export default {
           },
         },
       },
+    ],
+  },
+  Card: {
+    Root: [
+      (_props, theme) => ({
+        elevation: 1,
+        backgroundColor: theme.mode === 'light' ? 'background' : 'background-light',
+      }),
     ],
   },
   Checkbox: {
