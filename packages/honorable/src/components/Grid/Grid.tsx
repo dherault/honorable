@@ -44,7 +44,7 @@ function GridRef(props: GridProps, ref: Ref<any>) {
     item,
     zeroMinWidth,
     ...otherProps
-  } = usePropsWithBreakpoints(props)
+  } = usePropsWithBreakpoints(props) as GridProps
 
   return (
     <Flex
