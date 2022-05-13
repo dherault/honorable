@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Div Renders as a <div /> 1`] = `
+<div
+  className="emotion-0"
+>
+  Honorable
+</div>
+`;
+
+exports[`Div Renders as a <div /> with styles 1`] = `
+.emotion-0 {
+  color: blue;
+}
+
+<div
+  className="emotion-0"
+>
+  Honorable
+</div>
+`;
+
+exports[`Div Renders as a <div /> with styles on breakpoints 1`] = `
+@media (min-width: 0px) and (max-width: 600px) {
+  .emotion-0 {
+    color: blue;
+  }
+}
+
+<div
+  className="emotion-0"
+>
+  Honorable
+</div>
+`;
+
+exports[`Div Renders as a <div /> with styles on theme colors 1`] = `
+.emotion-0 {
+  color: #0000ff;
+}
+
+<div
+  className="emotion-0"
+>
+  Honorable
+</div>
+`;

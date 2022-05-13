@@ -1,6 +1,6 @@
 import resolveBreakpoints from '../../src/resolvers/resolveBreakpoints'
 
-import { theme } from '../theme'
+import theme from '../themes/theme1'
 
 describe('resolveBreakpoints', () => {
 

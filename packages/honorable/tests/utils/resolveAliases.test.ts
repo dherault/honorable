@@ -1,6 +1,6 @@
 import resolveAliases from '../../src/resolvers/resolveAliases'
 
-import { theme } from '../theme'
+import theme from '../themes/theme1'
 
 describe('resolveAliases', () => {
 

@@ -1,6 +1,6 @@
 import resolveAll from '../../src/resolvers/resolveAll'
 
-import { theme } from '../theme'
+import theme from '../themes/theme1'
 
 describe('resolveAll', () => {
 

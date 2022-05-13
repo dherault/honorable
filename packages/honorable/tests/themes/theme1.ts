@@ -1,6 +1,4 @@
-import { HonorableTheme } from '../src/types'
-
-export const theme: HonorableTheme = {
+export default {
   name: 'Test',
   mode: 'light',
   breakpoints: {

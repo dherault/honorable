@@ -1,6 +1,6 @@
 import resolveColor from '../../src/resolvers/resolveColor'
 
-import { theme } from '../theme'
+import theme from '../themes/theme1'
 
 describe('Color resolution', () => {
 

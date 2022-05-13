@@ -1,6 +1,6 @@
 import createMediaQuery from '../../src/utils/createMediaQuery'
 
-import { theme } from '../theme'
+import theme from '../themes/theme1'
 
 describe('createMediaQuery', () => {
 
