@@ -42,6 +42,10 @@ export default {
     success: '#64db5c',
     error: '#ff4d4d',
     warning: '#ff7900',
+    skeleton: {
+      light: '#00000015',
+      dark: 'lighten(background-light, 15)',
+    },
   },
   html: [
     {
@@ -597,6 +601,25 @@ export default {
     Mark: [
       {
         color: 'text-light',
+      },
+    ],
+  },
+  Skeleton: {
+    Root: [
+      {
+        overflow: 'hidden',
+      },
+      ({ variant }) => variant === 'line' && {
+        borderRadius: 4,
+        height: '1.666ex',
+      },
+      ({ variant }) => variant === 'circular' && {
+        borderRadius: '50%',
+      },
+    ],
+    Inner: [
+      {
+        backgroundColor: 'skeleton',
       },
     ],
   },

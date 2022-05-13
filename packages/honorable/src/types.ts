@@ -230,6 +230,7 @@ export type HonorableTheme = {
   ProgressBar?: ComponentProps
   Radio?: ComponentProps
   Select?: ComponentProps
+  Skeleton?: ComponentProps
   Slider?: ComponentProps
   Spinner?: ComponentProps
   Switch?: ComponentProps

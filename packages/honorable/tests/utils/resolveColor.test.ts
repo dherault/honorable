@@ -156,6 +156,7 @@ describe('transparencify', () => {
   test('it returns a resolved transparencified color with rgba syntax', () => {
     expect(resolveColor('transparency(rgba(0, 0, 0, 0), 10)', theme)).toBe('#000000e6')
     expect(resolveColor('transparency(rgba(0, 0, 0, 128), 10)', theme)).toBe('#00000066')
+    expect(resolveColor('transparency(rgba(0, 0, 0, 128), 75)', theme)).toBe('#00000000')
   })
 
 })
