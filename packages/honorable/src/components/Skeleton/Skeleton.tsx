@@ -61,8 +61,6 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
 
   let styles = {}
 
-  console.log('animation', animation)
-
   if (animation === 'wave') {
     styles = {
       /* Fix bug in Safari https://bugs.webkit.org/show_bug.cgi?id=68196 */
