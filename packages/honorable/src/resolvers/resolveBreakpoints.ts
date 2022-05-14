@@ -24,7 +24,7 @@ function resolveBreakpoints(props: object, theme: HonorableTheme): object {
         return {
           ...accumulator,
           [`@media ${query}`]: {
-            ...accumulator[query],
+            ...accumulator[`@media ${query}`],
             [key.slice(0, -breakpoint.length)]: value,
           },
         }

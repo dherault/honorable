@@ -44,6 +44,15 @@ describe('resolveBreakpoints', () => {
     })
   })
 
+  test('Resolves to media queries with multiple props', () => {
+    expect(resolveBreakpoints({ 'width-mobile': 128, 'height-mobile': 128 }, theme)).toStrictEqual({
+      '@media (min-width: 600px) and (max-width: 899px)': {
+        width: 128,
+        height: 128,
+      },
+    })
+  })
+
   const theme1 = {
     breakpoints: {
       'tablet-foo': 600,
