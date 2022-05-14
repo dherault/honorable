@@ -5,16 +5,14 @@ import { HonorableProps } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
-import usePropsWithBreakpoints from '../../hooks/usePropsWithBreakpoints'
-
 import { Flex, FlexBaseProps, FlexPropTypes, FlexProps } from '../Flex/Flex'
-import { Div, DivProps } from '../tags'
+import { Div } from '../tags'
 
 export type GridBaseProps = {
-  columns?: number
-  spacing?: number | string
-  rowSpacing?: number | string
-  columnSpacing?: number | string
+  columns?: number & { [breakpointName: string]: number }
+  spacing?: number | string | { [breakpointName: string]: number | string }
+  rowSpacing?: number | string | { [breakpointName: string]: number | string }
+  columnSpacing?: number | string | { [breakpointName: string]: number | string }
   container?: boolean
   item?: boolean
   zeroMinWidth?: boolean
@@ -23,12 +21,11 @@ export type GridBaseProps = {
 export type GridProps = HonorableProps<FlexProps & GridBaseProps>
 
 export const GridPropTypes = {
-  // __honorableUseBreakpoints: true,
   ...FlexPropTypes,
-  columns: PropTypes.number,
-  spacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  rowSpacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  columnSpacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  columns: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+  spacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
+  rowSpacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
+  columnSpacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
   container: PropTypes.bool,
   item: PropTypes.bool,
   zeroMinWidth: PropTypes.bool,
@@ -44,7 +41,7 @@ function GridRef(props: GridProps, ref: Ref<any>) {
     item,
     zeroMinWidth,
     ...otherProps
-  } = usePropsWithBreakpoints(props) as GridProps
+  } = props
 
   return (
     <Flex
@@ -60,6 +57,7 @@ GridRef.displayName = 'Grid'
 
 const ForwardedGrid = forwardRef(GridRef)
 
+// @ts-ignore
 ForwardedGrid.propTypes = GridPropTypes
 
 export const Grid = withHonorable<GridProps>(ForwardedGrid, 'Grid')
