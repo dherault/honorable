@@ -4,22 +4,39 @@ import theme from '../themes/theme1'
 
 describe('createMediaQuery', () => {
 
-  test('Creates simple media queries', () => {
-    expect(createMediaQuery('mobile', 'up', theme)).toBe('@media (min-width: 0px)')
-    expect(createMediaQuery('tablet', 'up', theme)).toBe('@media (min-width: 600px)')
-    expect(createMediaQuery('desktop', 'up', theme)).toBe('@media (min-width: 1000px)')
-    expect(createMediaQuery('mobile', 'down', theme)).toBe('@media (max-width: 0px)')
-    expect(createMediaQuery('tablet', 'down', theme)).toBe('@media (max-width: 600px)')
-    expect(createMediaQuery('desktop', 'down', theme)).toBe('@media (max-width: 1000px)')
-    expect(createMediaQuery('mobile', 'exact', theme)).toBe('@media (min-width: 0px) and (max-width: 600px)')
-    expect(createMediaQuery('tablet', 'exact', theme)).toBe('@media (min-width: 600px) and (max-width: 1000px)')
-    expect(createMediaQuery('desktop', 'exact', theme)).toBe('@media (min-width: 1000px)')
+  test('Creates `up` media queries', () => {
+    expect(createMediaQuery(theme, 'up', 'mobile')).toBe('(min-width: 600px)')
+    expect(createMediaQuery(theme, 'up', 'tablet')).toBe('(min-width: 900px)')
+    expect(createMediaQuery(theme, 'up', 'desktop')).toBe('(min-width: 1200px)')
+  })
+
+  test('Creates `down` media queries', () => {
+    expect(createMediaQuery(theme, 'down', 'mobile')).toBe('(max-width: 599px)')
+    expect(createMediaQuery(theme, 'down', 'tablet')).toBe('(max-width: 899px)')
+    expect(createMediaQuery(theme, 'down', 'desktop')).toBe('(max-width: 1199px)')
+  })
+
+  test('Creates `between` media queries', () => {
+    expect(createMediaQuery(theme, 'between', 'mobile', 'desktop')).toBe('(min-width: 600px) and (max-width: 1199px)')
+    expect(createMediaQuery(theme, 'between', 'tablet')).toBe('(min-width: 900px) and (max-width: 1199px)')
+    expect(createMediaQuery(theme, 'between', 'desktop')).toBe('(min-width: 1200px)')
+  })
+
+  test('Creates `only` media queries', () => {
+    expect(createMediaQuery(theme, 'only', 'mobile')).toBe('(min-width: 600px) and (max-width: 899px)')
+    expect(createMediaQuery(theme, 'only', 'tablet')).toBe('(min-width: 900px) and (max-width: 1199px)')
+    expect(createMediaQuery(theme, 'only', 'desktop')).toBe('(min-width: 1200px)')
+  })
+
+  test('Creates `not` media queries', () => {
+    expect(createMediaQuery(theme, 'not', 'mobile')).toBe('not (min-width: 600px) and (max-width: 899px)')
+    expect(createMediaQuery(theme, 'not', 'tablet')).toBe('not (min-width: 900px) and (max-width: 1199px)')
+    expect(createMediaQuery(theme, 'not', 'desktop')).toBe('not (min-width: 1200px)')
   })
 
   test('Returns null on error', () => {
-    expect(createMediaQuery('foo', 'up', theme)).toBe(null)
-    // @ts-expect-error
-    expect(createMediaQuery('mobile', 'foo', theme)).toBe(null)
+    expect(createMediaQuery(theme, 'up', 'foo')).toBe(null)
+    expect(createMediaQuery(theme, 'foo', 'mobile')).toBe('foo')
   })
 
 })

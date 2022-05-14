@@ -16,8 +16,8 @@ describe('resolveAll', () => {
         w: 128,
         bg: 'primary',
         '&:hover': {
-          'w-mobile': 64,
-          'bg-tablet-up': 'secondary',
+          'w-mobile-down': 64,
+          'bg-tablet': 'secondary',
           webkitOpacity: 0.5,
         },
         '& > div': {
@@ -30,10 +30,10 @@ describe('resolveAll', () => {
         width: 128,
         backgroundColor: '#0000ff',
         '&:hover': {
-          '@media (min-width: 0px) and (max-width: 600px)': {
+          '@media (max-width: 599px)': {
             width: 64,
           },
-          '@media (min-width: 600px)': {
+          '@media (min-width: 900px) and (max-width: 1199px)': {
             backgroundColor: '#ff0000',
           },
           WebkitOpacity: 0.5,

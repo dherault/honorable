@@ -40,7 +40,7 @@ describe('Div', () => {
 
     expect(tree).toMatchSnapshot()
     expect(tree).toHaveStyleRule('color', 'blue', {
-      media: '(min-width: 0px) and (max-width: 600px)',
+      media: '(min-width: 600px) and (max-width: 899px)',
     })
   })
 

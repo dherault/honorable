@@ -15,15 +15,15 @@ function resolveBreakpoints(props: object, theme: HonorableTheme): object {
       if (breakpoint) {
         const suffixArray = breakpoint.split('-')
         suffixArray.shift()
-        const suffix = suffixArray[suffixArray.length - 1] === 'up' || suffixArray[suffixArray.length - 1] === 'down' ? (suffixArray.pop() as 'up' | 'down') : 'exact'
+        const suffix = suffixArray[suffixArray.length - 1] === 'up' || suffixArray[suffixArray.length - 1] === 'down' ? (suffixArray.pop() as 'up' | 'down') : 'between'
         const breakpointName = suffixArray.join('-')
-        const query = createMediaQuery(breakpointName, suffix, theme)
+        const query = createMediaQuery(theme, suffix, breakpointName)
 
         if (!query) return accumulator
 
         return {
           ...accumulator,
-          [query]: {
+          [`@media ${query}`]: {
             ...accumulator[query],
             [key.slice(0, -breakpoint.length)]: value,
           },

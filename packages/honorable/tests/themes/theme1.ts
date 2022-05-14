@@ -2,9 +2,9 @@ export default {
   name: 'Test',
   mode: 'light',
   breakpoints: {
-    mobile: 0,
-    tablet: 600,
-    desktop: 1000,
+    mobile: 600,
+    tablet: 900,
+    desktop: 1200,
   },
   aliases: {
     w: 'width',
