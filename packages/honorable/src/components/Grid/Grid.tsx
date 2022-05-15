@@ -5,11 +5,13 @@ import { HonorableProps } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
+import usePropsWithBreakpoints from '../../hooks/usePropWithBreakpoints'
+
 import { Flex, FlexBaseProps, FlexPropTypes, FlexProps } from '../Flex/Flex'
 import { Div } from '../tags'
 
 export type GridBaseProps = {
-  columns?: number & { [breakpointName: string]: number }
+  columns?: number | { [breakpointName: string]: number }
   spacing?: number | string | { [breakpointName: string]: number | string }
   rowSpacing?: number | string | { [breakpointName: string]: number | string }
   columnSpacing?: number | string | { [breakpointName: string]: number | string }
@@ -42,6 +44,8 @@ function GridRef(props: GridProps, ref: Ref<any>) {
     zeroMinWidth,
     ...otherProps
   } = props
+
+  const actualColumns = usePropsWithBreakpoints(columns)
 
   return (
     <Flex

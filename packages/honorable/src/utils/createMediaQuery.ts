@@ -31,7 +31,7 @@ function createBetweenMediaQuery(
 
 function createMediaQuery(
   theme: HonorableTheme,
-  upOrDownOrBetweenOrQuery: 'up' | 'down' | 'between' | 'only' | 'not' | string,
+  upOrDownOrBetweenOrOnlyOrNotOrQuery: 'up' | 'down' | 'between' | 'only' | 'not' | string,
   breakpoint1?: string | number,
   breakpoint2?: string | number,
 ) {
@@ -40,7 +40,7 @@ function createMediaQuery(
 
   if (typeof breakpoint1Value !== 'number') return null
 
-  switch (upOrDownOrBetweenOrQuery) {
+  switch (upOrDownOrBetweenOrOnlyOrNotOrQuery) {
     case 'up': {
       return `(min-width: ${breakpoint1Value}px)`
     }
@@ -57,7 +57,7 @@ function createMediaQuery(
       return `not ${createBetweenMediaQuery(breakpoints, breakpoint1)}`
     }
     default: {
-      return upOrDownOrBetweenOrQuery
+      return upOrDownOrBetweenOrOnlyOrNotOrQuery
     }
   }
 }
