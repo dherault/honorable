@@ -1,7 +1,9 @@
-// Components
+// Special components
 export * from './components/tags'
 export * from './components/ThemeProvider/ThemeProvider'
 export * from './components/CssBaseline/CssBaseline'
+export * from './components/MomentProvider/MomentProvider'
+// Regular components
 export * from './components/Accordion/Accordion'
 export * from './components/Autocomplete/Autocomplete'
 export * from './components/Avatar/Avatar'
@@ -11,6 +13,7 @@ export * from './components/ButtonGroup/ButtonGroup'
 export * from './components/Card/Card'
 export * from './components/Caret/Caret'
 export * from './components/Checkbox/Checkbox'
+export * from './components/DatePicker/DatePicker'
 export * from './components/DropdownButton/DropdownButton'
 export * from './components/Flex/Flex'
 export * from './components/Icon/Icon'

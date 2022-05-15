@@ -219,6 +219,7 @@ export type HonorableTheme = {
   Card?: ComponentProps
   Caret?: ComponentProps
   Checkbox?: ComponentProps
+  DatePicker?: ComponentProps
   DropdownButton?: ComponentProps
   Flex?: ComponentProps
   Icon?: ComponentProps

@@ -5,7 +5,7 @@ import { HonorableProps } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
-import usePropsWithBreakpoints from '../../hooks/usePropWithBreakpoints'
+import usePropWithBreakpoints from '../../hooks/usePropWithBreakpoints'
 
 import { Flex, FlexBaseProps, FlexPropTypes, FlexProps } from '../Flex/Flex'
 import { Div } from '../tags'
@@ -45,7 +45,8 @@ function GridRef(props: GridProps, ref: Ref<any>) {
     ...otherProps
   } = props
 
-  const actualColumns = usePropsWithBreakpoints(columns)
+  const actualColumns = usePropWithBreakpoints(columns)
+  // const itemSpan = useBreakpointProps(props)
 
   return (
     <Flex
@@ -61,7 +62,7 @@ GridRef.displayName = 'Grid'
 
 const ForwardedGrid = forwardRef(GridRef)
 
-// @ts-ignore
+// @ts-expect-error
 ForwardedGrid.propTypes = GridPropTypes
 
 export const Grid = withHonorable<GridProps>(ForwardedGrid, 'Grid')
