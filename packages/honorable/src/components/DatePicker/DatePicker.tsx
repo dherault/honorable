@@ -14,6 +14,11 @@ import { Div, DivProps } from '../tags'
 import { Flex } from '../Flex/Flex'
 import { Caret } from '../Caret/Caret'
 
+type DimensionsType = {
+  width: number | 'auto'
+  height: number | 'auto'
+}
+
 export type DatePickerBaseProps = {
   onChange?: (date: string) => void
   value?: string
@@ -21,14 +26,11 @@ export type DatePickerBaseProps = {
   monthSpan?: number
   startDay?: number
   startDate?: string
+  minYear?: number
+  maxYear?: number
 }
 
 export type DatePickerProps = HonorableProps<DivProps & DatePickerBaseProps>
-
-type DimensionsType = {
-  width: number | 'auto'
-  height: number | 'auto'
-}
 
 export const DatePickerPropTypes = {
   onChange: PropTypes.func,
@@ -37,6 +39,8 @@ export const DatePickerPropTypes = {
   monthSpan: PropTypes.number,
   startDay: PropTypes.number,
   startDate: PropTypes.string,
+  minYear: PropTypes.number,
+  maxYear: PropTypes.number,
 }
 
 function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
@@ -47,6 +51,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     monthSpan = 1,
     startDay = 0,
     startDate,
+    minYear = 1900,
+    maxYear = 2099,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -58,12 +64,13 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const dtValue = DateTime.create(actualValue)
   const [actualStartDate, setActualStartDate] = useState(DateTime.startOf(startDate ? DateTime.create(startDate) : dtValue, 'month'))
   const [dimensions, setDimensions] = useState<DimensionsType>({ width: 'auto', height: 'auto' })
+  const [areYearsDisplayed, setAreYearsDisplayed] = useState(false)
 
   useEffect(() => {
     const { width, height } = datePickerRef.current.getBoundingClientRect()
 
     setDimensions({ width, height })
-  }, [])
+  }, [monthSpan])
 
   if (DateTime === null) {
     throw new Error('DatePicker: moment or luxon is not provided. Please provide moment or luxon props to DateTimeProvider as a parent.')
@@ -79,6 +86,13 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
 
   function handleStartDateChange(isLeft: boolean) {
     setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, isLeft ? -1 : 1, 'month'), 'month'))
+  }
+
+  function handleYearClick(year: number) {
+    const dt = DateTime.setYear(actualStartDate, year)
+
+    setActualStartDate(dt)
+    setAreYearsDisplayed(false)
   }
 
   function renderMonth(dt: any, i: number) {
@@ -117,21 +131,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         mr={2}
         _last={{ mr: 0 }}
       >
-        <Flex
-          align="center"
-          cursor="pointer"
-        >
-          {renderCaret(i, 'left')}
-          <Div flexGrow={1} />
-          <Div>
-            {DateTime.format(dt, 'MMMM')}
-          </Div>
-          <Div ml={0.5}>
-            {DateTime.format(dt, 'YYYY')}
-          </Div>
-          <Div flexGrow={1} />
-          {renderCaret(i, 'right')}
-        </Flex>
+        {renderMonthAndYear(dt, i)}
         <Flex
           mt={1}
           align="center"
@@ -184,6 +184,32 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     )
   }
 
+  function renderMonthAndYear(dt: any, i: number) {
+    return (
+      <Flex
+        align="center"
+        cursor="pointer"
+      >
+        {renderCaret(i, 'left')}
+        <Div flexGrow={1} />
+        <Flex
+          align="center"
+          onClick={() => setAreYearsDisplayed(x => !x)}
+        >
+          <Div>
+            {DateTime.format(dt, 'MMMM')}
+          </Div>
+          <Div ml={0.5}>
+            {DateTime.format(dt, 'YYYY')}
+          </Div>
+        </Flex>
+        <Div flexGrow={1} />
+        {renderCaret(i, 'right')}
+      </Flex>
+
+    )
+  }
+
   function renderCaret(i: number, direction: 'left' | 'right') {
     function withWrapper(isLeft: boolean, node: ReactNode) {
       return (
@@ -222,13 +248,49 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       )
     }
 
-    return <Div width={16} />
+    return (
+      <Div
+        width={24}
+        height={24}
+      />
+    )
   }
 
-  const monthNodes = []
+  function renderYears() {
+    return (
+      <Div
+        ref={ref}
+        width={dimensions.width}
+        height={dimensions.height}
+      >
+        <Flex
+          width={256}
+          height="100%"
+          direction="column"
+          align="center"
+        >
+          {renderMonthAndYear(actualStartDate, -1)}
+          <DatePickerYears
+            mt={1}
+            minYear={minYear}
+            maxYear={maxYear}
+            currentYear={DateTime.year(actualStartDate)}
+            dimensions={dimensions}
+            onYearClick={handleYearClick}
+          />
+        </Flex>
+      </Div>
+    )
+  }
 
-  for (let i = 0; i < monthSpan; i++) {
-    monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
+  function renderMonths() {
+    const monthNodes = []
+
+    for (let i = 0; i < monthSpan; i++) {
+      monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
+    }
+
+    return monthNodes
   }
 
   return (
@@ -236,9 +298,10 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       ref={forkedRef}
       display="flex"
       userSelect="none"
+      width={monthSpan * 256 + (monthSpan - 1) * 2 * 16}
       {...otherProps}
     >
-      {monthNodes}
+      {areYearsDisplayed ? renderYears() : renderMonths()}
     </Div>
   )
 }
@@ -250,3 +313,131 @@ const ForwardedDatePicker = forwardRef(DatePickerRef)
 ForwardedDatePicker.propTypes = DatePickerPropTypes
 
 export const DatePicker = withHonorable<DatePickerProps>(ForwardedDatePicker, 'DatePicker')
+
+/*
+  DatePickerYears
+*/
+
+export type DatePickerYearsBaseProps = {
+  minYear: number,
+  maxYear: number,
+  currentYear: number,
+  onYearClick: (year: number) => void,
+}
+
+export type DatePickerYearsProps = HonorableProps<DivProps & DatePickerYearsBaseProps>
+
+export const DatePickerYearsPropTypes = {
+  minYear: PropTypes.number,
+  maxYear: PropTypes.number,
+  currentYear: PropTypes.number,
+  onYearClick: PropTypes.func,
+}
+
+function DatePickerYearsRef({
+  minYear,
+  maxYear,
+  currentYear,
+  onYearClick,
+  ...props
+}: DatePickerYearsProps,
+ref: Ref<any>
+) {
+  const currentYearRef = useRef<HTMLDivElement>()
+  const yearNodes = []
+
+  for (let i = minYear; i <= maxYear; i++) {
+    yearNodes.push(
+      <DatePickerYear
+        key={i}
+        ref={i === currentYear ? currentYearRef : null}
+        year={i}
+        active={i === currentYear}
+        onClick={() => onYearClick(i)}
+        height={36}
+      />
+    )
+  }
+
+  useEffect(() => {
+    currentYearRef.current.scrollIntoView({
+      block: 'center',
+    })
+  }, [currentYear])
+
+  return (
+    <Flex
+      ref={ref}
+      height={5 * 36}
+      wrap="wrap"
+      align="flex-start"
+      justify="flex-start"
+      overflowY="auto"
+      {...props}
+    >
+      {yearNodes}
+    </Flex>
+  )
+}
+
+DatePickerYearsRef.displayName = 'DatePicker'
+
+const ForwardedDatePickerYears = forwardRef(DatePickerYearsRef)
+
+ForwardedDatePickerYears.propTypes = DatePickerYearsPropTypes
+
+export const DatePickerYears = withHonorable<DatePickerYearsProps>(ForwardedDatePickerYears, 'DatePickerYears')
+
+/*
+  DatePickerYear
+*/
+
+export type DatePickerYearBaseProps = {
+  year: number
+  active: boolean
+}
+
+export type DatePickerYearProps = HonorableProps<DivProps & DatePickerYearBaseProps>
+
+export const DatePickerYearPropTypes = {
+  dimensions: PropTypes.shape({
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  }),
+  minYear: PropTypes.number,
+  maxYear: PropTypes.number,
+  currentYear: PropTypes.number,
+}
+
+function DatePickerYearRef({
+  year,
+  active,
+  ...props
+}: DatePickerYearProps,
+ref: Ref<any>
+) {
+  return (
+    <Flex
+      ref={ref}
+      py={0.5}
+      px={1}
+      align="center"
+      justify="center"
+      border="1px solid transparent"
+      borderColor={active ? 'black' : 'transparent'}
+      width="25%"
+      _hover={{ borderColor: 'black' }}
+      {...props}
+    >
+      {year}
+    </Flex>
+  )
+}
+
+DatePickerYearRef.displayName = 'DatePicker'
+
+const ForwardedDatePickerYear = forwardRef(DatePickerYearRef)
+
+ForwardedDatePickerYear.propTypes = DatePickerYearPropTypes
+
+export const DatePickerYear = withHonorable<DatePickerYearProps>(ForwardedDatePickerYear, 'DatePickerYears')

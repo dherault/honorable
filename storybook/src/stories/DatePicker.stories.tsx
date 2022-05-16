@@ -42,14 +42,14 @@ function Template3(args: any) {
   )
 }
 
-export const Uncontrolled = Template.bind({})
-Uncontrolled.args = {
+export const UncontrolledMoment = Template.bind({})
+UncontrolledMoment.args = {
   monthSpan: 1,
   startDay: 0,
 }
 
-export const Luxon = Template2.bind({})
-Luxon.args = {
+export const UncontrolledLuxon = Template2.bind({})
+UncontrolledLuxon.args = {
   monthSpan: 1,
   startDay: 0,
 }

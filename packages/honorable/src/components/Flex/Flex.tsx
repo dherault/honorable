@@ -59,6 +59,7 @@ function FlexRef(props: FlexProps, ref: Ref<any>) {
     shrink,
     align,
     justify,
+    ...otherProps
   } = props
 
   return (
@@ -72,7 +73,7 @@ function FlexRef(props: FlexProps, ref: Ref<any>) {
       flexShrink={shrink}
       alignItems={align}
       justifyContent={justify}
-      {...props}
+      {...otherProps}
     />
   )
 }

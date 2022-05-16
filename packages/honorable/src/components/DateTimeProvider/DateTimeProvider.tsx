@@ -24,7 +24,9 @@ function wrapMoment(moment: any) {
     toISOString: (dt: any) => dt.toISOString(),
     format: (dt: any, format: string) => dt.format(format),
     weekday: (dt: any) => dt.day(),
+    year: (dt: any) => dt.year(),
     daysInMonth: (dt: any) => dt.daysInMonth(),
+    setYear: (dt: any, year: number) => moment(dt).year(year),
   }
 }
 
@@ -37,7 +39,9 @@ function wrapLuxon(luxon: any) {
     toISOString: (dt: any) => dt.toISO(),
     format: (dt: any, format: string) => dt.toFormat(format.replaceAll('Y', 'y').replaceAll('M', 'L').replaceAll('d', 'c').replaceAll('D', 'd')),
     weekday: (dt: any) => dt.weekday,
+    year: (dt: any) => dt.year,
     daysInMonth: (dt: any) => dt.daysInMonth,
+    setYear: (dt: any, year: number) => dt.set({ year }),
   }
 }
 
