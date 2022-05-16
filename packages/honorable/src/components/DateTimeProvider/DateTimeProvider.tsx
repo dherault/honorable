@@ -23,7 +23,7 @@ function wrapMoment(moment: any) {
     add: (dt: any, amount: number, unit: string) => moment(dt).add(amount, unit),
     toISOString: (dt: any) => dt.toISOString(),
     format: (dt: any, format: string) => dt.format(format),
-    day: (dt: any) => dt.day(),
+    weekday: (dt: any) => dt.day(),
     daysInMonth: (dt: any) => dt.daysInMonth(),
   }
 }
@@ -36,7 +36,7 @@ function wrapLuxon(luxon: any) {
     add: (dt: any, amount: number, unit: string) => dt.plus({ [unit]: amount }),
     toISOString: (dt: any) => dt.toISO(),
     format: (dt: any, format: string) => dt.toFormat(format.replaceAll('Y', 'y').replaceAll('M', 'L').replaceAll('d', 'c').replaceAll('D', 'd')),
-    day: (dt: any) => dt.day,
+    weekday: (dt: any) => dt.weekday,
     daysInMonth: (dt: any) => dt.daysInMonth,
   }
 }

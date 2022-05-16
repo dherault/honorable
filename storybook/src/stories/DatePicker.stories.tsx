@@ -71,3 +71,10 @@ StartDay.args = {
   monthSpan: 1,
   startDay: 1,
 }
+
+export const StartDate = Template.bind({})
+StartDate.args = {
+  monthSpan: 1,
+  startDay: 1,
+  startDate: new Date('2022-01-01').toISOString(),
+}
