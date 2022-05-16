@@ -5,7 +5,7 @@ import { HonorableProps } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
-import MomentContext from '../../contexts/MomentContext'
+import DateTimeContext from '../../contexts/DateTimeContext'
 
 import useTheme from '../../hooks/useTheme'
 
@@ -17,7 +17,7 @@ export type DatePickerBaseProps = {
   value?: string
   defaultValue?: string
   monthSpan?: number
-  startDayOfWeek?: number
+  startDay?: number
 }
 
 export type DatePickerProps = HonorableProps<DivProps & DatePickerBaseProps>
@@ -27,7 +27,7 @@ export const DatePickerPropTypes = {
   value: PropTypes.string,
   defaultValue: PropTypes.string,
   monthSpan: PropTypes.number,
-  startDayOfWeek: PropTypes.number,
+  startDay: PropTypes.number,
 }
 
 function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
@@ -36,23 +36,33 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     value,
     defaultValue,
     monthSpan = 1,
-    startDayOfWeek = 0,
+    startDay = 0,
     ...otherProps
   } = props
   const theme = useTheme()
-  const moment = useContext(MomentContext)
+  const DateTime = useContext(DateTimeContext)
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue || new Date().toISOString())
   const actualValue = value ?? uncontrolledValue
-  const [startDate, setStartDate] = useState(moment(actualValue).startOf('month'))
+  console.log('DateTime', DateTime)
+  const dtValue = DateTime.create(actualValue)
+  const [startDate, setStartDate] = useState(DateTime.startOf(dtValue, 'month'))
 
-  if (moment === null) {
-    throw new Error('DatePicker: moment is not provided. Please provide moment to DateTimePickerMomentProvider as a parent.')
+  if (DateTime === null) {
+    throw new Error('DatePicker: moment or luxon is not provided. Please provide moment or luxon props to DateTimeProvider as a parent.')
   }
 
-  function renderMonth(mx: any) {
+  function handleDayClick(dt: any) {
+    const value = DateTime.toISOString(dt)
+
+    if (typeof onChange === 'function') onChange(value)
+
+    setUncontrolledValue(value)
+  }
+
+  function renderMonth(dt: any, i: number) {
     const headerDays = []
 
-    for (let i = startDayOfWeek; i < startDayOfWeek + 7; i++) {
+    for (let i = startDay; i < startDay + 7; i++) {
       headerDays.push(
         <Flex
           key={i}
@@ -60,27 +70,29 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           align="center"
           justify="center"
         >
-          {moment(mx).add(i, 'day').format('dd')}
+          {DateTime.format(DateTime.add(dt, i, 'day'), 'ddd').slice(0, 2)}
         </Flex>
       )
     }
-    const days = []
 
-    for (let i = startDayOfWeek; i < mx.day(); i++) {
+    const days = []
+    const monthStartDay = DateTime.day(dt)
+    const maxI = monthStartDay < startDay ? monthStartDay + 7 : monthStartDay
+    const daysInMonth = DateTime.daysInMonth(dt)
+
+    for (let i = startDay % 7; i < maxI; i++) {
       days.push(renderDay(null, i))
     }
 
-    for (let i = 0; i < mx.daysInMonth(); i++) {
-      days.push(renderDay(moment(mx).add(i, 'day'), i))
+    for (let i = 0; i < daysInMonth; i++) {
+      days.push(renderDay(DateTime.startOf(DateTime.add(dt, i, 'day'), 'day'), i))
     }
 
     return (
       <Div
-        key={mx.toISOString()}
-        mr={1}
-        _last={{
-          mr: 0,
-        }}
+        key={i}
+        mr={2}
+        _last={{ mr: 0 }}
       >
         <Flex
           align="center"
@@ -88,10 +100,10 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           cursor="pointer"
         >
           <Div>
-            {mx.format('MMMM')}
+            {DateTime.format(dt, 'MMMM')}
           </Div>
           <Div ml={0.5}>
-            {mx.format('YYYY')}
+            {DateTime.format(dt, 'YYYY')}
           </Div>
         </Flex>
         <Flex
@@ -113,11 +125,11 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     )
   }
 
-  function renderDay(mx: any, i: number) {
-    if (mx === null) {
+  function renderDay(dt: any, i: number) {
+    if (dt === null) {
       return (
         <Div
-          key={i}
+          key={`${i}null`}
           width={256 / 7}
           height={256 / 7}
         />
@@ -130,9 +142,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         width={256 / 7}
         height={256 / 7}
         cursor="pointer"
-        {...{ '&:hover > div': {
-          border: '1px solid black',
-        } }}
+        {...{ '&:hover > div': { border: '1px solid black' } }}
+        onClick={() => handleDayClick(dt)}
       >
         <Flex
           flexGrow={1}
@@ -141,7 +152,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           borderRadius="50%"
           border="1px solid transparent"
         >
-          {mx.format('D')}
+          {DateTime.format(dt, 'D')}
         </Flex>
       </Flex>
     )
@@ -150,14 +161,15 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const monthNodes = []
 
   for (let i = 0; i < monthSpan; i++) {
-    monthNodes.push(renderMonth(moment(startDate).add(i, 'month').startOf('month')))
+    monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(startDate, i, 'month'), 'month'), i))
   }
 
   return (
     <Div
       ref={ref}
       display="flex"
-      {...props}
+      userSelect="none"
+      {...otherProps}
     >
       {monthNodes}
     </Div>

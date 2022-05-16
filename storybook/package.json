@@ -23,6 +23,7 @@
   "dependencies": {
     "honorable": "latest",
     "honorable-theme-default": "latest",
+    "luxon": "^2.4.0",
     "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -41,6 +42,7 @@
     "@storybook/preset-create-react-app": "^4.1.0",
     "@storybook/react": "6.5.0-beta.0",
     "@storybook/testing-library": "^0.0.11",
+    "@types/luxon": "^2.3.2",
     "webpack": "^5.72.1"
   }
 }

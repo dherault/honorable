@@ -2,7 +2,7 @@
 export * from './components/tags'
 export * from './components/ThemeProvider/ThemeProvider'
 export * from './components/CssBaseline/CssBaseline'
-export * from './components/MomentProvider/MomentProvider'
+export * from './components/DateTimeProvider/DateTimeProvider'
 // Regular components
 export * from './components/Accordion/Accordion'
 export * from './components/Autocomplete/Autocomplete'
