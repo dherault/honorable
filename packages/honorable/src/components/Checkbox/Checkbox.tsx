@@ -89,9 +89,9 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
     : labelPosition === 'left'
       ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
       : labelPosition === 'top'
-        ? { justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column-reverse' }
+        ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
         : labelPosition === 'bottom'
-          ? { justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column' }
+          ? { justifyContent: 'flex-start', flexDirection: 'column' }
           : { justifyContent: 'flex-start' }
 
   // Override `checked` prop in styles
@@ -115,6 +115,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
       ref={ref}
       tabIndex={0}
       display="flex"
+      alignItems="center"
       {...flexProps}
       {...otherProps}
       onClick={event => {
@@ -127,7 +128,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
       }}
     >
       <Span
-        display="inline-flex"
+        display="flex"
         alignItems="center"
         justifyContent="center"
         flexShrink={0}

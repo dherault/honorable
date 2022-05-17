@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, Checkbox, Flex } from 'honorable'
+import { A, Checkbox, Div, Flex, P } from 'honorable'
 
 export default {
   title: 'Checkbox',
@@ -33,6 +33,25 @@ function Template2(args: any) {
         Toggle
       </A>
     </Flex>
+  )
+}
+
+function Template3(args: any) {
+  return (
+    <Div>
+      <Checkbox
+        {...args}
+      />
+      <Checkbox
+        {...args}
+      />
+      <Checkbox
+        {...args}
+      />
+      <Checkbox
+        {...args}
+      />
+    </Div>
   )
 }
 
@@ -77,4 +96,30 @@ LabelPositionBottom.args = {
   disabled: false,
   children: 'A checkbox',
   labelPosition: 'bottom',
+}
+
+export const LabelSmall = Template.bind({})
+LabelSmall.args = {
+  disabled: false,
+  children: (
+    <P fontSize="0.5rem">
+      A checkbox
+    </P>
+  ),
+}
+
+export const Multiple = Template3.bind({})
+Multiple.args = {
+  disabled: false,
+  children: 'A checkbox',
+}
+
+export const MultipleLabelSmall = Template3.bind({})
+MultipleLabelSmall.args = {
+  disabled: false,
+  children: (
+    <P fontSize="0.5rem">
+      A checkbox
+    </P>
+  ),
 }

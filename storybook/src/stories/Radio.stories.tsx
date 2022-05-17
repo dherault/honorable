@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, Flex, Radio } from 'honorable'
+import { A, Flex, P, Radio } from 'honorable'
 
 export default {
   title: 'Radio',
@@ -77,4 +77,14 @@ LabelPositionBottom.args = {
   disabled: false,
   children: 'A Radio',
   labelPosition: 'bottom',
+}
+
+export const LabelSmall = Template.bind({})
+LabelSmall.args = {
+  disabled: false,
+  children: (
+    <P fontSize="0.5rem">
+      A Radio
+    </P>
+  ),
 }

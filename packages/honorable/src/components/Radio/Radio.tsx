@@ -97,9 +97,9 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
     : labelPosition === 'left'
       ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
       : labelPosition === 'top'
-        ? { justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column-reverse' }
+        ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
         : labelPosition === 'bottom'
-          ? { justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column' }
+          ? { justifyContent: 'flex-start', flexDirection: 'column' }
           : { justifyContent: 'flex-start' }
 
   // Override `checked` prop in styles
@@ -123,6 +123,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
       ref={ref}
       tabIndex={0}
       display="flex"
+      alignItems="center"
       {...flexProps}
       {...otherProps}
       onClick={event => {
