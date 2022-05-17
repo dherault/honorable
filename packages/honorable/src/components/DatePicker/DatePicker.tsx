@@ -28,6 +28,7 @@ export type DatePickerBaseProps = {
   startDate?: string
   minYear?: number
   maxYear?: number
+  transitionDuration?: number
 }
 
 export type DatePickerProps = HonorableProps<DivProps & DatePickerBaseProps>
@@ -41,6 +42,7 @@ export const DatePickerPropTypes = {
   startDate: PropTypes.string,
   minYear: PropTypes.number,
   maxYear: PropTypes.number,
+  transitionDuration: PropTypes.number,
 }
 
 function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
@@ -53,6 +55,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     startDate,
     minYear = 1900,
     maxYear = 2099,
+    transitionDuration = 400,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -65,6 +68,10 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const [actualStartDate, setActualStartDate] = useState(DateTime.startOf(startDate ? DateTime.create(startDate) : dtValue, 'month'))
   const [dimensions, setDimensions] = useState<DimensionsType>({ width: 'auto', height: 'auto' })
   const [areYearsDisplayed, setAreYearsDisplayed] = useState(false)
+  const [shouldTransition, setShouldTransition] = useState<'left' | 'right' | null>(null)
+  const viewportWidthBase = monthSpan * 256
+  const monthMargin = 2 * 16
+  const viewportWidth = viewportWidthBase + (monthSpan - 1) * monthMargin
 
   useEffect(() => {
     const { width, height } = datePickerRef.current.getBoundingClientRect()
@@ -84,15 +91,20 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     setUncontrolledValue(value)
   }
 
-  function handleStartDateChange(isLeft: boolean) {
-    setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, isLeft ? -1 : 1, 'month'), 'month'))
-  }
-
   function handleYearClick(year: number) {
     const dt = DateTime.setYear(actualStartDate, year)
 
     setActualStartDate(dt)
     setAreYearsDisplayed(false)
+  }
+
+  function handleStartDateChange(isLeft: boolean) {
+    setShouldTransition(isLeft ? 'left' : 'right')
+
+    setTimeout(() => {
+      setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, isLeft ? -1 : 1, 'month'), 'month'))
+      setShouldTransition(null)
+    }, transitionDuration + 16)
   }
 
   function renderMonth(dt: any, i: number) {
@@ -128,8 +140,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     return (
       <Div
         key={i}
-        mr={2}
-        _last={{ mr: 0 }}
+        marginRight={monthMargin}
+        _last={{ marginRight: 0 }}
       >
         {renderMonthAndYear(dt, i)}
         <Flex
@@ -187,13 +199,14 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   function renderMonthAndYear(dt: any, i: number) {
     return (
       <Flex
+        mx={0.333}
         align="center"
-        cursor="pointer"
       >
         {renderCaret(i, 'left')}
         <Div flexGrow={1} />
         <Flex
           align="center"
+          cursor="pointer"
           onClick={() => setAreYearsDisplayed(x => !x)}
         >
           <Div>
@@ -220,6 +233,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           height={24}
           borderRadius="50%"
           border="1px solid transparent"
+          cursor="pointer"
           _hover={{ borderColor: 'black' }}
           onClick={() => handleStartDateChange(isLeft)}
         >
@@ -232,7 +246,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       return withWrapper(
         true,
         <Caret
-          width={16}
+          width={18}
           rotation={90}
         />
       )
@@ -242,7 +256,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       return withWrapper(
         false,
         <Caret
-          width={16}
+          width={18}
           rotation={-90}
         />
       )
@@ -286,19 +300,30 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   function renderMonths() {
     const monthNodes = []
 
-    for (let i = 0; i < monthSpan; i++) {
+    for (let i = -monthSpan; i < 2 * monthSpan; i++) {
       monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
     }
 
-    return monthNodes
+    console.log('shouldTransition', shouldTransition)
+
+    return (
+      <Flex
+        position="relative"
+        width={3 * viewportWidthBase + 2 * monthMargin}
+        left={(viewportWidthBase + monthSpan * monthMargin) * (shouldTransition === null ? -1 : shouldTransition === 'left' ? 0 : -2)}
+        transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
+      >
+        {monthNodes}
+      </Flex>
+    )
   }
 
   return (
     <Div
       ref={forkedRef}
-      display="flex"
+      width={viewportWidth}
+      overflowX="hidden"
       userSelect="none"
-      width={monthSpan * 256 + (monthSpan - 1) * 2 * 16}
       {...otherProps}
     >
       {areYearsDisplayed ? renderYears() : renderMonths()}
