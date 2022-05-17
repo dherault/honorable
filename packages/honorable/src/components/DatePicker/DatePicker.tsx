@@ -68,8 +68,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const [actualStartDate, setActualStartDate] = useState(DateTime.startOf(startDate ? DateTime.create(startDate) : dtValue, 'month'))
   const [dimensions, setDimensions] = useState<DimensionsType>({ width: 'auto', height: 'auto' })
   const [areYearsDisplayed, setAreYearsDisplayed] = useState(false)
-  const [shouldTransition, setShouldTransition] = useState<'left' | 'right' | null>(null)
-
+  const [shouldTransition, setShouldTransition] = useState<number>(0)
+  const [transitionTimeoutId, setTransitionTimeoutId] = useState<NodeJS.Timeout>()
   const monthWidthBase = 256
   const monthMargin = 2 * 16
   const dayWidthBase = monthWidthBase / 7
@@ -102,12 +102,14 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   }
 
   function handleStartDateChange(isLeft: boolean) {
-    setShouldTransition(isLeft ? 'left' : 'right')
+    setShouldTransition(x => x + (isLeft ? -1 : 1))
 
-    setTimeout(() => {
+    clearTimeout(transitionTimeoutId)
+
+    setTransitionTimeoutId(setTimeout(() => {
       setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, isLeft ? -1 : 1, 'month'), 'month'))
-      setShouldTransition(null)
-    }, transitionDuration + 5 * 1000 / 60)
+      setShouldTransition(0)
+    }, transitionDuration + 5 * 1000 / 60))
   }
 
   function renderMonth(dt: any, i: number) {
@@ -146,7 +148,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         marginRight={monthMargin}
         _last={{ marginRight: 0 }}
       >
-        {renderMonthAndYear(dt, i)}
+        {renderMonthAndYear(dt)}
         <Flex
           mt={1}
           align="center"
@@ -163,6 +165,29 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           {days}
         </Flex>
       </Div>
+    )
+  }
+
+  function renderMonthAndYear(dt: any) {
+    return (
+      <Flex
+        mx={0.333}
+        align="center"
+        justify="center"
+      >
+        <Flex
+          align="center"
+          cursor="pointer"
+          onClick={() => setAreYearsDisplayed(x => !x)}
+        >
+          <Div>
+            {DateTime.format(dt, 'MMMM')}
+          </Div>
+          <Div ml={0.5}>
+            {DateTime.format(dt, 'YYYY')}
+          </Div>
+        </Flex>
+      </Flex>
     )
   }
 
@@ -199,35 +224,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     )
   }
 
-  function renderMonthAndYear(dt: any, i: number) {
-    return (
-      <Flex
-        mx={0.333}
-        align="center"
-      >
-        {renderCaret(i, 'left')}
-        <Div flexGrow={1} />
-        <Flex
-          align="center"
-          cursor="pointer"
-          onClick={() => setAreYearsDisplayed(x => !x)}
-        >
-          <Div>
-            {DateTime.format(dt, 'MMMM')}
-          </Div>
-          <Div ml={0.5}>
-            {DateTime.format(dt, 'YYYY')}
-          </Div>
-        </Flex>
-        <Div flexGrow={1} />
-        {renderCaret(i, 'right')}
-      </Flex>
-
-    )
-  }
-
-  function renderCaret(i: number, direction: 'left' | 'right') {
-    function withWrapper(isLeft: boolean, node: ReactNode) {
+  function renderCaret(isLeft: boolean) {
+    function withWrapper(node: ReactNode) {
       return (
         <Flex
           align="center"
@@ -245,9 +243,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       )
     }
 
-    if (i === 0 && direction === 'left') {
+    if (isLeft) {
       return withWrapper(
-        true,
         <Caret
           width={18}
           rotation={90}
@@ -255,20 +252,10 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       )
     }
 
-    if (i === monthSpan - 1 && direction === 'right') {
-      return withWrapper(
-        false,
-        <Caret
-          width={18}
-          rotation={-90}
-        />
-      )
-    }
-
-    return (
-      <Div
-        width={24}
-        height={24}
+    return withWrapper(
+      <Caret
+        width={18}
+        rotation={-90}
       />
     )
   }
@@ -286,7 +273,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           direction="column"
           align="center"
         >
-          {renderMonthAndYear(actualStartDate, -1)}
+          {renderMonthAndYear(actualStartDate)}
           <DatePickerYears
             mt={1}
             minYear={minYear}
@@ -307,20 +294,36 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
     }
 
-    console.log('shouldTransition', shouldTransition)
-
     return (
-      <Flex
-        position="relative"
-        width={3 * viewportWidthBase + 2 * monthMargin}
-        left={
-          (shouldTransition === null ? 0 : ((shouldTransition === 'left' ? 1 : -1) * (monthWidthBase + monthMargin)))
-          - (viewportWidthBase + monthSpan * monthMargin)
-        }
-        transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
-      >
-        {monthNodes}
-      </Flex>
+      <>
+        <Flex
+          position="relative"
+          width={3 * viewportWidthBase + 2 * monthMargin}
+          left={
+            -shouldTransition * (monthWidthBase + monthMargin)
+            - (viewportWidthBase + monthSpan * monthMargin)
+          }
+          transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
+        >
+          {monthNodes}
+        </Flex>
+        <Div
+          px={0.333}
+          position="absolute"
+          top={0}
+          left={0}
+        >
+          {renderCaret(true)}
+        </Div>
+        <Div
+          px={0.333}
+          position="absolute"
+          top={0}
+          right={0}
+        >
+          {renderCaret(false)}
+        </Div>
+      </>
     )
   }
 
@@ -328,6 +331,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     <Div
       ref={forkedRef}
       width={viewportWidth}
+      position="relative"
       overflowX="hidden"
       userSelect="none"
       {...otherProps}

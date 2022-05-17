@@ -130,6 +130,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
         display="inline-flex"
         alignItems="center"
         justifyContent="center"
+        flexShrink={0}
         {...resolvePartStyles('Control', props, theme)}
       >
         {actualChecked && icon}
