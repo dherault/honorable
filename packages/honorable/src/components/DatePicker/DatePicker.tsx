@@ -69,8 +69,11 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const [dimensions, setDimensions] = useState<DimensionsType>({ width: 'auto', height: 'auto' })
   const [areYearsDisplayed, setAreYearsDisplayed] = useState(false)
   const [shouldTransition, setShouldTransition] = useState<'left' | 'right' | null>(null)
-  const viewportWidthBase = monthSpan * 256
+
+  const monthWidthBase = 256
   const monthMargin = 2 * 16
+  const dayWidthBase = monthWidthBase / 7
+  const viewportWidthBase = monthSpan * monthWidthBase
   const viewportWidth = viewportWidthBase + (monthSpan - 1) * monthMargin
 
   useEffect(() => {
@@ -104,7 +107,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     setTimeout(() => {
       setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, isLeft ? -1 : 1, 'month'), 'month'))
       setShouldTransition(null)
-    }, transitionDuration + 16)
+    }, transitionDuration + 5 * 1000 / 60)
   }
 
   function renderMonth(dt: any, i: number) {
@@ -115,7 +118,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       headerDays.push(
         <Flex
           key={i}
-          width={256 / 7}
+          width={dayWidthBase}
           align="center"
           justify="center"
         >
@@ -168,8 +171,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       return (
         <Div
           key={`${i}null`}
-          width={256 / 7}
-          height={256 / 7}
+          width={dayWidthBase}
+          height={dayWidthBase}
         />
       )
     }
@@ -177,8 +180,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     return (
       <Flex
         key={i}
-        width={256 / 7}
-        height={256 / 7}
+        width={dayWidthBase}
+        height={dayWidthBase}
         cursor="pointer"
         {...{ '&:hover > div': { borderColor: 'black' } }}
         onClick={() => handleDayClick(dt)}
@@ -278,7 +281,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         height={dimensions.height}
       >
         <Flex
-          width={256}
+          width={monthWidthBase}
           height="100%"
           direction="column"
           align="center"
@@ -310,7 +313,10 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       <Flex
         position="relative"
         width={3 * viewportWidthBase + 2 * monthMargin}
-        left={(viewportWidthBase + monthSpan * monthMargin) * (shouldTransition === null ? -1 : shouldTransition === 'left' ? 0 : -2)}
+        left={
+          (shouldTransition === null ? 0 : ((shouldTransition === 'left' ? 1 : -1) * (monthWidthBase + monthMargin)))
+          - (viewportWidthBase + monthSpan * monthMargin)
+        }
         transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
       >
         {monthNodes}
