@@ -23,5 +23,9 @@ export default {
       light: 'primary',
       dark: 'secondary',
     },
+    border: {
+      light: '#ddd',
+      dark: '#444',
+    },
   },
 }

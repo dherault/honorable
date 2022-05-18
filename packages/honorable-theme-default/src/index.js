@@ -31,9 +31,17 @@ export default {
       light: 'lighten(text, 15)',
       dark: 'darken(text, 15)',
     },
+    'text-xlight': {
+      light: 'lighten(text, 30)',
+      dark: 'darken(text, 30)',
+    },
     border: {
       light: '#ddd',
       dark: '#444',
+    },
+    hover: {
+      light: 'lighten(border, 5)',
+      dark: 'darken(border, 5)',
     },
     shadow: {
       light: 'rgba(0, 0, 0, 0.2)',
@@ -264,6 +272,42 @@ export default {
         marginTop: labelPosition === 'bottom' ? 8 : 0,
         marginBottom: labelPosition === 'top' ? 8 : 0,
       }),
+    ],
+  },
+  DatePicker: {
+    WeekDays: [
+      {
+        fontWeight: 500,
+        color: 'text-xlight',
+        fontSize: '0.85rem',
+      },
+    ],
+    MonthAndYearInner: [
+      {
+        fontWeight: 500,
+      },
+    ],
+  },
+  DatePickerDay: {
+    Root: [
+      {
+        '& > div': {
+          borderColor: 'transparent',
+        },
+        '&:hover > div': {
+          borderColor: 'transparent',
+          backgroundColor: 'hover',
+        },
+      },
+    ],
+    Inner: [
+      {
+        borderColor: 'transparent',
+      },
+      ({ active }) => active && {
+        backgroundColor: 'primary',
+        color: 'white',
+      },
     ],
   },
   DropdownButton: {

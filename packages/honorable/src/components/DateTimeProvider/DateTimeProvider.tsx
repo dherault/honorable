@@ -27,6 +27,7 @@ function wrapMoment(moment: any) {
     year: (dt: any) => dt.year(),
     daysInMonth: (dt: any) => dt.daysInMonth(),
     setYear: (dt: any, year: number) => moment(dt).year(year),
+    isSame: (dt1: any, dt2: any, unit: string) => dt1.isSame(dt2, unit),
   }
 }
 
@@ -42,6 +43,7 @@ function wrapLuxon(luxon: any) {
     year: (dt: any) => dt.year,
     daysInMonth: (dt: any) => dt.daysInMonth,
     setYear: (dt: any, year: number) => dt.set({ year }),
+    isSame: (dt1: any, dt2: any, unit: string) => dt1.hasSame(dt2, unit),
   }
 }
 

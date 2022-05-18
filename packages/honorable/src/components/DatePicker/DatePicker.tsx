@@ -10,6 +10,8 @@ import DateTimeContext from '../../contexts/DateTimeContext'
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
+
 import { Div, DivProps } from '../tags'
 import { Flex } from '../Flex/Flex'
 import { Caret } from '../Caret/Caret'
@@ -29,6 +31,8 @@ export type DatePickerBaseProps = {
   minYear?: number
   maxYear?: number
   transitionDuration?: number
+  monthWidth?: number
+  monthMargin?: number
 }
 
 export type DatePickerProps = HonorableProps<DivProps & DatePickerBaseProps>
@@ -43,6 +47,8 @@ export const DatePickerPropTypes = {
   minYear: PropTypes.number,
   maxYear: PropTypes.number,
   transitionDuration: PropTypes.number,
+  monthWidth: PropTypes.number,
+  monthMargin: PropTypes.number,
 }
 
 function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
@@ -56,6 +62,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     minYear = 1900,
     maxYear = 2099,
     transitionDuration = 400,
+    monthWidth = 256,
+    monthMargin = 32,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -70,10 +78,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const [areYearsDisplayed, setAreYearsDisplayed] = useState(false)
   const [shouldTransition, setShouldTransition] = useState<number>(0)
   const [transitionTimeoutId, setTransitionTimeoutId] = useState<NodeJS.Timeout>()
-  const monthWidthBase = 256
-  const monthMargin = 2 * 16
-  const dayWidthBase = monthWidthBase / 7
-  const viewportWidthBase = monthSpan * monthWidthBase
+  const dayWidthBase = monthWidth / 7
+  const viewportWidthBase = monthSpan * monthWidth
   const viewportWidth = viewportWidthBase + (monthSpan - 1) * monthMargin
 
   useEffect(() => {
@@ -123,6 +129,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           width={dayWidthBase}
           align="center"
           justify="center"
+          {...resolvePartStyles('WeekDay', props, theme)}
         >
           {DateTime.format(DateTime.add(startOfWeek, i, 'day'), 'ddd').slice(0, 2)}
         </Flex>
@@ -135,11 +142,29 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     const daysInMonth = DateTime.daysInMonth(dt)
 
     for (let i = startDay % 7; i < maxI; i++) {
-      days.push(renderDay(null, i))
+      days.push(
+        <DatePickerDay
+          key={i}
+          day={null}
+          width={dayWidthBase}
+          height={dayWidthBase}
+        />
+      )
     }
 
     for (let i = 0; i < daysInMonth; i++) {
-      days.push(renderDay(DateTime.startOf(DateTime.add(dt, i, 'day'), 'day'), i))
+      const day = DateTime.startOf(DateTime.add(dt, i, 'day'), 'day')
+
+      days.push(
+        <DatePickerDay
+          key={i}
+          day={day.format('D')}
+          active={DateTime.isSame(dtValue, day, 'day')}
+          width={dayWidthBase}
+          height={dayWidthBase}
+          onClick={() => handleDayClick(day)}
+        />
+      )
     }
 
     return (
@@ -147,12 +172,14 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         key={i}
         marginRight={monthMargin}
         _last={{ marginRight: 0 }}
+        {...resolvePartStyles('Month', props, theme)}
       >
         {renderMonthAndYear(dt)}
         <Flex
           mt={1}
           align="center"
-          width={256}
+          width={monthWidth}
+          {...resolvePartStyles('WeekDays', props, theme)}
         >
           {headerDays}
         </Flex>
@@ -160,7 +187,8 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
           mt={0.5}
           align="center"
           wrap="wrap"
-          width={256}
+          width={monthWidth}
+          {...resolvePartStyles('Days', props, theme)}
         >
           {days}
         </Flex>
@@ -174,89 +202,17 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         mx={0.333}
         align="center"
         justify="center"
+        {...resolvePartStyles('MonthAndYear', props, theme)}
       >
         <Flex
           align="center"
           cursor="pointer"
           onClick={() => setAreYearsDisplayed(x => !x)}
+          {...resolvePartStyles('MonthAndYearInner', props, theme)}
         >
-          <Div>
-            {DateTime.format(dt, 'MMMM')}
-          </Div>
-          <Div ml={0.5}>
-            {DateTime.format(dt, 'YYYY')}
-          </Div>
+          {DateTime.format(dt, 'MMMM')} {DateTime.format(dt, 'YYYY')}
         </Flex>
       </Flex>
-    )
-  }
-
-  function renderDay(dt: any, i: number) {
-    if (dt === null) {
-      return (
-        <Div
-          key={`${i}null`}
-          width={dayWidthBase}
-          height={dayWidthBase}
-        />
-      )
-    }
-
-    return (
-      <Flex
-        key={i}
-        width={dayWidthBase}
-        height={dayWidthBase}
-        cursor="pointer"
-        {...{ '&:hover > div': { borderColor: 'black' } }}
-        onClick={() => handleDayClick(dt)}
-      >
-        <Flex
-          flexGrow={1}
-          align="center"
-          justify="center"
-          borderRadius="50%"
-          border="1px solid transparent"
-        >
-          {DateTime.format(dt, 'D')}
-        </Flex>
-      </Flex>
-    )
-  }
-
-  function renderCaret(isLeft: boolean) {
-    function withWrapper(node: ReactNode) {
-      return (
-        <Flex
-          align="center"
-          justify="center"
-          width={24}
-          height={24}
-          borderRadius="50%"
-          border="1px solid transparent"
-          cursor="pointer"
-          _hover={{ borderColor: 'black' }}
-          onClick={() => handleStartDateChange(isLeft)}
-        >
-          {node}
-        </Flex>
-      )
-    }
-
-    if (isLeft) {
-      return withWrapper(
-        <Caret
-          width={18}
-          rotation={90}
-        />
-      )
-    }
-
-    return withWrapper(
-      <Caret
-        width={18}
-        rotation={-90}
-      />
     )
   }
 
@@ -266,12 +222,14 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         ref={ref}
         width={dimensions.width}
         height={dimensions.height}
+        {...resolvePartStyles('Years', props, theme)}
       >
         <Flex
-          width={monthWidthBase}
+          width={monthWidth}
           height="100%"
           direction="column"
           align="center"
+          {...resolvePartStyles('YearsInner', props, theme)}
         >
           {renderMonthAndYear(actualStartDate)}
           <DatePickerYears
@@ -290,53 +248,79 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   function renderMonths() {
     const monthNodes = []
 
-    for (let i = -monthSpan; i < 2 * monthSpan; i++) {
+    for (let i = -1; i < monthSpan + 1; i++) {
       monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
     }
 
     return (
-      <>
-        <Flex
-          position="relative"
-          width={3 * viewportWidthBase + 2 * monthMargin}
-          left={
-            -shouldTransition * (monthWidthBase + monthMargin)
+      <Flex
+        position="relative"
+        width={3 * viewportWidthBase + 2 * monthMargin}
+        left={
+          -shouldTransition * (monthWidth + monthMargin)
             - (viewportWidthBase + monthSpan * monthMargin)
-          }
-          transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
-        >
-          {monthNodes}
-        </Flex>
-        <Div
-          px={0.333}
-          position="absolute"
-          top={0}
-          left={0}
-        >
-          {renderCaret(true)}
-        </Div>
-        <Div
-          px={0.333}
-          position="absolute"
-          top={0}
-          right={0}
-        >
-          {renderCaret(false)}
-        </Div>
-      </>
+        }
+        transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
+        {...resolvePartStyles('MonthsInner', props, theme)}
+      >
+        {monthNodes}
+      </Flex>
     )
   }
 
   return (
     <Div
       ref={forkedRef}
-      width={viewportWidth}
       position="relative"
-      overflowX="hidden"
       userSelect="none"
       {...otherProps}
     >
-      {areYearsDisplayed ? renderYears() : renderMonths()}
+      <Div
+        width={viewportWidth}
+        position="relative"
+        overflowX="hidden"
+        {...resolvePartStyles('Months', props, theme)}
+      >
+        {areYearsDisplayed ? renderYears() : renderMonths()}
+      </Div>
+      <Flex
+        p={0.25}
+        position="absolute"
+        top={-6}
+        left={2}
+        align="center"
+        justify="center"
+        borderRadius="50%"
+        border="1px solid transparent"
+        cursor="pointer"
+        _hover={{ borderColor: 'black' }}
+        onClick={() => handleStartDateChange(true)}
+        {...resolvePartStyles('Caret', props, theme)}
+      >
+        <Caret
+          width={22}
+          rotation={90}
+        />
+      </Flex>
+      <Flex
+        p={0.25}
+        position="absolute"
+        top={-6}
+        right={2}
+        align="center"
+        justify="center"
+        borderRadius="50%"
+        border="1px solid transparent"
+        cursor="pointer"
+        _hover={{ borderColor: 'black' }}
+        onClick={() => handleStartDateChange(false)}
+        {...resolvePartStyles('Caret', props, theme)}
+      >
+        <Caret
+          width={22}
+          rotation={-90}
+        />
+      </Flex>
     </Div>
   )
 }
@@ -348,6 +332,71 @@ const ForwardedDatePicker = forwardRef(DatePickerRef)
 ForwardedDatePicker.propTypes = DatePickerPropTypes
 
 export const DatePicker = withHonorable<DatePickerProps>(ForwardedDatePicker, 'DatePicker')
+
+/*
+  DatePickerDay
+*/
+
+export type DatePickerDayBaseProps = {
+  day: number,
+  active?: boolean
+}
+
+export type DatePickerDayProps = HonorableProps<DivProps & DatePickerDayBaseProps>
+
+export const DatePickerDayPropTypes = {
+  day: PropTypes.number.isRequired,
+  active: PropTypes.bool,
+}
+
+function DatePickerDayRef(props: DatePickerDayProps, ref: Ref<any>) {
+  const {
+    day,
+    active = false,
+    ...otherProps
+  } = props
+  const theme = useTheme()
+
+  if (day === null) {
+    return (
+      <Div
+        ref={ref}
+        {...otherProps}
+      />
+    )
+  }
+
+  const styles = { '&:hover > div': { borderColor: 'black' } }
+
+  if (active) styles['& > div'] = { borderColor: 'black' }
+
+  return (
+    <Flex
+      cursor="pointer"
+      {...styles}
+      {...otherProps}
+    >
+      <Flex
+        flexGrow={1}
+        align="center"
+        justify="center"
+        borderRadius="50%"
+        border="1px solid transparent"
+        {...resolvePartStyles('Inner', props, theme)}
+      >
+        {day}
+      </Flex>
+    </Flex>
+  )
+}
+
+DatePickerDayRef.displayName = 'DatePickerDay'
+
+const ForwardedDatePickerDay = forwardRef(DatePickerDayRef)
+
+ForwardedDatePickerDay.propTypes = DatePickerDayPropTypes
+
+export const DatePickerDay = withHonorable<DatePickerDayProps>(ForwardedDatePickerDay, 'DatePickerDay')
 
 /*
   DatePickerYears
@@ -415,7 +464,7 @@ ref: Ref<any>
   )
 }
 
-DatePickerYearsRef.displayName = 'DatePicker'
+DatePickerYearsRef.displayName = 'DatePickerYears'
 
 const ForwardedDatePickerYears = forwardRef(DatePickerYearsRef)
 
@@ -469,10 +518,10 @@ ref: Ref<any>
   )
 }
 
-DatePickerYearRef.displayName = 'DatePicker'
+DatePickerYearRef.displayName = 'DatePickerYear'
 
 const ForwardedDatePickerYear = forwardRef(DatePickerYearRef)
 
 ForwardedDatePickerYear.propTypes = DatePickerYearPropTypes
 
-export const DatePickerYear = withHonorable<DatePickerYearProps>(ForwardedDatePickerYear, 'DatePickerYears')
+export const DatePickerYear = withHonorable<DatePickerYearProps>(ForwardedDatePickerYear, 'DatePickerYear')
