@@ -47,9 +47,10 @@ export default function resolveColor<T>(value: T, theme: HonorableTheme = {}): T
 }
 
 export function resolveColorString(value: string, theme: HonorableTheme = {}): string {
-  console.log('value', value)
+  if (!theme.cache) theme.cache = {}
+  if (theme.cache[value]) return theme.cache[value]
 
-  return applyColorHelpers(convertThemeColors(value, theme))
+  return theme.cache[value] = applyColorHelpers(convertThemeColors(value, theme))
 }
 
 function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme = {}): any {
@@ -82,8 +83,6 @@ function convertThemeColors(value: string, theme: HonorableTheme, i = 0): string
 
   let converted = value
 
-  console.log('converted1', converted)
-
   Object.keys(filterObject(theme.colors))
   .sort((a, b) => b.length - a.length)
   .forEach(themeColorName => {
@@ -95,8 +94,6 @@ function convertThemeColors(value: string, theme: HonorableTheme, i = 0): string
     }
   })
 
-  console.log('converted2', converted)
-
   return converted === value ? converted : convertThemeColors(converted, theme, i + 1)
 }
 
@@ -104,8 +101,6 @@ function resolveThemeColor(color: string, theme: HonorableTheme, i = 0): string 
   if (i >= 64) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }
-
-  console.log('color', color)
 
   const foundColor = typeof theme.colors[color] === 'string'
     ? theme.colors[color]
@@ -163,8 +158,6 @@ function applyColorHelpers(colorString: string, i = 0): string {
   if (i >= 64) {
     throw new Error('Could not apply color helper. Too many recursions.')
   }
-
-  console.log('colorString', colorString)
 
   const appliedColor = colorHelpers.reduce((colorString, { regex, fn, name }) => {
     if (colorString.includes(name)) {

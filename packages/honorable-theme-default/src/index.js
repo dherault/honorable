@@ -287,6 +287,14 @@ export default {
         fontWeight: 500,
       },
     ],
+    Caret: [
+      {
+        '&:hover': {
+          borderColor: 'transparent',
+          backgroundColor: 'hover',
+        },
+      },
+    ],
   },
   DatePickerDay: {
     Root: [
@@ -305,7 +313,7 @@ export default {
         borderColor: 'transparent',
       },
       ({ active }) => active && {
-        backgroundColor: 'primary',
+        backgroundColor: 'primary !important',
         color: 'white',
       },
     ],

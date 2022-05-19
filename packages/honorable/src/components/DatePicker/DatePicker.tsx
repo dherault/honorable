@@ -1,4 +1,4 @@
-import { ReactNode, Ref, forwardRef, useContext, useEffect, useRef, useState } from 'react'
+import { Ref, forwardRef, useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { HonorableProps } from '../../types'
@@ -113,9 +113,9 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     clearTimeout(transitionTimeoutId)
 
     setTransitionTimeoutId(setTimeout(() => {
-      setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, isLeft ? -1 : 1, 'month'), 'month'))
+      setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, shouldTransition + (isLeft ? -1 : 1), 'month'), 'month'))
       setShouldTransition(0)
-    }, transitionDuration + 5 * 1000 / 60))
+    }, transitionDuration + 12 * 1000 / 60))
   }
 
   function renderMonth(dt: any, i: number) {
@@ -144,7 +144,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     for (let i = startDay % 7; i < maxI; i++) {
       days.push(
         <DatePickerDay
-          key={i}
+          key={`${i}null`}
           day={null}
           width={dayWidthBase}
           height={dayWidthBase}
@@ -248,7 +248,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   function renderMonths() {
     const monthNodes = []
 
-    for (let i = -1; i < monthSpan + 1; i++) {
+    for (let i = -1 + Math.min(shouldTransition, 0); i < monthSpan + 1 + Math.max(shouldTransition, 0); i++) {
       monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
     }
 
@@ -256,10 +256,10 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       <Flex
         position="relative"
         width={3 * viewportWidthBase + 2 * monthMargin}
-        left={
-          -shouldTransition * (monthWidth + monthMargin)
-            - (viewportWidthBase + monthSpan * monthMargin)
-        }
+        left={-(
+          shouldTransition * (monthWidth + monthMargin)
+          + viewportWidthBase + monthSpan * monthMargin
+        )}
         transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
         {...resolvePartStyles('MonthsInner', props, theme)}
       >
