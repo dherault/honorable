@@ -48,6 +48,11 @@ describe('Color resolution', () => {
     expect(resolveColor('aliasModedColor', { ...theme1, mode: 'dark' })).toBe(theme1.colors.secondary)
   })
 
+  test('it resolves a pantoned color', () => {
+    expect(resolveColor('blue.300', theme2)).toBe(theme2.colors.blue[300])
+    expect(resolveColor('blue', theme2)).toBe(theme2.colors.blue[500])
+  })
+
 })
 
 describe('lighten and darken', () => {

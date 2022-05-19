@@ -1,3 +1,18 @@
+const blue = {
+  950: '#00041A',
+  900: '#000933',
+  850: '#000B4D',
+  800: '#000E66',
+  700: '#001299',
+  600: '#0011CC',
+  500: '#151DF9',
+  400: '#293EFF',
+  300: '#5C77FF',
+  200: '#8FB4FF',
+  100: '#C2D8FF',
+  50: '#F0F5FF',
+}
+
 export default {
   name: 'Test',
   mode: 'light',
@@ -11,6 +26,7 @@ export default {
     bg: 'backgroundColor',
   },
   colors: {
+    blue,
     primary: '#3e73dd',
     background: {
       light: 'white',

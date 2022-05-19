@@ -46,14 +46,6 @@ export default function resolveColor<T>(value: T, theme: HonorableTheme = {}): T
   return resolveColorEntry(null, value, theme)
 }
 
-export function resolveColorString(value: string, theme: HonorableTheme = {}): string {
-  if (!theme.cache) theme.cache = {}
-  if (!theme.cache[theme.mode]) theme.cache[theme.mode] = {}
-  if (theme.cache[value]) return theme.cache[theme.mode][value]
-
-  return theme.cache[theme.mode][value] = applyColorHelpers(convertThemeColors(value, theme))
-}
-
 function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme = {}): any {
   if (key && !(isSelector(key) || colorProperties.includes(key))) return value
 
@@ -70,6 +62,46 @@ function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme
   return value
 }
 
+export function resolveColorString(value: string, theme: HonorableTheme = {}): string {
+  if (!theme.cache) theme.cache = {}
+  if (!theme.cache[theme.mode]) theme.cache[theme.mode] = {}
+  if (theme.cache[theme.mode][value]) return theme.cache[theme.mode][value]
+
+  const colors = Object.entries(filterObject(theme.colors)).reduce((accumulator, [key, value]) => {
+    if (typeof value === 'object') {
+      return {
+        ...accumulator,
+        [key]: value,
+        ...reduceObjectToJsonPathsObject(key, value),
+      }
+    }
+
+    accumulator[key] = value
+
+    return accumulator
+  }, {})
+
+  return theme.cache[theme.mode][value] = applyColorHelpers(convertThemeColors(value, colors, theme))
+}
+
+function reduceObjectToJsonPathsObject(key: string, value: any) {
+  const object = {}
+
+  Object.entries(value).forEach(([k, v]) => {
+    const nextKey = `${key}.${k}`
+
+    if (typeof v === 'object') {
+      Object.assign(object, reduceObjectToJsonPathsObject(nextKey, v))
+
+      return
+    }
+
+    object[nextKey] = v
+  })
+
+  return object
+}
+
 /*
   convertThemeColors
   ------------
@@ -77,39 +109,40 @@ function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme
   eg: "primary" => "#0070f3"
 */
 
-function convertThemeColors(value: string, theme: HonorableTheme, i = 0): string {
+function convertThemeColors(value: string, colors: object, theme: HonorableTheme, i = 0): string {
   if (i >= 64) {
-    throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
+    throw new Error('Could not convert color, you may have a circular color reference in your theme.')
   }
 
   let converted = value
 
-  Object.keys(filterObject(theme.colors))
+  Object.keys(colors)
   .sort((a, b) => b.length - a.length)
   .forEach(themeColorName => {
     if (themeColorName && converted.includes(themeColorName)) {
-      converted = converted.replaceAll(
-        themeColorName,
-        resolveThemeColor(themeColorName, theme)
-      )
+      const themeColor = resolveThemeColor(themeColorName, colors, theme)
+
+      if (typeof themeColor === 'string' && themeColor.length > 0) {
+        converted = converted.replaceAll(themeColorName, themeColor)
+      }
     }
   })
 
-  return converted === value ? converted : convertThemeColors(converted, theme, i + 1)
+  return converted === value ? converted : convertThemeColors(converted, colors, theme, i + 1)
 }
 
-function resolveThemeColor(color: string, theme: HonorableTheme, i = 0): string {
+function resolveThemeColor(color: string, colors: object, theme: HonorableTheme, i = 0): string {
   if (i >= 64) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }
 
-  const foundColor = typeof theme.colors[color] === 'string'
-    ? theme.colors[color]
-    : typeof theme.colors[color] === 'object'
-      ? theme.colors[color][theme.mode || 'light']
+  const foundColor = typeof colors[color] === 'string'
+    ? colors[color]
+    : typeof colors[color] === 'object'
+      ? colors[color][theme.mode || 'light'] || colors[color][500]
       : color
 
-  return foundColor === color ? foundColor : resolveThemeColor(foundColor, theme, i + 1)
+  return foundColor === color ? foundColor : resolveThemeColor(foundColor, colors, theme, i + 1)
 }
 
 /*
