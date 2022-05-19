@@ -98,7 +98,7 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
       justifyContent="center"
       width={size}
       height={size}
-      backgroundColor={name ? `${nameToColor(name)} !important` : null}
+      backgroundColor={name ? nameToColor(name) : null}
       {...otherProps}
     >
       {name ? extractInitials(name) : <PersonIcon size={size * 3 / 5} />}

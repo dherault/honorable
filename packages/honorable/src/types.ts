@@ -95,7 +95,7 @@ export type HonorableTheme = {
     resolveColorString: (color: string) => string
     resolveColorObject: (color: object) => object
   }
-  cache?: Record<string, string>
+  cache?: Record<string, object>
   // Tags
   ButtonBase?: ComponentProps
   InputBase?: ComponentProps

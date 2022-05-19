@@ -48,9 +48,10 @@ export default function resolveColor<T>(value: T, theme: HonorableTheme = {}): T
 
 export function resolveColorString(value: string, theme: HonorableTheme = {}): string {
   if (!theme.cache) theme.cache = {}
-  if (theme.cache[value]) return theme.cache[value]
+  if (!theme.cache[theme.mode]) theme.cache[theme.mode] = {}
+  if (theme.cache[value]) return theme.cache[theme.mode][value]
 
-  return theme.cache[value] = applyColorHelpers(convertThemeColors(value, theme))
+  return theme.cache[theme.mode][value] = applyColorHelpers(convertThemeColors(value, theme))
 }
 
 function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme = {}): any {
