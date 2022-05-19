@@ -85,8 +85,8 @@ describe('lighten and darken', () => {
     expect(resolveColor('lighten(border, 5)', theme1)).toBe('#eaeaea')
   })
 
-  test.only('it returns a resolved lightened direct theme color', () => {
-    expect(resolveColor('hover', theme2)).toBe('')
+  test('it returns a resolved lightened direct theme color', () => {
+    expect(resolveColor('hover', theme2)).toBe('#eaeaea')
   })
 
   test('it returns a resolved darkened theme color', () => {

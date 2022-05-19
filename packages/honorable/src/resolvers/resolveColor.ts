@@ -6,6 +6,7 @@ import reduceDeep from '../utils/reduceDeep'
 import isSelector from '../utils/isSelector'
 import { darken, lighten } from '../utils/lightenAndDarken'
 import transparency from '../utils/transparency'
+import filterObject from '../utils/filterObject'
 
 /*
   resolveColor
@@ -46,6 +47,8 @@ export default function resolveColor<T>(value: T, theme: HonorableTheme = {}): T
 }
 
 export function resolveColorString(value: string, theme: HonorableTheme = {}): string {
+  console.log('value', value)
+
   return applyColorHelpers(convertThemeColors(value, theme))
 }
 
@@ -72,27 +75,37 @@ function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme
   eg: "primary" => "#0070f3"
 */
 
-function convertThemeColors(value: string, theme: HonorableTheme) {
+function convertThemeColors(value: string, theme: HonorableTheme, i = 0): string {
+  if (i >= 64) {
+    throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
+  }
+
   let converted = value
 
-  Object.keys(theme.colors || {})
+  console.log('converted1', converted)
+
+  Object.keys(filterObject(theme.colors))
   .sort((a, b) => b.length - a.length)
   .forEach(themeColorName => {
     if (themeColorName && converted.includes(themeColorName)) {
-      converted = converted.replace(
-        new RegExp(themeColorName, 'g'),
+      converted = converted.replaceAll(
+        themeColorName,
         resolveThemeColor(themeColorName, theme)
       )
     }
   })
 
-  return converted
+  console.log('converted2', converted)
+
+  return converted === value ? converted : convertThemeColors(converted, theme, i + 1)
 }
 
-function resolveThemeColor(color: string, theme: HonorableTheme, previousColor = '', i = 0): string {
+function resolveThemeColor(color: string, theme: HonorableTheme, i = 0): string {
   if (i >= 64) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }
+
+  console.log('color', color)
 
   const foundColor = typeof theme.colors[color] === 'string'
     ? theme.colors[color]
@@ -100,7 +113,7 @@ function resolveThemeColor(color: string, theme: HonorableTheme, previousColor =
       ? theme.colors[color][theme.mode || 'light']
       : color
 
-  return foundColor === previousColor ? foundColor : resolveThemeColor(foundColor, theme, foundColor, i + 1)
+  return foundColor === color ? foundColor : resolveThemeColor(foundColor, theme, i + 1)
 }
 
 /*
@@ -150,6 +163,8 @@ function applyColorHelpers(colorString: string, i = 0): string {
   if (i >= 64) {
     throw new Error('Could not apply color helper. Too many recursions.')
   }
+
+  console.log('colorString', colorString)
 
   const appliedColor = colorHelpers.reduce((colorString, { regex, fn, name }) => {
     if (colorString.includes(name)) {
