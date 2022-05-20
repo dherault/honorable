@@ -34,6 +34,7 @@ export * from './components/Text/Text'
 export * from './components/Tooltip/Tooltip'
 // Hooks
 export { default as useTheme } from './hooks/useTheme'
+export { default as useForkedRef } from './hooks/useForkedRef'
 export { default as useMediaQuery } from './hooks/useMediaQuery'
 export { default as useOutsideClick } from './hooks/useOutsideClick'
 // Utils
