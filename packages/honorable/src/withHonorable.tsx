@@ -20,7 +20,7 @@ import resolveAll from './resolvers/resolveAll'
 import resolveStyles from './resolvers/resolveStyles'
 
 const allStyleProperties = [
-  'xflex',
+  'xflex', // TODO remove
   ...mpProperties,
   ...styleProperties,
 ]
@@ -45,7 +45,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
     const [overridenProps, setOverridenProps] = useState({})
 
     const [honorable, otherProps] = useMemo(() => {
-      const aliases = Object.keys(theme.aliases || {})
+      const aliases = Object.keys(theme.aliases || {}) // TODO filterObject
       const suffixedAliases = aliases.map(x => `${x}-`)
       const stylesProps: StylesProps = {}
       const otherProps = {} as P

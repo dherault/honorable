@@ -49,8 +49,6 @@ export type StylesProps = AnyProps & CssProps & PseudoSelectorProps & MpProps & 
 }
 
 export type StyledHonorableProps = {
-  ref: Ref<any>
-  theme: HonorableTheme
   honorable: StylesProps
 }
 

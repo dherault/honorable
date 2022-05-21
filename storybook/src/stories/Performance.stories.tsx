@@ -1,6 +1,6 @@
-// Icons from https://icons.modulz.app/
 import React, { useEffect, useState } from 'react'
 import { Div, Flex, H1, Switch } from 'honorable'
+import Stats from 'stats.js'
 
 export default {
   title: 'Performance',
@@ -11,7 +11,7 @@ function Template(args: any) {
   const [useHonorable, setUseHonorable] = useState(true)
   const nodes = []
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 32; i++) {
     nodes.push(
       <Node
         key={i}
@@ -63,12 +63,17 @@ function Node({ useHonorable = false }) {
   const [position, setPosition] = useState<PositionType>(createPosition())
 
   useEffect(() => {
-    let paused = false
+    const stats = new Stats()
+    stats.showPanel(0)
+    document.body.appendChild(stats.dom)
+
     let currentX = position.x
     let currentY = position.y
     let objective = createPosition()
 
     function goToObjective() {
+      stats.begin()
+
       const { x, y } = objective
 
       const dx = x - currentX
@@ -79,22 +84,18 @@ function Node({ useHonorable = false }) {
         objective = createPosition()
       }
       else {
-        currentX += 1 * dx / distance
-        currentY += 1 * dy / distance
+        currentX += dx / distance
+        currentY += dy / distance
 
         setPosition({ x: currentX, y: currentY })
       }
 
-      if (!paused) {
-        window.requestAnimationFrame(goToObjective)
-      }
+      stats.end()
+
+      window.requestAnimationFrame(goToObjective)
     }
 
-    window.requestAnimationFrame(goToObjective)
-
-    return () => {
-      paused = true
-    }
+    goToObjective()
   // eslint-disable-next-line
   }, [])
 
