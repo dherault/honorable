@@ -85,6 +85,8 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
         width={size}
         height={size}
         objectFit="cover"
+        flexShrink={0}
+        backgroundColor={name ? `${nameToColor(name)} !important` : null}
         {...otherProps}
       />
     )
@@ -98,6 +100,7 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
       justifyContent="center"
       width={size}
       height={size}
+      flexShrink={0}
       backgroundColor={name ? `${nameToColor(name)} !important` : null}
       {...otherProps}
     >
