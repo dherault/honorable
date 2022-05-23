@@ -239,20 +239,20 @@ export type HonorableTheme = {
 }
 
 export type TargetWithValue<T> = T & {
-  target?: {
-    value?: any
+  target: {
+    value: any
   }
-  currentTarget?: {
-    value?: any
+  currentTarget: {
+    value: any
   }
 }
 
 export type TargetWithChecked<T> = T & {
-  target?: {
-    checked?: boolean
+  target: {
+    checked: boolean
   }
-  currentTarget?: {
-    checked?: boolean
+  currentTarget: {
+    checked: boolean
   }
 }
 
