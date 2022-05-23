@@ -262,6 +262,8 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     return (
       <Transition
         in={actualOpen}
+        mountOnEnter
+        unmountOnExit
         timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {
