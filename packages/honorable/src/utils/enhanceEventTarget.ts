@@ -3,12 +3,12 @@ function enhanceEventTarget<T>(event: T, object: object): T {
   return {
     ...event,
     target: {
-      // @ts-ignore
+      // @ts-expect-error
       ...event.target,
       ...object,
     },
     currentTarget: {
-      // @ts-ignore
+      // @ts-expect-error
       ...event.currentTarget,
       ...object,
     },

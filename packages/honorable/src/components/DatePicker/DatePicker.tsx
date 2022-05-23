@@ -22,9 +22,10 @@ type DimensionsType = {
 }
 
 export type DatePickerBaseProps = {
-  onChange?: (date: string) => void
+  onChange?: (date: string | [string, string]) => void
   value?: string
   defaultValue?: string
+  range?: boolean
   monthSpan?: number
   startDay?: number
   startDate?: string
@@ -41,6 +42,7 @@ export const DatePickerPropTypes = {
   onChange: PropTypes.func,
   value: PropTypes.string,
   defaultValue: PropTypes.string,
+  range: PropTypes.bool,
   monthSpan: PropTypes.number,
   startDay: PropTypes.number,
   startDate: PropTypes.string,
@@ -56,12 +58,13 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     onChange,
     value,
     defaultValue,
+    range = false,
     monthSpan = 1,
     startDay = 0,
     startDate,
     minYear = 1900,
     maxYear = 2099,
-    transitionDuration = 400,
+    transitionDuration = 650,
     monthWidth = 256,
     monthMargin = 32,
     ...otherProps
@@ -74,13 +77,19 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const actualValue = value ?? uncontrolledValue
   const dtValue = DateTime.create(actualValue)
   const [actualStartDate, setActualStartDate] = useState(DateTime.startOf(startDate ? DateTime.create(startDate) : dtValue, 'month'))
+  const [displayedStartDate, setDisplayedStartDate] = useState(actualStartDate)
   const [dimensions, setDimensions] = useState<DimensionsType>({ width: 'auto', height: 'auto' })
   const [areYearsDisplayed, setAreYearsDisplayed] = useState(false)
-  const [shouldTransition, setShouldTransition] = useState<number>(0)
-  const [transitionTimeoutId, setTransitionTimeoutId] = useState<NodeJS.Timeout>()
+  const [transitionGoal, setTransitionGoal] = useState(0)
+  // const [transitionDirection, setTransitionDirection] = useState(0)
+  const [isTransitionning, setIsTransitionning] = useState(false)
+  const [isGoal, setIsGoal] = useState(true)
   const dayWidthBase = monthWidth / 7
   const viewportWidthBase = monthSpan * monthWidth
   const viewportWidth = viewportWidthBase + (monthSpan - 1) * monthMargin
+
+  console.log('goal', transitionGoal)
+  // console.log('goal -> current', transitionGoal, transitionDirection)
 
   useEffect(() => {
     const { width, height } = datePickerRef.current.getBoundingClientRect()
@@ -88,9 +97,39 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     setDimensions({ width, height })
   }, [monthSpan])
 
+  useEffect(() => {
+    if (DateTime.isSame(actualStartDate, DateTime.add(actualStartDate, transitionGoal, 'month'))) {
+      return
+    }
+
+    // if (isTransitionning) return
+
+    // if (transitionDirection === transitionGoal && transitionGoal !== 0) {
+    //   setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, transitionGoal, 'month'), 'month'))
+    //   setTransitionDirection(0)
+    //   setTransitionGoal(0)
+    //   setIsGoal(true)
+    // }
+
+    // const diff = transitionGoal - transitionDirection > 0 ? 1 : -1
+
+    // setIsTransitionning(true)
+
+    setTimeout(() => {
+      // setIsTransitionning(false)
+      // setTransitionDirection(transitionDirection + diff)
+      setTransitionGoal(0)
+      setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, transitionGoal, 'month'), 'month'))
+    }, transitionDuration)
+  }, [transitionGoal, transitionDuration, DateTime, actualStartDate])
+
   if (DateTime === null) {
     throw new Error('DatePicker: moment or luxon is not provided. Please provide moment or luxon props to DateTimeProvider as a parent.')
   }
+
+  /*
+    HANDLERS
+  */
 
   function handleDayClick(dt: any) {
     const value = DateTime.toISOString(dt)
@@ -108,17 +147,55 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   }
 
   function handleStartDateChange(isLeft: boolean) {
-    setShouldTransition(x => x + (isLeft ? -1 : 1))
-
-    clearTimeout(transitionTimeoutId)
-
-    setTransitionTimeoutId(setTimeout(() => {
-      setActualStartDate(DateTime.startOf(DateTime.add(actualStartDate, shouldTransition + (isLeft ? -1 : 1), 'month'), 'month'))
-      setShouldTransition(0)
-    }, transitionDuration + 12 * 1000 / 60))
+    setTransitionGoal(x => x + (isLeft ? -1 : 1))
+    setDisplayedStartDate(DateTime.startOf(DateTime.add(displayedStartDate, isLeft ? -1 : 1, 'month'), 'month'))
+    // setIsGoal(false)
   }
 
-  function renderMonth(dt: any, i: number) {
+  /*
+    RENDER MONTHS
+  */
+
+  function renderMonths() {
+    const monthHeaderNodes = []
+    const monthContentNodes = []
+
+    for (let i = 0; i < monthSpan; i++) {
+      const dt = DateTime.startOf(DateTime.add(displayedStartDate, i, 'month'), 'month')
+
+      monthHeaderNodes.push(renderMonthHeader(dt, i))
+    }
+
+    for (let i = Math.min(0, transitionGoal); i < monthSpan + Math.max(0, transitionGoal); i++) {
+      const dt = DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month')
+      monthContentNodes.push(renderMonthContent(dt, i))
+    }
+
+    return (
+      <>
+        <Flex>
+          {monthHeaderNodes}
+        </Flex>
+        <Flex
+          mt={0.5}
+          width={viewportWidth}
+          overflowX="hidden"
+        >
+          <Flex
+            wrap="no wrap"
+            position="relative"
+            left={transitionGoal > 0 ? -transitionGoal * (monthWidth + monthMargin) : 0}
+            transition={transitionGoal ? `left ${transitionDuration}ms ease-in-out` : null}
+            // {...resolvePartStyles('MonthsInner', props, theme)}
+          >
+            {monthContentNodes}
+          </Flex>
+        </Flex>
+      </>
+    )
+  }
+
+  function renderMonthHeader(dt: any, i: number) {
     const headerDays = []
     const startOfWeek = DateTime.startOf(dt, 'week')
 
@@ -136,6 +213,47 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       )
     }
 
+    return (
+      <Div
+        key={i}
+        marginRight={monthMargin}
+        _last={{ marginRight: 0 }}
+        {...resolvePartStyles('Month', props, theme)}
+      >
+        {renderMonthAndYear(dt)}
+        <Flex
+          mt={1}
+          align="center"
+          width={monthWidth}
+          {...resolvePartStyles('WeekDays', props, theme)}
+        >
+          {headerDays}
+        </Flex>
+      </Div>
+    )
+  }
+
+  function renderMonthAndYear(dt: any) {
+    return (
+      <Flex
+        px={1}
+        align="center"
+        justify="center"
+        {...resolvePartStyles('MonthAndYear', props, theme)}
+      >
+        <Flex
+          align="center"
+          cursor="pointer"
+          onClick={() => setAreYearsDisplayed(x => !x)}
+          {...resolvePartStyles('MonthAndYearInner', props, theme)}
+        >
+          {DateTime.format(dt, 'MMMM')} {DateTime.format(dt, 'YYYY')}
+        </Flex>
+      </Flex>
+    )
+  }
+
+  function renderMonthContent(dt: any, i: number) {
     const days = []
     const monthStartDay = (DateTime.weekday(dt) + (DateTime.isLuxon ? -1 : 0)) % 7
     const maxI = monthStartDay < startDay ? monthStartDay + 7 : monthStartDay
@@ -158,7 +276,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       days.push(
         <DatePickerDay
           key={i}
-          day={day.format('D')}
+          day={DateTime.format(day, 'D')}
           active={DateTime.isSame(dtValue, day, 'day')}
           width={dayWidthBase}
           height={dayWidthBase}
@@ -168,53 +286,23 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     }
 
     return (
-      <Div
-        key={i}
+      <Flex
         marginRight={monthMargin}
         _last={{ marginRight: 0 }}
-        {...resolvePartStyles('Month', props, theme)}
-      >
-        {renderMonthAndYear(dt)}
-        <Flex
-          mt={1}
-          align="center"
-          width={monthWidth}
-          {...resolvePartStyles('WeekDays', props, theme)}
-        >
-          {headerDays}
-        </Flex>
-        <Flex
-          mt={0.5}
-          align="center"
-          wrap="wrap"
-          width={monthWidth}
-          {...resolvePartStyles('Days', props, theme)}
-        >
-          {days}
-        </Flex>
-      </Div>
-    )
-  }
-
-  function renderMonthAndYear(dt: any) {
-    return (
-      <Flex
-        mx={0.333}
         align="center"
-        justify="center"
-        {...resolvePartStyles('MonthAndYear', props, theme)}
+        wrap="wrap"
+        width={monthWidth}
+        id={dt.format('MM')}
+        {...resolvePartStyles('Days', props, theme)}
       >
-        <Flex
-          align="center"
-          cursor="pointer"
-          onClick={() => setAreYearsDisplayed(x => !x)}
-          {...resolvePartStyles('MonthAndYearInner', props, theme)}
-        >
-          {DateTime.format(dt, 'MMMM')} {DateTime.format(dt, 'YYYY')}
-        </Flex>
+        {days}
       </Flex>
     )
   }
+
+  /*
+    RENDER YEARS
+  */
 
   function renderYears() {
     return (
@@ -245,48 +333,42 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
     )
   }
 
-  function renderMonths() {
-    const monthNodes = []
+  // function renderMonths() {
+  //   const monthNodes = []
 
-    for (let i = -1 + Math.min(shouldTransition, 0); i < monthSpan + 1 + Math.max(shouldTransition, 0); i++) {
-      monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
-    }
+  //   for (let i = -1 + Math.min(shouldTransition, 0); i < monthSpan + 1 + Math.max(shouldTransition, 0); i++) {
+  //     monthNodes.push(renderMonth(DateTime.startOf(DateTime.add(actualStartDate, i, 'month'), 'month'), i))
+  //   }
 
-    return (
-      <Flex
-        position="relative"
-        width={3 * viewportWidthBase + 2 * monthMargin}
-        left={-(
-          shouldTransition * (monthWidth + monthMargin)
-          + viewportWidthBase + monthSpan * monthMargin
-        )}
-        transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
-        {...resolvePartStyles('MonthsInner', props, theme)}
-      >
-        {monthNodes}
-      </Flex>
-    )
-  }
+  //   return (
+  //     <Flex
+  //       position="relative"
+  //       width={3 * viewportWidthBase + 2 * monthMargin}
+  //       left={-(
+  //         shouldTransition * (monthWidth + monthMargin)
+  //         + viewportWidthBase + monthSpan * monthMargin
+  //       )}
+  //       transition={shouldTransition ? `left ${transitionDuration}ms ease-in-out` : null}
+  //       {...resolvePartStyles('MonthsInner', props, theme)}
+  //     >
+  //       {monthNodes}
+  //     </Flex>
+  //   )
+  // }
 
   return (
     <Div
       ref={forkedRef}
+      width={viewportWidth}
       position="relative"
       userSelect="none"
       {...otherProps}
     >
-      <Div
-        width={viewportWidth}
-        position="relative"
-        overflowX="hidden"
-        {...resolvePartStyles('Months', props, theme)}
-      >
-        {areYearsDisplayed ? renderYears() : renderMonths()}
-      </Div>
+      {areYearsDisplayed ? renderYears() : renderMonths()}
       <Flex
-        p={0.25}
+        p={0.333}
         position="absolute"
-        top={-6}
+        top={-8}
         left={2}
         align="center"
         justify="center"
@@ -303,9 +385,9 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
         />
       </Flex>
       <Flex
-        p={0.25}
+        p={0.333}
         position="absolute"
-        top={-6}
+        top={-8}
         right={2}
         align="center"
         justify="center"
@@ -338,14 +420,14 @@ export const DatePicker = withHonorable<DatePickerProps>(ForwardedDatePicker, 'D
 */
 
 export type DatePickerDayBaseProps = {
-  day: number,
+  day?: string,
   active?: boolean
 }
 
 export type DatePickerDayProps = HonorableProps<DivProps & DatePickerDayBaseProps>
 
 export const DatePickerDayPropTypes = {
-  day: PropTypes.number.isRequired,
+  day: PropTypes.string,
   active: PropTypes.bool,
 }
 
