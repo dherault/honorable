@@ -1,14 +1,12 @@
 import { Ref, forwardRef } from 'react'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import { Div, DivProps } from '../tags'
 
 export type CardBaseProps = unknown
 
-export type CardProps = HonorableProps<DivProps & CardBaseProps>
+export type CardProps = DivProps & CardBaseProps
 
 export const CardPropTypes = {}
 

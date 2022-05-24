@@ -1,8 +1,6 @@
 import { ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -36,7 +34,7 @@ export type AccordionBaseProps = {
   expandIcon?: ReactNode
 }
 
-export type AccordionProps = HonorableProps<Omit<DivProps, 'title'> & AccordionBaseProps>
+export type AccordionProps = Omit<DivProps, 'title'> & AccordionBaseProps
 
 export const accordionPropTypes = {
   expanded: PropTypes.bool,

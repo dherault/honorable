@@ -150,6 +150,7 @@ export default {
       {
         color: 'white',
         backgroundColor: 'primary',
+        border: 'none',
         padding: '8px 16px',
         borderRadius: 4,
         userSelect: 'none',

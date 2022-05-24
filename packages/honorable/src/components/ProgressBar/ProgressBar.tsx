@@ -1,7 +1,5 @@
 import { Ref, forwardRef } from 'react'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -17,7 +15,7 @@ export type ProgressBarBaseProps = {
   value: number
 }
 
-export type ProgressBarProps = HonorableProps<DivProps & ProgressBarBaseProps>
+export type ProgressBarProps = DivProps & ProgressBarBaseProps
 
 export const progressBarPropTypes = {}
 

@@ -22,7 +22,7 @@ const allStyleProperties = [
 const suffixedAllStyleProperties = allStyleProperties.map(x => `${x}-`)
 const pseudoSelectorPropKeys = Object.keys(propToPseudoSelectors)
 
-function useHonorable(props: object, name: string) {
+function useHonorable(props: object, name: string, propTypeKeys: string[] = []) {
   const theme = useTheme()
 
   return useMemo(() => {
@@ -30,16 +30,19 @@ function useHonorable(props: object, name: string) {
     const suffixedAliases = aliases.map(x => `${x}-`)
     const stylesProps: StylesProps = {}
     const resolvedRootStyles = resolveStyles(theme[name]?.Root, props, theme)
-    const otherProps = {}
+    const otherProps = resolveStyles(theme[name]?.DefaultProps, props, theme)
 
     Object.entries(props).forEach(([key, value]) => {
       if (
-        allStyleProperties.includes(key as typeof allStyleProperties[number])
-        || suffixedAllStyleProperties.some(x => key.startsWith(x))
-        || aliases.includes(key)
-        || suffixedAliases.some(x => key.startsWith(x))
-        || isSelector(key)
-        || pseudoSelectorPropKeys.includes(key)
+        (
+          allStyleProperties.includes(key as typeof allStyleProperties[number])
+          || suffixedAllStyleProperties.some(x => key.startsWith(x))
+          || aliases.includes(key)
+          || suffixedAliases.some(x => key.startsWith(x))
+          || isSelector(key)
+          || pseudoSelectorPropKeys.includes(key)
+        )
+        && !propTypeKeys.includes(key)
       ) {
         stylesProps[key] = value
       }
@@ -63,7 +66,7 @@ function useHonorable(props: object, name: string) {
       ),
       otherProps,
     ]
-  }, [props, name, theme])
+  }, [props, name, propTypeKeys, theme])
 }
 
 export default useHonorable

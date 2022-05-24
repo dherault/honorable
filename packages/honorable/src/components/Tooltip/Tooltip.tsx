@@ -4,8 +4,6 @@ import { arrow as arrowMiddleware, autoUpdate, offset, shift, useFloating } from
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -79,7 +77,7 @@ export type TooltipBaseProps = {
     | 'top'
 }
 
-export type TooltipProps = HonorableProps<DivProps & TooltipBaseProps>
+export type TooltipProps = DivProps & TooltipBaseProps
 
 export const TooltipPropTypes = {
   children: PropTypes.node.isRequired,

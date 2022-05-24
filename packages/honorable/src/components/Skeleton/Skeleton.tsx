@@ -3,8 +3,6 @@ import { Ref, forwardRef } from 'react'
 import { css, keyframes } from '@emotion/react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -17,7 +15,7 @@ export type SkeletonBaseProps = {
   animation?: 'wave' | true | false
 }
 
-export type SkeletonProps = HonorableProps<DivProps & SkeletonBaseProps>
+export type SkeletonProps = DivProps & SkeletonBaseProps
 
 export const SkeletonPropTypes = {
   animation: PropTypes.oneOfType([

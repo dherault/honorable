@@ -1,8 +1,6 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import usePropWithBreakpoints from '../../hooks/usePropWithBreakpoints'
@@ -20,7 +18,7 @@ export type GridBaseProps = {
   zeroMinWidth?: boolean
 }
 
-export type GridProps = HonorableProps<FlexProps & GridBaseProps>
+export type GridProps = FlexProps & GridBaseProps
 
 export const GridPropTypes = {
   ...FlexPropTypes,

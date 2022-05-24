@@ -4,7 +4,8 @@ type UseOverridenProps = {
   __honorableSetOverridenProps?: Dispatch<SetStateAction<object>>
 }
 
-function useOverridenProps({ __honorableSetOverridenProps }: UseOverridenProps, props: object) {
+// HACK: any to avoid TS error so far, should use UseOverridenProps
+function useOverridenProps({ __honorableSetOverridenProps }: any, props: object) {
   useEffect(() => {
     __honorableSetOverridenProps(props)
   // eslint-disable-next-line react-hooks/exhaustive-deps

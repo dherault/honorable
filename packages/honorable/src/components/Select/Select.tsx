@@ -1,7 +1,7 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps, TargetWithValue } from '../../types'
+import { TargetWithValue } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -33,7 +33,7 @@ export type SelectBaseProps = {
   fade?: boolean
 }
 
-export type SelectProps = HonorableProps<Omit<DivProps, 'onChange'> & SelectBaseProps>
+export type SelectProps = Omit<DivProps, 'onChange'> & SelectBaseProps
 
 export const selectPropTypes = {
   open: PropTypes.bool,

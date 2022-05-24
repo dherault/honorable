@@ -1,8 +1,6 @@
 import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import { MenuStateType } from '../../contexts/MenuContext'
@@ -35,7 +33,7 @@ export type AutocompleteBaseProps = {
   noOptionsNode?: ReactNode
 }
 
-export type AutocompleteProps = HonorableProps<InputBaseProps & Omit<DivProps, 'onChange'> & AutocompleteBaseProps>
+export type AutocompleteProps = InputBaseProps & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
 
 const autocompletePropTypes = {
   ...inputPropTypes,

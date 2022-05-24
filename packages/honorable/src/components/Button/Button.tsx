@@ -1,8 +1,6 @@
 import { ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -36,7 +34,7 @@ export type ButtonBaseProps = {
   disabled?: boolean
 }
 
-export type ButtonProps = HonorableProps<ButtonBaseBaseProps & ButtonBaseProps>
+export type ButtonProps = ButtonBaseBaseProps & ButtonBaseProps
 
 export const buttonPropTypes = {
   startIcon: PropTypes.node,

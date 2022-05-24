@@ -1,7 +1,6 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -14,7 +13,7 @@ export type CaretBaseProps = {
   rotation?: number
 }
 
-export type CaretProps = HonorableProps<SvgProps & CaretBaseProps>
+export type CaretProps = SvgProps & CaretBaseProps
 
 export const caretPropTypes = {
   rotation: PropTypes.number,

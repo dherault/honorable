@@ -1,8 +1,6 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useImageLoad from '../../hooks/useImageLoad'
@@ -24,7 +22,7 @@ export type AvatarBaseProps = {
   name?: string
 }
 
-export type AvatarProps = HonorableProps<ImgProps & DivProps & AvatarBaseProps>
+export type AvatarProps = ImgProps & DivProps & AvatarBaseProps
 
 export const AvatarPropTypes = {
   size: PropTypes.number,

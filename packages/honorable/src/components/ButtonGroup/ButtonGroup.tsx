@@ -1,14 +1,12 @@
 import { Ref, forwardRef } from 'react'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import { Div, DivProps } from '../tags'
 
 export type ButtonGroupBaseProps = unknown
 
-export type ButtonGroupProps = HonorableProps<DivProps & ButtonGroupBaseProps>
+export type ButtonGroupProps = DivProps & ButtonGroupBaseProps
 
 export const buttonGroupPropTypes = {}
 

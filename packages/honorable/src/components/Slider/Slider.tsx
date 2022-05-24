@@ -2,8 +2,6 @@
 import { MouseEvent as ReactMouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -38,7 +36,7 @@ export type SliderBaseProps = {
   labelTooltipDisplay: 'on' | 'off'| 'auto'
 }
 
-export type SliderProps = HonorableProps<DivProps & SliderBaseProps>
+export type SliderProps = DivProps & SliderBaseProps
 
 type MarkProps = {
   label: ReactNode

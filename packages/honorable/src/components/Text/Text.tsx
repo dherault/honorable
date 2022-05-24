@@ -1,14 +1,12 @@
 import { Ref, forwardRef } from 'react'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import { P, PProps } from '../tags'
 
 export type TextBaseProps = unknown
 
-export type TextProps = HonorableProps<PProps & TextBaseProps>
+export type TextProps = PProps & TextBaseProps
 
 export const TextPropTypes = {}
 

@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps, TargetWithChecked } from '../../types'
+import { TargetWithChecked } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -38,10 +38,10 @@ export type CheckboxBaseProps = {
   /**
    * The position of the label relative to the Checkbox
    */
-  labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
+  labelPosition?: 'left' | 'right' | 'top' | 'bottom'
 }
 
-export type CheckboxProps = HonorableProps<Omit<DivProps, 'onChange'> & CheckboxBaseProps>
+export type CheckboxProps = Omit<DivProps, 'onChange'> & CheckboxBaseProps
 
 export const checkboxPropTypes = {
   checked: PropTypes.bool,
@@ -149,6 +149,7 @@ CheckboxRef.displayName = 'Checkbox'
 
 const ForwaredCheckbox = forwardRef(CheckboxRef)
 
+// @ts-expect-error
 ForwaredCheckbox.propTypes = checkboxPropTypes
 
 export const Checkbox = withHonorable<CheckboxProps>(ForwaredCheckbox, 'Checkbox')

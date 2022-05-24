@@ -1,8 +1,6 @@
 import { Ref, forwardRef, useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import DateTimeContext from '../../contexts/DateTimeContext'
@@ -36,7 +34,7 @@ export type DatePickerBaseProps = {
   monthMargin?: number
 }
 
-export type DatePickerProps = HonorableProps<DivProps & DatePickerBaseProps>
+export type DatePickerProps = DivProps & DatePickerBaseProps
 
 export const DatePickerPropTypes = {
   onChange: PropTypes.func,
@@ -424,7 +422,7 @@ export type DatePickerDayBaseProps = {
   active?: boolean
 }
 
-export type DatePickerDayProps = HonorableProps<DivProps & DatePickerDayBaseProps>
+export type DatePickerDayProps = DivProps & DatePickerDayBaseProps
 
 export const DatePickerDayPropTypes = {
   day: PropTypes.string,
@@ -491,7 +489,7 @@ export type DatePickerYearsBaseProps = {
   onYearClick: (year: number) => void,
 }
 
-export type DatePickerYearsProps = HonorableProps<DivProps & DatePickerYearsBaseProps>
+export type DatePickerYearsProps = DivProps & DatePickerYearsBaseProps
 
 export const DatePickerYearsPropTypes = {
   minYear: PropTypes.number,
@@ -563,7 +561,7 @@ export type DatePickerYearBaseProps = {
   active: boolean
 }
 
-export type DatePickerYearProps = HonorableProps<DivProps & DatePickerYearBaseProps>
+export type DatePickerYearProps = DivProps & DatePickerYearBaseProps
 
 export const DatePickerYearPropTypes = {
   dimensions: PropTypes.shape({

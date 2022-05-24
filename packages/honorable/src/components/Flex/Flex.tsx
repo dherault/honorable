@@ -1,8 +1,6 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import { Div, DivProps } from '../tags'
@@ -38,7 +36,7 @@ export type FlexBaseProps = {
   justify?: string
 }
 
-export type FlexProps = HonorableProps<DivProps & FlexBaseProps>
+export type FlexProps = DivProps & FlexBaseProps
 
 export const FlexPropTypes = {
   direction: PropTypes.string,

@@ -1,92 +1,29 @@
 /* eslint-disable no-multi-spaces */
-import { ComponentType, Ref, forwardRef, memo, useMemo, useState } from 'react'
+import { ComponentType, Ref, forwardRef, useState } from 'react'
 import styled from '@emotion/styled'
-import isPropValid from '@emotion/is-prop-valid'
-import merge from 'lodash.merge'
-
-import {
-  StyledHonorableProps,
-  StylesProps,
-} from './types'
-
-import mpProperties from './data/mpProperties'
-import styleProperties from './data/stylesProperties'
-import propToPseudoSelectors from './data/propToPseudoSelectors'
 
 import useTheme from './hooks/useTheme'
 
-import isSelector from './utils/isSelector'
-import resolveAll from './resolvers/resolveAll'
-import resolveStyles from './resolvers/resolveStyles'
+import useHonorable from './hooks/useHonorable'
 
-const allStyleProperties = [
-  'xflex', // TODO remove
-  ...mpProperties,
-  ...styleProperties,
-]
-const suffixedAllStyleProperties = allStyleProperties.map(x => `${x}-`)
-const pseudoSelectorPropKeys = Object.keys(propToPseudoSelectors)
-
+// TODO remove this and replace with hooks
 // React HOC to support style props
-function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) {
-  const isTag = typeof ComponentOrTag === 'string'
-  const componentPropsTypes = isTag ? {} : ComponentOrTag.propTypes || {}
+function withHonorable<P>(ComponentOrTag: ComponentType<any>, name: string) {
+  const componentPropsTypes = ComponentOrTag.propTypes || {}
   const propTypeKeys = Object.keys(componentPropsTypes)
 
   const HonorableStyle = styled(
-    ComponentOrTag as ComponentType<StyledHonorableProps & P>,
+    ComponentOrTag,
     {
-      shouldForwardProp: (prop: string) => !(isTag || prop === 'honorable' || prop === 'theme') || isPropValid(prop),
+      shouldForwardProp: (prop: string) => !(prop === 'honorable' || prop === 'theme'),
     }
-  )(props => props.honorable)
+  )<ComponentType<P>>((props: any) => props.honorable)
 
   function Honorable(props: P, ref: Ref<any>) {
     const theme = useTheme()
     const [overridenProps, setOverridenProps] = useState({})
 
-    const [honorable, otherProps] = useMemo(() => {
-      const aliases = Object.keys(theme.aliases || {}) // TODO filterObject
-      const suffixedAliases = aliases.map(x => `${x}-`)
-      const stylesProps: StylesProps = {}
-      const otherProps = {} as P
-      const resolvedProps = { ...props, ...overridenProps }
-      const resolvedRootStyles = resolveStyles(theme[name]?.Root, resolvedProps, theme)
-
-      Object.entries(props).forEach(([key, value]) => {
-        if (
-          (
-            allStyleProperties.includes(key)
-            || suffixedAllStyleProperties.some(x => key.startsWith(x))
-            || aliases.includes(key)
-            || suffixedAliases.some(x => key.startsWith(x))
-            || isSelector(key)
-            || pseudoSelectorPropKeys.includes(key)
-          )
-          && !propTypeKeys.includes(key)
-        ) {
-          stylesProps[key] = value
-        }
-        else {
-          otherProps[key] = value
-        }
-      })
-
-      return [
-        resolveAll(
-          merge(
-            {},
-            // Component root styles
-            resolvedRootStyles,
-            // Global props
-            resolveStyles(theme.global, { ...resolvedProps, ...resolvedRootStyles }, theme),
-            // Actual style from props
-            stylesProps,
-          ),
-          theme
-        ),
-        otherProps,
-      ]
-    }, [props, overridenProps, theme])
+    const [honorable, otherProps] = useHonorable(props as unknown as object, name, propTypeKeys)
 
     return (
       <HonorableStyle
@@ -106,7 +43,7 @@ function withHonorable<P>(ComponentOrTag: string | ComponentType, name: string) 
   ForwardedHonorable.displayName = `Honorable(${name})`
   ForwardedHonorable.propTypes = componentPropsTypes
 
-  return memo(ForwardedHonorable)
+  return ForwardedHonorable
 }
 
 export default withHonorable

@@ -2,8 +2,6 @@ import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, use
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
-import { HonorableProps } from '../../types'
-
 import withHonorable from '../../withHonorable'
 
 import useTheme from '../../hooks/useTheme'
@@ -87,7 +85,7 @@ export type InputBaseProps = {
   maxRows?: number
 }
 
-export type InputProps = HonorableProps<Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & InputBaseProps>
+export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & InputBaseProps
 
 export const inputPropTypes = {
   type: PropTypes.string,
