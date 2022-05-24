@@ -151,7 +151,6 @@ export default {
         color: 'white',
         backgroundColor: 'primary',
         padding: '8px 16px',
-        border: '1px solid primary',
         borderRadius: 4,
         userSelect: 'none',
         textDecoration: 'none',
@@ -159,15 +158,12 @@ export default {
         flexShrink: 0,
         ':hover': {
           backgroundColor: 'darken(primary, 10)',
-          borderColor: 'darken(primary, 10)',
         },
         ':active': {
           backgroundColor: 'darken(primary, 20)',
-          borderColor: 'darken(primary, 20)',
         },
-        '&:disabled': {
+        ':disabled': {
           backgroundColor: 'lightgrey',
-          borderColor: 'lightgrey',
           cursor: 'not-allowed',
           ':hover': {
             backgroundColor: 'lightgrey',

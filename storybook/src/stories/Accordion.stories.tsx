@@ -10,6 +10,30 @@ export default {
   component: Accordion,
 }
 
+// START-DEMO
+// Uncontrolled
+// https://storybook.honorable.design/iframe.html?args=&id=accordion--demo&viewMode=story
+function AccordionUncontrolled() {
+  return (
+    <>
+      <Accordion title="Our vision">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Accordion>
+      <Accordion title="Our mission">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Accordion>
+      <Accordion title="Our values">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Accordion>
+    </>
+  )
+}
+// END-DEMO
+
+export const DemoUncontrolled = AccordionUncontrolled.bind({})
+DemoUncontrolled.args = {
+}
+
 function Template(args: any) {
   return (
     <>
@@ -27,23 +51,23 @@ function TemplateSolo(args: any) {
 }
 
 function TemplateControlled(args: any) {
-  const [expanded, setExpanded] = useState(null)
+  const [expanded, setExpanded] = useState(-1)
 
   return (
     <>
       <Accordion
         {...args}
-        onExpand={() => setExpanded(expanded === 1 ? null : 1)}
+        onExpand={() => setExpanded(expanded === 1 ? -1 : 1)}
         expanded={expanded === 1}
       />
       <Accordion
         {...args}
-        onExpand={() => setExpanded(expanded === 2 ? null : 2)}
+        onExpand={() => setExpanded(expanded === 2 ? -1 : 2)}
         expanded={expanded === 2}
       />
       <Accordion
         {...args}
-        onExpand={() => setExpanded(expanded === 3 ? null : 3)}
+        onExpand={() => setExpanded(expanded === 3 ? -1 : 3)}
         expanded={expanded === 3}
       />
     </>
@@ -100,20 +124,4 @@ DefaultExpanded.args = {
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
   disabled: false,
   defaultExpanded: true,
-}
-
-export const Parts = createPartsTemplate(
-  Accordion,
-  'Accordion',
-  [
-    'Title',
-    'ExpandIcon',
-    'ChildrenWrapper',
-    'Children',
-  ],
-).bind({})
-Parts.args = {
-  defaultExpanded: true,
-  title: 'An Accordion',
-  children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 }

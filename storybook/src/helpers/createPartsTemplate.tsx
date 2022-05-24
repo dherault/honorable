@@ -37,8 +37,6 @@ function createPartsTemplate(Component: ComponentType<any>, name: string, parts:
     },
   }
 
-  console.log('extendedTheme', extendedTheme)
-
   return function Template(args: any) {
     return (
       <ExtendTheme theme={extendedTheme}>

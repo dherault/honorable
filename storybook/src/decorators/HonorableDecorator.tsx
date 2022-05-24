@@ -17,6 +17,7 @@ const theme = mergeTheme(defaultTheme, {
 
 const titleToBackgroundColor = {
   Accordion: 'background-light',
+  'Accordion Demo': 'background-light',
 }
 
 function HonorableDecorator(Story: StoryType, { title }: StoryContext) {
