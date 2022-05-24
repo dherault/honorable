@@ -2,6 +2,8 @@
 import React from 'react'
 import { Avatar } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Avatar',
   component: Avatar,
@@ -52,4 +54,13 @@ export const Size = Template.bind({})
 Size.args = {
   name: 'Julien Brothero',
   size: 64,
+}
+
+export const Parts = createPartsTemplate(
+  Avatar,
+  'Avatar',
+  [],
+).bind({})
+Parts.args = {
+  name: 'Jane Smith',
 }

@@ -2,6 +2,8 @@ import React from 'react'
 
 import { Div } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Div',
   component: Div,

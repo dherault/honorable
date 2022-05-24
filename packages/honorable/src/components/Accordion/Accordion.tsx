@@ -98,11 +98,11 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       </Div>
       <Div
         height={actualExpanded ? childrenHeight : 0}
-        {...resolvePartStyles('Children', props, theme)}
+        {...resolvePartStyles('ChildrenWrapper', props, theme)}
       >
         <Div
           ref={childrenRef}
-          {...resolvePartStyles('ChildrenInner', props, theme)}
+          {...resolvePartStyles('Children', props, theme)}
         >
           {children}
         </Div>

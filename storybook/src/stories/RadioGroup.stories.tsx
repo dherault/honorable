@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { Radio, RadioGroup } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'RadioGroup',
   component: RadioGroup,

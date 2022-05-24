@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { Input, P } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Input',
   component: Input,

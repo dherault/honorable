@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Slider } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Slider',
   component: Slider,

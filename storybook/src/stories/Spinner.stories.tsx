@@ -1,5 +1,7 @@
 import React, { Spinner } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Spinner',
   component: Spinner,

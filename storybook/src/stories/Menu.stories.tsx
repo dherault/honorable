@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import React, { A, Menu, MenuItem } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Menu',
   component: Menu,

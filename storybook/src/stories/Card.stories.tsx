@@ -2,6 +2,8 @@
 import React from 'react'
 import { Card } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Card',
   component: Card,

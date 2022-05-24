@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { A, Flex, Menu, MenuItem, Select } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Select',
   component: Select,

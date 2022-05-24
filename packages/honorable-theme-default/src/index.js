@@ -108,12 +108,12 @@ export default {
         padding: 16,
       },
     ],
-    Children: [
+    ChildrenWrapper: [
       {
         transition: 'height 200ms ease',
       },
     ],
-    ChildrenInner: [
+    Children: [
       {
         padding: '0 16px 16px 16px',
       },

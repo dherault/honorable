@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Flex, Tooltip } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Tooltip',
   component: Tooltip,

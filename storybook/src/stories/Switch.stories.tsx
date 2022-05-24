@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { Switch } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Switch',
   component: Switch,

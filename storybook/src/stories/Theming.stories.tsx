@@ -1,6 +1,8 @@
 import React from 'react'
 import { DropdownButton, ExtendTheme } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Theming',
 }

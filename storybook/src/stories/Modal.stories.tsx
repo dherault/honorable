@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { A, ExtendTheme, Modal, P } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Modal',
   component: Modal,

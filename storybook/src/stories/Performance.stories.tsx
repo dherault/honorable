@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Div, Flex, H1, Switch } from 'honorable'
 import Stats from 'stats.js'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'Performance',
   component: Div,

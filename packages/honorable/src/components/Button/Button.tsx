@@ -71,9 +71,9 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       ref={forkedRef}
       display="inline-flex"
       alignItems="center"
+      disabled={loading}
       {...otherProps}
       position="relative"
-      disabled={props.disabled || loading}
     >
       {!!startIcon && (
         <Span

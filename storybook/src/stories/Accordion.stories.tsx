@@ -1,7 +1,9 @@
 // Icons from https://icons.modulz.app/
 import React, { useState } from 'react'
 
-import { Accordion, Div } from 'honorable'
+import { Accordion } from 'honorable'
+
+import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
   title: 'Accordion',
@@ -10,19 +12,17 @@ export default {
 
 function Template(args: any) {
   return (
-    <Div height="100%">
+    <>
       <Accordion {...args} />
       <Accordion {...args} />
       <Accordion {...args} />
-    </Div>
+    </>
   )
 }
 
 function TemplateSolo(args: any) {
   return (
-    <Div height="100%">
-      <Accordion {...args} />
-    </Div>
+    <Accordion {...args} />
   )
 }
 
@@ -30,7 +30,7 @@ function TemplateControlled(args: any) {
   const [expanded, setExpanded] = useState(null)
 
   return (
-    <Div height="100%">
+    <>
       <Accordion
         {...args}
         onExpand={() => setExpanded(expanded === 1 ? null : 1)}
@@ -46,7 +46,7 @@ function TemplateControlled(args: any) {
         onExpand={() => setExpanded(expanded === 3 ? null : 3)}
         expanded={expanded === 3}
       />
-    </Div>
+    </>
   )
 }
 
@@ -100,4 +100,20 @@ DefaultExpanded.args = {
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
   disabled: false,
   defaultExpanded: true,
+}
+
+export const Parts = createPartsTemplate(
+  Accordion,
+  'Accordion',
+  [
+    'Title',
+    'ExpandIcon',
+    'ChildrenWrapper',
+    'Children',
+  ],
+).bind({})
+Parts.args = {
+  defaultExpanded: true,
+  title: 'An Accordion',
+  children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 }

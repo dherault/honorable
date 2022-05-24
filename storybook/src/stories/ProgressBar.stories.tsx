@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { A, ProgressBar } from 'honorable'
 
+import createPartsTemplate from '../helpers/createPartsTemplate'
+
 export default {
   title: 'ProgressBar',
   component: ProgressBar,
