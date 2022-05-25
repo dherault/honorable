@@ -3,12 +3,10 @@ import PropTypes from 'prop-types'
 
 import { TargetWithChecked } from '../../types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyle from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
@@ -41,6 +39,10 @@ export type SwitchBaseProps = {
    * Useful to place an emoji like 🌞
    */
   uncheckedBackground?: ReactNode
+  /**
+   * The position of the label relative to the Checkbox
+   */
+   labelPosition?: 'left' | 'right' | 'top' | 'bottom'
 }
 
 export type SwitchProps = Omit<DivProps, 'onChange'> & SwitchBaseProps
@@ -51,6 +53,7 @@ export const switchPropTypes = {
   onChange: PropTypes.func,
   checkedBackground: PropTypes.node,
   uncheckedBackground: PropTypes.node,
+  labelPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
 }
 
 // TODO v1 decide weither to use actualChecked or uncontrolledChecked
@@ -63,13 +66,23 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
     onChange,
     checkedBackground = null,
     uncheckedBackground = null,
+    labelPosition = 'right',
+    children,
     ...otherProps
   } = props
   const theme = useTheme()
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
+  const workingProps = { ...props, checked: actualChecked }
+  const rootStyle = useRootStyle('Switch', workingProps, theme)
 
-  useOverridenProps(props, { checked: actualChecked })
+  const flexProps = labelPosition === 'left'
+    ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
+    : labelPosition === 'top'
+      ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
+      : labelPosition === 'bottom'
+        ? { justifyContent: 'flex-start', flexDirection: 'column' }
+        : { justifyContent: 'flex-start' }
 
   function handleKeyDown(event: KeyboardEvent) {
     if (event.code === 'Enter' || event.code === 'Space') {
@@ -81,17 +94,11 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      display="inline-flex"
-      flexDirection="column"
-      flexShrink={0}
-      position="relative"
-      width={50}
-      height={24}
-      borderRadius={24 / 2}
-      userSelect="none"
-      cursor="pointer"
-      role="button"
+      display="flex"
+      alignItems="center"
       tabIndex={0}
+      {...flexProps}
+      {...rootStyle}
       {...otherProps}
       onClick={event => {
         if (disabled) return
@@ -105,45 +112,65 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
         if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
       }}
     >
-      {actualChecked && !!checkedBackground && (
-        <Div
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-start"
-          flexGrow={1}
-        >
-          {checkedBackground}
+      <Div
+        display="flex"
+        flexDirection="column"
+        flexShrink={0}
+        position="relative"
+        width={50}
+        height={24}
+        borderRadius={24 / 2}
+        userSelect="none"
+        cursor="pointer"
+        role="button"
+        {...resolvePartStyles('Switch.Control', workingProps, theme)}
+      >
+        {actualChecked && !!checkedBackground && (
+          <Div
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-start"
+            flexGrow={1}
+            {...resolvePartStyles('Switch.CheckedBackground', workingProps, theme)}
+          >
+            {checkedBackground}
+          </Div>
+        )}
+        {!actualChecked && !!uncheckedBackground && (
+          <Div
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-end"
+            flexGrow={1}
+            {...resolvePartStyles('Switch.UncheckedBackground', workingProps, theme)}
+          >
+            {uncheckedBackground}
+          </Div>
+        )}
+        <Span
+          position="absolute"
+          width={20}
+          height={20}
+          borderRadius={20 / 2}
+          backgroundColor="white"
+          top={2}
+          left={actualChecked ? 'calc(100% - 22px)' : 2}
+          transition="left 150ms ease"
+          {...resolvePartStyles('Switch.Handle', workingProps, theme)}
+        />
+      </Div>
+      {!!children && (
+        <Div {...resolvePartStyles('Switch.Children', workingProps, theme)}>
+          {children}
         </Div>
       )}
-      {!actualChecked && !!uncheckedBackground && (
-        <Div
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-end"
-          flexGrow={1}
-        >
-          {uncheckedBackground}
-        </Div>
-      )}
-      <Span
-        position="absolute"
-        width={20}
-        height={20}
-        borderRadius={20 / 2}
-        backgroundColor="white"
-        top={2}
-        left={actualChecked ? 'calc(100% - 22px)' : 2}
-        transition="left 150ms ease"
-        {...resolvePartStyles('Handle', props, theme)}
-      />
     </Div>
   )
 }
 
 SwitchRef.displayName = 'Switch'
 
-const ForwaredSwitch = forwardRef(SwitchRef)
+export const Switch = forwardRef(SwitchRef)
 
-ForwaredSwitch.propTypes = switchPropTypes
-
-export const Switch = withHonorable<SwitchProps>(ForwaredSwitch, 'Switch')
+// @ts-expect-error
+Switch.propTypes = switchPropTypes

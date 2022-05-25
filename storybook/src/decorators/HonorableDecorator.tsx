@@ -13,6 +13,26 @@ const theme = mergeTheme(defaultTheme, {
       },
     },
   ],
+  Switch: {
+    Control: [
+      ({ sunAndMoon }: any) => sunAndMoon && {
+        backgroundColor: 'primary',
+        fontSize: 18,
+      },
+    ],
+    CheckedBackground: [
+      ({ sunAndMoon }: any) => sunAndMoon && {
+        paddingLeft: 4,
+        paddingTop: 1,
+      },
+    ],
+    UncheckedBackground: [
+      ({ sunAndMoon }: any) => sunAndMoon && {
+        paddingRight: 4,
+        paddingTop: 1,
+      },
+    ],
+  },
 })
 
 const titleToBackgroundColor = {
@@ -34,27 +54,11 @@ function HonorableDecorator(Story: StoryType, { title }: StoryContext) {
         backgroundColor={titleToBackgroundColor[title]}
       >
         <Switch
-          checkedBackground={(
-            <Span
-              paddingLeft={4}
-              paddingTop={1}
-              fontSize={18}
-            >
-              🌜
-            </Span>
-          )}
-          uncheckedBackground={(
-            <Span
-              paddingRight={4}
-              paddingTop={1}
-              fontSize={18}
-            >
-              🌞
-            </Span>
-          )}
+          sunAndMoon
+          checkedBackground="🌜"
+          uncheckedBackground="🌞"
           checked={mode === 'dark'}
           onChange={event => setMode(event.target.checked ? 'dark' : 'light')}
-          backgroundColor="primary"
           position="absolute"
           top="0.5rem"
           right="0.5rem"

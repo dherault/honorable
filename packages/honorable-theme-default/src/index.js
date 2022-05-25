@@ -5,6 +5,14 @@ import createElevation from './createElevation'
 const spinner = keyframes`
   to { transform: rotate(360deg); }
 `
+
+const withLabelPosition = ({ labelPosition }) => ({
+  marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
+  marginRight: labelPosition === 'left' ? 8 : 0,
+  marginTop: labelPosition === 'bottom' ? 8 : 0,
+  marginBottom: labelPosition === 'top' ? 8 : 0,
+})
+
 export default {
   name: 'Default',
   mode: 'light',
@@ -228,8 +236,6 @@ export default {
   Checkbox: {
     Root: [
       {
-        cursor: 'pointer',
-        userSelect: 'none',
         '&:hover > span': {
           border: '1px solid primary',
         },
@@ -263,12 +269,7 @@ export default {
       },
     ],
     Children: [
-      ({ labelPosition }) => ({
-        marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
-        marginRight: labelPosition === 'left' ? 8 : 0,
-        marginTop: labelPosition === 'bottom' ? 8 : 0,
-        marginBottom: labelPosition === 'top' ? 8 : 0,
-      }),
+      withLabelPosition,
     ],
   },
   DatePicker: {
@@ -558,8 +559,6 @@ export default {
   Radio: {
     Root: [
       {
-        cursor: 'pointer',
-        userSelect: 'none',
         outline: 'none',
         '&:hover > span': {
           color: 'primary',
@@ -585,12 +584,7 @@ export default {
       },
     ],
     Children: [
-      ({ labelPosition }) => ({
-        marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
-        marginRight: labelPosition === 'left' ? 8 : 0,
-        marginTop: labelPosition === 'bottom' ? 8 : 0,
-        marginBottom: labelPosition === 'top' ? 8 : 0,
-      }),
+      withLabelPosition,
       ({ disabled }) => disabled && {
         color: 'border',
       },
@@ -697,7 +691,7 @@ export default {
     ],
   },
   Switch: {
-    Root: [
+    Control: [
       {
         backgroundColor: 'background-light',
         transition: 'background-color 150ms ease',
@@ -708,6 +702,9 @@ export default {
       ({ checked }) => checked && {
         backgroundColor: 'primary',
       },
+    ],
+    Children: [
+      withLabelPosition,
     ],
   },
   Table: {

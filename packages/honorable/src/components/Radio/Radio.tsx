@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import {  TargetWithChecked, TargetWithValue } from '../../types'
+import { TargetWithChecked, TargetWithValue } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -92,15 +92,13 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = checked ?? uncontrolledChecked ?? false
 
-  const flexProps = labelPosition === 'right'
-    ? { justifyContent: 'flex-start' }
-    : labelPosition === 'left'
-      ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
-      : labelPosition === 'top'
-        ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
-        : labelPosition === 'bottom'
-          ? { justifyContent: 'flex-start', flexDirection: 'column' }
-          : { justifyContent: 'flex-start' }
+  const flexProps = labelPosition === 'left'
+    ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
+    : labelPosition === 'top'
+      ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
+      : labelPosition === 'bottom'
+        ? { justifyContent: 'flex-start', flexDirection: 'column' }
+        : { justifyContent: 'flex-start' }
 
   // Override `checked` prop in styles
   useOverridenProps(props, { checked: actualChecked })
@@ -124,6 +122,8 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
       tabIndex={0}
       display="flex"
       alignItems="center"
+      cursor="pointer"
+      userSelect="none"
       {...flexProps}
       {...otherProps}
       onClick={event => {

@@ -23,4 +23,32 @@ function Template(args: any) {
 
 export const Default = Template.bind({})
 Default.args = {
+  disabled: false,
+}
+
+export const Label = Template.bind({})
+Label.args = {
+  disabled: false,
+  children: 'A switch',
+}
+
+export const LabelPositionLeft = Template.bind({})
+LabelPositionLeft.args = {
+  disabled: false,
+  children: 'A switch',
+  labelPosition: 'left',
+}
+
+export const LabelPositionTop = Template.bind({})
+LabelPositionTop.args = {
+  disabled: false,
+  children: 'A switch',
+  labelPosition: 'top',
+}
+
+export const LabelPositionBottom = Template.bind({})
+LabelPositionBottom.args = {
+  disabled: false,
+  children: 'A switch',
+  labelPosition: 'bottom',
 }
