@@ -1,13 +1,14 @@
 import resolveAll from '../../src/resolvers/resolveAll'
 
-import theme from '../themes/theme1'
+import theme1 from '../themes/theme1'
+import theme2 from '../themes/theme2'
 
 describe('resolveAll', () => {
 
   test('Resolves to identity when no breakpoints nor alias nor webkit property nor color is involved', () => {
     expect(resolveAll({ width: 128 }, {})).toStrictEqual({ width: 128 })
-    expect(resolveAll({ width: 128 }, theme)).toStrictEqual({ width: 128 })
-    expect(resolveAll({ 'width-foo': 128 }, theme)).toStrictEqual({ 'width-foo': 128 })
+    expect(resolveAll({ width: 128 }, theme1)).toStrictEqual({ width: 128 })
+    expect(resolveAll({ 'width-foo': 128 }, theme1)).toStrictEqual({ 'width-foo': 128 })
   })
 
   test('Resolves complex objects', () => {
@@ -24,7 +25,7 @@ describe('resolveAll', () => {
           ml: 2,
           pt: '2rem',
         },
-      }, theme)
+      }, theme1)
     ).toStrictEqual(
       {
         width: 128,
@@ -45,4 +46,5 @@ describe('resolveAll', () => {
       }
     )
   })
+
 })

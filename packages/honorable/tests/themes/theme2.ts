@@ -67,5 +67,6 @@ export default {
       light: '#00000015',
       dark: 'lighten(background-light, 15)',
     },
+    aliasBlue300: 'blue.300',
   },
 }

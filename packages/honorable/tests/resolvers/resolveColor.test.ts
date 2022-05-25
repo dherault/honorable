@@ -53,6 +53,10 @@ describe('Color resolution', () => {
     expect(resolveColor('blue', theme2)).toBe(theme2.colors.blue[500])
   })
 
+  test('it resolves an aliased pantoned color', () => {
+    expect(resolveColor('aliasBlue300', theme2)).toBe(theme2.colors.blue[300])
+  })
+
 })
 
 describe('lighten and darken', () => {
