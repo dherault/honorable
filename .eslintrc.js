@@ -30,6 +30,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'no-cond-assign': 'off', // Used in storybook/*/createPartsTemplate
     'no-eval': 'off', // Used in designer/src/components/ComponentEditor.js
     'react/jsx-no-bind': 'off',
     'react/forbid-prop-types': 'off',

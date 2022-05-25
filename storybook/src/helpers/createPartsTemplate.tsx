@@ -1,4 +1,4 @@
-import React, { ComponentType, ReactNode } from 'react'
+import React, { ComponentType, useEffect, useState } from 'react'
 import { Div, ExtendTheme, Flex, P } from 'honorable'
 
 const rootColor = 'tomato'
@@ -16,11 +16,40 @@ const partColors = [
   'darkmagenta',
 ]
 
+const createId = (x: string) => `__HONORABLE__${x}`
+
+function cssPath(el: Element, parent: Element) {
+  if (!(el instanceof Element)) return
+
+  const path = []
+
+  while (el && el.nodeType === Node.ELEMENT_NODE && el !== parent) {
+    let selector = el.nodeName.toLowerCase()
+    let sib = el
+    let nth = 1
+
+    while (sib = sib.previousElementSibling) {
+      if (sib.nodeName.toLowerCase() === selector) nth++
+    }
+
+    if (nth !== 1) {
+      if (nth === el.parentElement.childElementCount) selector += ':last-of-type'
+      else selector += `:nth-of-type(${nth})`
+    }
+
+    path.unshift(selector)
+    el = el.parentElement
+  }
+
+  return `& > ${path.join(' > ')}`
+}
+
 function createPartsTemplate(Component: ComponentType<any>, name: string, parts: string[]) {
   const extendedTheme = {
     [name]: {
       Root: [
         {
+          id: createId('Root'),
           border: `2px solid ${rootColor}`,
           padding: '0.5rem',
         },
@@ -29,6 +58,7 @@ function createPartsTemplate(Component: ComponentType<any>, name: string, parts:
         ...accumulator,
         [part]: [
           {
+            id: createId(part),
             border: `2px solid ${partColors[i]}`,
             padding: '0.5rem',
           },
@@ -38,6 +68,18 @@ function createPartsTemplate(Component: ComponentType<any>, name: string, parts:
   }
 
   return function Template(args: any) {
+    const [paths, setPaths] = useState({})
+
+    useEffect(() => {
+      const root = document.getElementById(createId('Root'))
+
+      parts.forEach(part => {
+        const element = document.getElementById(createId(part))
+
+        setPaths(x => ({ ...x, [part]: cssPath(element, root) }))
+      })
+    }, [])
+
     return (
       <ExtendTheme theme={extendedTheme}>
         <Component {...args} />
@@ -47,7 +89,7 @@ function createPartsTemplate(Component: ComponentType<any>, name: string, parts:
           </P>
           <Flex
             align="center"
-            mb={0.25}
+            mb={0.5}
           >
             <Div
               width={24}
@@ -62,7 +104,7 @@ function createPartsTemplate(Component: ComponentType<any>, name: string, parts:
             <Flex
               key={part}
               align="center"
-              mb={0.25}
+              mb={0.5}
             >
               <Div
                 width={24}
@@ -71,6 +113,12 @@ function createPartsTemplate(Component: ComponentType<any>, name: string, parts:
               />
               <P ml={0.5}>
                 {part}
+              </P>
+              <P
+                ml={1.5}
+                fontSize={12}
+              >
+                {paths[part]}
               </P>
             </Flex>
           ))}
