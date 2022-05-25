@@ -1,3 +1,5 @@
+import merge from 'lodash.merge'
+
 import { HonorableTheme, StylesProps } from '../types'
 
 import resolveAll from './resolveAll'
@@ -40,8 +42,21 @@ function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme
 
   if (!partTheme) return nextHonorableProps
 
+  const honorableProps = { ...(__honorableOriginProps || otherProps), ...__honorableOverridenProps }
+
+  const partStyles = resolveStyles(partTheme, honorableProps, theme)
+
   return {
-    ...resolveAll(resolveStyles(partTheme, { ...(__honorableOriginProps || otherProps), ...__honorableOverridenProps }, theme), theme),
+    ...resolveAll(
+      merge(
+        {},
+        // Component part styles
+        partStyles,
+        // Global props
+        resolveStyles(theme.global, { ...honorableProps, ...partStyles }, theme),
+      ),
+      theme
+    ),
     ...nextHonorableProps,
   }
 }

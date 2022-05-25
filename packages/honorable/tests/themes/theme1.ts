@@ -28,4 +28,18 @@ export default {
       dark: '#444',
     },
   },
+  Accordion: {
+    Children: [
+      {
+        w: 128,
+      },
+    ],
+  },
+  Checkbox: {
+    Children: [
+      ({ checked }: any) => ({
+        color: checked ? 'primary' : 'secondary',
+      }),
+    ],
+  },
 }

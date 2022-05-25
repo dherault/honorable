@@ -26,7 +26,8 @@ describe('resolveAll', () => {
           pt: '2rem',
         },
       }, theme1)
-    ).toStrictEqual(
+    )
+    .toStrictEqual(
       {
         width: 128,
         backgroundColor: '#0000ff',
