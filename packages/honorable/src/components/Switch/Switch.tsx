@@ -97,6 +97,8 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
       display="flex"
       alignItems="center"
       tabIndex={0}
+      userSelect="none"
+      cursor="pointer"
       {...flexProps}
       {...rootStyle}
       {...otherProps}
@@ -120,8 +122,6 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
         width={50}
         height={24}
         borderRadius={24 / 2}
-        userSelect="none"
-        cursor="pointer"
         role="button"
         {...resolvePartStyles('Switch.Control', workingProps, theme)}
       >
@@ -151,7 +151,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
           position="absolute"
           width={20}
           height={20}
-          borderRadius={20 / 2}
+          borderRadius="50%"
           backgroundColor="white"
           top={2}
           left={actualChecked ? 'calc(100% - 22px)' : 2}

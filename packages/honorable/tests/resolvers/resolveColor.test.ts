@@ -50,7 +50,7 @@ describe('Color resolution', () => {
 
   test('it resolves a pantoned color', () => {
     expect(resolveColor('blue.300', theme2)).toBe(theme2.colors.blue[300])
-    expect(resolveColor('blue', theme2)).toBe(theme2.colors.blue[500])
+    expect(resolveColor('blue', theme2)).toBe('blue')
   })
 
   test('it resolves an aliased pantoned color', () => {

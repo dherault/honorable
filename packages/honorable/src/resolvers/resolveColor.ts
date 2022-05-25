@@ -141,7 +141,7 @@ function resolveThemeColor(color: string, colors: object, theme: HonorableTheme,
   const foundColor = typeof colors[color] === 'string'
     ? colors[color]
     : typeof colors[color] === 'object'
-      ? colors[color][theme.mode || 'light'] || colors[color][500]
+      ? colors[color][theme.mode || 'light']
       : color
 
   return foundColor === color ? foundColor : resolveThemeColor(foundColor, colors, theme, i + 1)
