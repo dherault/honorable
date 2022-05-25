@@ -252,11 +252,11 @@ export default {
       },
       ({ checked }) => checked && {
         backgroundColor: 'primary',
-        borderColor: 'primary',
+        border: '1px solid primary',
       },
       ({ disabled }) => disabled && {
         backgroundColor: 'border',
-        borderColor: 'border',
+        border: '1px solid border',
         '&:hover': {
           border: '1px solid border',
         },
