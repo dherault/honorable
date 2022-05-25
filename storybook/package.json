@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:watch": "npm run storybook",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "start-storybook -p 1110 -s public",
     "build": "npm run build-storybook",
     "build-storybook": "build-storybook -s public"
   },

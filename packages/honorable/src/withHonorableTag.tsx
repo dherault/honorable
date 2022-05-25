@@ -10,13 +10,18 @@ function withHonorableTag<P>(tag: string, name: string) {
     // @ts-expect-error
     tag,
     {
-      shouldForwardProp: (prop: string) => !(prop.startsWith('__honorable') || prop === 'honorable' || prop === 'theme'),
+      shouldForwardProp: (prop: string) => !(prop.startsWith('__honorable') || prop === 'honorable' || prop === 'theme' || prop === 'as'),
     }
   )<ComponentType<P>>((props: any) => props.honorable)
 
   function Honorable(props: P, ref: Ref<any>) {
     const theme = useTheme()
     const [honorable, otherProps] = useHonorable(name, props as unknown as object)
+
+    // @ts-ignore
+    if (props.as === 'a') {
+      console.log('honorable, otherProps', honorable, otherProps)
+    }
 
     return (
       <HonorableStyle

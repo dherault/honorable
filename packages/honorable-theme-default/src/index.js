@@ -71,12 +71,13 @@ export default {
       webkitFontSmoothing: 'antialiased',
       mozOsxFontSmoothing: 'grayscale',
       textRendering: 'optimizeLegibility',
+      boxSizing: 'border-box',
+      '*, *:before, *:after': {
+        boxSizing: 'inherit',
+      },
     },
   ],
   global: [
-    {
-      boxSizing: 'border-box',
-    },
     ...createElevation().map((styles, i) => (z => (({ elevation }) => elevation === z && styles))(i)),
   ],
   A: {
