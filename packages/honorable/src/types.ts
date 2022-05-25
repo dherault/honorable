@@ -1,5 +1,5 @@
 import '@emotion/react'
-import React, { Dispatch, PropsWithChildren, PropsWithRef, Ref, SetStateAction } from 'react'
+import React, { PropsWithChildren, PropsWithRef, Ref } from 'react'
 
 import mpProperties from './data/mpProperties'
 import stylesProperties from './data/stylesProperties'
@@ -71,6 +71,7 @@ export type PartProps = {
   [partName: string]: StylesArray | PartProps
 }
 export type ComponentProps = PartProps & {
+  DefaultProps?: StylesArray
   Root?: StylesArray
 }
 
