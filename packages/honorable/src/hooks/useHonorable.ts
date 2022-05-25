@@ -7,13 +7,13 @@ import mpProperties from '../data/mpProperties'
 import styleProperties from '../data/stylesProperties'
 import propToPseudoSelectors from '../data/propToPseudoSelectors'
 
-import useTheme from '../hooks/useTheme'
-
 import resolveAll from '../resolvers/resolveAll'
 import resolveStyles from '../resolvers/resolveStyles'
 
 import isSelector from '../utils/isSelector'
 import filterObject from '../utils/filterObject'
+
+import useTheme from './useTheme'
 
 const allStyleProperties = [
   ...mpProperties,

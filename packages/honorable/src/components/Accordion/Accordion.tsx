@@ -1,12 +1,10 @@
 import { ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyle from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import { Caret } from '../Caret/Caret'
 import { Div, DivProps } from '../tags'
@@ -59,8 +57,8 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const [childrenHeight, setChildrenHeight] = useState<number | 'auto'>('auto')
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
-
-  useOverridenProps(props, { expanded: actualExpanded })
+  const workingProps = { ...props, expanded: actualExpanded }
+  const rootStyle = useRootStyle('Accordion', workingProps, theme)
 
   const handleExpand = useCallback(() => {
     setUncontrolledExpanded(!actualExpanded)
@@ -74,13 +72,14 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
+      {...rootStyle}
       {...otherProps}
     >
       <Div
         display="flex"
         alignItems="center"
         cursor="pointer"
-        {...resolvePartStyles('Title', props, theme)}
+        {...resolvePartStyles('Accordion.Title', workingProps, theme)}
         onClick={handleExpand}
       >
         {title}
@@ -89,18 +88,18 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          {...resolvePartStyles('ExpandIcon', props, theme)}
+          {...resolvePartStyles('Accordion.ExpandIcon', workingProps, theme)}
         >
           {expandIcon || <Caret />}
         </Div>
       </Div>
       <Div
         height={actualExpanded ? childrenHeight : 0}
-        {...resolvePartStyles('ChildrenWrapper', props, theme)}
+        {...resolvePartStyles('Accordion.ChildrenWrapper', workingProps, theme)}
       >
         <Div
           ref={childrenRef}
-          {...resolvePartStyles('Children', props, theme)}
+          {...resolvePartStyles('Accordion.Children', workingProps, theme)}
         >
           {children}
         </Div>
@@ -111,8 +110,6 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
 
 AccordionRef.displayName = 'Accordion'
 
-const ForwardedAccordion = forwardRef(AccordionRef)
+export const Accordion = forwardRef(AccordionRef)
 
-ForwardedAccordion.propTypes = accordionPropTypes
-
-export const Accordion = withHonorable<AccordionProps>(ForwardedAccordion, 'Accordion')
+Accordion.propTypes = accordionPropTypes
