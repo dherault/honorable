@@ -16,7 +16,7 @@ function withHonorableTag<P>(tag: string, name: string) {
 
   function Honorable(props: P, ref: Ref<any>) {
     const theme = useTheme()
-    const [honorable, otherProps] = useHonorable(props as unknown as object, name)
+    const [honorable, otherProps] = useHonorable(name, props as unknown as object)
 
     if (name === 'P') {
       console.log('otherProps', otherProps)

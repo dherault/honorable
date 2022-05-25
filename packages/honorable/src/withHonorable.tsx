@@ -23,7 +23,7 @@ function withHonorable<P>(ComponentOrTag: ComponentType<any>, name: string) {
     const theme = useTheme()
     const [overridenProps, setOverridenProps] = useState({})
 
-    const [honorable, otherProps] = useHonorable(props as unknown as object, name, propTypeKeys)
+    const [honorable, otherProps] = useHonorable(name, props as unknown as object, overridenProps, propTypeKeys)
 
     return (
       <HonorableStyle

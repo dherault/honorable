@@ -49,6 +49,12 @@ const extendedTheme2 = {
         ),
       },
     ],
+    Root: [
+      ({ checked }: any) => ({
+        padding: '1rem',
+        backgroundColor: checked ? 'green' : 'red',
+      }),
+    ],
   },
 }
 

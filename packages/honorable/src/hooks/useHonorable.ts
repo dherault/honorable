@@ -22,15 +22,16 @@ const allStyleProperties = [
 const suffixedAllStyleProperties = allStyleProperties.map(x => `${x}-`)
 const pseudoSelectorPropKeys = Object.keys(propToPseudoSelectors)
 
-function useHonorable(props: object, name: string, propTypeKeys: string[] = []) {
+function useHonorable(name: string, props: object, overridenProps: object = {}, propTypeKeys: string[] = []) {
   const theme = useTheme()
 
   return useMemo(() => {
+    const workingProps = { ...props, ...overridenProps }
     const aliases = Object.keys(filterObject(theme.aliases))
     const suffixedAliases = aliases.map(x => `${x}-`)
     const stylesProps: StylesProps = {}
-    const resolvedRootStyles = resolveStyles(theme[name]?.Root, props, theme)
-    const otherProps = resolveStyles(theme[name]?.DefaultProps, props, theme)
+    const resolvedRootStyles = resolveStyles(theme[name]?.Root, workingProps, theme)
+    const otherProps = resolveStyles(theme[name]?.DefaultProps, workingProps, theme)
 
     Object.entries(props).forEach(([key, value]) => {
       if (
@@ -58,7 +59,7 @@ function useHonorable(props: object, name: string, propTypeKeys: string[] = []) 
           // Component root styles
           resolvedRootStyles,
           // Global props
-          resolveStyles(theme.global, { ...props, ...resolvedRootStyles }, theme),
+          resolveStyles(theme.global, { ...workingProps, ...resolvedRootStyles }, theme),
           // Actual style from props
           stylesProps,
         ),
@@ -66,7 +67,7 @@ function useHonorable(props: object, name: string, propTypeKeys: string[] = []) 
       ),
       otherProps,
     ]
-  }, [props, name, propTypeKeys, theme])
+  }, [name, props, overridenProps, propTypeKeys, theme])
 }
 
 export default useHonorable
