@@ -33,7 +33,6 @@
     "src/**/*"
   ],
   "dependencies": {
-    "@emotion/is-prop-valid": "^1.1.2",
     "@floating-ui/react-dom": "^0.7.0",
     "lodash.merge": "^4.6.2",
     "lodash.mergewith": "^4.6.2",
