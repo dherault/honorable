@@ -129,11 +129,11 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const [active, setActive] = useState(false)
+  const [focused, setFocused] = useState(false)
   const [uncontrolledValue, setUncontrolledValue] = useState<InputValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
 
-  useOverridenProps(props, { active, value: actualValue })
+  useOverridenProps(props, { focused, value: actualValue })
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUncontrolledValue(event.target.value)
@@ -172,11 +172,11 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onChange={handleChange}
           placeholder={placeholder}
           onFocus={event => {
-            setActive(true)
+            setFocused(true)
             if (typeof onFocus === 'function') onFocus(event)
           }}
           onBlur={event => {
-            setActive(false)
+            setFocused(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
           onKeyDown={event => {
@@ -196,11 +196,11 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onChange={handleChange}
           placeholder={placeholder}
           onFocus={event => {
-            setActive(true)
+            setFocused(true)
             if (typeof onFocus === 'function') onFocus(event)
           }}
           onBlur={event => {
-            setActive(false)
+            setFocused(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
           onKeyDown={event => {

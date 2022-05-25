@@ -408,7 +408,7 @@ const theme: HonorableTheme = {
         borderRadius: 4,
         overflow: 'hidden',
       },
-      ({ active }: any) => active && {
+      ({ focused }: any) => focused && {
         border: '1px solid primary',
       },
       ({ disabled }: any) => disabled && {
