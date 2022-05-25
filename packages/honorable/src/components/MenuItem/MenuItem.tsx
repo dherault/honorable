@@ -262,7 +262,6 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
             right={0}
           />
         </>
-
       )}
     </Div>
   )

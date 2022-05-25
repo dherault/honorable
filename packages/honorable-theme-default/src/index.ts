@@ -1,4 +1,5 @@
 import { keyframes } from '@emotion/react'
+import { HonorableTheme } from 'honorable'
 
 import createElevation from './createElevation'
 
@@ -6,14 +7,14 @@ const spinner = keyframes`
   to { transform: rotate(360deg); }
 `
 
-const withLabelPosition = ({ labelPosition }) => ({
+const withLabelPosition = ({ labelPosition }: any) => ({
   marginLeft: labelPosition === 'right' || !labelPosition ? 8 : 0,
   marginRight: labelPosition === 'left' ? 8 : 0,
   marginTop: labelPosition === 'bottom' ? 8 : 0,
   marginBottom: labelPosition === 'top' ? 8 : 0,
 })
 
-export default {
+const theme: HonorableTheme = {
   name: 'Default',
   mode: 'light',
   breakpoints: {
@@ -63,22 +64,26 @@ export default {
       dark: 'lighten(background-light, 15)',
     },
   },
-  html: [
-    {
-      fontSize: 16,
-      color: 'text',
-      backgroundColor: 'background',
-      webkitFontSmoothing: 'antialiased',
-      mozOsxFontSmoothing: 'grayscale',
-      textRendering: 'optimizeLegibility',
-      boxSizing: 'border-box',
-      '*, *:before, *:after': {
+  stylesheet: {
+    html: [
+      {
+        fontSize: 16,
+        color: 'text',
+        backgroundColor: 'background',
+        webkitFontSmoothing: 'antialiased',
+        mozOsxFontSmoothing: 'grayscale',
+        textRendering: 'optimizeLegibility',
+        boxSizing: 'border-box',
+      },
+    ],
+    '*, *:before, *:after': [
+      {
         boxSizing: 'inherit',
       },
-    },
-  ],
+    ],
+  },
   global: [
-    ...createElevation().map((styles, i) => (z => (({ elevation }) => elevation === z && styles))(i)),
+    ...createElevation().map((styles, i) => (z => (({ elevation }: any) => elevation === z && styles))(i)),
   ],
   A: {
     Root: [
@@ -131,7 +136,7 @@ export default {
       {
         transition: 'transform 200ms ease',
       },
-      ({ expanded }) => expanded && {
+      ({ expanded }: any) => expanded && {
         transform: 'rotate(180deg)',
       },
     ],
@@ -228,7 +233,7 @@ export default {
   },
   Card: {
     Root: [
-      (_props, theme) => ({
+      (_props: any, theme: HonorableTheme) => ({
         elevation: 1,
         backgroundColor: theme.mode === 'light' ? 'background' : 'background-light',
       }),
@@ -241,7 +246,7 @@ export default {
           border: '1px solid primary',
         },
       },
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         cursor: 'not-allowed',
         '&:hover > span': {
           border: '1px solid border',
@@ -257,11 +262,11 @@ export default {
         border: '1px solid border',
         borderRadius: 2,
       },
-      ({ checked }) => checked && {
+      ({ checked }: any) => checked && {
         backgroundColor: 'primary',
         border: '1px solid primary',
       },
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         backgroundColor: 'border',
         border: '1px solid border',
         '&:hover': {
@@ -311,7 +316,7 @@ export default {
       {
         borderColor: 'transparent',
       },
-      ({ active }) => active && {
+      ({ active }: any) => active && {
         backgroundColor: 'primary !important',
         color: 'white',
       },
@@ -403,16 +408,16 @@ export default {
         borderRadius: 4,
         overflow: 'hidden',
       },
-      ({ active }) => active && {
+      ({ active }: any) => active && {
         border: '1px solid primary',
       },
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         backgroundColor: 'background-light',
         cursor: 'not-allowed',
       },
     ],
     InputBase: [
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         cursor: 'not-allowed',
         backgroundColor: 'background-light',
       },
@@ -498,7 +503,7 @@ export default {
         borderRadius: 4,
         outline: 'none',
       },
-      ({ isSubMenu }) => isSubMenu && {
+      ({ isSubMenu }: any) => isSubMenu && {
         marginTop: -8,
       },
     ],
@@ -513,10 +518,10 @@ export default {
       {
         padding: '8px 16px',
       },
-      ({ active }) => active && {
+      ({ active }: any) => active && {
         backgroundColor: 'background-light',
       },
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         backgroundColor: 'none',
         text: 'text-light',
       },
@@ -565,7 +570,7 @@ export default {
           color: 'primary',
         },
       },
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         cursor: 'not-allowed',
         '&:hover > span': {
           color: 'border',
@@ -580,26 +585,26 @@ export default {
         borderRadius: '50%',
         userSelect: 'none',
       },
-      ({ checked }) => checked && {
+      ({ checked }: any) => checked && {
         color: 'primary',
       },
     ],
     Children: [
       withLabelPosition,
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         color: 'border',
       },
     ],
   },
   RadioGroup: {
     Radio: [
-      ({ row }) => row && {
+      ({ row }: any) => row && {
         marginRight: 8,
         '&:last-of-type': {
           marginRight: 0,
         },
       },
-      ({ row }) => !row && {
+      ({ row }: any) => !row && {
         marginBottom: 8,
         '&:last-of-type': {
           marginBottom: 0,
@@ -627,7 +632,7 @@ export default {
   },
   Slider: {
     Root: [
-      ({ disabled }) => disabled && {
+      ({ disabled }: any) => disabled && {
         cursor: 'not-allowed',
       },
     ],
@@ -653,11 +658,11 @@ export default {
       {
         overflow: 'hidden',
       },
-      ({ variant }) => variant === 'line' && {
+      ({ variant }: any) => variant === 'line' && {
         borderRadius: 4,
         height: '1.666ex',
       },
-      ({ variant }) => variant === 'circular' && {
+      ({ variant }: any) => variant === 'circular' && {
         borderRadius: '50%',
       },
     ],
@@ -669,7 +674,7 @@ export default {
   },
   Spinner: {
     Root: [
-      ({ size = 24, color = 'primary' }) => ({
+      ({ size = 24, color = 'primary' }: any) => ({
         width: size,
         height: size,
         position: 'relative',
@@ -700,7 +705,7 @@ export default {
           boxShadow: '0 0 0 2px border',
         },
       },
-      ({ checked }) => checked && {
+      ({ checked }: any) => checked && {
         backgroundColor: 'primary',
       },
     ],
@@ -765,3 +770,5 @@ export default {
     ],
   },
 }
+
+export default theme

@@ -24,6 +24,9 @@
   ],
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
+  "dependencies": {
+    "honorable": "^0.103.0"
+  },
   "devDependencies": {
     "nodemon": "^2.0.16",
     "rimraf": "^3.0.2"

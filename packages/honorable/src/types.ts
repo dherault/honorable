@@ -45,14 +45,6 @@ export type StyledTagHonorableProps = {
   honorable: StylesProps
 }
 
-// export type StyledComponentHonorableProps = StyledTagHonorableProps & {
-//   __honorableOrigin: string
-//   __honorableOverridenProps: object
-//   __honorableSetOverridenProps: Dispatch<SetStateAction<object>>
-// }
-
-// export type HonorableProps<P> = P & StylesProps
-
 /*
   THEME
 */
@@ -79,15 +71,17 @@ export type HonorableTheme = {
   name?: string
   mode?: Mode
   breakpoints?: {
-    [key: string]: number
+    [breakpointName: string]: number
   }
   colors?: {
-    [key: ColorKey]: ColorValue
+    [colorName: ColorKey]: ColorValue
   }
   aliases?: {
-    [key: string]: string
+    [alias: string]: string
   }
-  html?: StylesArray
+  stylesheet?: {
+    [selector: string]: StylesArray
+  }
   global?: StylesArray
   utils?: {
     resolveColorString: (color: string) => string
@@ -219,6 +213,9 @@ export type HonorableTheme = {
   Caret?: ComponentProps
   Checkbox?: ComponentProps
   DatePicker?: ComponentProps
+  DatePickerDay?: ComponentProps
+  DatePickerYears?: ComponentProps
+  DatePickerYear?: ComponentProps
   DropdownButton?: ComponentProps
   Flex?: ComponentProps
   Icon?: ComponentProps
@@ -229,6 +226,7 @@ export type HonorableTheme = {
   Modal?: ComponentProps
   ProgressBar?: ComponentProps
   Radio?: ComponentProps
+  RadioGroup?: ComponentProps
   Select?: ComponentProps
   Skeleton?: ComponentProps
   Slider?: ComponentProps
@@ -265,6 +263,6 @@ declare module 'react' {
 }
 
 declare module '@emotion/react' {
-  // @ts-ignore
-  export type Theme = HonorableTheme
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface Theme extends HonorableTheme {}
 }

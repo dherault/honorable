@@ -15,7 +15,9 @@
     "paths": {
       "*": ["node_modules/*"],
       "@assets/*": ["./assets/*"],
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
+      "honorable": ["node_modules/honorable"],
+      "honorable/*": ["node_modules/honorable/*"]
     },
     "lib": [
       "ESNext",

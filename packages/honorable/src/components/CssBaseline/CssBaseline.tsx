@@ -10,12 +10,8 @@ export type CssBaselineBaseProps = unknown
 const defaultFontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
 function assignDefaultFontFamily(object: any) {
-  if (!object.fontFamily) {
-    object.fontFamily = defaultFontFamily
-  }
-  else {
-    object.fontFamily = `${object.fontFamily}, ${defaultFontFamily}`
-  }
+  if (!object.fontFamily) object.fontFamily = defaultFontFamily
+  else object.fontFamily = `${object.fontFamily}, ${defaultFontFamily}`
 
   return object
 }
@@ -374,17 +370,26 @@ template {
 
 export function CssBaseline() {
   const theme = useTheme()
+  const { html, ...otherSelectors } = theme.stylesheet || {}
 
   return (
     <>
       <Global styles={css`${normalizeCss}`} />
-      {typeof theme.html === 'object' && theme.html && (
+      {Array.isArray(html) && (
         <Global
           styles={{
-            html: assignDefaultFontFamily(resolveAll(resolveStyles(theme.html, {}, theme), theme)),
+            html: assignDefaultFontFamily(resolveAll(resolveStyles(html, {}, theme), theme)),
           }}
         />
       )}
+      {Object.entries(otherSelectors || {}).map(([selector, styleArray]) => Array.isArray(styleArray) && (
+        <Global
+          key={selector}
+          styles={{
+            [selector]: resolveAll(resolveStyles(styleArray, {}, theme), theme) as any,
+          }}
+        />
+      ))}
       <Global
         styles={css`
           :root {
