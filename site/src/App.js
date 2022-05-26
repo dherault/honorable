@@ -4,6 +4,8 @@ import { CssBaseline, ThemeProvider, mergeTheme } from 'honorable'
 
 import theme from './extended-honorable-theme'
 
+import Layout from './components/layout/Layout'
+
 import Home from './scenes/Home'
 import Onboarding from './scenes/Onboarding'
 
@@ -18,16 +20,18 @@ function App() {
       <ThemeProvider theme={mergeTheme(theme, { mode: themeMode })}>
         <CssBaseline />
         <BrowserRouter>
-          <Routes>
-            <Route
-              path="/onboarding"
-              element={<Onboarding />}
-            />
-            <Route
-              path="*"
-              element={<Home />}
-            />
-          </Routes>
+          <Layout>
+            <Routes>
+              <Route
+                path="/onboarding"
+                element={<Onboarding />}
+              />
+              <Route
+                path="*"
+                element={<Home />}
+              />
+            </Routes>
+          </Layout>
         </BrowserRouter>
       </ThemeProvider>
     </ThemeModeContext.Provider>
