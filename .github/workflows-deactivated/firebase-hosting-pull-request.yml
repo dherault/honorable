@@ -8,7 +8,7 @@ jobs:
   changes_detector:
     runs-on: ubuntu-latest
     outputs:
-      landing: ${{ steps.filter.outputs.landing }}
+      site: ${{ steps.filter.outputs.site }}
       designer: ${{ steps.filter.outputs.designer }}
     steps:
       # - uses: actions/checkout@v2
@@ -16,23 +16,23 @@ jobs:
         id: filter
         with:
           filters: |
-            landing:
-              - 'landing/**/*'
+            site:
+              - 'site/**/*'
             designer:
               - 'designer/**/*'
-  preview_landing:
+  preview_site:
     needs: changes_detector
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.landing == 'true' }}'
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.site == 'true' }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm i && cd landing && npm i && npm run build
+      - run: npm i && cd site && npm i && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HONORABLE_LANDING }}'
           projectId: honorable-landing
-          entryPoint: landing
+          entryPoint: site
   preview_designer:
     needs: changes_detector
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository && needs.changes_detector.outputs.designer == 'true' }}'

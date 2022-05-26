@@ -11,7 +11,7 @@ jobs:
   changes_detector:
     runs-on: ubuntu-latest
     outputs:
-      landing: ${{ steps.filter.outputs.landing }}
+      site: ${{ steps.filter.outputs.site }}
       designer: ${{ steps.filter.outputs.designer }}
       storybook: ${{ steps.filter.outputs.storybook }}
     steps:
@@ -20,26 +20,26 @@ jobs:
         id: filter
         with:
           filters: |
-            landing:
-              - 'landing/**/*'
+            site:
+              - 'site/**/*'
             designer:
               - 'designer/**/*'
             storybook:
               - 'storybook/**/*'
-  deploy_landing:
+  deploy_site:
     needs: changes_detector
-    if: ${{ needs.changes_detector.outputs.landing == 'true' }}
+    if: ${{ needs.changes_detector.outputs.site == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && cd landing && npm ci && npm run build
+      - run: npm ci && cd site && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HONORABLE_LANDING }}'
           channelId: live
           projectId: honorable-landing
-          entryPoint: landing
+          entryPoint: site
   deploy_designer:
     needs: changes_detector
     if: ${{ needs.changes_detector.outputs.designer == 'true' }}
