@@ -18,11 +18,6 @@ function withHonorableTag<P>(tag: string, name: string) {
     const theme = useTheme()
     const [honorable, otherProps] = useHonorable(name, props as unknown as object)
 
-    // @ts-ignore
-    if (props.as === 'a') {
-      console.log('honorable, otherProps', honorable, otherProps)
-    }
-
     return (
       <HonorableStyle
         ref={ref}

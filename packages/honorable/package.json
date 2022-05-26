@@ -11,6 +11,7 @@
     "clean": "npm run clean:build && npm run clean:node-modules && npm i --force",
     "clean:node-modules": "rimraf node_module package-lock.json",
     "clean:build": "rimraf dist",
+    "clean:peerDependencies": "rimraf node_modules/react node_modules/react-dom",
     "prepublishOnly": "npm run clean && npm test && npm run build"
   },
   "repository": {

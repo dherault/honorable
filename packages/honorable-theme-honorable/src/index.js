@@ -1,13 +1,8 @@
 import { mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
 
-const mobile = 600
-
 export default mergeTheme(defaultTheme, {
   name: 'Honorable',
-  breakpoints: {
-    mobile,
-  },
   colors: {
     secondary: '#FFC547',
   },
@@ -20,17 +15,21 @@ export default mergeTheme(defaultTheme, {
     },
     ({ text }) => text === 'large' && {
       fontSize: '1.5rem',
-      [`@media (max-width: ${mobile}px)`]: {
-        fontSize: '1.25rem',
-      },
+      'fontSize-mobile': '1.25rem',
     },
     ({ text }) => text === 'xlarge' && {
       fontSize: '2rem',
-      [`@media (max-width: ${mobile}px)`]: {
-        fontSize: '1.5rem',
-      },
+      'fontSize-mobile': '1.5rem',
     },
   ],
+  A: {
+    Root: [
+      ({ nav }) => nav && {
+        fontSize: '1.1666rem',
+        marginBottom: -4,
+      },
+    ],
+  },
   Button: {
     Root: [
       ({ size }) => size === 'large' && {
@@ -43,9 +42,7 @@ export default mergeTheme(defaultTheme, {
     Root: [
       {
         fontSize: '5rem',
-        [`@media (max-width: ${mobile}px)`]: {
-          fontSize: '3rem',
-        },
+        'fontSize-mobile': '3rem',
       },
     ],
   },
@@ -53,21 +50,15 @@ export default mergeTheme(defaultTheme, {
     Root: [
       {
         fontSize: '2rem',
-        [`@media (max-width: ${mobile}px)`]: {
-          fontSize: '1.5rem',
-        },
+        'fontSize-mobile': '1.5rem',
       },
     ],
   },
-  Section: {
+  H3: {
     Root: [
-      ({ container }) => container && {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        maxWidth: 'calc(100% * 3 / 4)',
-        [`@media (max-width: ${mobile}px)`]: {
-          maxWidth: 'unset',
-        },
+      {
+        fontSize: '1.5rem',
+        'fontSize-mobile': '1.25rem',
       },
     ],
   },
@@ -83,6 +74,33 @@ export default mergeTheme(defaultTheme, {
           color: 'white',
           backgroundColor: 'primary',
         },
+      },
+    ],
+  },
+  Section: {
+    Root: [
+      ({ container }) => container && {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        maxWidth: 'calc(100% * 3 / 4)',
+        'maxWidth-mobile': 'unset',
+      },
+    ],
+  },
+  Switch: {
+    Control: [
+      {
+        backgroundColor: 'primary',
+      },
+    ],
+    CheckedBackground: [
+      {
+        paddingLeft: 4,
+      },
+    ],
+    UncheckedBackground: [
+      {
+        paddingRight: 4,
       },
     ],
   },

@@ -15,7 +15,8 @@ function resolveBreakpoints(props: object, theme: HonorableTheme): object {
       if (breakpoint) {
         const suffixArray = breakpoint.split('-')
         suffixArray.shift()
-        const suffix = suffixArray[suffixArray.length - 1] === 'up' || suffixArray[suffixArray.length - 1] === 'down' ? (suffixArray.pop() as 'up' | 'down') : 'between'
+        // TODO v1 'exact'
+        const suffix = suffixArray[suffixArray.length - 1] === 'up' || suffixArray[suffixArray.length - 1] === 'down' ? (suffixArray.pop() as 'up' | 'down') : 'down'
         const breakpointName = suffixArray.join('-')
         const query = createMediaQuery(theme, suffix, breakpointName)
 

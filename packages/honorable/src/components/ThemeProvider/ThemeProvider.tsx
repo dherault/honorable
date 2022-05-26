@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import { HonorableTheme } from '../../types'
 
 import ThemeContext from '../../contexts/ThemeContext'
-import defaultTheme from '../../data/defaultTheme'
 import enhanceTheme from '../../utils/enhanceTheme'
 import mergeTheme from '../../utils/mergeTheme'
 
@@ -20,7 +19,7 @@ export const themProviderPropTypes = {
 }
 
 export function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
-  const userTheme = enhanceTheme(mergeTheme(defaultTheme, theme))
+  const userTheme = enhanceTheme(theme)
 
   return (
     <ThemeContext.Provider value={userTheme}>
