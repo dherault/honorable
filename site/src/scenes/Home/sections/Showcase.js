@@ -1,8 +1,8 @@
-import { Div } from 'honorable'
+import { Section } from 'honorable'
 
 function ShowcaseSection() {
   return (
-    <Div
+    <Section
       width="100vw"
       height="100vh"
       backgroundColor="background-light"
@@ -12,7 +12,7 @@ function ShowcaseSection() {
       fontSize={80}
     >
       Showcase
-    </Div>
+    </Section>
   )
 }
 

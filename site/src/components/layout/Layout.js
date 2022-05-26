@@ -1,4 +1,4 @@
-import { A, Div, Flex, H3, Span } from 'honorable'
+import { A, Div, Flex, H3, Nav, Span } from 'honorable'
 import { Link } from 'react-router-dom'
 
 import ThemeSwitch from './ThemeSwitch'
@@ -6,13 +6,14 @@ import ThemeSwitch from './ThemeSwitch'
 function Layout({ children }) {
   return (
     <>
-      <Flex
+      <Nav
         as="nav"
         py={1}
         px={2}
-        align="center"
-        position="sticky"
+        xflex="x4"
+        position="fixed"
         top={0}
+        width="100vw"
         background="linear-gradient(180deg, background 25%, transparent 100%)"
       >
         <H3
@@ -34,7 +35,7 @@ function Layout({ children }) {
         </A>
         <Div flexGrow={1} />
         <ThemeSwitch />
-      </Flex>
+      </Nav>
       {children}
     </>
   )

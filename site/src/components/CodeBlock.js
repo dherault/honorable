@@ -28,13 +28,7 @@ function CodeBlock({ children, ...props }) {
 
   return (
     <Div
-      p={1}
-      backgroundColor="background-light"
-      border="1px solid border"
-      borderRadius={4}
       overflowY="auto"
-      position="relative"
-      display="inline-block"
       {...props}
     >
       <SyntaxHighlighter

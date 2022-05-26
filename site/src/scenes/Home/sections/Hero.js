@@ -19,7 +19,7 @@ function HeroSection() {
       minHeight="100vh"
     >
       <Div
-        mt={-12}
+        mt={-8}
         mt-mobile={-4}
         xflex="y2s"
         maxWidth="65%"
