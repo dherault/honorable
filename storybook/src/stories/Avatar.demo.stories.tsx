@@ -66,6 +66,7 @@ function AvatarDemo(args: any) {
     </>
   )
 }
+// END-DEMO
 
 export const Demo = AvatarDemo.bind({})
 
