@@ -152,10 +152,12 @@ const theme: HonorableTheme = {
   Avatar: {
     Root: [
       {
-        backgroundColor: 'primary',
         color: 'white',
         fontWeight: 'bold',
         borderRadius: '50%',
+      },
+      ({ name, src }: any) => !(name || src) && {
+        backgroundColor: 'primary',
       },
     ],
   },

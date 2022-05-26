@@ -55,12 +55,3 @@ Size.args = {
   name: 'Julien Brothero',
   size: 64,
 }
-
-export const Parts = createPartsTemplate(
-  Avatar,
-  'Avatar',
-  [],
-).bind({})
-Parts.args = {
-  name: 'Jane Smith',
-}

@@ -13,7 +13,7 @@ export default {
 // START-DEMO
 // Uncontrolled
 // https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-uncontrolled&viewMode=story
-function AccordionUncontrolled() {
+function AccordionUncontrolledDemo() {
   return (
     <>
       <Accordion title="Our vision">
@@ -30,12 +30,12 @@ function AccordionUncontrolled() {
 }
 // END-DEMO
 
-export const DemoUncontrolled = AccordionUncontrolled.bind({})
+export const DemoUncontrolled = AccordionUncontrolledDemo.bind({})
 
 // START-DEMO
 // Controlled
 // https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-controlled&viewMode=story
-function AccordionControlled() {
+function AccordionControlledDemo() {
   const [expanded, setExpanded] = useState(-1)
 
   return (
@@ -66,12 +66,12 @@ function AccordionControlled() {
 }
 // END-DEMO
 
-export const DemoControlled = AccordionControlled.bind({})
+export const DemoControlled = AccordionControlledDemo.bind({})
 
 // START-DEMO
 // Uncontrolled
 // https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-default-expanded&viewMode=story
-function AccordionDefaultExpanded() {
+function AccordionDefaultExpandedDemo() {
   return (
     <>
       <Accordion
@@ -91,7 +91,7 @@ function AccordionDefaultExpanded() {
 }
 // END-DEMO
 
-export const DemoDefaultExpanded = AccordionDefaultExpanded.bind({})
+export const DemoDefaultExpanded = AccordionDefaultExpandedDemo.bind({})
 
 // START-PARTS
 // https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--parts&viewMode=story

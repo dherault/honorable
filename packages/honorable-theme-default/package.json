@@ -4,7 +4,7 @@
   "description": "The default honorable theme",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "npm run clean:build && nodemon --watch src --exec \"npm run build\"",
+    "dev": "npm run clean:build && nodemon --watch src --ext ts,tsx --exec \"npm run build\"",
     "build": "npx tsc --declaration",
     "clean": "npm run clean:build",
     "clean:build": "rimraf dist",
@@ -24,14 +24,12 @@
   ],
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
-  "dependencies": {
-    "honorable": "^0.104.0"
-  },
   "devDependencies": {
     "nodemon": "^2.0.16",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "@emotion/react": ">=10.0.0"
+    "@emotion/react": ">=10.0.0",
+    "honorable": "*"
   }
 }

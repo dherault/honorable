@@ -6,13 +6,15 @@ import defaultTheme from 'honorable-theme-default'
 
 const theme = mergeTheme(defaultTheme, {
   // Fix storybook body padding
-  html: [
-    {
-      '& > body': {
-        padding: '0 !important',
+  stylesheet: {
+    html: [
+      {
+        '& > body': {
+          padding: '0 !important',
+        },
       },
-    },
-  ],
+    ],
+  },
   Switch: {
     Control: [
       ({ sunAndMoon }: any) => sunAndMoon && {
