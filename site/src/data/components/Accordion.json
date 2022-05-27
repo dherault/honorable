@@ -1,0 +1,47 @@
+{
+  "props": [
+    {
+      "name": "expanded",
+      "type": "boolean",
+      "description": "Whether the Accordion is expanded or not"
+    },
+    {
+      "name": "defaultExpanded",
+      "type": "boolean",
+      "description": "Whether the Accordion is expanded by default or not"
+    },
+    {
+      "name": "onExpand",
+      "type": "(expanded: boolean) => void",
+      "description": "Callback called when the Accordion is expanded or collapsed"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "description": "The Accordion's title node"
+    },
+    {
+      "name": "expandIcon",
+      "type": "React.ReactNode",
+      "description": "The Accordion's expand icon node"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function AccordionUncontrolledDemo() {\n  return (\n    <>\n      <Accordion title=\"Our vision\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n      <Accordion title=\"Our mission\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n      <Accordion title=\"Our values\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n    </>\n  )\n}\n",
+      "name": "Uncontrolled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-uncontrolled&viewMode=story"
+    },
+    {
+      "source": "function AccordionControlledDemo() {\n  const [expanded, setExpanded] = useState(-1)\n\n  return (\n    <>\n      <Accordion\n        title=\"Our vision\"\n        onExpand={() => setExpanded(expanded === 0 ? -1 : 0)}\n        expanded={expanded === 0}\n      >\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n      <Accordion\n        title=\"Our mission\"\n        onExpand={() => setExpanded(expanded === 1 ? -1 : 1)}\n        expanded={expanded === 1}\n      >\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n      <Accordion\n        title=\"Our values\"\n        onExpand={() => setExpanded(expanded === 2 ? -1 : 2)}\n        expanded={expanded === 2}\n      >\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n    </>\n  )\n}\n",
+      "name": "Controlled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-controlled&viewMode=story"
+    },
+    {
+      "source": "function AccordionDefaultExpandedDemo() {\n  return (\n    <>\n      <Accordion\n        defaultExpanded\n        title=\"Our vision\"\n      >\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n      <Accordion title=\"Our mission\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n      <Accordion title=\"Our values\">\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      </Accordion>\n    </>\n  )\n}\n",
+      "name": "Uncontrolled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-default-expanded&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--parts&viewMode=story"
+}
