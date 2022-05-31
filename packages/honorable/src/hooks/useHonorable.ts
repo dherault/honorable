@@ -56,12 +56,14 @@ function useHonorable(name: string, props: object, overridenProps: object = {}, 
       resolveAll(
         merge(
           {},
-          // Component root styles
+          // Component `Root` styles
           resolvedRootStyles,
-          // Global props
+          // `global` styles
           resolveStyles(theme.global, { ...workingProps, ...resolvedRootStyles }, theme),
-          // Actual style from props
+          // Actual styles from props
           stylesProps,
+          // Resolved styles from props against `global` styles
+          resolveStyles(theme.global, stylesProps, theme),
         ),
         theme
       ),

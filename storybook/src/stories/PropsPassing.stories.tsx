@@ -1,5 +1,5 @@
 import React from 'react'
-import { A, Div, P } from 'honorable'
+import { A, Div, ExtendTheme, Flex, P } from 'honorable'
 
 export default {
   title: 'Props Passing',
@@ -38,4 +38,44 @@ function Template2() {
 
 export const AsAnchor = Template2.bind({})
 AsAnchor.args = {
+}
+
+const borderRadiuses = {
+  normal: 6,
+}
+
+function Template3() {
+  return (
+    <ExtendTheme
+      theme={{
+        global: [
+          ({ borderRadius }: any) => typeof borderRadius !== 'undefined' && {
+            borderRadius: borderRadiuses[borderRadius] || borderRadius,
+          },
+        ],
+      }}
+    >
+      <Div
+        p={0.5}
+        borderRadius="normal"
+        backgroundColor="blue"
+        color="white"
+      >
+        I should have a 6px border radius.
+      </Div>
+      <Flex
+        mt={1}
+        p={0.5}
+        borderRadius="normal"
+        backgroundColor="blue"
+        color="white"
+      >
+        I should have a 6px border radius.
+      </Flex>
+    </ExtendTheme>
+  )
+}
+
+export const BorderRadius = Template3.bind({})
+BorderRadius.args = {
 }
