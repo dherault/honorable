@@ -21,7 +21,7 @@ exports[`Div Renders as a <div /> with styles 1`] = `
 `;
 
 exports[`Div Renders as a <div /> with styles on breakpoints 1`] = `
-@media (min-width: 600px) and (max-width: 899px) {
+@media (max-width: 599px) {
   .emotion-0 {
     color: blue;
   }

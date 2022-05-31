@@ -1,7 +1,7 @@
 import resolveAll from '../../src/resolvers/resolveAll'
 
 import theme1 from '../themes/theme1'
-import theme2 from '../themes/theme2'
+// import theme2 from '../themes/theme2'
 
 describe('resolveAll', () => {
 
@@ -17,8 +17,8 @@ describe('resolveAll', () => {
         w: 128,
         bg: 'primary',
         '&:hover': {
-          'w-mobile-down': 64,
-          'bg-tablet': 'secondary',
+          'w-mobile': 64,
+          'bg-tablet-only': 'secondary',
           webkitOpacity: 0.5,
         },
         '& > div': {

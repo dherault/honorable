@@ -11,7 +11,7 @@ describe('resolveBreakpoints', () => {
 
   test('Resolves to media queries', () => {
     expect(resolveBreakpoints({ 'width-mobile': 128 }, theme)).toStrictEqual({
-      '@media (min-width: 600px) and (max-width: 899px)': {
+      '@media (max-width: 599px)': {
         width: 128,
       },
     })
@@ -37,7 +37,7 @@ describe('resolveBreakpoints', () => {
       theme
     )).toStrictEqual({
       '&:hover': {
-        '@media (min-width: 600px) and (max-width: 899px)': {
+        '@media (max-width: 599px)': {
           width: 128,
         },
       },
@@ -46,7 +46,7 @@ describe('resolveBreakpoints', () => {
 
   test('Resolves to media queries with multiple props', () => {
     expect(resolveBreakpoints({ 'width-mobile': 128, 'height-mobile': 128 }, theme)).toStrictEqual({
-      '@media (min-width: 600px) and (max-width: 899px)': {
+      '@media (max-width: 599px)': {
         width: 128,
         height: 128,
       },
@@ -62,7 +62,7 @@ describe('resolveBreakpoints', () => {
 
   test('Resolves to media queries with complex breakpoint names', () => {
     expect(resolveBreakpoints({ 'width-tablet-foo': 128 }, theme1)).toStrictEqual({
-      '@media (min-width: 600px) and (max-width: 999px)': {
+      '@media (max-width: 599px)': {
         width: 128,
       },
     })
@@ -71,8 +71,8 @@ describe('resolveBreakpoints', () => {
         width: 128,
       },
     })
-    expect(resolveBreakpoints({ 'width-tablet-foo-down': 128 }, theme1)).toStrictEqual({
-      '@media (max-width: 599px)': {
+    expect(resolveBreakpoints({ 'width-tablet-foo-only': 128 }, theme1)).toStrictEqual({
+      '@media (min-width: 600px) and (max-width: 999px)': {
         width: 128,
       },
     })
