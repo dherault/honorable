@@ -3,12 +3,10 @@ import PropTypes from 'prop-types'
 
 import { TargetWithChecked } from '../../types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyle from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
@@ -83,6 +81,14 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
   const theme = useTheme()
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = checked ?? uncontrolledChecked ?? false
+  const workingProps = {
+    ...props,
+    checked: actualChecked,
+    disabled,
+    icon,
+    labelPosition,
+  }
+  const rootStyle = useRootStyle('Checkbox', workingProps, theme)
 
   const flexProps = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
@@ -91,9 +97,6 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
       : labelPosition === 'bottom'
         ? { justifyContent: 'flex-start', flexDirection: 'column' }
         : { justifyContent: 'flex-start' }
-
-  // Override `checked` prop in styles
-  useOverridenProps(props, { checked: actualChecked })
 
   function handleChange(event: MouseEvent | KeyboardEvent) {
     if (disabled) return
@@ -117,6 +120,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
       cursor="pointer"
       userSelect="none"
       {...flexProps}
+      {...rootStyle}
       {...otherProps}
       onClick={event => {
         handleChange(event)
@@ -132,12 +136,12 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
         alignItems="center"
         justifyContent="center"
         flexShrink={0}
-        {...resolvePartStyles('Control', props, theme)}
+        {...resolvePartStyles('Checkbox.Control', workingProps, theme)}
       >
         {actualChecked && icon}
       </Span>
       {!!children && (
-        <Div {...resolvePartStyles('Children', props, theme)}>
+        <Div {...resolvePartStyles('Checkbox.Children', workingProps, theme)}>
           {children}
         </Div>
       )}
@@ -145,11 +149,8 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
   )
 }
 
-CheckboxRef.displayName = 'Checkbox'
+export const Checkbox = forwardRef(CheckboxRef)
 
-const ForwaredCheckbox = forwardRef(CheckboxRef)
-
+Checkbox.displayName = 'Checkbox'
 // @ts-expect-error
-ForwaredCheckbox.propTypes = checkboxPropTypes
-
-export const Checkbox = withHonorable<CheckboxProps>(ForwaredCheckbox, 'Checkbox')
+Checkbox.propTypes = checkboxPropTypes

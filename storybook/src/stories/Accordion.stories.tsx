@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 
 import { Accordion } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate'
-
 export default {
   title: 'Accordion',
   component: Accordion,

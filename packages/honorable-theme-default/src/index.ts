@@ -225,9 +225,21 @@ const theme: HonorableTheme = {
         '& > button': {
           border: 'none',
           borderRadius: 0,
+        },
+      },
+      ({ direction }: any) => direction === 'row' && {
+        '& > button': {
           borderLeft: '1px solid darken(primary)',
           '&:first-of-type': {
             borderLeft: 'none',
+          },
+        },
+      },
+      ({ direction }: any) => direction === 'column' && {
+        '& > button': {
+          borderTop: '1px solid darken(primary)',
+          '&:first-of-type': {
+            borderTop: 'none',
           },
         },
       },

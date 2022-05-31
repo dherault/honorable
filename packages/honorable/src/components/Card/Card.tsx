@@ -1,6 +1,7 @@
 import { Ref, forwardRef } from 'react'
 
-import withHonorable from '../../withHonorable'
+import useTheme from '../../hooks/useTheme'
+import useRootStyle from '../../hooks/useRootStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -11,18 +12,19 @@ export type CardProps = DivProps & CardBaseProps
 export const CardPropTypes = {}
 
 function CardRef(props: CardProps, ref: Ref<any>) {
+  const theme = useTheme()
+  const rootStyle = useRootStyle('Card', props, theme)
+
   return (
     <Div
       ref={ref}
+      {...rootStyle}
       {...props}
     />
   )
 }
 
-CardRef.displayName = 'Card'
+export const Card = forwardRef(CardRef)
 
-const ForwardedCard = forwardRef(CardRef)
-
-ForwardedCard.propTypes = CardPropTypes
-
-export const Card = withHonorable<CardProps>(ForwardedCard, 'Card')
+Card.displayName = 'Card'
+Card.propTypes = CardPropTypes

@@ -108,8 +108,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   )
 }
 
-AccordionRef.displayName = 'Accordion'
-
 export const Accordion = forwardRef(AccordionRef)
 
+Accordion.displayName = 'Accordion'
 Accordion.propTypes = accordionPropTypes

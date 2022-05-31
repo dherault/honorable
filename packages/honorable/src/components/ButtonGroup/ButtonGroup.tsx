@@ -1,30 +1,42 @@
 import { Ref, forwardRef } from 'react'
 
-import withHonorable from '../../withHonorable'
+import useTheme from '../../hooks/useTheme'
+import useRootStyle from '../../hooks/useRootStyles'
 
 import { Div, DivProps } from '../tags'
 
-export type ButtonGroupBaseProps = unknown
+export type ButtonGroupBaseProps = {
+  /**
+   * The direction of the ButtonGroup
+   */
+  direction: 'row' | 'column'
+}
 
 export type ButtonGroupProps = DivProps & ButtonGroupBaseProps
 
 export const buttonGroupPropTypes = {}
 
 function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
+  const {
+    direction = 'row',
+    ...otherProps
+  } = props
+  const theme = useTheme()
+  const workingProps = { ...props, direction } // Add default value `row` to direction
+  const rootStyle = useRootStyle('ButtonGroup', workingProps, theme)
+
   return (
     <Div
       ref={ref}
       display="inline-flex"
-      alignItems="center"
-      {...props}
+      flexDirection={direction}
+      {...rootStyle}
+      {...otherProps}
     />
   )
 }
 
-ButtonGroupRef.displayName = 'ButtonGroup'
+export const ButtonGroup = forwardRef(ButtonGroupRef)
 
-const ForwardedButtonGroup = forwardRef(ButtonGroupRef)
-
-ForwardedButtonGroup.propTypes = buttonGroupPropTypes
-
-export const ButtonGroup = withHonorable<ButtonGroupProps>(ForwardedButtonGroup, 'ButtonGroup')
+ButtonGroup.displayName = 'ButtonGroup'
+ButtonGroup.propTypes = buttonGroupPropTypes

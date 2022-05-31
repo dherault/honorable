@@ -1,12 +1,11 @@
 import { ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
+import useRootStyle from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import { Spinner } from '../Spinner/Spinner'
 import { ButtonBase, ButtonBaseBaseProps, Span } from '../tags'
@@ -57,6 +56,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const buttonRef = useRef<HTMLButtonElement>()
   const forkedRef = useForkedRef(ref, buttonRef)
   const [height, setHeight] = useState<number | 'auto'>('auto')
+  const rootStyle = useRootStyle('Button', props, theme)
 
   useEffect(() => {
     if (!buttonRef.current) return
@@ -70,8 +70,9 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       display="inline-flex"
       alignItems="center"
       disabled={loading}
-      {...otherProps}
       position="relative"
+      {...rootStyle}
+      {...otherProps}
     >
       {!!startIcon && (
         <Span
@@ -79,7 +80,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
           alignItems="center"
           justifyContent="center"
           visibility={loading ? 'hidden' : 'visible'}
-          {...resolvePartStyles('StartIcon', props, theme)}
+          {...resolvePartStyles('Button.StartIcon', props, theme)}
         >
           {startIcon}
         </Span>
@@ -94,7 +95,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
           right={0}
           top={0}
           bottom={0}
-          {...resolvePartStyles('LoadingIndicator', props, theme)}
+          {...resolvePartStyles('Button.LoadingIndicator', props, theme)}
         >
           {(loadingIndicator || (
             <Spinner
@@ -106,7 +107,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       )}
       <Span
         visibility={loading ? 'hidden' : 'visible'}
-        {...resolvePartStyles('Children', props, theme)}
+        {...resolvePartStyles('Button.Children', props, theme)}
       >
         {children}
       </Span>
@@ -116,7 +117,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
           alignItems="center"
           justifyContent="center"
           visibility={loading ? 'hidden' : 'visible'}
-          {...resolvePartStyles('EndIcon', props, theme)}
+          {...resolvePartStyles('Button.EndIcon', props, theme)}
         >
           {endIcon}
         </Span>
@@ -125,10 +126,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   )
 }
 
-ButtonRef.displayName = 'Button'
+export const Button = forwardRef(ButtonRef)
 
-const ForwardedButton = forwardRef(ButtonRef)
-
-ForwardedButton.propTypes = buttonPropTypes
-
-export const Button = withHonorable<ButtonProps>(ForwardedButton, 'Button')
+Button.displayName = 'Button'
+Button.propTypes = buttonPropTypes

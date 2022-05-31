@@ -2,8 +2,6 @@
 import React from 'react'
 import { Avatar } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate'
-
 export default {
   title: 'Avatar',
   component: Avatar,

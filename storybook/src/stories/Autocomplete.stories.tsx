@@ -3,8 +3,6 @@
 import React, { useState } from 'react'
 import { Autocomplete } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate'
-
 export default {
   title: 'Autocomplete',
   component: Autocomplete,

@@ -1,6 +1,7 @@
 import { Ref, forwardRef } from 'react'
 
-import withHonorable from '../../withHonorable'
+import useTheme from '../../hooks/useTheme'
+import useRootStyle from '../../hooks/useRootStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -11,18 +12,19 @@ export type BoxProps = DivProps & BoxBaseProps
 export const BoxPropTypes = {}
 
 function BoxRef(props: BoxProps, ref: Ref<any>) {
+  const theme = useTheme()
+  const rootStyle = useRootStyle('Box', props, theme)
+
   return (
     <Div
       ref={ref}
+      {...rootStyle}
       {...props}
     />
   )
 }
 
-BoxRef.displayName = 'Box'
+export const Box = forwardRef(BoxRef)
 
-const ForwardedBox = forwardRef(BoxRef)
-
-ForwardedBox.propTypes = BoxPropTypes
-
-export const Box = withHonorable<BoxProps>(ForwardedBox, 'Box')
+Box.displayName = 'Box'
+Box.propTypes = BoxPropTypes
