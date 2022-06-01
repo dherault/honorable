@@ -1,5 +1,5 @@
 import React from 'react'
-import { A, Div, ExtendTheme, Flex, P } from 'honorable'
+import { A, Accordion, Div, ExtendTheme, Flex, P } from 'honorable'
 
 export default {
   title: 'Props Passing',
@@ -78,4 +78,19 @@ function Template3() {
 
 export const BorderRadius = Template3.bind({})
 BorderRadius.args = {
+}
+
+function Template4() {
+  return (
+    <Accordion
+      title="I should have a red border bottom"
+      borderBottom="1px solid red"
+    >
+      Do I?
+    </Accordion>
+  )
+}
+
+export const AccordionBorder = Template4.bind({})
+AccordionBorder.args = {
 }

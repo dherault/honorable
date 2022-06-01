@@ -134,6 +134,7 @@ const theme: HonorableTheme = {
     ],
     ExpandIcon: [
       {
+        marginLeft: 16,
         transition: 'transform 200ms ease',
       },
       ({ expanded }: any) => expanded && {
