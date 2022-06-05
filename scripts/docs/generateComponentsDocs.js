@@ -13,7 +13,7 @@ function generateComponentDocs() {
   const componentToDemo = extractDemo()
 
   ;['Accordion'].forEach(component => {
-    const docsDataLocation = path.join(__dirname, `../../site/src/data/components/${component}.json`)
+    const docsDataLocation = path.join(__dirname, `../../site/src/docs/components/${component}.json`)
 
     fs.writeFileSync(
       docsDataLocation,

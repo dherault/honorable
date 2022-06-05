@@ -1,5 +1,4 @@
 import { keyframes } from '@emotion/react'
-import { HonorableTheme } from 'honorable'
 
 import createElevation from './createElevation'
 
@@ -14,7 +13,7 @@ const withLabelPosition = ({ labelPosition }: any) => ({
   marginBottom: labelPosition === 'top' ? 8 : 0,
 })
 
-const theme: HonorableTheme = {
+const theme = {
   name: 'Default',
   mode: 'light',
   breakpoints: {
@@ -248,7 +247,7 @@ const theme: HonorableTheme = {
   },
   Card: {
     Root: [
-      (_props: any, theme: HonorableTheme) => ({
+      (_props: any, theme: any) => ({
         elevation: 1,
         backgroundColor: theme.mode === 'light' ? 'background' : 'background-light',
       }),

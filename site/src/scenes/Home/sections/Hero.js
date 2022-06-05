@@ -16,10 +16,10 @@ function HeroSection() {
       p={2}
       px-mobile={1}
       xflex="y5"
-      minHeight="100vh"
+      minHeight="calc(100vh - 60px)"
     >
       <Div
-        mt={-8}
+        mt={-8 - 6}
         mt-mobile={-4}
         xflex="y2s"
         maxWidth="65%"

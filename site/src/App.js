@@ -7,9 +7,13 @@ import theme from './extended-honorable-theme'
 import Layout from './components/layout/Layout'
 
 import Home from './scenes/Home'
-import Onboarding from './scenes/Onboarding'
+// import Onboarding from './scenes/Onboarding'
+import Documentation from './scenes/Documentation'
+import DocumentationPage from './scenes/Documentation/DocumentationPage'
 
 import ThemeModeContext from './contexts/ThemeModeContext'
+
+import pages from './docs/pages'
 
 function App() {
   const [themeMode, setThemeMode] = useState('light')
@@ -22,10 +26,22 @@ function App() {
         <BrowserRouter>
           <Layout>
             <Routes>
-              <Route
+              {/* <Route
                 path="/onboarding"
                 element={<Onboarding />}
-              />
+              /> */}
+              <Route
+                path="/docs"
+                element={<Documentation />}
+              >
+                {pages.map(page => (
+                  <Route
+                    key={page.path}
+                    path={page.path}
+                    element={<DocumentationPage contentUrl={page.url} />}
+                  />
+                ))}
+              </Route>
               <Route
                 path="*"
                 element={<Home />}
