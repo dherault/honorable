@@ -1,16 +1,16 @@
 import { ComponentType, Ref, forwardRef } from 'react'
 import styled from '@emotion/styled'
+import isPropValid from '@emotion/is-prop-valid'
 
 import useTheme from './hooks/useTheme'
 import useHonorable from './hooks/useHonorable'
 
 // React HOC to support style props
-function withHonorableTag<P>(tag: string, name: string) {
+function withHonorableTag<P>(tag: keyof JSX.IntrinsicElements, name: string) {
   const HonorableStyle = styled(
-    // @ts-expect-error
     tag,
     {
-      shouldForwardProp: (prop: string) => !(prop.startsWith('__honorable') || prop === 'honorable' || prop === 'theme' || prop === 'as'),
+      shouldForwardProp: isPropValid,
     }
   )<ComponentType<P>>((props: any) => props.honorable)
 
