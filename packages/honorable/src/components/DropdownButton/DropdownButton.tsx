@@ -122,10 +122,10 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       {...divProps}
     >
       <Button
-        {...buttonProps}
         endIcon={(
           <Caret rotation={actualOpen ? 180 : 0} />
         )}
+        {...buttonProps}
         onClick={event => {
           if (buttonProps.disabled) return
 

@@ -137,3 +137,22 @@ Fade.args = {
   label: 'Drop it!',
   items,
 }
+
+export const EndIcon = Template.bind({})
+EndIcon.args = {
+  label: 'Drop it!',
+  items,
+  endIcon: (
+    <svg
+      width={10}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8.00001 12L2.80386 6H13.1962L8.00001 12Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+}
