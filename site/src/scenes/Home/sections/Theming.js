@@ -1,6 +1,6 @@
 import { Button, Div, H2, Section } from 'honorable'
 
-import CodeBlock from '../../../components/CodeBlock'
+import JsxCodeBlock from '../../../components/JsxCodeBlock'
 
 const code1 = `import { Div } from 'honorable'
 
@@ -32,14 +32,14 @@ function ThemingSection() {
         <H2>
           Pass CSS as props
         </H2>
-        <CodeBlock
+        <JsxCodeBlock
           backgroundColor="background-light"
           border="1px solid border"
           p={1}
           width={256 + 128}
         >
           {code1}
-        </CodeBlock>
+        </JsxCodeBlock>
       </Div>
       <Div
         mt={4}
@@ -48,14 +48,14 @@ function ThemingSection() {
         <H2>
           Create your own conventions
         </H2>
-        <CodeBlock
+        <JsxCodeBlock
           backgroundColor="background-light"
           border="1px solid border"
           p={1}
           width={256 + 128}
         >
           {code2}
-        </CodeBlock>
+        </JsxCodeBlock>
       </Div>
       <Div
         mt={4}

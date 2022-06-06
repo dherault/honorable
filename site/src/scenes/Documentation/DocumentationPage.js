@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Div, H2, H3, H4, H5, H6, P, Pre } from 'honorable'
 import Markdown from 'markdown-to-jsx'
 
+import CodeBlock from '../../components/CodeBlock'
+
 function DocumentationPage({ contentUrl }) {
   const [content, setContent] = useState('')
 
@@ -39,8 +41,8 @@ function DocumentationPage({ contentUrl }) {
           p: {
             component: P,
           },
-          pre: {
-            component: Pre,
+          code: {
+            component: CodeBlock,
           },
         },
       }}
