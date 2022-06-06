@@ -2,7 +2,7 @@ import { ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } 
 import PropTypes from 'prop-types'
 
 import useTheme from '../../hooks/useTheme'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
@@ -58,7 +58,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
   const workingProps = { ...props, expanded: actualExpanded }
-  const rootStyle = useRootStyle('Accordion', workingProps, theme)
+  const rootStyle = useRootStyles('Accordion', workingProps, theme)
 
   const handleExpand = useCallback(() => {
     setUncontrolledExpanded(!actualExpanded)

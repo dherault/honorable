@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { TargetWithChecked } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
@@ -88,7 +88,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
     icon,
     labelPosition,
   }
-  const rootStyle = useRootStyle('Checkbox', workingProps, theme)
+  const rootStyle = useRootStyles('Checkbox', workingProps, theme)
 
   const flexProps = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }

@@ -1,7 +1,7 @@
 import { Ref, forwardRef } from 'react'
 
 import useTheme from '../../hooks/useTheme'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -13,7 +13,7 @@ export const BoxPropTypes = {}
 
 function BoxRef(props: BoxProps, ref: Ref<any>) {
   const theme = useTheme()
-  const rootStyle = useRootStyle('Box', props, theme)
+  const rootStyle = useRootStyles('Box', props, theme)
 
   return (
     <Div

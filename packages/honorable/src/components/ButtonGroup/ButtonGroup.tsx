@@ -1,7 +1,7 @@
 import { Ref, forwardRef } from 'react'
 
 import useTheme from '../../hooks/useTheme'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -23,7 +23,7 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   } = props
   const theme = useTheme()
   const workingProps = { ...props, direction } // Add default value `row` to direction
-  const rootStyle = useRootStyle('ButtonGroup', workingProps, theme)
+  const rootStyle = useRootStyles('ButtonGroup', workingProps, theme)
 
   return (
     <Div

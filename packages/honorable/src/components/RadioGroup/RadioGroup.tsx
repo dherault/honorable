@@ -1,7 +1,7 @@
 import { ChangeEvent, Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import {  TargetWithValue } from '../../types'
+import { TargetWithValue } from '../../types'
 
 import withHonorable from '../../withHonorable'
 
@@ -95,7 +95,7 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
   return (
     <Flex
       ref={ref}
-      direction={row ? 'row' : 'column'}
+      direction={row ? 'row' : 'column' as FlexProps['direction']}
       tabIndex={0}
       {...otherProps}
       onKeyDown={event => {

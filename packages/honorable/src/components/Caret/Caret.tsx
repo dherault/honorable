@@ -2,7 +2,7 @@ import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
 import useTheme from '../../hooks/useTheme'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Svg, SvgProps } from '../tags'
 
@@ -23,7 +23,7 @@ function CaretRef(props: CaretProps, ref: Ref<any>) {
   const { rotation = 0, ...otherProps } = props
   const theme = useTheme()
   const workingProps = { ...props, rotation }
-  const rootStyle = useRootStyle('Caret', workingProps, theme)
+  const rootStyle = useRootStyles('Caret', workingProps, theme)
 
   return (
     <Svg

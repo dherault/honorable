@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import useTheme from '../../hooks/useTheme'
 import useImageLoad from '../../hooks/useImageLoad'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Div, DivProps, Img, ImgProps } from '../tags'
 
@@ -74,7 +74,7 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
   const { size = 40, src, name, ...otherProps } = props
   const theme = useTheme()
   const [loaded, error] = useImageLoad(src)
-  const rootStyle = useRootStyle('Avatar', props, theme)
+  const rootStyle = useRootStyles('Avatar', props, theme)
 
   if (src && loaded && !error) {
     return (

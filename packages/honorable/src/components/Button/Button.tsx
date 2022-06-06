@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
@@ -56,7 +56,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const buttonRef = useRef<HTMLButtonElement>()
   const forkedRef = useForkedRef(ref, buttonRef)
   const [height, setHeight] = useState<number | 'auto'>('auto')
-  const rootStyle = useRootStyle('Button', props, theme)
+  const rootStyle = useRootStyles('Button', props, theme)
 
   useEffect(() => {
     if (!buttonRef.current) return

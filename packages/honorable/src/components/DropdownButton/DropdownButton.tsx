@@ -9,7 +9,7 @@ import usePrevious from '../../hooks/usePrevious'
 import useEscapeKey from '../../hooks/useEscapeKey'
 import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
-import useRootStyle from '../../hooks/useRootStyles'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import pickProps from '../../utils/pickProps'
 import resolvePartStyles from '../../resolvers/resolvePartStyles2'
@@ -60,6 +60,7 @@ export const dropdownButtonPropTypes = {
 }
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
+  const [buttonProps, rootProps]: [ButtonProps, DivProps] = pickProps(props, buttonPropTypes)
   const {
     open,
     defaultOpen,
@@ -68,9 +69,9 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     onChange,
     onOpen,
     children,
-  } = props
+    ...otherProps
+  } = rootProps
   const theme = useTheme()
-  const [buttonProps, divProps]: [ButtonProps, DivProps] = pickProps(props, buttonPropTypes)
   const dropdownButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
@@ -81,7 +82,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const previousEvent = usePrevious(event)
   const actualOpen = open ?? defaultOpen ?? uncontrolledOpen
   const workingProps = { ...props, open: actualOpen }
-  const rootStyle = useRootStyle('DropdownButton', workingProps, theme)
+  const rootStyle = useRootStyles('DropdownButton', workingProps, theme)
 
   const handleOpen = useCallback(() => {
     setUncontrolledOpen(true)
@@ -119,7 +120,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       position="relative"
       display="inline-block"
       {...rootStyle}
-      {...divProps}
+      {...otherProps}
     >
       <Button
         endIcon={(
@@ -134,7 +135,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
 
           if (typeof buttonProps.onClick === 'function') buttonProps.onClick(event)
         }}
-        {...resolvePartStyles('Button', props, theme)}
+        {...resolvePartStyles('DropdownButton.Button', workingProps, theme)}
       >
         {label}
       </Button>
@@ -149,7 +150,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
           right={0}
           left={0}
           zIndex={100}
-          {...resolvePartStyles('Menu', props, theme)}
+          {...resolvePartStyles('DropdownButton.Menu', workingProps, theme)}
         >
           {children}
         </Menu>

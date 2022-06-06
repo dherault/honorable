@@ -1,7 +1,8 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
+import useTheme from '../../hooks/useTheme'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -9,43 +10,43 @@ export type FlexBaseProps = {
   /**
    * Alias for flexDirection
    */
-  direction?: string
+  direction?: 'row' | 'column'
   /**
    * wrap flex property
    */
-  wrap?: string
+  wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | boolean | string
   /**
    * Alias for flexBasis
    */
-  basis?: string
+  basis?: string | number
   /**
    * Alias for flexGrow
    */
-  grow?: number
+  grow?: boolean | number
   /**
    * Alias for flexShrink
    */
-  shrink?: number
+  shrink?: boolean | number
   /**
    * Alias for alignItems
    */
-  align?: string
+  align?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch' | string
   /**
    * Alias for justifyContent
    */
-  justify?: string
+  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | string
 }
 
 export type FlexProps = DivProps & FlexBaseProps
 
 export const FlexPropTypes = {
-  direction: PropTypes.string,
-  wrap: PropTypes.string,
-  basis: PropTypes.string,
-  grow: PropTypes.number,
-  shrink: PropTypes.number,
-  align: PropTypes.string,
-  justify: PropTypes.string,
+  direction: PropTypes.oneOf(['row', 'column']),
+  wrap: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['wrap', 'nowrap', 'wrap-reverse'])]),
+  basis: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  grow: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  shrink: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  align: PropTypes.oneOfType([PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'baseline', 'stretch']), PropTypes.string]),
+  justify: PropTypes.oneOfType([PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly']), PropTypes.string]),
 }
 
 function FlexRef(props: FlexProps, ref: Ref<any>) {
@@ -59,27 +60,27 @@ function FlexRef(props: FlexProps, ref: Ref<any>) {
     justify,
     ...otherProps
   } = props
+  const theme = useTheme()
+  const rootStyle = useRootStyles('Flex', props, theme)
 
   return (
     <Div
       ref={ref}
       display="flex"
       flexDirection={direction}
-      flexWrap={wrap}
+      flexWrap={typeof wrap === 'boolean' ? 'wrap' : wrap}
       flexBasis={basis}
-      flexGrow={grow}
-      flexShrink={shrink}
+      flexGrow={typeof grow === 'boolean' ? 1 : grow}
+      flexShrink={typeof shrink === 'boolean' ? 1 : shrink}
       alignItems={align}
       justifyContent={justify}
+      {...rootStyle}
       {...otherProps}
     />
   )
 }
 
-FlexRef.displayName = 'Flex'
+export const Flex = forwardRef(FlexRef)
 
-const ForwardedFlex = forwardRef(FlexRef)
-
-ForwardedFlex.propTypes = FlexPropTypes
-
-export const Flex = withHonorable<FlexProps>(ForwardedFlex, 'Flex')
+Flex.displayName = 'Flex'
+Flex.propTypes = FlexPropTypes
