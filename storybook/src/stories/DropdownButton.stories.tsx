@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, DropdownButton, ExtendTheme, Flex, Menu, MenuItem } from 'honorable'
+import { A, Div, DropdownButton, ExtendTheme, Flex, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'DropdownButton',
@@ -32,9 +32,14 @@ function renderItem({ text, items }: any, depth = 0) {
 
 function Template({ items, ...args }: any) {
   return (
-    <DropdownButton {...args}>
-      {items.map(renderItem)}
-    </DropdownButton>
+    <Div>
+      <DropdownButton {...args}>
+        {items.map(renderItem)}
+      </DropdownButton>
+      <Div mt={1}>
+        Am I underneath?
+      </Div>
+    </Div>
   )
 }
 
@@ -85,13 +90,18 @@ function Template3({ items, ...args }: any) {
 
 function Template4({ items, ...args }: any) {
   return (
-    <DropdownButton
-      {...args}
-      onChange={() => console.log(1)}
-      onOpen={x => console.log(2, x)}
-    >
-      {items.map(renderItem)}
-    </DropdownButton>
+    <Div>
+      <DropdownButton
+        {...args}
+        onChange={() => console.log(1)}
+        onOpen={x => console.log(2, x)}
+      >
+        {items.map(renderItem)}
+      </DropdownButton>
+      <Div mt={1}>
+        Am I underneath?
+      </Div>
+    </Div>
   )
 }
 

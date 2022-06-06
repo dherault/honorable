@@ -166,15 +166,13 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     if (!fade) return element
 
     const defaultStyle = {
-      position: 'relative',
-      top: -4,
       opacity: 0,
-      transition: `opacity ${transtionDuration}ms ease, top ${transtionDuration}ms ease`,
+      transition: `opacity ${transtionDuration}ms ease`,
     }
 
     const transitionStyles = {
-      entering: { opacity: 1, top: 0 },
-      entered: { opacity: 1, top: 0 },
+      entering: { opacity: 1 },
+      entered: { opacity: 1 },
       exiting: { opacity: 0 },
       exited: { opacity: 0 },
     }
