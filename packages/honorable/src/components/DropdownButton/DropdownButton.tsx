@@ -1,8 +1,6 @@
 import { KeyboardEvent, MouseEvent, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
 
@@ -11,10 +9,10 @@ import usePrevious from '../../hooks/usePrevious'
 import useEscapeKey from '../../hooks/useEscapeKey'
 import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyle from '../../hooks/useRootStyles'
 
 import pickProps from '../../utils/pickProps'
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Button, ButtonProps, buttonPropTypes } from '../Button/Button'
@@ -82,6 +80,8 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const { value, event } = menuUsageState
   const previousEvent = usePrevious(event)
   const actualOpen = open ?? defaultOpen ?? uncontrolledOpen
+  const workingProps = { ...props, open: actualOpen }
+  const rootStyle = useRootStyle('DropdownButton', workingProps, theme)
 
   const handleOpen = useCallback(() => {
     setUncontrolledOpen(true)
@@ -94,8 +94,6 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     setMenuState(x => ({ ...x, activeItemIndex: -1 }))
     if (typeof onOpen === 'function') onOpen(false)
   }, [onOpen])
-
-  useOverridenProps(props, { open: actualOpen })
 
   useEscapeKey(handleClose)
   useOutsideClick(dropdownButtonRef, handleClose)
@@ -120,6 +118,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       ref={forkedRef}
       position="relative"
       display="inline-block"
+      {...rootStyle}
       {...divProps}
     >
       <Button
@@ -159,10 +158,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   )
 }
 
-DropdownButtonRef.displayName = 'DropdownButton'
+export const DropdownButton = forwardRef(DropdownButtonRef)
 
-const ForwardedDropdownButton = forwardRef(DropdownButtonRef)
-
-ForwardedDropdownButton.propTypes = dropdownButtonPropTypes
-
-export const DropdownButton = withHonorable<DropdownButtonProps>(ForwardedDropdownButton, 'DropdownButton')
+DropdownButton.displayName = 'DropdownButton'
+DropdownButton.propTypes = dropdownButtonPropTypes

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Div, H2, H3, H4, H5, H6, P, Pre } from 'honorable'
+import { Div, H2, H3, H4, H5, H6, P } from 'honorable'
 import Markdown from 'markdown-to-jsx'
 
 import CodeBlock from '../../components/CodeBlock'
