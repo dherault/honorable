@@ -1,13 +1,13 @@
 import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
-
-import withHonorable from '../../withHonorable'
+import PropTypes from 'prop-types'
 
 import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../../contexts/MenuContext'
+
+import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Div, DivProps } from '../tags'
 import { MenuItem } from '../MenuItem/MenuItem'
@@ -57,6 +57,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     children,
     ...otherProps
   } = props
+  const theme = useTheme()
   const menuRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, menuRef)
   const [menuState, setMenuState] = useState<MenuStateType>({})
@@ -70,10 +71,10 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     : actualMenuState.activeItemIndex
 
   const actualOpen = open ?? true
-  const [transtionOpen, setTranstionOpen] = useState(actualOpen)
+  const [transitionOpen, setTransitionOpen] = useState(actualOpen)
 
-  // Give `active` and `activeItemIndex` and other props to customProps
-  useOverridenProps(props, actualMenuState)
+  const workingProps = { ...props, ...actualMenuState }
+  const rootStyles = useRootStyles('Menu', workingProps, theme)
 
   // On outside click, unset active item
   useOutsideClick(menuRef, () => {
@@ -81,6 +82,8 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   })
 
   useEffect(() => {
+    if (!menuRef.current) return
+
     if (actualMenuState.shouldFocus) {
       menuRef.current.focus()
 
@@ -110,15 +113,21 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   useEffect(() => {
     if (!actualOpen) {
       setActualMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
-      setTimeout(() => {
-        setTranstionOpen(false)
-      }, transtionDuration)
+
+      if (fade) {
+        setTimeout(() => {
+          setTransitionOpen(false)
+        }, transtionDuration)
+      }
+      else {
+        setTransitionOpen(false)
+      }
     }
     else {
       setActualMenuState(x => ({ ...x, active: true }))
-      setTranstionOpen(true)
+      setTransitionOpen(true)
     }
-  }, [actualOpen, transtionDuration, setActualMenuState])
+  }, [actualOpen, fade, transtionDuration, setActualMenuState])
 
   // Handle up and down keys
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -187,7 +196,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     )
   }
 
-  if (!(actualOpen || transtionOpen)) return null
+  if (!(actualOpen || transitionOpen)) return null
 
   return (
     <MenuContext.Provider value={menuValue}>
@@ -196,6 +205,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
           ref={forkedRef}
           tabIndex={0}
           display="inline-block"
+          {...rootStyles}
           {...otherProps}
           onKeyDown={event => {
             handleKeyDown(event)
@@ -226,10 +236,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   )
 }
 
-MenuRef.displayName = 'Menu'
+export const Menu = forwardRef(MenuRef)
 
-const ForwardedMenu = forwardRef(MenuRef)
-
-ForwardedMenu.propTypes = menuPropTypes
-
-export const Menu = withHonorable<MenuProps>(ForwardedMenu, 'Menu')
+Menu.displayName = 'Menu'
+Menu.propTypes = menuPropTypes

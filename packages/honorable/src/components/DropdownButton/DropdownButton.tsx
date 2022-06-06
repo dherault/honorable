@@ -74,13 +74,13 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const theme = useTheme()
   const dropdownButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, dropdownButtonRef)
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
   const [menuState, setMenuState] = useState<MenuStateType>({})
   const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({})
   const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState, setMenuUsageState])
   const { value, event } = menuUsageState
   const previousEvent = usePrevious(event)
-  const actualOpen = open ?? defaultOpen ?? uncontrolledOpen
+  const actualOpen = open ?? uncontrolledOpen ?? false
   const workingProps = { ...props, open: actualOpen }
   const rootStyle = useRootStyles('DropdownButton', workingProps, theme)
 
@@ -97,7 +97,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   }, [onOpen])
 
   useEscapeKey(handleClose)
-  useOutsideClick(dropdownButtonRef, handleClose)
+  useOutsideClick(dropdownButtonRef, () => actualOpen && handleClose())
 
   useEffect(() => {
     if (event && previousEvent !== event) {
@@ -105,14 +105,6 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       handleClose()
     }
   }, [previousEvent, event, value, onChange, handleClose])
-
-  useEffect(() => {
-    // Prevents initial handleClose
-    if (!previousEvent) return
-
-    if (actualOpen) handleOpen()
-    else handleClose()
-  }, [actualOpen, previousEvent, handleOpen, handleClose])
 
   return (
     <Div

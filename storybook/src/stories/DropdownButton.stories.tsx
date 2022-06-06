@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 
 import { A, DropdownButton, ExtendTheme, Flex, Menu, MenuItem } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate'
-
 export default {
   title: 'DropdownButton',
   component: DropdownButton,
@@ -16,16 +14,16 @@ const items = [
   { text: 'And', value: 'And' },
 ]
 
-function renderItem({ text, items }: any) {
+function renderItem({ text, items }: any, depth = 0) {
   return (
     <MenuItem
-      key={text}
-      value={text}
+      key={text + depth}
+      value={text + depth}
     >
       {text}
       {Array.isArray(items) && (
         <Menu>
-          {items.map(renderItem)}
+          {items.map(x => renderItem(x, depth + 1))}
         </Menu>
       )}
     </MenuItem>
@@ -47,6 +45,8 @@ function Template2({ items, ...args }: any) {
     <Flex align="center">
       <DropdownButton
         open={open}
+        // @ts-ignore
+        onOpen={x => console.log('onOpen', x) || setOpen(x)}
         {...args}
       >
         {items.map(renderItem)}
@@ -80,6 +80,18 @@ function Template3({ items, ...args }: any) {
         {items.map(renderItem)}
       </DropdownButton>
     </ExtendTheme>
+  )
+}
+
+function Template4({ items, ...args }: any) {
+  return (
+    <DropdownButton
+      {...args}
+      onChange={() => console.log(1)}
+      onOpen={x => console.log(2, x)}
+    >
+      {items.map(renderItem)}
+    </DropdownButton>
   )
 }
 
@@ -155,4 +167,10 @@ EndIcon.args = {
       />
     </svg>
   ),
+}
+
+export const EventOrder = Template4.bind({})
+EventOrder.args = {
+  label: 'Drop it!',
+  items,
 }

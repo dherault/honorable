@@ -1,15 +1,14 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import MenuContext, { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext from '../../contexts/MenuUsageContext'
 
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
+import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
@@ -83,6 +82,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const [menuUsageState, setMenuUsageState] = useContext(MenuUsageContext)
   const [subMenuState, setSubMenuState] = useState<MenuStateType>({ active: false, isSubMenuVisible: false })
   const [height, setHeight] = useState(0)
+  const rootStyles = useRootStyles('MenuItem', props, theme)
 
   const subMenu = useMemo(() => {
     let subMenu: ReactElement
@@ -191,6 +191,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       ref={forkedRef}
       position="relative"
       tabIndex={itemIndex}
+      {...rootStyles}
       {...otherProps}
       onKeyDown={event => {
         handleKeyDown(event)
@@ -216,7 +217,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
           setParentMenuState(x => ({ ...x, active: false }))
           menuItemRef.current.focus()
         }}
-        {...resolvePartStyles('Children', props, theme)}
+        {...resolvePartStyles('MenuItem.Children', props, theme)}
       >
         {Children.map(children, (child: ReactElement) => {
           if (child?.type === Menu) return null
@@ -230,7 +231,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
               ml={0.5}
               mr={-0.5}
               rotation={-90}
-              {...resolvePartStyles('Caret', props, theme)}
+              {...resolvePartStyles('MenuItem.Caret', props, theme)}
             />
           </>
         )}
@@ -267,10 +268,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   )
 }
 
-MenuItemRef.displayName = 'MenuItemRef'
+export const MenuItem = forwardRef(MenuItemRef)
 
-const ForwardedMenuItem = forwardRef(MenuItemRef)
-
-ForwardedMenuItem.propTypes = menuItemPropTypes
-
-export const MenuItem = withHonorable<MenuItemProps>(ForwardedMenuItem, 'MenuItem')
+MenuItem.displayName = 'MenuItem'
+MenuItem.propTypes = menuItemPropTypes
