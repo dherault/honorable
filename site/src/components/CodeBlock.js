@@ -3,7 +3,7 @@ import { Pre } from 'honorable'
 import JsxCodeBlock from './JsxCodeBlock'
 
 function CodeBlock({ children, ...props }) {
-  if (props.className !== 'lang-jsx') {
+  if (!props.className?.startsWith('lang')) {
     return (
       <Pre {...props}>
         {children}
@@ -11,10 +11,22 @@ function CodeBlock({ children, ...props }) {
     )
   }
 
+  if (props.className?.startsWith('lang-jsx')) {
+    return (
+      <JsxCodeBlock {...props}>
+        {children}
+      </JsxCodeBlock>
+    )
+  }
+
   return (
-    <JsxCodeBlock {...props}>
+    <Pre
+      {...props}
+      color="text-light"
+      border="1px solid border"
+    >
       {children}
-    </JsxCodeBlock>
+    </Pre>
   )
 }
 

@@ -4,19 +4,15 @@
 
 In your current React app:
 
-{% tabs %}
-{% tab title="NPM" %}
-```
+```bash
 npm install --save honorable honorable-theme-default @emotion/react @emotion/styled
 ```
-{% endtab %}
 
-{% tab title="Yarn" %}
-```
+or:
+
+```bash
 yarn honorable honorable-theme-default @emotion/react @emotion/styled
 ```
-{% endtab %}
-{% endtabs %}
 
 ## Usage
 
@@ -40,9 +36,7 @@ function App() {
 }
 ```
 
-{% hint style="info" %}
-**Good to know:** Using ThemeProvider or CssBaseline is totally optional: most honorable components can work without it.
-{% endhint %}
+**Good to know:** Using ThemeProvider or CssBaseline is totally optional, most honorable components can work without it.
 
 ## Import and style components
 
@@ -90,13 +84,11 @@ const theme = mergeTheme(defaultTheme, {
 })
 ```
 
-For more info, see:
+For more info, see [theming.md](theming.md).
 
-{% content-ref url="theming.md" %}
-[theming.md](theming.md)
-{% endcontent-ref %}
+## Learn about the `mp` props
 
-## Learn about the `xflex` and `mp` props
+TODO make this a separate component
 
 They are opinionated aliases that ship by default with Honorable.
 
@@ -105,18 +97,9 @@ They are opinionated aliases that ship by default with Honorable.
 
 ```jsx
 <Div
-  xflex="x5"  // All centered
   mt={1}      // margin-top: 1rem
   p={2}       // padding: 2rem
 />
 ```
 
-For more info, see:
-
-{% content-ref url="xflex-property.md" %}
-[xflex-property.md](xflex-property.md)
-{% endcontent-ref %}
-
-{% content-ref url="mp-properties.md" %}
-[mp-properties.md](mp-properties.md)
-{% endcontent-ref %}
+For more info, see [mp-properties.md](mp-properties.md)

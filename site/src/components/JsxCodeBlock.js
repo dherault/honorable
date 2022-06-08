@@ -28,6 +28,9 @@ function JsxCodeBlock({ children, ...props }) {
 
   return (
     <Div
+      p={1}
+      backgroundColor="background-light"
+      border="1px solid border"
       overflowY="auto"
       {...props}
     >

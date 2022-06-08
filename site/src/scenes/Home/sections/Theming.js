@@ -33,9 +33,6 @@ function ThemingSection() {
           Pass CSS as props
         </H2>
         <JsxCodeBlock
-          backgroundColor="background-light"
-          border="1px solid border"
-          p={1}
           width={256 + 128}
         >
           {code1}
@@ -49,9 +46,6 @@ function ThemingSection() {
           Create your own conventions
         </H2>
         <JsxCodeBlock
-          backgroundColor="background-light"
-          border="1px solid border"
-          p={1}
           width={256 + 128}
         >
           {code2}
