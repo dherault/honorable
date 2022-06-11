@@ -3,25 +3,47 @@ import PropTypes from 'prop-types'
 
 import { TargetWithChecked, TargetWithValue } from '../../types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Div, DivProps, Span } from '../tags'
 
 export type RadioBaseProps = {
+  /**
+   * The value of the Radio, available at event.target.value, passed to RadioGroup if any
+   */
   value?: any
+  /**
+   * Weither the Radio is checked dor not
+   */
   checked?: boolean
+  /**
+   * Weither the Radio is checked or not by default
+   */
   defaultChecked?: boolean
+  /**
+   * Weither thhe Radio is disabled or not
+   */
   disabled?: boolean
+  /**
+   * The icon used for the unchecked state
+   */
   iconUnchecked?: ReactNode
+  /**
+   * The icon used to the checked state
+   */
   iconChecked?: ReactNode
+  /**
+   * Callback called when the Radio is clicked
+   */
   onChange?: (event: TargetWithChecked<TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>>) => void
+  /**
+   * The position of the label relative to the control
+   */
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
@@ -53,6 +75,7 @@ const defaultIconUnchecked = (
     />
   </svg>
 )
+
 const defaultIconChecked = (
   <svg
     width="100%"
@@ -91,6 +114,15 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
   const theme = useTheme()
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = checked ?? uncontrolledChecked ?? false
+  const workingProps = {
+    ...props,
+    checked: actualChecked,
+    disabled,
+    iconChecked,
+    iconUnchecked,
+    labelPosition,
+  }
+  const rootStyles = useRootStyles('Radio', workingProps, theme)
 
   const flexProps = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
@@ -99,9 +131,6 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
       : labelPosition === 'bottom'
         ? { justifyContent: 'flex-start', flexDirection: 'column' }
         : { justifyContent: 'flex-start' }
-
-  // Override `checked` prop in styles
-  useOverridenProps(props, { checked: actualChecked })
 
   function handleChange(event: MouseEvent | KeyboardEvent) {
     if (disabled) return
@@ -125,6 +154,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
       cursor="pointer"
       userSelect="none"
       {...flexProps}
+      {...rootStyles}
       {...otherProps}
       onClick={event => {
         handleChange(event)
@@ -139,12 +169,12 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
         display="inline-flex"
         alignItems="center"
         justifyContent="center"
-        {...resolvePartStyles('Control', props, theme)}
+        {...resolvePartStyles('Radio.Control', workingProps, theme)}
       >
         {actualChecked ? iconChecked : iconUnchecked}
       </Span>
       {!!children && (
-        <Div {...resolvePartStyles('Children', props, theme)}>
+        <Div {...resolvePartStyles('Radio.Children', workingProps, theme)}>
           {children}
         </Div>
       )}
@@ -152,10 +182,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
   )
 }
 
-RadioRef.displayName = 'Radio'
+export const Radio = forwardRef(RadioRef)
 
-const ForwaredRadio = forwardRef(RadioRef)
-
-ForwaredRadio.propTypes = radioPropTypes
-
-export const Radio = withHonorable<RadioProps>(ForwaredRadio, 'Radio')
+Radio.displayName = 'Radio'
+Radio.propTypes = radioPropTypes

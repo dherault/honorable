@@ -82,7 +82,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   const previousEvent = usePrevious(event)
   const actualOpen = open ?? uncontrolledOpen ?? false
   const workingProps = { ...props, open: actualOpen }
-  const rootStyle = useRootStyles('DropdownButton', workingProps, theme)
+  const rootStyles = useRootStyles('DropdownButton', workingProps, theme)
 
   const handleOpen = useCallback(() => {
     setUncontrolledOpen(true)
@@ -111,7 +111,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       ref={forkedRef}
       position="relative"
       display="inline-block"
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
     >
       <Button

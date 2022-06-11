@@ -56,7 +56,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const buttonRef = useRef<HTMLButtonElement>()
   const forkedRef = useForkedRef(ref, buttonRef)
   const [height, setHeight] = useState<number | 'auto'>('auto')
-  const rootStyle = useRootStyles('Button', props, theme)
+  const rootStyles = useRootStyles('Button', props, theme)
 
   useEffect(() => {
     if (!buttonRef.current) return
@@ -71,7 +71,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       alignItems="center"
       disabled={loading}
       position="relative"
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
     >
       {!!startIcon && (

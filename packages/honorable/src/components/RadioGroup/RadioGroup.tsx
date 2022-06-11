@@ -3,12 +3,10 @@ import PropTypes from 'prop-types'
 
 import { TargetWithValue } from '../../types'
 
-import withHonorable from '../../withHonorable'
-
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
-
 import useTheme from '../../hooks/useTheme'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyles from '../../hooks/useRootStyles'
+
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
@@ -56,6 +54,8 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
   const theme = useTheme()
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue)
   const actualValue = value ?? uncontrolledValue ?? false
+  const workingProps = { ...props, value: actualValue, row }
+  const rootStyles = useRootStyles('RadioGroup', workingProps, theme)
 
   const childrenValues = useMemo(() => {
     const childrenValues: any[] = []
@@ -68,9 +68,6 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
 
     return childrenValues
   }, [children])
-
-  // Override `value` prop in styles
-  useOverridenProps(props, { value: actualValue })
 
   function handleChange(event: TargetWithValue<MouseEvent | KeyboardEvent | ChangeEvent>) {
     if (typeof onChange === 'function') onChange(event)
@@ -97,6 +94,7 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
       ref={ref}
       direction={row ? 'row' : 'column' as FlexProps['direction']}
       tabIndex={0}
+      {...rootStyles}
       {...otherProps}
       onKeyDown={event => {
         handleKeyDown(event)
@@ -106,7 +104,7 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
       {Children.map(children, (child: ReactElement) => {
         if (child?.type === Radio) {
           return (
-            <Div {...resolvePartStyles('Radio', props, theme)}>
+            <Div {...resolvePartStyles('RadioGroup.Radio', props, theme)}>
               {cloneElement(child, {
                 ...child.props,
                 checked: child.props.value === actualValue,
@@ -122,10 +120,7 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
   )
 }
 
-RadioGroupRef.displayName = 'RadioGroup'
+export const RadioGroup = forwardRef(RadioGroupRef)
 
-const ForwaredRadioGroup = forwardRef(RadioGroupRef)
-
-ForwaredRadioGroup.propTypes = radioGroupPropTypes
-
-export const RadioGroup = withHonorable<RadioGroupProps>(ForwaredRadioGroup, 'RadioGroup')
+RadioGroup.displayName = 'RadioGroup'
+RadioGroup.propTypes = radioGroupPropTypes

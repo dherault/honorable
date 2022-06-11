@@ -58,7 +58,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
   const actualExpanded = expanded ?? uncontrolledExpanded
   const workingProps = { ...props, expanded: actualExpanded }
-  const rootStyle = useRootStyles('Accordion', workingProps, theme)
+  const rootStyles = useRootStyles('Accordion', workingProps, theme)
 
   const handleExpand = useCallback(() => {
     setUncontrolledExpanded(!actualExpanded)
@@ -72,7 +72,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   return (
     <Div
       ref={ref}
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
     >
       <Div

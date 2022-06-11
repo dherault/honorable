@@ -1,9 +1,8 @@
 import { Ref, forwardRef, useEffect, useRef, useState } from 'react'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { ButtonBase, ButtonBaseBaseProps } from '../tags'
 
@@ -18,6 +17,7 @@ function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
   const iconButtonRef = useRef<any>()
   const forkedRef = useForkedRef(ref, iconButtonRef)
   const [height, setHeight] = useState<number | 'auto'>('auto')
+  const rootStyles = useRootStyles('IconButton', props, theme)
 
   useEffect(() => {
     if (iconButtonRef.current) {
@@ -32,15 +32,13 @@ function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
       display="inline-flex"
       alignItem="center"
       justifyContent="center"
+      {...rootStyles}
       {...props}
     />
   )
 }
 
-IconButtonRef.displayName = 'IconButton'
+const IconButton = forwardRef(IconButtonRef)
 
-const ForwardedIconButton = forwardRef(IconButtonRef)
-
-ForwardedIconButton.propTypes = iconButtonPropTypes
-
-export const IconButton = withHonorable<IconButtonProps>(ForwardedIconButton, 'IconButton')
+IconButton.displayName = 'IconButton'
+IconButton.propTypes = iconButtonPropTypes

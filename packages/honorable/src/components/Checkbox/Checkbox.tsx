@@ -88,7 +88,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
     icon,
     labelPosition,
   }
-  const rootStyle = useRootStyles('Checkbox', workingProps, theme)
+  const rootStyles = useRootStyles('Checkbox', workingProps, theme)
 
   const flexProps = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
@@ -120,7 +120,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
       cursor="pointer"
       userSelect="none"
       {...flexProps}
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
       onClick={event => {
         handleChange(event)

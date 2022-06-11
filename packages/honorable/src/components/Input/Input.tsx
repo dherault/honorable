@@ -2,12 +2,10 @@ import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, use
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import { Div, DivProps, InputBase } from '../tags'
 
@@ -129,11 +127,10 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const [focused, setFocused] = useState(false)
   const [uncontrolledValue, setUncontrolledValue] = useState<InputValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
-
-  useOverridenProps(props, { focused, value: actualValue })
+  const workingProps = { ...props, value: actualValue }
+  const rootStyles = useRootStyles('Input', workingProps, theme)
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUncontrolledValue(event.target.value)
@@ -151,6 +148,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       alignItems="flex-start"
       justifyContent="flex-start"
       px={0.5}
+      {...rootStyles}
       {...otherProps}
     >
       {!!startIcon && (
@@ -158,7 +156,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          {...resolvePartStyles('StartIcon', props, theme)}
+          {...resolvePartStyles('Input.StartIcon', workingProps, theme)}
         >
           {startIcon}
         </Div>
@@ -172,11 +170,9 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onChange={handleChange}
           placeholder={placeholder}
           onFocus={event => {
-            setFocused(true)
             if (typeof onFocus === 'function') onFocus(event)
           }}
           onBlur={event => {
-            setFocused(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
           onKeyDown={event => {
@@ -184,7 +180,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
             if (typeof onKeyDown === 'function') onKeyDown(event)
           }}
           onKeyUp={onKeyUp}
-          {...resolvePartStyles('InputBase', props, theme)}
+          {...resolvePartStyles('Input.InputBase', workingProps, theme)}
           flexGrow={1}
         />
       )}
@@ -196,11 +192,9 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onChange={handleChange}
           placeholder={placeholder}
           onFocus={event => {
-            setFocused(true)
             if (typeof onFocus === 'function') onFocus(event)
           }}
           onBlur={event => {
-            setFocused(false)
             if (typeof onBlur === 'function') onBlur(event)
           }}
           onKeyDown={event => {
@@ -212,7 +206,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           maxRows={maxRows}
           style={{
             flexGrow: 1,
-            ...resolvePartStyles('TextArea', props, theme),
+            ...resolvePartStyles('Input.TextArea', workingProps, theme),
           }}
         />
       )}
@@ -221,7 +215,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          {...resolvePartStyles('EndIcon', props, theme)}
+          {...resolvePartStyles('Input.EndIcon', workingProps, theme)}
         >
           {endIcon}
         </Div>
@@ -230,10 +224,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   )
 }
 
-InputRef.displayName = 'Input'
+const Input = forwardRef(InputRef)
 
-const ForwardedInput = forwardRef(InputRef)
-
-ForwardedInput.propTypes = inputPropTypes
-
-export const Input = withHonorable<InputProps>(ForwardedInput, 'Input')
+Input.displayName = 'Input'
+Input.propTypes = inputPropTypes

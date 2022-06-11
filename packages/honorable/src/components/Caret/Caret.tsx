@@ -23,7 +23,7 @@ function CaretRef(props: CaretProps, ref: Ref<any>) {
   const { rotation = 0, ...otherProps } = props
   const theme = useTheme()
   const workingProps = { ...props, rotation }
-  const rootStyle = useRootStyles('Caret', workingProps, theme)
+  const rootStyles = useRootStyles('Caret', workingProps, theme)
 
   return (
     <Svg
@@ -34,7 +34,7 @@ function CaretRef(props: CaretProps, ref: Ref<any>) {
       xmlns="http://www.w3.org/2000/svg"
       transition="transform 150ms ease"
       transform={`rotate(${rotation}deg)`}
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
     >
       <path

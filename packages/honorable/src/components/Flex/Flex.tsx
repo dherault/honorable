@@ -61,7 +61,7 @@ function FlexRef(props: FlexProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const rootStyle = useRootStyles('Flex', props, theme)
+  const rootStyles = useRootStyles('Flex', props, theme)
 
   return (
     <Div
@@ -74,7 +74,7 @@ function FlexRef(props: FlexProps, ref: Ref<any>) {
       flexShrink={typeof shrink === 'boolean' ? 1 : shrink}
       alignItems={align}
       justifyContent={justify}
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
     />
   )

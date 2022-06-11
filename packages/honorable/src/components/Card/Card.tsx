@@ -13,12 +13,12 @@ export const CardPropTypes = {}
 
 function CardRef(props: CardProps, ref: Ref<any>) {
   const theme = useTheme()
-  const rootStyle = useRootStyles('Card', props, theme)
+  const rootStyles = useRootStyles('Card', props, theme)
 
   return (
     <Div
       ref={ref}
-      {...rootStyle}
+      {...rootStyles}
       {...props}
     />
   )

@@ -23,14 +23,14 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   } = props
   const theme = useTheme()
   const workingProps = { ...props, direction } // Add default value `row` to direction
-  const rootStyle = useRootStyles('ButtonGroup', workingProps, theme)
+  const rootStyles = useRootStyles('ButtonGroup', workingProps, theme)
 
   return (
     <Div
       ref={ref}
       display="inline-flex"
       flexDirection={direction}
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
     />
   )

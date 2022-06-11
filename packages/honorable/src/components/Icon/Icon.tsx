@@ -1,6 +1,7 @@
 import { Ref, forwardRef } from 'react'
 
-import withHonorable from '../../withHonorable'
+import useTheme from '../../hooks/useTheme'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Span, SpanProps } from '../tags'
 
@@ -11,21 +12,22 @@ export type IconProps = SpanProps & IconBaseProps
 export const iconPropTypes = {}
 
 function IconRef(props: IconProps, ref: Ref<any>) {
+  const theme = useTheme()
+  const rootStyles = useRootStyles('Icon', props, theme)
+
   return (
     <Span
       ref={ref}
       display="inline-flex"
       alignItems="center"
       justifyContent="center"
+      {...rootStyles}
       {...props}
     />
   )
 }
 
-IconRef.displayName = 'Icon'
+const Icon = forwardRef(IconRef)
 
-const ForwardedIcon = forwardRef(IconRef)
-
-ForwardedIcon.propTypes = iconPropTypes
-
-export const Icon = withHonorable<IconProps>(ForwardedIcon, 'Icon')
+Icon.displayName = 'Icon'
+Icon.propTypes = iconPropTypes

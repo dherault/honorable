@@ -1,11 +1,11 @@
 import { Link, Outlet } from 'react-router-dom'
-import { Div, Flex } from 'honorable'
+import { Div } from 'honorable'
 
 import pages from '../../docs/pages'
 
 function Documentation() {
   return (
-    <Flex>
+    <Div xflex="x4s">
       <Div
         width={512 - 256 + 128 - 64 + 32 - 16 + 8 - 4 + 2}
       >
@@ -28,7 +28,7 @@ function Documentation() {
       <Div mb={4}>
         <Outlet />
       </Div>
-    </Flex>
+    </Div>
   )
 }
 

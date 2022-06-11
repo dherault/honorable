@@ -74,7 +74,7 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
   const { size = 40, src, name, ...otherProps } = props
   const theme = useTheme()
   const [loaded, error] = useImageLoad(src)
-  const rootStyle = useRootStyles('Avatar', props, theme)
+  const rootStyles = useRootStyles('Avatar', props, theme)
 
   if (src && loaded && !error) {
     return (
@@ -87,7 +87,7 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
         objectFit="cover"
         flexShrink={0}
         backgroundColor={name ? `${nameToColor(name)} !important` : null}
-        {...rootStyle}
+        {...rootStyles}
         {...otherProps}
       />
     )
@@ -103,7 +103,7 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
       height={size}
       flexShrink={0}
       backgroundColor={name ? `${nameToColor(name)}` : null}
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
     >
       {name ? extractInitials(name) : <PersonIcon width={size * 3 / 5} />}

@@ -100,7 +100,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
       userSelect="none"
       cursor="pointer"
       {...flexProps}
-      {...rootStyle}
+      {...rootStyles}
       {...otherProps}
       onClick={event => {
         if (disabled) return

@@ -2,12 +2,11 @@ import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, u
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
 import useEscapeKey from '../../hooks/useEscapeKey'
+import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import { Div, DivProps } from '../tags'
 
@@ -42,6 +41,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   const backdropRef = useRef()
   const [isOpen, setIsOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
+  const rootStyles = useRootStyles('Modal', props, theme)
 
   useEscapeKey(event => !disableEscapeKey && handleClose(event))
 
@@ -155,7 +155,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
       zIndex="1000"
       backgroundColor="rgba(0, 0, 0, 0.5)"
       onClick={handleBackdropClick}
-      {...resolvePartStyles('Backdrop', props, theme)}
+      {...resolvePartStyles('Modal.Backdrop', props, theme)}
     >
       {wrapFadeInner(
         <Div
@@ -163,6 +163,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
           backgroundColor="background"
           overflowY="auto"
           m={4}
+          {...rootStyles}
           {...otherProps}
         />
       )}
@@ -170,10 +171,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   )
 }
 
-ModalRef.displayName = 'Modal'
+export const Modal = forwardRef(ModalRef)
 
-const ForwardedModal = forwardRef(ModalRef)
-
-ForwardedModal.propTypes = modalPropTypes
-
-export const Modal = withHonorable<ModalProps>(ForwardedModal, 'Modal')
+Modal.displayName = 'Modal'
+Modal.propTypes = modalPropTypes

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import { TargetWithValue } from '../../types'
 
-import withHonorable from '../../withHonorable'
-
 import { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
 
@@ -14,9 +12,9 @@ import usePreviousWithDefault from '../../hooks/usePreviousWithDefault'
 import useForkedRef from '../../hooks/useForkedRef'
 import useEscapeKey from '../../hooks/useEscapeKey'
 import useOutsideClick from '../../hooks/useOutsideClick'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles2'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
@@ -66,15 +64,14 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   const { value: currentValue, renderedItem, event } = menuUsageState
   const previousEvent = usePrevious(event)
   const previousOpen = usePreviousWithDefault(open)
+  const workingProps = { ...props, open: actualOpen }
+  const rootStyles = useRootStyles('Select', workingProps, theme)
 
   const handleOpen = useCallback((nextOpen: boolean) => {
     if (actualOpen === nextOpen) return
     setActualOpen(nextOpen)
     if (typeof onOpen === 'function') onOpen(nextOpen)
   }, [actualOpen, onOpen])
-
-  // Override the `open` props in customProps
-  useOverridenProps(props, { open: actualOpen })
 
   useEscapeKey(() => handleOpen(false))
   useOutsideClick(selectRef, () => handleOpen(false))
@@ -120,7 +117,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         alignItems="center"
         justifyContent="center"
         userSelect="none"
-        {...resolvePartStyles('Caret', props, theme)}
+        {...resolvePartStyles('Select.Caret', props, theme)}
       >
         <Caret rotation={actualOpen ? 180 : 0} />
       </Span>
@@ -132,6 +129,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
       ref={forkedRef}
       minWidth={128 + 32 + 8 + 2}
       position="relative"
+      {...rootStyles}
       {...otherProps}
     >
       <Div
@@ -142,7 +140,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
-        {...resolvePartStyles('Input', props, theme)}
+        {...resolvePartStyles('Select.Input', props, theme)}
       >
         {renderSelected()}
         <Div flexGrow={1} />
@@ -159,7 +157,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={actualOpen ? 'block' : 'none'}
-          {...resolvePartStyles('Menu', props, theme)}
+          {...resolvePartStyles('Select.Menu', props, theme)}
         >
           {children}
         </Menu>
@@ -168,10 +166,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   )
 }
 
-SelectRef.displayName = 'Select'
+export const Select = forwardRef(SelectRef)
 
-const ForwardedSelect = forwardRef(SelectRef)
-
-ForwardedSelect.propTypes = selectPropTypes
-
-export const Select = withHonorable<SelectProps>(ForwardedSelect, 'Select')
+Select.displayName = 'Select'
+Select.propTypes = selectPropTypes

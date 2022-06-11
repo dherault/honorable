@@ -13,12 +13,12 @@ export const BoxPropTypes = {}
 
 function BoxRef(props: BoxProps, ref: Ref<any>) {
   const theme = useTheme()
-  const rootStyle = useRootStyles('Box', props, theme)
+  const rootStyles = useRootStyles('Box', props, theme)
 
   return (
     <Div
       ref={ref}
-      {...rootStyle}
+      {...rootStyles}
       {...props}
     />
   )
