@@ -6,7 +6,7 @@ function resolvePseudoSelectors(props: object): object {
 
     if (pseudoSelectors && value && typeof value === 'object') {
       pseudoSelectors.forEach((pseudoSelector: string) => {
-        Object.assign(accumulator[pseudoSelector], resolvePseudoSelectors(value))
+        accumulator[pseudoSelector] = Object.assign(accumulator[pseudoSelector] || {}, resolvePseudoSelectors(value))
       })
 
       return accumulator
