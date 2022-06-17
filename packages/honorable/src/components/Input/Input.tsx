@@ -224,7 +224,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   )
 }
 
-const Input = forwardRef(InputRef)
+export const Input = forwardRef(InputRef)
 
 Input.displayName = 'Input'
 Input.propTypes = inputPropTypes

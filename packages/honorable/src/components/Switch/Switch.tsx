@@ -74,7 +74,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked)
   const actualChecked = typeof checked === 'boolean' ? checked : uncontrolledChecked
   const workingProps = { ...props, checked: actualChecked }
-  const rootStyle = useRootStyle('Switch', workingProps, theme)
+  const rootStyles = useRootStyle('Switch', workingProps, theme)
 
   const flexProps = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }

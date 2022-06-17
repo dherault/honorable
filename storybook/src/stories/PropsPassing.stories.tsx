@@ -94,3 +94,29 @@ function Template4() {
 export const AccordionBorder = Template4.bind({})
 AccordionBorder.args = {
 }
+
+function Template5() {
+  return (
+    <ExtendTheme
+      theme={{
+        A: {
+          Root: [
+            {
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            },
+          ],
+        },
+      }}
+    >
+      <A _hover={{ color: 'blue' }}>
+        Am I blue with an underline on hover?
+      </A>
+    </ExtendTheme>
+  )
+}
+
+export const AnchorHover = Template5.bind({})
+AnchorHover.args = {
+}

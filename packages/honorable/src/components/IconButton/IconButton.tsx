@@ -38,7 +38,7 @@ function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
   )
 }
 
-const IconButton = forwardRef(IconButtonRef)
+export const IconButton = forwardRef(IconButtonRef)
 
 IconButton.displayName = 'IconButton'
 IconButton.propTypes = iconButtonPropTypes

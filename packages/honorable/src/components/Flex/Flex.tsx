@@ -10,7 +10,7 @@ export type FlexBaseProps = {
   /**
    * Alias for flexDirection
    */
-  direction?: 'row' | 'column'
+  direction?: 'row' | 'column' | string
   /**
    * wrap flex property
    */
