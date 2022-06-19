@@ -27,7 +27,7 @@ function IconRef(props: IconProps, ref: Ref<any>) {
   )
 }
 
-const Icon = forwardRef(IconRef)
+export const Icon = forwardRef(IconRef)
 
 Icon.displayName = 'Icon'
 Icon.propTypes = iconPropTypes
