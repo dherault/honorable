@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 
 import { A, ExtendTheme, Modal, P } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate'
-
 export default {
   title: 'Modal',
   component: Modal,
@@ -190,6 +188,16 @@ function Template5(args: any) {
   )
 }
 
+function Template6(args: any) {
+  return (
+    <Modal
+      {...args}
+    >
+      Content
+    </Modal>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
 }
@@ -228,4 +236,8 @@ RealWorld.args = {
 
 export const RealWorld2 = Template5.bind({})
 RealWorld2.args = {
+}
+
+export const Naked = Template6.bind({})
+Naked.args = {
 }
