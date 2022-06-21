@@ -68,6 +68,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   const rootStyles = useRootStyles('Select', workingProps, theme)
 
   const handleOpen = useCallback((nextOpen: boolean) => {
+    // console.log('actualOpen, nextOpen', actualOpen, nextOpen)
     if (actualOpen === nextOpen) return
     setActualOpen(nextOpen)
     if (typeof onOpen === 'function') onOpen(nextOpen)

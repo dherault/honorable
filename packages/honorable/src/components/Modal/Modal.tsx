@@ -30,16 +30,16 @@ export const modalPropTypes = {
 
 function ModalRef(props: ModalProps, ref: Ref<any>) {
   const {
-    open = false,
-    onClose,
+    open = true,
     fade = true,
+    onClose,
     transitionDuration = 250,
     disableEscapeKey = false,
     ...otherProps
   } = props
   const theme = useTheme()
   const backdropRef = useRef()
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(open)
   const [isClosing, setIsClosing] = useState(false)
   const rootStyles = useRootStyles('Modal', props, theme)
 
