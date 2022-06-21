@@ -140,7 +140,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           setMenuState(x => ({ ...x, shouldFocus: true }))
           if (typeof onClick === 'function') onClick(event)
         }}
-        {...resolvePartStyles('Select.Input', props, theme)}
+        {...resolvePartStyles('Select.Selected', props, theme)}
       >
         {renderSelected()}
         <Div flexGrow={1} />
@@ -153,8 +153,8 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           setMenuState={setMenuState}
           position="absolute"
           top="100%"
-          right={0}
-          left={0}
+          right={-1} // -1 for compensating the border
+          left={-1}
           zIndex={100}
           display={actualOpen ? 'block' : 'none'}
           {...resolvePartStyles('Select.Menu', props, theme)}

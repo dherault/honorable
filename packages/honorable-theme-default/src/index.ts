@@ -417,6 +417,7 @@ const theme = {
   Input: {
     Root: [
       {
+        height: 38,
         color: 'text',
         border: '1px solid border',
         borderRadius: 4,
@@ -438,14 +439,12 @@ const theme = {
     ],
     StartIcon: [
       {
-        marginTop: 8,
-        marginRight: 8,
+        paddingRight: 8,
       },
     ],
     EndIcon: [
       {
-        marginTop: 8,
-        marginLeft: 8,
+        paddingLeft: 8,
       },
     ],
     TextArea: [
@@ -462,7 +461,8 @@ const theme = {
   InputBase: {
     Root: [
       {
-        padding: '8px 0',
+        padding: 0,
+        lineHeight: '32px',
         color: 'text',
         backgroundColor: 'transparent',
         border: 'none',
@@ -637,10 +637,11 @@ const theme = {
         },
       },
     ],
-    Input: [
+    Selected: [
       {
         padding: '4px 0 4px 8px',
         cursor: 'pointer',
+        userSelect: 'none',
       },
     ],
   },
