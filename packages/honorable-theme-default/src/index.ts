@@ -417,6 +417,7 @@ const theme = {
   Input: {
     Root: [
       {
+        width: 256,
         height: 38,
         color: 'text',
         border: '1px solid border',
@@ -629,6 +630,8 @@ const theme = {
   Select: {
     Root: [
       {
+        width: 256,
+        height: 38,
         display: 'inline-block',
         borderRadius: 4,
         border: '1px solid border',
