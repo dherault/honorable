@@ -1,0 +1,10 @@
+import resolvePartStyles from '../../src/resolvers/resolvePartStyles'
+
+import theme1 from '../themes/theme1'
+
+// describe('resolvePartStyles', () => {
+
+//   test('', () => {
+//   })
+
+// })
