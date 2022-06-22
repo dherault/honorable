@@ -14,7 +14,7 @@ import useEscapeKey from '../../hooks/useEscapeKey'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles2'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 

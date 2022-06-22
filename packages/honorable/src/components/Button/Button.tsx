@@ -5,7 +5,7 @@ import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles2'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Spinner } from '../Spinner/Spinner'
 import { ButtonBase, ButtonBaseBaseProps, Span } from '../tags'

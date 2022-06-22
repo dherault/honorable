@@ -6,7 +6,7 @@ import { TargetWithChecked } from '../../types'
 import useTheme from '../../hooks/useTheme'
 import useRootStyle from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles2'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
@@ -168,9 +168,8 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   )
 }
 
-SwitchRef.displayName = 'Switch'
-
 export const Switch = forwardRef(SwitchRef)
 
+Switch.displayName = 'Switch'
 // @ts-expect-error
 Switch.propTypes = switchPropTypes

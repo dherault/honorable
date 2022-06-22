@@ -12,7 +12,7 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import pickProps from '../../utils/pickProps'
-import resolvePartStyles from '../../resolvers/resolvePartStyles2'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
 import { Button, ButtonProps, buttonPropTypes } from '../Button/Button'

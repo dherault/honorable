@@ -4,11 +4,10 @@ import { arrow as arrowMiddleware, autoUpdate, offset, shift, useFloating } from
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
@@ -125,6 +124,8 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
+  const rootStyles = useRootStyles('Tooltip', props, theme)
+
   const arrowRef = useRef()
   const childRef = useRef<HTMLElement>()
   const middleware = [offset(8), shift({ padding: 8 })]
@@ -284,6 +285,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
           ref={forkedTooltipRef}
           backgroundColor="black"
           color="white"
+          {...rootStyles}
           {...otherProps}
         >
           {!!arrow && (
@@ -298,13 +300,13 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
               transform="rotate(45deg)"
               zIndex={0}
               {...{ [staticSide]: -arrowSize / 2 }}
-              {...resolvePartStyles('Arrow', props, theme)}
+              {...resolvePartStyles('Tooltip.Arrow', props, theme)}
             />
           )}
           <Div
             position="relative"
             zIndex={1}
-            {...resolvePartStyles('Label', props, theme)}
+            {...resolvePartStyles('Tooltip.Label', props, theme)}
           >
             {label}
           </Div>
@@ -314,11 +316,8 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   )
 }
 
-TooltipRef.displayName = 'Tooltip'
+export const Tooltip = forwardRef(TooltipRef)
 
-const ForwardedTooltip = forwardRef(TooltipRef)
-
+Tooltip.displayName = 'Tooltip'
 // @ts-expect-error
-ForwardedTooltip.propTypes = TooltipPropTypes
-
-export const Tooltip = withHonorable<TooltipProps>(ForwardedTooltip, 'Tooltip')
+Tooltip.propTypes = TooltipPropTypes

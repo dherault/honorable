@@ -2,10 +2,9 @@
 import { MouseEvent as ReactMouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
@@ -125,6 +124,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
   const [uncontrolledValues, setUncontrolledValues] = useState<number[]>(Array.isArray(defaultValue) ? defaultValue : [defaultValue || min])
   const actualValues = useMemo(() => (value ? Array.isArray(value) ? value : [value] : undefined) ?? uncontrolledValues, [value, uncontrolledValues])
   const isHorizontal = orientation === 'horizontal'
+  const rootStyles = useRootStyles('Slider', props, theme)
 
   const valueToPosition = useCallback((value: number) => `${(value - min) / (max - min) * 100}%`, [min, max])
 
@@ -204,13 +204,14 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
       position="relative"
       height={isHorizontal ? 8 : 256}
       width={isHorizontal ? 256 : 8}
+      {...rootStyles}
       {...otherProps}
     >
       <Div
         width={isHorizontal ? '100%' : 8}
         height={isHorizontal ? 8 : '100%'}
         backgroundColor="black"
-        {...resolvePartStyles('Track', props, theme)}
+        {...resolvePartStyles('Slider.Track', props, theme)}
       />
       {actualValues.map((value, i) => wrapTooltip(i,
         <Div
@@ -224,7 +225,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
           top={isHorizontal ? `calc(${-knobSize / 2}px + 50%)` : `calc(${valueToPosition(value)} - ${knobSize / 2}px)`}
           left={isHorizontal ? `calc(${valueToPosition(value)} - ${knobSize / 2}px)` : `calc(${-knobSize / 2}px + 50%)`}
           onMouseDown={event => handleKnobMouseDown(event, i)}
-          {...resolvePartStyles('Knob', props, theme)}
+          {...resolvePartStyles('Slider.Knob', props, theme)}
         />
       ))}
       {Array.isArray(marks) && marks.map(({ label, value }, i) => (
@@ -235,18 +236,15 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
           markOffset={markOffset}
           isHorizontal={isHorizontal}
           styles={resolvePartStyles('Mark', props, theme)}
-          innerStyles={resolvePartStyles('MarkInner', props, theme)}
+          innerStyles={resolvePartStyles('Slider.MarkInner', props, theme)}
         />
       ))}
     </Div>
   )
 }
 
-SliderRef.displayName = 'Slider'
+export const Slider = forwardRef(SliderRef)
 
-const ForwardedSlider = forwardRef(SliderRef)
-
+Slider.displayName = 'Slider'
 // @ts-expect-error
-ForwardedSlider.propTypes = SliderPropTypes
-
-export const Slider = withHonorable<SliderProps>(ForwardedSlider, 'Slider')
+Slider.propTypes = SliderPropTypes

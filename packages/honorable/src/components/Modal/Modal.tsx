@@ -6,7 +6,7 @@ import useTheme from '../../hooks/useTheme'
 import useEscapeKey from '../../hooks/useEscapeKey'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles2'
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 

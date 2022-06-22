@@ -3,9 +3,8 @@ import { Ref, forwardRef } from 'react'
 import { css, keyframes } from '@emotion/react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import useTheme from '../../hooks/useTheme'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
@@ -56,6 +55,7 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
+  const rootStyles = useRootStyles('Skeleton', props, theme)
 
   let styles = {}
 
@@ -87,6 +87,7 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
       ref={ref}
       position="relative"
       width={children ? undefined : '100%'}
+      {...rootStyles}
       {...otherProps}
     >
       <Div
@@ -96,11 +97,11 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
         left={0}
         right={0}
         css={css(styles)}
-        {...resolvePartStyles('Inner', props, theme)}
+        {...resolvePartStyles('Skeleton.Inner', props, theme)}
       />
       <Div
         visibility="hidden"
-        {...resolvePartStyles('Children', props, theme)}
+        {...resolvePartStyles('Skeleton.Children', props, theme)}
       >
         {children}
       </Div>
@@ -108,10 +109,7 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
   )
 }
 
-SkeletonRef.displayName = 'Skeleton'
+export const Skeleton = forwardRef(SkeletonRef)
 
-const ForwardedSkeleton = forwardRef(SkeletonRef)
-
-ForwardedSkeleton.propTypes = SkeletonPropTypes
-
-export const Skeleton = withHonorable<SkeletonProps>(ForwardedSkeleton, 'Skeleton')
+Skeleton.displayName = 'Skeleton'
+Skeleton.propTypes = SkeletonPropTypes

@@ -1,7 +1,8 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
+import useTheme from '../../hooks/useTheme'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import { Span, SpanProps } from '../tags'
 
@@ -23,20 +24,20 @@ export const spinnerPropTypes = {
   color: PropTypes.string,
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SpinnerRef({ size, color, ...props }: SpinnerProps, ref: Ref<any>) {
+  const theme = useTheme()
+  const rootStyles = useRootStyles('Spinner', { size, color, ...props }, theme)
+
   return (
     <Span
       ref={ref}
+      {...rootStyles}
       {...props}
     />
   )
 }
 
-SpinnerRef.displayName = 'Spinner'
+export const Spinner = forwardRef(SpinnerRef)
 
-const ForwardedSpinner = forwardRef(SpinnerRef)
-
-ForwardedSpinner.propTypes = spinnerPropTypes
-
-export const Spinner = withHonorable<SpinnerProps>(ForwardedSpinner, 'Spinner')
+Spinner.displayName = 'Spinner'
+Spinner.propTypes = spinnerPropTypes
