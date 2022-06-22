@@ -419,6 +419,8 @@ const theme = {
       {
         width: 256,
         height: 38,
+        paddingLeft: 8,
+        paddingRight: 8,
         color: 'text',
         border: '1px solid border',
         borderRadius: 4,

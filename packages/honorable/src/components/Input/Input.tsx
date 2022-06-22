@@ -146,7 +146,6 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       ref={ref}
       display="inline-flex"
       justifyContent="flex-start"
-      px={0.5}
       {...rootStyles}
       {...otherProps}
     >
