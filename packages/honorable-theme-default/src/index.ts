@@ -118,7 +118,10 @@ const theme = {
     ],
     Title: [
       {
-        padding: 16,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
       },
     ],
     ChildrenWrapper: [
@@ -128,7 +131,10 @@ const theme = {
     ],
     Children: [
       {
-        padding: '0 16px 16px 16px',
+        paddingTop: 0,
+        paddingBottom: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
       },
     ],
     ExpandIcon: [
@@ -167,7 +173,10 @@ const theme = {
         color: 'white',
         backgroundColor: 'primary',
         border: 'none',
-        padding: '8px 16px',
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 16,
+        paddingRight: 16,
         borderRadius: 4,
         userSelect: 'none',
         textDecoration: 'none',
@@ -190,14 +199,14 @@ const theme = {
     ],
     StartIcon: [
       {
-        marginLeft: '-6px',
-        marginRight: '8px',
+        marginLeft: -6,
+        marginRight: 8,
       },
     ],
     EndIcon: [
       {
-        marginLeft: '8px',
-        marginRight: '-6px',
+        marginLeft: 8,
+        marginRight: -6,
       },
     ],
     Spinner: [
@@ -340,8 +349,8 @@ const theme = {
     Button: {
       EndIcon: [
         {
-          marginLeft: '8px',
-          marginRight: '-6px',
+          marginLeft: 8,
+          marginRight: -6,
         },
       ],
     },
@@ -349,42 +358,60 @@ const theme = {
   H1: {
     Root: [
       {
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
       },
     ],
   },
   H2: {
     Root: [
       {
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
       },
     ],
   },
   H3: {
     Root: [
       {
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
       },
     ],
   },
   H4: {
     Root: [
       {
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
       },
     ],
   },
   H5: {
     Root: [
       {
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
       },
     ],
   },
   H6: {
     Root: [
       {
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
       },
     ],
   },
@@ -399,7 +426,10 @@ const theme = {
   IconButton: {
     Root: [
       {
-        padding: 8,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 8,
+        paddingRight: 8,
         border: 'none',
         borderRadius: '50%',
         background: 'background',
@@ -453,7 +483,10 @@ const theme = {
     TextArea: [
       {
         color: 'text',
-        padding: '8px 0',
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 0,
+        paddingRight: 0,
         resize: 'none',
         outline: 'none',
         border: 'none',
@@ -464,7 +497,10 @@ const theme = {
   InputBase: {
     Root: [
       {
-        padding: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        paddingRight: 0,
         lineHeight: '32px',
         color: 'text',
         backgroundColor: 'transparent',
@@ -474,8 +510,14 @@ const theme = {
         },
         '&[type="checkbox"]': {
           appearance: 'none',
-          margin: 0,
-          padding: 0,
+          marginTop: 0,
+          marginBottom: 0,
+          marginLeft: 0,
+          marginRight: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+          paddingLeft: 0,
+          paddingRight: 0,
           backgroundColor: 'background',
           border: '1px solid border',
           borderRadius: 4,
@@ -514,7 +556,10 @@ const theme = {
   Menu: {
     Root: [
       {
-        padding: '8px 0',
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 0,
+        paddingRight: 0,
         elevation: 1,
         backgroundColor: 'background',
         borderRadius: 4,
@@ -533,7 +578,10 @@ const theme = {
     ],
     Children: [
       {
-        padding: '8px 16px',
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 16,
+        paddingRight: 16,
       },
       ({ active }: any) => active && {
         backgroundColor: 'background-light',
@@ -547,7 +595,10 @@ const theme = {
   Modal: {
     Root: [
       {
-        padding: 32,
+        paddingTop: 32,
+        paddingBottom: 32,
+        paddingLeft: 32,
+        paddingRight: 32,
         borderRadius: 4,
       },
     ],
@@ -555,7 +606,10 @@ const theme = {
   P: {
     Root: [
       {
-        margin: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
       },
     ],
   },
@@ -563,8 +617,14 @@ const theme = {
     Root: [
       {
         display: 'inline-block',
-        margin: 0,
-        padding: '4px 8px',
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingLeft: 8,
+        paddingRight: 8,
         borderRadius: 4,
         backgroundColor: 'background-light',
       },
@@ -644,7 +704,10 @@ const theme = {
     ],
     Selected: [
       {
-        padding: '4px 0 4px 8px',
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingLeft: 8,
+        paddingRight: 0,
         cursor: 'pointer',
         userSelect: 'none',
       },
@@ -747,14 +810,20 @@ const theme = {
   Td: {
     Root: [
       {
-        padding: 16,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
       },
     ],
   },
   Th: {
     Root: [
       {
-        padding: 16,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
       },
     ],
   },
@@ -780,7 +849,10 @@ const theme = {
     ],
     Label: [
       {
-        padding: 4,
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingLeft: 4,
+        paddingRight: 4,
       },
     ],
     Arrow: [
