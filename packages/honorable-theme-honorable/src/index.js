@@ -1,5 +1,6 @@
 import { mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
+import mpRecipe from 'honorable-recipe-mp'
 
 export default mergeTheme(defaultTheme, {
   name: 'Honorable',
@@ -21,6 +22,7 @@ export default mergeTheme(defaultTheme, {
       fontSize: '2rem',
       'fontSize-mobile': '1.5rem',
     },
+    mpRecipe(),
   ],
   A: {
     Root: [

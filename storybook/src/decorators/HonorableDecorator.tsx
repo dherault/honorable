@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 // eslint-disable-next-line
 import { Story as StoryType, StoryContext } from '@storybook/react'
-import { CssBaseline, Div, Flex, Span, Switch, ThemeProvider, mergeTheme } from 'honorable'
+import { CssBaseline, Div, Flex, Switch, ThemeProvider, mergeTheme } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
+import mpRecipe from 'honorable-recipe-mp'
 
 const theme = mergeTheme(defaultTheme, {
+  global: [
+    mpRecipe(),
+  ],
   // Fix storybook body padding
   stylesheet: {
     html: [
