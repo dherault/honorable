@@ -9,10 +9,12 @@ import Layout from './components/layout/Layout'
 import Home from './scenes/Home'
 // import Onboarding from './scenes/Onboarding'
 import Documentation from './scenes/Documentation'
+import ComponentPage from './scenes/Documentation/ComponentPage'
 import DocumentationPage from './scenes/Documentation/DocumentationPage'
 
 import ThemeModeContext from './contexts/ThemeModeContext'
 
+import components from './docs/components'
 import pages from './docs/pages'
 
 function App() {
@@ -34,6 +36,18 @@ function App() {
                 path="/docs"
                 element={<Documentation />}
               >
+                {components.map(({ path, name, json }) => (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={(
+                      <ComponentPage
+                        componentName={name}
+                        componentJson={json}
+                      />
+                    )}
+                  />
+                ))}
                 {pages.map(page => (
                   <Route
                     key={page.path}
