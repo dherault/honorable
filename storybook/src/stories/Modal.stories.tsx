@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, ExtendTheme, Modal, P } from 'honorable'
+import { A, Button, Div, ExtendTheme, Modal, P } from 'honorable'
 
 export default {
   title: 'Modal',
@@ -198,6 +198,44 @@ function Template6(args: any) {
   )
 }
 
+function Template7(args: any) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <A
+        onClick={() => setOpen(true)}
+        userSelect="none"
+      >
+        Open
+      </A>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        {...args}
+      >
+        <Button onClick={() => setOpen(false)}>Close</Button>
+      </Modal>
+    </>
+  )
+}
+
+function Template8(args: any) {
+  return (
+    <Div
+      width={256}
+      height={256}
+      willChange="transform"
+    >
+      <Modal
+        {...args}
+      >
+        Content
+      </Modal>
+    </Div>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
 }
@@ -240,4 +278,12 @@ RealWorld2.args = {
 
 export const Naked = Template6.bind({})
 Naked.args = {
+}
+
+export const CloseButton = Template7.bind({})
+CloseButton.args = {
+}
+
+export const WillChangeContainer = Template8.bind({})
+WillChangeContainer.args = {
 }
