@@ -1,4 +1,4 @@
-import { H2 } from 'honorable'
+import { H2, H3, Iframe } from 'honorable'
 
 import DemoContainer from '../../components/DemoContainer'
 import PropsContainer from '../../components/PropsContainer'
@@ -18,6 +18,13 @@ function ComponentPage({ componentName, componentJson }) {
       <PropsContainer
         mt={4}
         componentProps={componentJson.props}
+      />
+      <H3 mt={4}>Styling parts</H3>
+      <Iframe
+        mt={2}
+        src={componentJson.partsUrl}
+        width="100%"
+        height={512}
       />
     </>
   )

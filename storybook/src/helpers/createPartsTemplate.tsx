@@ -1,5 +1,5 @@
 import React, { ComponentType, useEffect, useState } from 'react'
-import { Div, ExtendTheme, Flex, P } from 'honorable'
+import { Div, ExtendTheme, Table, Tbody, Td, Tr } from 'honorable'
 
 const rootColor = 'tomato'
 const partColors = [
@@ -84,44 +84,40 @@ function createPartsTemplate(Component: ComponentType<any>, name: string, parts:
       <ExtendTheme theme={extendedTheme}>
         <Component {...args} />
         <Div mt={2}>
-          <P mb={0.5}>
-            Parts:
-          </P>
-          <Flex
-            align="center"
-            mb={0.5}
-          >
-            <Div
-              width={24}
-              height={2}
-              backgroundColor={rootColor}
-            />
-            <P ml={0.5}>
-              Root
-            </P>
-          </Flex>
-          {parts.map((part, i) => (
-            <Flex
-              key={part}
-              align="center"
-              mb={0.5}
-            >
-              <Div
-                width={24}
-                height={2}
-                backgroundColor={partColors[i]}
-              />
-              <P ml={0.5}>
-                {part}
-              </P>
-              <P
-                ml={1.5}
-                fontSize={12}
-              >
-                {paths[part]}
-              </P>
-            </Flex>
-          ))}
+          <Table>
+            <Tbody>
+              <Tr>
+                <Td>
+                  <Div
+                    width={24}
+                    height={2}
+                    backgroundColor={rootColor}
+                  />
+                </Td>
+                <Td>
+                  Root
+                </Td>
+                <Td />
+              </Tr>
+              {parts.map((part, i) => (
+                <Tr key={part}>
+                  <Td>
+                    <Div
+                      width={24}
+                      height={2}
+                      backgroundColor={partColors[i]}
+                    />
+                  </Td>
+                  <Td>
+                    {part}
+                  </Td>
+                  <Td fontSize={12}>
+                    {paths[part]}
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
         </Div>
       </ExtendTheme>
     )
