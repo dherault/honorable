@@ -22,8 +22,7 @@ describe('resolveAll', () => {
           webkitOpacity: 0.5,
         },
         '& > div': {
-          ml: 2,
-          pt: '2rem',
+          color: 'blue',
         },
       }, theme1)
     )
@@ -41,8 +40,7 @@ describe('resolveAll', () => {
           WebkitOpacity: 0.5,
         },
         '& > div': {
-          marginLeft: 32,
-          paddingTop: '2rem',
+          color: 'blue',
         },
       }
     )
