@@ -1,1 +1,5 @@
 # Honorable website
+
+## License
+
+MIT

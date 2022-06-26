@@ -1,1 +1,5 @@
 # Honorable Storybook
+
+## License
+
+MIT

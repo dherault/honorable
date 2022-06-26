@@ -30,12 +30,9 @@ jobs:
     needs: changes_detector
     if: ${{ needs.changes_detector.outputs.site == 'true' }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18]
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && cd site && npm ci && npm run build
+      - run: npm ci && cd site && npm i && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -47,12 +44,9 @@ jobs:
     needs: changes_detector
     if: ${{ needs.changes_detector.outputs.designer == 'true' }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18]
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && cd designer && npm ci && npm run build
+      - run: npm ci && cd designer && npm i && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -64,12 +58,9 @@ jobs:
     needs: changes_detector
     if: ${{ needs.changes_detector.outputs.storybook == 'true' }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18]
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && cd storybook && npm ci && npm run build
+      - run: npm ci && cd storybook && npm i && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
