@@ -5,10 +5,15 @@ import components from '../../docs/components'
 import pages from '../../docs/pages'
 
 function Documentation() {
+  const sidebarWidth = 256
+
   return (
-    <Div xflex="x4s">
+    <Div
+      xflex="x4s"
+    >
       <Div
-        width={512 - 256 + 128 - 64 + 32 - 16 + 8 - 4 + 2}
+        width={sidebarWidth}
+        flexShrink={0}
       >
         {pages.map(({ path, title }) => (
           <Link
@@ -42,7 +47,14 @@ function Documentation() {
           </Link>
         ))}
       </Div>
-      <Div mb={4}>
+      <Div
+        mb={4}
+        p={2}
+        pl={0}
+        width={`calc(100% - ${sidebarWidth}px)`}
+        flexGrow={1}
+        flexShrink={1}
+      >
         <Outlet />
       </Div>
     </Div>
