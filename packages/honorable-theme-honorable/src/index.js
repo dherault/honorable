@@ -8,6 +8,11 @@ export default mergeTheme(defaultTheme, {
     secondary: '#FFC547',
   },
   global: [
+    ({ container }) => container && {
+      width: '66.666%',
+      margin: '0 auto',
+    },
+    // TODO: an actual design system
     ({ text }) => text === 'small' && {
       fontSize: '0.875rem',
     },

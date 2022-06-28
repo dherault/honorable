@@ -42,8 +42,8 @@
     "patch:honorable-theme-material": "npm run upgrade:honorable-theme-material && (cd packages/honorable-theme-material && npm version patch && npm publish)",
     "minor:honorable-theme-wireframe": "npm run upgrade:honorable-theme-wireframe && (cd packages/honorable-theme-wireframe && npm version minor && npm publish)",
     "patch:honorable-theme-wireframe": "npm run upgrade:honorable-theme-wireframe && (cd packages/honorable-theme-wireframe && npm version patch && npm publish)",
-    "docs": "npm run docs:generateHtmlTags",
-    "docs:generateHtmlTags": "npx ts-node scripts/docs/generateHtmlTagsDocs.js"
+    "docs": "npm run docs:generateComponentsDocs",
+    "docs:generateComponentsDocs": "npx ts-node scripts/docs/generateComponentsDocs.js"
   },
   "repository": {
     "type": "git",

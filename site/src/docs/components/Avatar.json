@@ -1,0 +1,27 @@
+{
+  "props": [
+    {
+      "name": "src",
+      "type": "string",
+      "description": "The source of the Avatar's image"
+    },
+    {
+      "name": "size",
+      "type": "number",
+      "description": "The size of the Avatar"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "The name of that will be transformed into the Avatar's initials"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function AvatarDemo(args: any) {\n  return (\n    <>\n      <Flex>\n        <Avatar {...args} />\n        <Avatar\n          ml={0.5}\n          name=\"Jane Smith\"\n          {...args}\n        />\n        <Avatar\n          ml={0.5}\n          name=\"Henry Doe\"\n          {...args}\n        />\n        <Avatar\n          ml={0.5}\n          name=\"Alexander Taze\"\n          {...args}\n        />\n        <Avatar\n          ml={0.5}\n          src=\"/profile-picture.jpeg\"\n          {...args}\n        />\n      </Flex>\n      <ExtendTheme theme={{ Avatar: { Root: [{ borderRadius: 4 }] } }}>\n        <Flex mt={0.5}>\n          <Avatar {...args} />\n          <Avatar\n            ml={0.5}\n            name=\"Jane Smith\"\n            {...args}\n          />\n          <Avatar\n            ml={0.5}\n            name=\"Henry Doe\"\n            {...args}\n          />\n          <Avatar\n            ml={0.5}\n            name=\"Alexander Taze\"\n            {...args}\n          />\n          <Avatar\n            ml={0.5}\n            src=\"/profile-picture.jpeg\"\n            {...args}\n          />\n        </Flex>\n      </ExtendTheme>\n    </>\n  )\n}\n",
+      "name": "Demo",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--demo&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--parts&viewMode=story"
+}

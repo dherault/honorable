@@ -5,15 +5,14 @@ import components from '../../docs/components'
 import pages from '../../docs/pages'
 
 function Documentation() {
-  const sidebarWidth = 256
+  const sidebarWidth = 256 + 64 + 16 + 4
 
   return (
-    <Div
-      xflex="x4s"
-    >
+    <Div xflex="x4s">
       <Div
         width={sidebarWidth}
         flexShrink={0}
+        pt={2}
       >
         {pages.map(({ path, title }) => (
           <Link
@@ -22,10 +21,10 @@ function Documentation() {
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <Div
-              p={1}
+              py={0.5}
+              px={2}
               color="primary"
               _hover={{ textDecoration: 'underline' }}
-
             >
               {title}
             </Div>
@@ -38,7 +37,8 @@ function Documentation() {
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <Div
-              p={1}
+              py={0.5}
+              px={2}
               color="primary"
               _hover={{ textDecoration: 'underline' }}
             >

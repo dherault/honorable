@@ -85,21 +85,3 @@ const theme = mergeTheme(defaultTheme, {
 ```
 
 For more info, see [theming.md](theming.md).
-
-## Learn about the `mp` props
-
-TODO make this a separate component
-
-They are opinionated aliases that ship by default with Honorable.
-
-* `xflex` allow for super quick flexbox layouts.
-* `mp` props set margins and paddings.
-
-```jsx
-<Div
-  mt={1}      // margin-top: 1rem
-  p={2}       // padding: 2rem
-/>
-```
-
-For more info, see [mp-properties.md](mp-properties.md)

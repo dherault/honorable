@@ -73,7 +73,7 @@ function AccordionControlledDemo() {
 export const DemoControlled = AccordionControlledDemo.bind({})
 
 // START-DEMO
-// @name Uncontrolled
+// @name Default expanded
 // @url https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-default-expanded&viewMode=story
 // START-SOURCE
 function AccordionDefaultExpandedDemo() {

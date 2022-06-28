@@ -10,8 +10,9 @@ export default {
 }
 
 // START-DEMO
-// Rounded and Squared
-// https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--demo&viewMode=story
+// @name Demo
+// @url https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--demo&viewMode=story
+// START-SOURCE
 function AvatarDemo(args: any) {
   return (
     <>
@@ -66,14 +67,12 @@ function AvatarDemo(args: any) {
     </>
   )
 }
+// END-SOURCE
 // END-DEMO
 
 export const Demo = AvatarDemo.bind({})
 
-// START-PARTS
-// https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--parts&viewMode=story
-// END-PARTS
-
+// @parts https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--parts&viewMode=story
 export const Parts = createPartsTemplate(
   Avatar,
   'Avatar',
