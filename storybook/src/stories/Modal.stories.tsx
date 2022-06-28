@@ -286,4 +286,5 @@ CloseButton.args = {
 
 export const WillChangeContainer = Template8.bind({})
 WillChangeContainer.args = {
+  portal: true,
 }

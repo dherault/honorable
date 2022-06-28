@@ -8,6 +8,8 @@ import ThemeContext from '../../contexts/ThemeContext'
 import enhanceTheme from '../../utils/enhanceTheme'
 import mergeTheme from '../../utils/mergeTheme'
 
+import { Div } from '../tags'
+
 export type ThemeProviderBaseProps = {
   theme: HonorableTheme
 }
@@ -25,6 +27,7 @@ export function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
     <ThemeContext.Provider value={userTheme}>
       <EmotionProvider theme={userTheme}>
         {children}
+        <Div id="honorable-portal" />
       </EmotionProvider>
     </ThemeContext.Provider>
   )

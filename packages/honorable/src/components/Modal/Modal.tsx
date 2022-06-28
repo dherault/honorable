@@ -1,4 +1,5 @@
-import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
@@ -16,6 +17,7 @@ export type ModalBaseProps = {
   fade?: boolean
   transitionDuration?: number
   disableEscapeKey?: boolean
+  portal?: boolean,
 }
 
 export type ModalProps = DivProps & ModalBaseProps
@@ -26,6 +28,7 @@ export const modalPropTypes = {
   fade: PropTypes.bool,
   transitionDuration: PropTypes.number,
   disableEscapeKey: PropTypes.bool,
+  portal: PropTypes.bool,
 }
 
 function ModalRef(props: ModalProps, ref: Ref<any>) {
@@ -35,6 +38,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     onClose,
     transitionDuration = 250,
     disableEscapeKey = false,
+    portal = false,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -42,6 +46,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   const [isOpen, setIsOpen] = useState(open)
   const [isClosing, setIsClosing] = useState(false)
   const rootStyles = useRootStyles('Modal', props, theme)
+  const portalElement = useMemo(() => document.createElement('div'), [])
 
   useEscapeKey(event => !disableEscapeKey && handleClose(event))
 
@@ -70,6 +75,17 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     }
   }, [fade, open, transitionDuration])
 
+  useEffect(() => {
+    const honorablePortalElement = document.getElementById('honorable-portal')
+
+    if (portal && honorablePortalElement) {
+      honorablePortalElement.appendChild(portalElement)
+
+      return () => {
+        honorablePortalElement.removeChild(portalElement)
+      }
+    }
+  }, [portal, portalElement])
   if (!(open || isOpen || isClosing)) return null
 
   function handleBackdropClick(event: MouseEvent) {
@@ -109,6 +125,12 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     )
   }
 
+  function renderInPortal(element: ReactElement) {
+    if (!portal) return element
+
+    return createPortal(element, portalElement)
+  }
+
   function wrapFadeInner(element: ReactElement) {
     if (!fade) return element
 
@@ -140,7 +162,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     )
   }
 
-  return wrapFadeOutter(
+  return renderInPortal(wrapFadeOutter(
     <Div
       ref={backdropRef}
       display="flex"
@@ -168,7 +190,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
         />
       )}
     </Div>
-  )
+  ))
 }
 
 export const Modal = forwardRef(ModalRef)
