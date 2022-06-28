@@ -38,8 +38,8 @@ describe('Div', () => {
 
     const tree = component.toJSON()
 
-    expect(tree).toMatchSnapshot()
-    expect(tree).toHaveStyleRule('color', 'blue', {
+    expect(tree[0]).toMatchSnapshot()
+    expect(tree[0]).toHaveStyleRule('color', 'blue', {
       media: '@media (max-width: 599px)',
     })
   })
@@ -53,7 +53,7 @@ describe('Div', () => {
 
     const tree = component.toJSON()
 
-    expect(tree).toMatchSnapshot()
-    expect(tree).toHaveStyleRule('color', '#0000ff')
+    expect(tree[0]).toMatchSnapshot()
+    expect(tree[0]).toHaveStyleRule('color', '#0000ff')
   })
 })
