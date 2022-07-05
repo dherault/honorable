@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { MenuStateType } from '../../contexts/MenuContext'
@@ -38,6 +38,10 @@ export type DropdownButtonBaseProps = {
    */
   fade?: boolean
   /**
+   * The end icon for the button
+   */
+  endIcon?: ReactNode,
+  /**
    * Callback function called when the DropdownButton returns a value
    */
   onChange?: (event: MouseEvent | KeyboardEvent) => void
@@ -55,6 +59,7 @@ export const dropdownButtonPropTypes = {
   defaultOpen: PropTypes.bool,
   label: PropTypes.string,
   fade: PropTypes.bool,
+  endIcon: PropTypes.node,
   onChange: PropTypes.func,
   onOpen: PropTypes.func,
 }
@@ -66,6 +71,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     defaultOpen,
     label,
     fade,
+    endIcon,
     onChange,
     onOpen,
     children,
@@ -115,7 +121,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       {...otherProps}
     >
       <Button
-        endIcon={(
+        endIcon={endIcon || (
           <Caret rotation={actualOpen ? 180 : 0} />
         )}
         {...buttonProps}

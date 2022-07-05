@@ -23,7 +23,7 @@ function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme
       // Component part styles
       partStyle,
       // Global props
-      resolveStyles(theme.global, { ...props, ...partStyle }, theme),
+      resolveStyles(theme.global, partStyle, theme),
     ),
     theme
   )
