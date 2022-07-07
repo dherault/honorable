@@ -246,28 +246,28 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
       left: x ?? '',
     }
 
-    const defaultStyle = {
+    const defaultStyles = {
+      display: 'none',
       opacity: 0,
       transition: `opacity ${transitionDuration}ms ease`,
     }
 
     const transitionStyles = {
-      entering: { opacity: 1 },
-      entered: { opacity: 1 },
-      exiting: { opacity: 0 },
-      exited: { opacity: 0 },
+      entering: { opacity: 0, display: 'block' },
+      entered: { opacity: 1, display: 'block' },
+      exiting: { opacity: 0, display: 'block' },
+      exited: { opacity: 0, display: 'none' },
     }
 
     return (
       <Transition
         in={actualOpen}
-        appear
         timeout={transitionDuration}
       >
         {(state: string) => cloneElement(element, {
           ...element.props,
           ...positionStyles,
-          ...defaultStyle,
+          ...defaultStyles,
           ...transitionStyles[state],
         })}
       </Transition>
@@ -285,6 +285,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
           ref={forkedTooltipRef}
           backgroundColor="black"
           color="white"
+          cursor="default"
           {...rootStyles}
           {...otherProps}
         >
