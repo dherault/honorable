@@ -12,6 +12,9 @@ describe('resolveMp', () => {
       marginTop: '2px',
       marginBottom: '2px',
       padding: 16,
+      ml: null,
+      my: null,
+      p: null,
     })
   })
 
@@ -20,6 +23,7 @@ describe('resolveMp', () => {
       ml: {},
     })).toEqual({
       marginLeft: {},
+      ml: null,
     })
   })
 
@@ -29,6 +33,7 @@ describe('resolveMp', () => {
       p: 1,
     })).toEqual({
       padding: 16,
+      p: null,
     })
   })
 

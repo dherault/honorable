@@ -59,13 +59,7 @@ function decodeMp(key: string, value: any, multiplier: number) {
 function resolveMp(multiplier = 16) {
   return (props: object) => Object.entries(props)
   .filter(([key]) => mpProperties.includes(key as typeof mpProperties[number]))
-  .reduce((acc, [key, value]) => {
-    const decoded = { ...acc, ...decodeMp(key, value, multiplier) }
-
-    delete decoded[key]
-
-    return decoded
-  }, {})
+  .reduce((acc, [key, value]) => ({ ...acc, ...decodeMp(key, value, multiplier), [key]: null }), {})
 }
 
 export default resolveMp
