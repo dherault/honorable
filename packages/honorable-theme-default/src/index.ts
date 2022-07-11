@@ -448,7 +448,7 @@ const theme = {
     Root: [
       {
         width: 256,
-        height: 38,
+        minHeight: 38,
         paddingLeft: 8,
         paddingRight: 8,
         color: 'text',
