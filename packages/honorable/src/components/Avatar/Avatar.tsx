@@ -11,15 +11,15 @@ export type AvatarBaseProps = {
   /**
    * The source of the Avatar's image
    */
-  src?: string | null
+  src?: string | null | undefined
   /**
    * The size of the Avatar
    */
-  size?: number | null
+  size?: number | null | undefined
   /**
    * The name of that will be transformed into the Avatar's initials
    */
-  name?: string | null
+  name?: string | null | undefined
 }
 
 export type AvatarProps = ImgProps & DivProps & AvatarBaseProps
