@@ -1,8 +1,6 @@
 import { RefObject, useEffect } from 'react'
 
-type UseOutsideClickHandlerType = (event: MouseEvent) => void;
-
-function useOutsideClick(ref: RefObject<any>, handler: UseOutsideClickHandlerType) {
+function useOutsideClick(ref: RefObject<any>, handler: (event: MouseEvent) => void) {
   useEffect(() => {
     function handleClick(event: MouseEvent) {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -10,12 +8,16 @@ function useOutsideClick(ref: RefObject<any>, handler: UseOutsideClickHandlerTyp
       }
     }
 
-    window.addEventListener('click', handleClick)
+    document.addEventListener('click', handleClick)
+    document.addEventListener('touchstart', handleClick)
 
     return () => {
-      window.removeEventListener('click', handleClick)
+      document.removeEventListener('click', handleClick)
+      document.removeEventListener('touchstart', handleClick)
     }
-  }, [ref, handler])
+  // Do not add [ref, handler] here as may cause a bug where only the last useOutsideClick works
+  // eslint-disable-next-line
+  }, [handler])
 }
 
 export default useOutsideClick

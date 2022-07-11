@@ -68,14 +68,16 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   const rootStyles = useRootStyles('Select', workingProps, theme)
 
   const handleOpen = useCallback((nextOpen: boolean) => {
-    // console.log('actualOpen, nextOpen', actualOpen, nextOpen)
-    if (actualOpen === nextOpen) return
     setActualOpen(nextOpen)
     if (typeof onOpen === 'function') onOpen(nextOpen)
-  }, [actualOpen, onOpen])
+  }, [onOpen])
 
-  useEscapeKey(() => handleOpen(false))
-  useOutsideClick(selectRef, () => handleOpen(false))
+  const handleCloseIfOpen = useCallback(() => {
+    if (actualOpen) handleOpen(false)
+  }, [handleOpen, actualOpen])
+
+  useEscapeKey(handleCloseIfOpen)
+  useOutsideClick(selectRef, handleCloseIfOpen)
 
   useEffect(() => {
     if (typeof open === 'undefined' || previousOpen === open) return
@@ -143,7 +145,14 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         }}
         {...resolvePartStyles('Select.Selected', props, theme)}
       >
-        {renderSelected()}
+        <Div
+          flexShrink={1}
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
+        >
+          {renderSelected()}
+        </Div>
         <Div flexGrow={1} />
         {renderCaret()}
       </Div>

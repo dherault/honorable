@@ -14,6 +14,28 @@ const items = [
   { text: 'And', value: 'And' },
 ]
 
+function makeItems(items: any[], depth = 1): any[] {
+  if (depth <= 0) return items
+
+  return items.map((item, i) => ({
+    ...item,
+    value: item.text + depth,
+    items: i % 2 === depth % 2 ? null : makeItems(items, depth - 1),
+  }))
+}
+
+function findAllValues(items: any[]) {
+  return items.reduce((acc, item) => {
+    acc.push(item.value)
+
+    if (Array.isArray(item.items)) {
+      acc.push(...findAllValues(item.items))
+    }
+
+    return acc
+  }, [])
+}
+
 function renderItem({ text, value, items }: any) {
   return (
     <MenuItem
@@ -107,26 +129,26 @@ function Template3({ items, initialValue, ...args }: any) {
   )
 }
 
-function makeItems(items: any[], depth = 1): any[] {
-  if (depth <= 0) return items
+function Template4(args: any) {
+  const [value, setValue] = useState('0')
 
-  return items.map((item, i) => ({
-    ...item,
-    value: item.text + depth,
-    items: i % 2 === depth % 2 ? null : makeItems(items, depth - 1),
-  }))
-}
-
-function findAllValues(items: any[]) {
-  return items.reduce((acc, item) => {
-    acc.push(item.value)
-
-    if (Array.isArray(item.items)) {
-      acc.push(...findAllValues(item.items))
-    }
-
-    return acc
-  }, [])
+  return (
+    <Select
+      {...args}
+      value={value}
+      onChange={event => setValue(event.target.value)}
+    >
+      <MenuItem value="0">
+        A long long long long train running in a deep dark forest.
+      </MenuItem>
+      <MenuItem value="1">
+        A long long long long train running in a deep dark forest.
+      </MenuItem>
+      <MenuItem value="2">
+        A long long long long train running in a deep dark forest.
+      </MenuItem>
+    </Select>
+  )
 }
 
 export const Default = Template.bind({})
@@ -164,4 +186,8 @@ ControlledChanging.args = {
 export const ControlledChangingSubMenu = Template3.bind({})
 ControlledChangingSubMenu.args = {
   items: makeItems(items, 6),
+}
+
+export const LongItems = Template4.bind({})
+LongItems.args = {
 }

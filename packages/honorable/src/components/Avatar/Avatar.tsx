@@ -11,15 +11,15 @@ export type AvatarBaseProps = {
   /**
    * The source of the Avatar's image
    */
-  src?: string
+  src?: string | null
   /**
    * The size of the Avatar
    */
-  size?: number
+  size?: number | null
   /**
    * The name of that will be transformed into the Avatar's initials
    */
-  name?: string
+  name?: string | null
 }
 
 export type AvatarProps = ImgProps & DivProps & AvatarBaseProps
@@ -103,6 +103,7 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
       height={size}
       flexShrink={0}
       backgroundColor={name ? `${nameToColor(name)}` : null}
+      userSelect="none"
       {...rootStyles}
       {...otherProps}
     >
