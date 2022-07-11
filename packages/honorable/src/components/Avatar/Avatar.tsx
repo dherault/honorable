@@ -11,18 +11,18 @@ export type AvatarBaseProps = {
   /**
    * The source of the Avatar's image
    */
-  src?: string | null | undefined
+  src?: string
   /**
    * The size of the Avatar
    */
-  size?: number | null | undefined
+  size?: number
   /**
    * The name of that will be transformed into the Avatar's initials
    */
-  name?: string | null | undefined
+  name?: string
 }
 
-export type AvatarProps = ImgProps & DivProps & AvatarBaseProps
+export type AvatarProps = Omit<ImgProps & DivProps, 'src' | 'name' | 'size'> & AvatarBaseProps
 
 export const AvatarPropTypes = {
   size: PropTypes.number,
