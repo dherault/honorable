@@ -9,7 +9,7 @@ export type ButtonGroupBaseProps = {
   /**
    * The direction of the ButtonGroup
    */
-  direction: 'row' | 'column'
+  direction?: 'row' | 'column'
 }
 
 export type ButtonGroupProps = DivProps & ButtonGroupBaseProps
