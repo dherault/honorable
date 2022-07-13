@@ -454,7 +454,6 @@ const theme = {
         color: 'text',
         border: '1px solid border',
         borderRadius: 4,
-        overflow: 'hidden',
       },
       ({ focused }: any) => focused && {
         border: '1px solid primary',
