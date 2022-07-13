@@ -115,7 +115,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   function renderCaret() {
     return (
       <Span
-        p={0.5}
+        padding={8}
         display="inline-flex"
         alignItems="center"
         justifyContent="center"

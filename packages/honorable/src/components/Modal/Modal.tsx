@@ -184,7 +184,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
           ref={ref}
           backgroundColor="background"
           overflowY="auto"
-          m={4}
+          margin={32}
           {...rootStyles}
           {...otherProps}
         />

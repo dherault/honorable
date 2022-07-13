@@ -228,8 +228,8 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
           <>
             <Span flexGrow={1} />
             <Caret
-              ml={0.5}
-              mr={-0.5}
+              marginLeft={8}
+              marginRight={-8}
               rotation={-90}
               {...resolvePartStyles('MenuItem.Caret', props, theme)}
             />
