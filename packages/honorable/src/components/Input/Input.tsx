@@ -81,6 +81,18 @@ export type InputBaseProps = {
    * If multiline, the maximum number of rows to display
    */
   maxRows?: number
+  /**
+   * The min of number input
+   */
+  min?: number
+  /**
+   * The max of number input
+   */
+  max?: number
+  /**
+   * The step of number input
+   */
+  step?: number
 }
 
 export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & InputBaseProps
@@ -103,6 +115,9 @@ export const inputPropTypes = {
   multiline: PropTypes.bool,
   minRows: PropTypes.number,
   maxRows: PropTypes.number,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
 }
 
 function InputRef(props: InputProps, ref: Ref<any>) {
@@ -124,6 +139,9 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     multiline,
     minRows,
     maxRows,
+    min,
+    max,
+    step,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -167,6 +185,9 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           value={actualValue}
           onChange={handleChange}
           placeholder={placeholder}
+          min={min}
+          max={max}
+          step={step}
           onFocus={event => {
             if (typeof onFocus === 'function') onFocus(event)
           }}
