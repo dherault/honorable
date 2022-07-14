@@ -170,6 +170,7 @@ const theme = {
   Button: {
     Root: [
       {
+        minHeight: 38,
         color: 'white',
         backgroundColor: 'primary',
         border: 'none',
