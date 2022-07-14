@@ -82,17 +82,21 @@ export type InputBaseProps = {
    */
   maxRows?: number
   /**
-   * The min of number input
+   * The min of the number Input
    */
   min?: number
   /**
-   * The max of number input
+   * The max of the number Input
    */
   max?: number
   /**
-   * The step of number input
+   * The step of the number Input
    */
   step?: number
+  /**
+   * The pattern of the Input
+   */
+  pattern?: string
 }
 
 export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & InputBaseProps
@@ -118,6 +122,7 @@ export const inputPropTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   step: PropTypes.number,
+  pattern: PropTypes.string,
 }
 
 function InputRef(props: InputProps, ref: Ref<any>) {
@@ -142,6 +147,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     min,
     max,
     step,
+    pattern,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -188,6 +194,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           min={min}
           max={max}
           step={step}
+          pattern={pattern}
           onFocus={event => {
             if (typeof onFocus === 'function') onFocus(event)
           }}

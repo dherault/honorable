@@ -146,14 +146,13 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         {...resolvePartStyles('Select.Selected', props, theme)}
       >
         <Div
-          flexShrink={1}
+          flexGrow={1}
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis"
         >
           {renderSelected()}
         </Div>
-        <Div flexGrow={1} />
         {renderCaret()}
       </Div>
       <MenuUsageContext.Provider value={menuUsageValue}>
