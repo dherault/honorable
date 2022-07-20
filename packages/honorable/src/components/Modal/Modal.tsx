@@ -48,7 +48,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   const rootStyles = useRootStyles('Modal', props, theme)
   const portalElement = useMemo(() => document.createElement('div'), [])
 
-  useEscapeKey(event => !disableEscapeKey && handleClose(event))
+  useEscapeKey(event => isOpen && !isClosing && !disableEscapeKey && handleClose(event))
 
   const handleClose = useCallback((event: MouseEvent | KeyboardEvent) => {
     if (typeof onClose === 'function') {
