@@ -1,7 +1,6 @@
 import '@emotion/react'
-import React, { PropsWithChildren, PropsWithRef, Ref } from 'react'
+import React, { PropsWithChildren, PropsWithRef } from 'react'
 
-import mpProperties from './data/mpProperties'
 import stylesProperties from './data/stylesProperties'
 import propToPseudoSelectors from './data/propToPseudoSelectors'
 
@@ -31,13 +30,8 @@ export type PseudoSelectorProps = {
   [key in keyof typeof propToPseudoSelectors]?: object
 }
 
-export type MpProperties = typeof mpProperties[number]
-export type MpProps = {
-  [mpKey in MpProperties]?: number | string | 'auto'
-}
-
 export type StylesProperties = typeof stylesProperties[number]
-export type StylesProps = AnyProps & CssProps & PseudoSelectorProps & MpProps & {
+export type StylesProps = AnyProps & CssProps & PseudoSelectorProps & {
   [stylesKey in StylesProperties]?: any
 }
 
