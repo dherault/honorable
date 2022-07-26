@@ -3,7 +3,7 @@ import React, { Spinner } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Spinner',
+  title: 'Components/Spinner',
   component: Spinner,
 }
 

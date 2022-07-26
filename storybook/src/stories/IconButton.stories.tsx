@@ -3,7 +3,7 @@ import React, { IconButton } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'IconButton',
+  title: 'Components/IconButton',
   component: IconButton,
 }
 

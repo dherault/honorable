@@ -5,7 +5,7 @@ import { Avatar, Skeleton } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Skeleton',
+  title: 'Components/Skeleton',
   component: Skeleton,
 }
 

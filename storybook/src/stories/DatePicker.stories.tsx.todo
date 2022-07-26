@@ -7,7 +7,7 @@ import { DatePicker, DateTimeProvider, P } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'DatePicker',
+  title: 'Components/DatePicker',
   component: DatePicker,
 }
 

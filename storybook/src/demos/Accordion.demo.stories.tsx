@@ -6,13 +6,13 @@ import { Accordion } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Accordion Demo',
+  title: 'Demos/Accordion',
   component: Accordion,
 }
 
 // START-DEMO
 // @name Uncontrolled
-// @url https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-uncontrolled&viewMode=story
+// @url https://storybook.honorable.design/iframe.html?args=&id=demos-accordion--uncontrolledd&viewMode=story
 // START-SOURCE
 function AccordionUncontrolledDemo() {
   return (
@@ -32,11 +32,11 @@ function AccordionUncontrolledDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const DemoUncontrolled = AccordionUncontrolledDemo.bind({})
+export const Uncontrolled = AccordionUncontrolledDemo.bind({})
 
 // START-DEMO
 // @name Controlled
-// @url https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-controlled&viewMode=story
+// @url https://storybook.honorable.design/iframe.html?args=&id=demos-accordion--controlled&viewMode=story
 // START-SOURCE
 function AccordionControlledDemo() {
   const [expanded, setExpanded] = useState(-1)
@@ -70,11 +70,11 @@ function AccordionControlledDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const DemoControlled = AccordionControlledDemo.bind({})
+export const Controlled = AccordionControlledDemo.bind({})
 
 // START-DEMO
 // @name Default expanded
-// @url https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--demo-default-expanded&viewMode=story
+// @url https://storybook.honorable.design/iframe.html?args=&id=demos-accordion--expanded&viewMode=story
 // START-SOURCE
 function AccordionDefaultExpandedDemo() {
   return (
@@ -97,9 +97,9 @@ function AccordionDefaultExpandedDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const DemoDefaultExpanded = AccordionDefaultExpandedDemo.bind({})
+export const DefaultExpanded = AccordionDefaultExpandedDemo.bind({})
 
-// @parts https://storybook.honorable.design/iframe.html?args=&id=accordion-demo--parts&viewMode=story
+// @parts https://storybook.honorable.design/iframe.html?args=&id=demos-accordion--parts&viewMode=story
 export const Parts = createPartsTemplate(
   Accordion,
   'Accordion',

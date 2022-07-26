@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { A, Button, Div, ExtendTheme, Modal, P } from 'honorable'
 
 export default {
-  title: 'Modal',
+  title: 'Components/Modal',
   component: Modal,
 }
 

@@ -4,7 +4,7 @@ import React, { A, Menu, MenuItem } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Menu',
+  title: 'Components/Menu',
   component: Menu,
 }
 

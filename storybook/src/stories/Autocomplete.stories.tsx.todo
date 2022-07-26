@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Autocomplete } from 'honorable'
 
 export default {
-  title: 'Autocomplete',
+  title: 'Components/Autocomplete',
   component: Autocomplete,
   argTypes: {
     argTypes: {

@@ -5,7 +5,7 @@ import { Card } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Card',
+  title: 'Components/Card',
   component: Card,
 }
 

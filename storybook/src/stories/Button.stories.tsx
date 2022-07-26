@@ -5,7 +5,7 @@ import { Button } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Button',
+  title: 'Components/Button',
   component: Button,
 }
 

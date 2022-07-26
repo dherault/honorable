@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { A, Flex, Menu, MenuItem, Select } from 'honorable'
 
 export default {
-  title: 'Select',
+  title: 'Components/Select',
   component: Select,
 }
 

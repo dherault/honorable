@@ -5,7 +5,7 @@ import { Input, P } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Input',
+  title: 'Components/Input',
   component: Input,
 }
 

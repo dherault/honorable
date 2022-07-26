@@ -5,7 +5,7 @@ import { A, ProgressBar } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'ProgressBar',
+  title: 'Components/ProgressBar',
   component: ProgressBar,
 }
 

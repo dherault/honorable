@@ -5,7 +5,7 @@ import { Div } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Div',
+  title: 'Components/Div',
   component: Div,
 }
 

@@ -5,7 +5,7 @@ import { A, Checkbox, Div, Flex, P } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Checkbox',
+  title: 'Components/Checkbox',
   component: Checkbox,
 }
 

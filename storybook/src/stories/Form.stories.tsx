@@ -3,7 +3,7 @@ import React from 'react'
 import { Input, MenuItem, Select } from 'honorable'
 
 export default {
-  title: 'Form',
+  title: 'Components/Form',
 }
 
 const items = [

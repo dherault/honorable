@@ -2,7 +2,7 @@ import React from 'react'
 import { Caret } from 'honorable'
 
 export default {
-  title: 'Caret',
+  title: 'Components/Caret',
   component: Caret,
 }
 

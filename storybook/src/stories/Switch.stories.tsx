@@ -5,7 +5,7 @@ import { Switch } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Switch',
+  title: 'Components/Switch',
   component: Switch,
 }
 

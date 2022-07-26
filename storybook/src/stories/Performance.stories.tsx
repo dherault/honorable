@@ -5,7 +5,7 @@ import Stats from 'stats.js'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Performance',
+  title: 'Components/Performance',
   component: Div,
 }
 

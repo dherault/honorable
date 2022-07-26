@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 
 function extractDemo() {
-  const demoLocation = path.join(__dirname, '../../../storybook/src/stories')
+  const demoLocation = path.join(__dirname, '../../../storybook/src/demos')
   const files = fs.readdirSync(demoLocation).filter(x => x.endsWith('.demo.stories.tsx'))
 
   const componentToDemo = {}

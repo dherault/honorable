@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Accordion } from 'honorable'
 
 export default {
-  title: 'Accordion',
+  title: 'Components/Accordion',
   component: Accordion,
 }
 

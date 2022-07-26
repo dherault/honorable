@@ -5,13 +5,13 @@ import { Avatar, ExtendTheme, Flex } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Avatar Demo',
+  title: 'Demos/Avatar',
   component: Avatar,
 }
 
 // START-DEMO
 // @name Demo
-// @url https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--demo&viewMode=story
+// @url https://storybook.honorable.design/iframe.html?args=&id=demos-avatar--basic&viewMode=story
 // START-SOURCE
 function AvatarDemo(args: any) {
   return (
@@ -70,9 +70,9 @@ function AvatarDemo(args: any) {
 // END-SOURCE
 // END-DEMO
 
-export const Demo = AvatarDemo.bind({})
+export const Basic = AvatarDemo.bind({})
 
-// @parts https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--parts&viewMode=story
+// @parts https://storybook.honorable.design/iframe.html?args=&id=demos-avatar--parts&viewMode=story
 export const Parts = createPartsTemplate(
   Avatar,
   'Avatar',

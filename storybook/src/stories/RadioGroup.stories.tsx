@@ -5,7 +5,7 @@ import { Radio, RadioGroup } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'RadioGroup',
+  title: 'Components/RadioGroup',
   component: RadioGroup,
 }
 

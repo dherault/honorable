@@ -5,7 +5,7 @@ import { A, Flex, P, Radio } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Radio',
+  title: 'Components/Radio',
   component: Radio,
 }
 

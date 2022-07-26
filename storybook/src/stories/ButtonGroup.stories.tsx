@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, ButtonGroup } from 'honorable'
 
 export default {
-  title: 'ButtonGroup',
+  title: 'Components/ButtonGroup',
   component: ButtonGroup,
 }
 

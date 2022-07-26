@@ -2,7 +2,7 @@ import React from 'react'
 import { A, Accordion, Div, ExtendTheme, Flex, P } from 'honorable'
 
 export default {
-  title: 'Props Passing',
+  title: 'Components/Props Passing',
 }
 
 function Template1() {

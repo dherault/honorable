@@ -2,7 +2,7 @@ import React from 'react'
 import { Checkbox, DropdownButton, ExtendTheme } from 'honorable'
 
 export default {
-  title: 'Theming',
+  title: 'Components/Theming',
 }
 
 const extendedTheme1 = {

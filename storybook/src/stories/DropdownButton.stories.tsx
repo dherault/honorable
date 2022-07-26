@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { A, Div, DropdownButton, ExtendTheme, Flex, Menu, MenuItem } from 'honorable'
 
 export default {
-  title: 'DropdownButton',
+  title: 'Components/DropdownButton',
   component: DropdownButton,
 }
 

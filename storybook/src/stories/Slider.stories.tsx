@@ -4,7 +4,7 @@ import { Slider } from 'honorable'
 import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
-  title: 'Slider',
+  title: 'Components/Slider',
   component: Slider,
 }
 

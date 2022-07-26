@@ -14,6 +14,7 @@
     "dev:designer": "npm run link:designer && (cd designer && npm run start:watch)",
     "dev:site": "npm run link:site && (cd packages/honorable && npm run clean:peerDependencies) && (cd site && npm run start:watch)",
     "dev:storybook": "npm run link:storybook && (cd storybook && npm run start:watch)",
+    "dev:sb": "npm run dev:storybook",
     "link:packages": "npm run link:honorable && npm run link:honorable-theme-default && npm run link:honorable-theme-honorable && npm run link:honorable-theme-material && npm run link:honorable-theme-wireframe",
     "link:honorable": "(cd packages/honorable && npm link)",
     "link:honorable-theme-default": "(cd packages/honorable-theme-default && npm link)",
