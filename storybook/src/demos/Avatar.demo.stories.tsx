@@ -10,7 +10,7 @@ export default {
 }
 
 // START-DEMO
-// @name Demo
+// @name Basic
 // @url https://storybook.honorable.design/iframe.html?args=&id=demos-avatar--basic&viewMode=story
 // START-SOURCE
 function AvatarDemo(args: any) {

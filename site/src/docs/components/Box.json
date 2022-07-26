@@ -1,0 +1,11 @@
+{
+  "props": [],
+  "demos": [
+    {
+      "source": "function BoxDemo() {\n  return (\n    <>\n      <Box\n        width={128}\n        height={128}\n        backgroundColor=\"background-light\"\n      />\n      <Box>\n        Box is an alias for Div\n      </Box>\n    </>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-box--basic&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-box--parts&viewMode=story"
+}

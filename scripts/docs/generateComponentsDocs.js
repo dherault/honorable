@@ -13,6 +13,8 @@ function generateComponentDocs() {
   const componentToDemo = extractDemo()
 
   Object.keys(componentToDemo).forEach(component => {
+    console.log('Generating docs for', component, `(${componentToDemo[component].demos.length} demo)`)
+
     const docsDataLocation = path.join(__dirname, `../../site/src/docs/components/${component}.json`)
 
     fs.writeFileSync(
