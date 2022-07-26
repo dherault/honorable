@@ -12,7 +12,7 @@ export default {
 
 // START-DEMO
 // @name Uncontrolled
-// @url https://storybook.honorable.design/iframe.html?args=&id=demos-accordion--uncontrolledd&viewMode=story
+// @url https://storybook.honorable.design/iframe.html?args=&id=demos-accordion--uncontrolled&viewMode=story
 // START-SOURCE
 function AccordionUncontrolledDemo() {
   return (

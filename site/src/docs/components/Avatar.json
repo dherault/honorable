@@ -20,8 +20,8 @@
     {
       "source": "function AvatarDemo(args: any) {\n  return (\n    <>\n      <Flex>\n        <Avatar {...args} />\n        <Avatar\n          ml={0.5}\n          name=\"Jane Smith\"\n          {...args}\n        />\n        <Avatar\n          ml={0.5}\n          name=\"Henry Doe\"\n          {...args}\n        />\n        <Avatar\n          ml={0.5}\n          name=\"Alexander Taze\"\n          {...args}\n        />\n        <Avatar\n          ml={0.5}\n          src=\"/profile-picture.jpeg\"\n          {...args}\n        />\n      </Flex>\n      <ExtendTheme theme={{ Avatar: { Root: [{ borderRadius: 4 }] } }}>\n        <Flex mt={0.5}>\n          <Avatar {...args} />\n          <Avatar\n            ml={0.5}\n            name=\"Jane Smith\"\n            {...args}\n          />\n          <Avatar\n            ml={0.5}\n            name=\"Henry Doe\"\n            {...args}\n          />\n          <Avatar\n            ml={0.5}\n            name=\"Alexander Taze\"\n            {...args}\n          />\n          <Avatar\n            ml={0.5}\n            src=\"/profile-picture.jpeg\"\n            {...args}\n          />\n        </Flex>\n      </ExtendTheme>\n    </>\n  )\n}\n",
       "name": "Demo",
-      "url": "https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--demo&viewMode=story"
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-avatar--basic&viewMode=story"
     }
   ],
-  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=avatar-demo--parts&viewMode=story"
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-avatar--parts&viewMode=story"
 }
