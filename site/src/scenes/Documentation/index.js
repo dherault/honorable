@@ -57,6 +57,7 @@ function Documentation() {
       >
         <Outlet />
       </Div>
+      <Div width={sidebarWidth} />
     </Div>
   )
 }

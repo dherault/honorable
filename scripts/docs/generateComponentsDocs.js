@@ -12,10 +12,7 @@ function generateComponentDocs() {
   const componentToProps = extractProps()
   const componentToDemo = extractDemo()
 
-  ;[
-    'Accordion',
-    'Avatar',
-  ].forEach(component => {
+  Object.keys(componentToDemo).forEach(component => {
     const docsDataLocation = path.join(__dirname, `../../site/src/docs/components/${component}.json`)
 
     fs.writeFileSync(
