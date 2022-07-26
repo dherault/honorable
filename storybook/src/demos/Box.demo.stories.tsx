@@ -21,7 +21,7 @@ function BoxDemo() {
         height={128}
         backgroundColor="background-light"
       />
-      <Box>
+      <Box marginTop={16}>
         Box is an alias for Div
       </Box>
     </>
