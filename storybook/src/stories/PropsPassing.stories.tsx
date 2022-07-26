@@ -120,3 +120,20 @@ function Template5() {
 export const AnchorHover = Template5.bind({})
 AnchorHover.args = {
 }
+
+function Template6() {
+  return (
+    <Accordion
+      title="I should have a red title"
+      TitleProps={{
+        color: 'red',
+      }}
+    >
+      Do I?
+    </Accordion>
+  )
+}
+
+export const PartProps = Template6.bind({})
+PartProps.args = {
+}

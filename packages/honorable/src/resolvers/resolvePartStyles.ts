@@ -24,6 +24,8 @@ function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme
       partStyle,
       // Global props
       resolveStyles(theme.global, partStyle, theme),
+      // Part props
+      props[`${key}Props`] || {},
     ),
     theme
   )
