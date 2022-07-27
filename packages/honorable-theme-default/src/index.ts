@@ -704,7 +704,7 @@ const theme = {
     ],
     Selected: [
       {
-        paddingTop: 4,
+        paddingTop: 2,
         paddingBottom: 4,
         paddingLeft: 8,
         paddingRight: 0,

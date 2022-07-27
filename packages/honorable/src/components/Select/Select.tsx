@@ -21,6 +21,7 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
+import { Icon } from '../Icon/Icon'
 
 export type SelectBaseProps = {
   open?: boolean
@@ -29,6 +30,9 @@ export type SelectBaseProps = {
   onChange?: (event: TargetWithValue<MouseEvent | KeyboardEvent>) => void
   onOpen?: (open: boolean) => void
   fade?: boolean
+  renderSelected?: (value: any) => ReactElement
+  startIcon?: ReactElement
+  endIcon?: ReactElement | boolean
 }
 
 export type SelectProps = Omit<DivProps, 'onChange'> & SelectBaseProps
@@ -40,6 +44,9 @@ export const selectPropTypes = {
   onChange: PropTypes.func,
   onOpen: PropTypes.func,
   fade: PropTypes.bool,
+  renderSelected: PropTypes.func,
+  startIcon: PropTypes.element,
+  endIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
 }
 
 function SelectRef(props: SelectProps, ref: Ref<any>) {
@@ -52,6 +59,9 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     fade,
     onClick,
     children,
+    renderSelected,
+    startIcon = null,
+    endIcon = null,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -98,8 +108,12 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     }
   }, [previousEvent, event, currentValue, onChange, handleOpen])
 
-  function renderSelected() {
+  function renderSelectedItem() {
     if (!renderedItem) return '\u00a0'
+
+    if (typeof renderSelected === 'function') {
+      return renderSelected(currentValue)
+    }
 
     const nodes: ReactElement[] = []
 
@@ -112,7 +126,27 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     return nodes
   }
 
-  function renderCaret() {
+  function renderStartIcon() {
+    if (!startIcon) return null
+
+    return (
+      <Span
+        paddingLeft={4}
+        paddingRight={8}
+        display="inline-flex"
+        alignItems="center"
+        justifyContent="center"
+        userSelect="none"
+        {...resolvePartStyles('Select.StartIcon', props, theme)}
+      >
+        {startIcon}
+      </Span>
+    )
+  }
+
+  function renderEndIcon() {
+    if (endIcon === false) return null
+
     return (
       <Span
         padding={8}
@@ -120,9 +154,11 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         alignItems="center"
         justifyContent="center"
         userSelect="none"
-        {...resolvePartStyles('Select.Caret', props, theme)}
+        {...resolvePartStyles('Select.EndIcon', props, theme)}
       >
-        <Caret rotation={actualOpen ? 180 : 0} />
+        {endIcon || (
+          <Caret rotation={actualOpen ? 180 : 0} />
+        )}
       </Span>
     )
   }
@@ -138,6 +174,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
       <Div
         display="flex"
         alignItems="center"
+        height="100%"
         onClick={event => {
           handleOpen(!actualOpen)
           setMenuState(x => ({ ...x, shouldFocus: true }))
@@ -145,15 +182,16 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         }}
         {...resolvePartStyles('Select.Selected', props, theme)}
       >
+        {renderStartIcon()}
         <Div
           flexGrow={1}
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis"
         >
-          {renderSelected()}
+          {renderSelectedItem()}
         </Div>
-        {renderCaret()}
+        {renderEndIcon()}
       </Div>
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
