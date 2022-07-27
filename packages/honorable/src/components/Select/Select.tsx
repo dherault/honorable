@@ -21,7 +21,6 @@ import enhanceEventTarget from '../../utils/enhanceEventTarget'
 import { Div, DivProps, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
-import { Icon } from '../Icon/Icon'
 
 export type SelectBaseProps = {
   open?: boolean
