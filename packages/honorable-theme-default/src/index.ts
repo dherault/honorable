@@ -853,6 +853,7 @@ const theme = {
         paddingBottom: 4,
         paddingLeft: 4,
         paddingRight: 4,
+        whiteSpace: 'nowrap',
       },
     ],
     Arrow: [
