@@ -173,6 +173,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           value={actualValue}
           onChange={handleChange}
           placeholder={placeholder}
+          width="100%"
           {...inputProps}
           onFocus={event => {
             if (typeof onFocus === 'function') onFocus(event)
@@ -211,6 +212,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           maxRows={maxRows}
           style={{
             flexGrow: 1,
+            width: '100%',
             ...resolvePartStyles('Input.TextArea', workingProps, theme),
           }}
         />
