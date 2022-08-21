@@ -17,7 +17,7 @@ export type ModalBaseProps = {
   fade?: boolean
   transitionDuration?: number
   disableEscapeKey?: boolean
-  portal?: boolean,
+  portal?: boolean
 }
 
 export type ModalProps = DivProps & ModalBaseProps
