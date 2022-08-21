@@ -83,16 +83,16 @@ BorderRadius.args = {
 function Template4() {
   return (
     <Accordion
-      title="I should have a red border bottom"
-      borderBottom="1px solid red"
+      title="I should have a red color"
+      color="red"
     >
       Do I?
     </Accordion>
   )
 }
 
-export const AccordionBorder = Template4.bind({})
-AccordionBorder.args = {
+export const AccordionColor = Template4.bind({})
+AccordionColor.args = {
 }
 
 function Template5() {
@@ -136,4 +136,16 @@ function Template6() {
 
 export const PartProps = Template6.bind({})
 PartProps.args = {
+}
+
+function Template7() {
+  return (
+    <Div red-mobile-down>
+      I should be red on mobile
+    </Div>
+  )
+}
+
+export const CustomPropsBreakpoints = Template7.bind({})
+CustomPropsBreakpoints.args = {
 }

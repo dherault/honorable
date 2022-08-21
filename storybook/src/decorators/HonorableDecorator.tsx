@@ -8,6 +8,9 @@ import mpRecipe from 'honorable-recipe-mp'
 const theme = mergeTheme(defaultTheme, {
   global: [
     mpRecipe(),
+    ({ red }: any) => red && {
+      color: 'red',
+    },
   ],
   // Fix storybook body padding
   stylesheet: {
