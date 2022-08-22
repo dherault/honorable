@@ -10,14 +10,14 @@ import useTheme from './useTheme'
 // useMediaQuery('down', 'tablet')
 // useMediaQuery('between', 'mobile', 'tablet')
 
-function useMediaQuery(upOrDownOrBetweenOrQuery: 'up' | 'down' | 'between' | string, breakpoint1?: string | number, breakpoint2?: string | number): boolean {
+function useMediaQuery(upOrDownOrBetweenOrOnlyOrNotOrQuery: 'up' | 'down' | 'between' | 'only' | 'not' | string, breakpoint1?: string | number, breakpoint2?: string | number): boolean {
   const theme = useTheme()
 
   const isMatched = useCallback(() => {
-    const mediaQuery = createMediaQuery(theme, upOrDownOrBetweenOrQuery, breakpoint1, breakpoint2)
+    const mediaQuery = createMediaQuery(theme, upOrDownOrBetweenOrOnlyOrNotOrQuery, breakpoint1, breakpoint2)
 
     return window.matchMedia(mediaQuery).matches
-  }, [theme, upOrDownOrBetweenOrQuery, breakpoint1, breakpoint2])
+  }, [theme, upOrDownOrBetweenOrOnlyOrNotOrQuery, breakpoint1, breakpoint2])
 
   const [matched, setMatched] = useState(isMatched())
 
