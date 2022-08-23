@@ -1,13 +1,13 @@
 // Icons from https://icons.modulz.app/
-import React from 'react';
-import { Button } from 'honorable';
+import React from 'react'
+import { Button } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate';
+import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
 	title: 'Demos/Button',
 	component: Button,
-};
+}
 
 // START-DEMO
 // @name Basic
@@ -17,16 +17,19 @@ function ButtonBasicDemo() {
 	return (
 		<>
 			<Button mb={0.5}>Button</Button>
-			<Button mb={0.5} width="100%">
+			<Button
+				mb={0.5}
+				width="100%"
+			>
 				Button
 			</Button>
 		</>
-	);
+	)
 }
 // END-SOURCE
 // END-DEMO
 
-export const Basic = ButtonBasicDemo.bind({});
+export const Basic = ButtonBasicDemo.bind({})
 
 // START-DEMO
 // @name StartIcon
@@ -37,7 +40,7 @@ function ButtonStartIconDemo() {
 		<>
 			<Button
 				mb={0.5}
-				startIcon={
+				startIcon={(
 					<svg
 						width={16}
 						viewBox="0 0 15 15"
@@ -51,13 +54,13 @@ function ButtonStartIconDemo() {
 							clipRule="evenodd"
 						/>
 					</svg>
-				}
+				)}
 			>
 				Button
 			</Button>
 			<Button
 				mb={0.5}
-				startIcon={
+				startIcon={(
 					<svg
 						width={16}
 						viewBox="0 0 15 15"
@@ -71,17 +74,17 @@ function ButtonStartIconDemo() {
 							clipRule="evenodd"
 						/>
 					</svg>
-				}
+				)}
 			>
 				Button
 			</Button>
 		</>
-	);
+	)
 }
 // END-SOURCE
 // END-DEMO
 
-export const StartIcon = ButtonStartIconDemo.bind({});
+export const StartIcon = ButtonStartIconDemo.bind({})
 
 // START-DEMO
 // @name EndIcon
@@ -92,7 +95,7 @@ function ButtonEndIconDemo() {
 		<>
 			<Button
 				mb={0.5}
-				endIcon={
+				endIcon={(
 					<svg
 						width={16}
 						viewBox="0 0 15 15"
@@ -106,13 +109,13 @@ function ButtonEndIconDemo() {
 							clipRule="evenodd"
 						/>
 					</svg>
-				}
+				)}
 			>
 				Button
 			</Button>
 			<Button
 				mb={0.5}
-				endIcon={
+				endIcon={(
 					<svg
 						width={16}
 						viewBox="0 0 15 15"
@@ -126,17 +129,17 @@ function ButtonEndIconDemo() {
 							clipRule="evenodd"
 						/>
 					</svg>
-				}
+				)}
 			>
 				Button
 			</Button>
 		</>
-	);
+	)
 }
 // END-SOURCE
 // END-DEMO
 
-export const EndIcon = ButtonEndIconDemo.bind({});
+export const EndIcon = ButtonEndIconDemo.bind({})
 
 // START-DEMO
 // @name Loading
@@ -145,38 +148,57 @@ export const EndIcon = ButtonEndIconDemo.bind({});
 function ButtonLoadingDemo() {
 	return (
 		<>
-			<Button mb={0.5} loading>
+			<Button
+				mb={0.5}
+				loading
+			>
 				Button
 			</Button>
-			<Button mb={0.5} loading width="100%">
+			<Button
+				mb={0.5}
+				loading
+				width="100%"
+			>
 				Button
 			</Button>
-			<Button mb={0.5} loading loadingIndicator="Loading...">
+			<Button
+				mb={0.5}
+				loading
+				loadingIndicator="Loading..."
+			>
 				Button
 			</Button>
-			<Button mb={0.5} loading loadingIndicator="Loading...">
+			<Button
+				mb={0.5}
+				loading
+				loadingIndicator="Loading..."
+			>
 				x
 			</Button>
 		</>
-	);
+	)
 }
 
 // END-SOURCE
 // END-DEMO
 
-export const Loading = ButtonLoadingDemo.bind({});
+export const Loading = ButtonLoadingDemo.bind({})
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-button--parts&viewMode=story
 export const Parts = createPartsTemplate(
 	(args: any) => (
 		<>
 			<Button {...args} />
-			<Button mt={0.5} loading {...args} />
+			<Button
+				mt={0.5}
+				loading
+				{...args}
+			/>
 		</>
 	),
 	'Button',
 	['StartIcon', 'LoadingIndicator', 'Spinner', 'Children', 'EndIcon']
-).bind({});
+).bind({})
 Parts.args = {
 	children: 'Button',
 	startIcon: (
@@ -209,4 +231,4 @@ Parts.args = {
 			/>
 		</svg>
 	),
-};
+}

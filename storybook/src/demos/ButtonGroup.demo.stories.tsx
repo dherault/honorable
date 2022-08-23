@@ -1,13 +1,13 @@
 // Icons from https://icons.modulz.app/
-import React from 'react';
-import { ButtonGroup, Button } from 'honorable';
+import React from 'react'
+import { Button, ButtonGroup } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate';
+import createPartsTemplate from '../helpers/createPartsTemplate'
 
 export default {
 	title: 'Demos/ButtonGroup',
 	component: ButtonGroup,
-};
+}
 
 // START-DEMO
 // @name Basic
@@ -15,19 +15,17 @@ export default {
 // START-SOURCE
 function ButtonGroupBasic() {
 	return (
-		<>
-			<ButtonGroup>
-				<Button>Button 1</Button>
-				<Button>Button 2</Button>
-				<Button>Button 3</Button>
-			</ButtonGroup>
-		</>
-	);
+		<ButtonGroup>
+			<Button>Button 1</Button>
+			<Button>Button 2</Button>
+			<Button>Button 3</Button>
+		</ButtonGroup>
+	)
 }
 // END-SOURCE
 // END-DEMO
 
-export const Basic = ButtonGroupBasic.bind({});
+export const Basic = ButtonGroupBasic.bind({})
 
 // START-DEMO
 // @name Column
@@ -35,34 +33,33 @@ export const Basic = ButtonGroupBasic.bind({});
 // START-SOURCE
 function ButtonGroupColumn() {
 	return (
-		<>
-			<ButtonGroup direction="column">
-				<Button>Button 1</Button>
-				<Button>Button 2</Button>
-				<Button>Button 3</Button>
-			</ButtonGroup>
-		</>
-	);
+		<ButtonGroup direction="column">
+			<Button>Button 1</Button>
+			<Button>Button 2</Button>
+			<Button>Button 3</Button>
+		</ButtonGroup>
+	)
 }
 // END-SOURCE
 // END-DEMO
 
-export const Column = ButtonGroupColumn.bind({});
+export const Column = ButtonGroupColumn.bind({})
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-buttongroup--parts&viewMode=story
 export const Parts = createPartsTemplate(
 	(args: any) => (
-		<>
-			<ButtonGroup direction="column" {...args}>
-				<Button>Button 1</Button>
-				<Button>Button 2</Button>
-				<Button>Button 3</Button>
-			</ButtonGroup>
-		</>
+		<ButtonGroup
+			direction="column"
+			{...args}
+		>
+			<Button>Button 1</Button>
+			<Button>Button 2</Button>
+			<Button>Button 3</Button>
+		</ButtonGroup>
 	),
 	'ButtonGroup',
 	[]
-).bind({});
+).bind({})
 Parts.args = {
 	children: 'Button',
-};
+}
