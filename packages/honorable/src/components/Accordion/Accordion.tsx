@@ -1,4 +1,4 @@
-import { ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useTheme from '../../hooks/useTheme'
@@ -65,6 +65,13 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
     if (typeof onExpand === 'function') onExpand(!actualExpanded)
   }, [actualExpanded, onExpand])
 
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleExpand()
+    }
+  }, [handleExpand])
+
   useEffect(() => {
     setChildrenHeight(childrenRef.current.offsetHeight)
   }, [children])
@@ -76,11 +83,13 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       {...otherProps}
     >
       <Div
+        tabIndex={0}
         display="flex"
         alignItems="center"
         cursor="pointer"
         {...resolvePartStyles('Accordion.Title', workingProps, theme)}
         onClick={handleExpand}
+        onKeyDown={handleKeyDown}
       >
         {title}
         <Div flexGrow={1} />

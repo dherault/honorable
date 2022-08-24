@@ -102,8 +102,14 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
     if (typeof onOpen === 'function') onOpen(false)
   }, [onOpen])
 
+  const handleOutsideClick = useCallback(() => {
+    if (actualOpen) {
+      handleClose()
+    }
+  }, [actualOpen, handleClose])
+
   useEscapeKey(handleClose)
-  useOutsideClick(dropdownButtonRef, () => actualOpen && handleClose())
+  useOutsideClick(dropdownButtonRef, handleOutsideClick)
 
   useEffect(() => {
     if (event && previousEvent !== event) {
