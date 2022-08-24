@@ -61,7 +61,7 @@ export type ComponentProps = PartProps & {
   Root?: StylesArray
 }
 
-export type HonorableTheme<T> = {
+export type HonorableTheme = {
   name?: string
   mode?: Mode
   breakpoints?: {
@@ -228,7 +228,7 @@ export type HonorableTheme<T> = {
   Switch?: ComponentProps
   Text?: ComponentProps
   Tooltip?: ComponentProps
-} & T
+}
 
 export type TargetWithValue<T> = T & {
   target: {
