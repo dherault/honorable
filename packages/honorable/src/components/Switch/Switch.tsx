@@ -42,7 +42,7 @@ export type SwitchBaseProps = {
   /**
    * The position of the label relative to the Checkbox
    */
-   labelPosition?: 'left' | 'right' | 'top' | 'bottom'
+  labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
 export type SwitchProps = Omit<DivProps, 'onChange'> & SwitchBaseProps
@@ -171,5 +171,4 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
 export const Switch = forwardRef(SwitchRef)
 
 Switch.displayName = 'Switch'
-// @ts-expect-error
 Switch.propTypes = switchPropTypes

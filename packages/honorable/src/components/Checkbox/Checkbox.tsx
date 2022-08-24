@@ -36,7 +36,7 @@ export type CheckboxBaseProps = {
   /**
    * The position of the label relative to the Checkbox
    */
-  labelPosition?: 'left' | 'right' | 'top' | 'bottom'
+  labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
 export type CheckboxProps = Omit<DivProps, 'onChange'> & CheckboxBaseProps
@@ -152,5 +152,4 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
 export const Checkbox = forwardRef(CheckboxRef)
 
 Checkbox.displayName = 'Checkbox'
-// @ts-expect-error
 Checkbox.propTypes = checkboxPropTypes

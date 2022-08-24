@@ -9,10 +9,10 @@ export type ButtonGroupBaseProps = {
   /**
    * The direction of the ButtonGroup
    */
-  direction?: 'row' | 'column'
+  direction?: 'row' | 'column' | string
 }
 
-export type ButtonGroupProps = DivProps & ButtonGroupBaseProps
+export type ButtonGroupProps = Omit<DivProps, 'direction'> & ButtonGroupBaseProps
 
 export const buttonGroupPropTypes = {}
 
