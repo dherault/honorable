@@ -21,7 +21,7 @@
     ]
   },
   "dependencies": {
-    "firebase": "^9.9.1",
+    "firebase": "^9.9.3",
     "flexpad": "^4.0.1",
     "honorable": "latest",
     "honorable-theme-default": "latest",
@@ -35,7 +35,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.5.0",
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
