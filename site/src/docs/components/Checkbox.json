@@ -1,0 +1,57 @@
+{
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "description": "Weither the Checkbox is checked or not"
+    },
+    {
+      "name": "defaultChecked",
+      "type": "boolean",
+      "description": "Weither the Checkbox is checked by default or not"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Weither the Checkbox is disabled or not"
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "description": "The icon react node of the Checkbox"
+    },
+    {
+      "name": "onChange",
+      "type": "(event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithChecked<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>) => void",
+      "description": "Callback function called when the Checkbox checked state changes"
+    },
+    {
+      "name": "labelPosition",
+      "type": "string",
+      "description": "The position of the label relative to the Checkbox"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function CheckboxBasicDemo() {\n  return (\n    <Flex>\n      <Checkbox />\n      <Checkbox\n        disabled\n        ml={0.5}\n      />\n    </Flex>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--basic&viewMode=story"
+    },
+    {
+      "source": "function CheckboxControlledDemo() {\n  const [checked, setChecked] = useState(false)\n\n  return (\n    <Flex>\n      <Checkbox\n        checked={checked}\n        onChange={event => setChecked(event.target.checked)}\n      />\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => setChecked(x => !x)}\n      >\n        Toggle\n      </A>\n    </Flex>\n  )\n}\n",
+      "name": "Controlled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--controlled&viewMode=story"
+    },
+    {
+      "source": "function CheckboxLabelDemo() {\n  return (\n    <>\n      <Checkbox>A checkbox</Checkbox>\n      <Checkbox mt={0.5}>\n        <P fontSize=\"0.5rem\">A small checkbox</P>\n      </Checkbox>\n      <Checkbox\n        mt={0.5}\n        labelPosition=\"top\"\n      >\n        top label\n      </Checkbox>\n      <Checkbox\n        mt={0.5}\n        labelPosition=\"left\"\n      >\n        left label\n      </Checkbox>\n      <Checkbox\n        mt={0.5}\n        labelPosition=\"right\"\n      >\n        right label\n      </Checkbox>\n      <Checkbox\n        mt={0.5}\n        labelPosition=\"bottom\"\n      >\n        bottom label\n      </Checkbox>\n    </>\n  )\n}\n",
+      "name": "Label",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--label&viewMode=story"
+    },
+    {
+      "source": "function CheckboxMultipleDemo() {\n  return (\n    <>\n      <Div>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n      </Div>\n\n      <Div mt={0.5}>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n      </Div>\n    </>\n  )\n}\n",
+      "name": "Multiple",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--basic&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--parts&viewMode=story"
+}

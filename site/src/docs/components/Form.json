@@ -1,0 +1,10 @@
+{
+  "demos": [
+    {
+      "source": "function FormBasic() {\n  return (\n    <>\n      <Select>\n        {items.map(item => (\n          <MenuItem\n            key={item.text}\n            value={item.value}\n          >\n            {item.text}\n          </MenuItem>\n        ))}\n      </Select>\n      <Input mt={1} />\n    </>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-form--basic&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-form--parts&viewMode=story"
+}
