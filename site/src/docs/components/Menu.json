@@ -1,0 +1,26 @@
+{
+  "props": [],
+  "demos": [
+    {
+      "source": "function MenuBasic() {\n  function renderItem({ text, value, items }: any) {\n    return (\n      <MenuItem\n        key={text}\n        value={value}\n      >\n        {text}\n        {Array.isArray(items) && (\n          <Menu>\n            {items.map(renderItem)}\n          </Menu>\n        )}\n      </MenuItem>\n    )\n  }\n\n  return (\n    <Menu>\n      {items.map(renderItem)}\n    </Menu>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-menu--basic&viewMode=story"
+    },
+    {
+      "source": "function MenuSubMenu() {\n  function renderItem({ text, value, items }: any) {\n    return (\n      <MenuItem\n        key={text}\n        value={value}\n      >\n        {text}\n        {Array.isArray(items) && (\n          <Menu>\n            {items.map(renderItem)}\n          </Menu>\n        )}\n      </MenuItem>\n    )\n  }\n\n  return (\n    <Menu>\n      {makeItems(items, 6).map(renderItem)}\n    </Menu>\n  )\n}\n",
+      "name": "SubMenu",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-menu--sub-menu&viewMode=story"
+    },
+    {
+      "source": "function MenuFade() {\n  function renderItem({ text, value, items }: any) {\n    return (\n      <MenuItem\n        key={text}\n        value={value}\n      >\n        {text}\n        {Array.isArray(items) && (\n          <Menu>\n            {items.map(renderItem)}\n          </Menu>\n        )}\n      </MenuItem>\n    )\n  }\n\n  return (\n    <Menu fade>\n      {makeItems(items, 6).map(renderItem)}\n    </Menu>\n  )\n}\n",
+      "name": "Fade",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-menu--fade&viewMode=story"
+    },
+    {
+      "source": "function MenuClosed() {\n  function renderItem({ text, value, items }: any) {\n    return (\n      <MenuItem\n        key={text}\n        value={value}\n      >\n        {text}\n        {Array.isArray(items) && (\n          <Menu>\n            {items.map(renderItem)}\n          </Menu>\n        )}\n      </MenuItem>\n    )\n  }\n\n  return (\n    <Menu open={false}>\n      {items.map(renderItem)}\n    </Menu>\n  )\n}\n",
+      "name": "Closed",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-menu--closed&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-menu--parts&viewMode=story"
+}

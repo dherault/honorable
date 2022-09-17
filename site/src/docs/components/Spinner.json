@@ -1,0 +1,27 @@
+{
+  "props": [
+    {
+      "name": "size",
+      "type": "number",
+      "description": "The size of the Spinner"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "description": "The color of the Spinner"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function SpinnerBasic() {\n  return (\n    <Spinner />\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-spinner--basic&viewMode=story"
+    },
+    {
+      "source": "function SpinnerLarge() {\n  return (\n    <Spinner size={64} />\n  )\n}\n",
+      "name": "Large",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-spinner--large&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-spinner--parts&viewMode=story"
+}

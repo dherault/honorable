@@ -1,0 +1,17 @@
+{
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "description": "The value of the ProgressBar. Between 0 and 1"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function ProgressBarBasic() {\n  const [progress, setProgress] = useState(0.25)\n\n  return (\n    <>\n      <A\n        onClick={() => setProgress(x => (x + 0.25) % 1.0001)}\n        userSelect=\"none\"\n      >\n        Progress\n      </A>\n      <ProgressBar\n        mt={1}\n        value={progress}\n      />\n    </>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--basic&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--parts&viewMode=story"
+}
