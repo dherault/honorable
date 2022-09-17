@@ -108,7 +108,7 @@ function InputCounter() {
   return (
     <>
       <Input
-        onEnter={() => setCounter(prev => x + 1)}
+        onEnter={() => setCounter(x => x + 1)}
       />
       <P mt={1}>
         {counter}
@@ -214,9 +214,9 @@ export const Multiline = InputMultiline.bind({})
 function InputMultilineMinMaxRows() {
   return (
     <Input
-      multiline 
+      multiline
       minRows={2}
-      maxRows={4} 
+      maxRows={4}
     />
   )
 }
