@@ -24,7 +24,7 @@
     "honorable": "latest",
     "honorable-recipe-mp": "^0.3.0",
     "honorable-theme-default": "latest",
-    "luxon": "^3.0.1",
+    "luxon": "^3.0.3",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -32,20 +32,20 @@
     "stats.js": "^0.17.0"
   },
   "devDependencies": {
-    "@mdx-js/react": "^2.1.2",
-    "@storybook/addon-actions": "^6.5.9",
-    "@storybook/addon-docs": "^6.5.9",
-    "@storybook/addon-essentials": "^6.5.9",
-    "@storybook/addon-interactions": "^6.5.9",
-    "@storybook/addon-links": "^6.5.9",
-    "@storybook/builder-webpack5": "^6.5.9",
-    "@storybook/manager-webpack5": "^6.5.9",
-    "@storybook/node-logger": "^6.5.9",
+    "@mdx-js/react": "^2.1.3",
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-docs": "^6.5.12",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-interactions": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/builder-webpack5": "^6.5.12",
+    "@storybook/manager-webpack5": "^6.5.12",
+    "@storybook/node-logger": "^6.5.12",
     "@storybook/preset-create-react-app": "^4.1.2",
-    "@storybook/react": "6.5.9",
+    "@storybook/react": "6.5.12",
     "@storybook/testing-library": "^0.0.13",
-    "@types/luxon": "^3.0.0",
+    "@types/luxon": "^3.0.1",
     "@types/stats.js": "^0.17.0",
-    "webpack": "^5.73.0"
+    "webpack": "^5.74.0"
   }
 }

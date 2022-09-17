@@ -11,15 +11,15 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import { Div, DivProps } from '../tags'
 
 export type SkeletonBaseProps = {
-  animation?: 'wave' | true | false
+  animation?: 'wave' | boolean | string
 }
 
-export type SkeletonProps = DivProps & SkeletonBaseProps
+export type SkeletonProps = Omit<DivProps, 'animation'> & SkeletonBaseProps
 
 export const SkeletonPropTypes = {
   animation: PropTypes.oneOfType([
-    PropTypes.bool,
     PropTypes.oneOf(['wave']),
+    PropTypes.bool,
   ]),
 }
 

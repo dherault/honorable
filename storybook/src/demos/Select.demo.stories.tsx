@@ -124,7 +124,7 @@ export const SubMenu = SelectSubMenu.bind({})
 // @url https://storybook.honorable.design/iframe.html?args=&id=demos-select--controlled&viewMode=story
 // START-SOURCE
 function SelectControlled() {
-  const [value, setValue] = useState()
+  const [value, setValue] = useState('')
   const allValues = findAllValues(items)
 
   return (
@@ -254,7 +254,7 @@ function SelectRenderSelectedFn() {
     <Select
       value={value}
       onChange={event => setValue(event.target.value)}
-      renderSelected={(value: any) => `${value} (custom)`}
+      renderSelected={(value: any) => <>{value} (custom)</>}
     >
       {items.map(renderItem)}
     </Select>

@@ -1,0 +1,11 @@
+{
+  "props": [],
+  "demos": [
+    {
+      "source": "function CardBasic() {\n  return (\n    <Card\n      width={256}\n      height={256}\n    />\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-card--basic&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-card--parts&viewMode=story"
+}
