@@ -79,7 +79,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          visibility={loading ? 'hidden' : 'visible'}
+          visibility={loading ? 'hidden' : 'inherit'}
           {...resolvePartStyles('Button.StartIcon', props, theme)}
         >
           {startIcon}
@@ -106,7 +106,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         </Span>
       )}
       <Span
-        visibility={loading ? 'hidden' : 'visible'}
+        visibility={loading ? 'hidden' : 'inherit'}
         {...resolvePartStyles('Button.Children', props, theme)}
       >
         {children}
@@ -116,7 +116,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          visibility={loading ? 'hidden' : 'visible'}
+          visibility={loading ? 'hidden' : 'inherit'}
           {...resolvePartStyles('Button.EndIcon', props, theme)}
         >
           {endIcon}
