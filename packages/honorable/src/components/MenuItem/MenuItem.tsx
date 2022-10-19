@@ -21,6 +21,7 @@ export type MenuItemBaseProps = {
   isSubMenuItem?: boolean
   fade?: boolean
   disabled?: boolean
+  onClick?: (event: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>) => void
 }
 
 export type MenuItemProps = DivProps & MenuItemBaseProps
@@ -31,8 +32,8 @@ export const menuItemPropTypes = {
   active: PropTypes.bool,
   isSubMenuItem: PropTypes.bool,
   fade: PropTypes.bool,
-  onClick: PropTypes.func,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 // A triangle to smooth the user interaction with the submenus
@@ -73,6 +74,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     isSubMenuItem,
     fade,
     disabled,
+    onClick,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -184,6 +186,10 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       isSubMenuVisible: false,
       activeItemIndex: -1,
     }))
+
+    if (typeof onClick === 'function') {
+      onClick(event)
+    }
   }
 
   return (
