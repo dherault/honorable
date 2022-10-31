@@ -51,6 +51,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   useEscapeKey(event => isOpen && !isClosing && !disableEscapeKey && handleClose(event))
 
   const handleClose = useCallback((event: MouseEvent | KeyboardEvent) => {
+    console.log('fade', fade, onClose)
     if (typeof onClose === 'function') {
       if (fade) {
         setIsClosing(true)
@@ -63,12 +64,22 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     }
   }, [fade, transitionDuration, onClose])
 
+  const handleBackdropClick = useCallback((event: MouseEvent) => {
+    if (event.target === backdropRef.current) {
+      handleClose(event)
+    }
+  }, [handleClose])
+
   useEffect(() => {
     if (fade && open) {
       setIsOpen(true)
     }
     else if (fade && !open) {
-      setIsOpen(false)
+      setIsClosing(true)
+      setTimeout(() => {
+        setIsClosing(false)
+        setIsOpen(false)
+      }, transitionDuration)
     }
     else {
       setIsOpen(open)
@@ -87,12 +98,6 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
     }
   }, [portal, portalElement])
   if (!(open || isOpen || isClosing)) return null
-
-  function handleBackdropClick(event: MouseEvent) {
-    if (event.target === backdropRef.current) {
-      handleClose(event)
-    }
-  }
 
   function wrapFadeOutter(element: ReactElement) {
     if (!fade) return element

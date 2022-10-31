@@ -117,6 +117,11 @@ function Template4(args: any) {
         {...args}
       >
         {value}
+        <Div mt={2}>
+          <Button onClick={() => setValue(null)}>
+            Close (set null)
+          </Button>
+        </Div>
       </Modal>
     </>
   )
