@@ -31,6 +31,10 @@ export type ButtonBaseProps = {
    * Weither the Button is disabled or not
    */
   disabled?: boolean
+  /**
+   * The Button's Spinner color
+   */
+  spinnerColor?: string
 }
 
 export type ButtonProps = ButtonBaseBaseProps & ButtonBaseProps
@@ -41,6 +45,7 @@ export const buttonPropTypes = {
   loading: PropTypes.bool,
   loadingIndicator: PropTypes.node,
   disabled: PropTypes.bool,
+  spinnerColor: PropTypes.string,
 }
 
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
@@ -50,6 +55,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
     children,
     loading,
     loadingIndicator,
+    spinnerColor = 'white',
     ...otherProps
   } = props
   const theme = useTheme()
@@ -99,6 +105,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         >
           {(loadingIndicator || (
             <Spinner
+              color={spinnerColor}
               size={typeof height === 'number' ? height * 3 / 5 : 16}
               {...resolvePartStyles('Spinner', props, theme)}
             />
@@ -106,6 +113,9 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         </Span>
       )}
       <Span
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         visibility={loading ? 'hidden' : 'inherit'}
         {...resolvePartStyles('Button.Children', props, theme)}
       >
