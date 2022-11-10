@@ -26,7 +26,7 @@ function useHonorable(name: string, props: object, overridenProps: object = {}, 
     const suffixedAliases = aliases.map(x => `${x}-`)
     const stylesProps: StylesProps = {}
     const resolvedRootStyles = resolveStyles(theme[name]?.Root, workingProps, theme)
-    const otherProps = resolveStyles(theme[name]?.DefaultProps, workingProps, theme)
+    const otherProps: Record<string, any> = {}
 
     Object.entries(props).forEach(([key, value]) => {
       if (
