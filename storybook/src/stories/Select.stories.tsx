@@ -156,6 +156,12 @@ Default.args = {
   items,
 }
 
+export const MenuOnTop = Template.bind({})
+MenuOnTop.args = {
+  items,
+  menuOnTop: true,
+}
+
 export const DefaultOpen = Template.bind({})
 DefaultOpen.args = {
   items,

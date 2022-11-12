@@ -32,6 +32,7 @@ export type SelectBaseProps = {
   renderSelected?: (value: any) => ReactElement
   startIcon?: ReactElement
   endIcon?: ReactElement | boolean
+  menuOnTop?: boolean
 }
 
 export type SelectProps = Omit<DivProps, 'onChange'> & SelectBaseProps
@@ -46,21 +47,23 @@ export const selectPropTypes = {
   renderSelected: PropTypes.func,
   startIcon: PropTypes.element,
   endIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
+  menuOnTop: PropTypes.bool,
 }
 
 function SelectRef(props: SelectProps, ref: Ref<any>) {
   const {
     open,
-    defaultOpen,
+    defaultOpen = false,
     value,
     onChange,
     onOpen,
-    fade,
     onClick,
-    children,
     renderSelected,
+    fade = true,
     startIcon = null,
     endIcon = null,
+    menuOnTop = false,
+    children,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -198,7 +201,8 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
           menuState={menuState}
           setMenuState={setMenuState}
           position="absolute"
-          top="100%"
+          top={menuOnTop ? null : '100%'}
+          bottom={menuOnTop ? '100%' : null}
           right={-1} // -1 for compensating the border
           left={-1}
           zIndex={100}
