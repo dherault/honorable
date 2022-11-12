@@ -5,6 +5,7 @@ export * from './components/CssBaseline/CssBaseline'
 export * from './components/DateTimeProvider/DateTimeProvider'
 // Regular components
 export * from './components/Accordion/Accordion'
+export * from './components/Autocomplete/Autocomplete'
 export * from './components/Avatar/Avatar'
 export * from './components/Box/Box'
 export * from './components/Button/Button'

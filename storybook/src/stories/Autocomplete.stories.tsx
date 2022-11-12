@@ -23,11 +23,14 @@ function TemplateControlled(args: any) {
   const [value, setValue] = useState('')
 
   return (
-    <Autocomplete
-      value={value}
-      onChange={event => setValue(event.target.value)}
-      {...args}
-    />
+    <>
+      <div>{value}</div>
+      <Autocomplete
+        value={value}
+        onChange={(value: any) => setValue(value)}
+        {...args}
+      />
+    </>
   )
 }
 

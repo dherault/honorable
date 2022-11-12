@@ -1,8 +1,6 @@
 import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import withHonorable from '../../withHonorable'
-
 import { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
 
@@ -10,7 +8,7 @@ import useTheme from '../../hooks/useTheme'
 import usePrevious from '../../hooks/usePrevious'
 import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
-import useOverridenProps from '../../hooks/useOverridenProps'
+import useRootStyles from '../../hooks/useRootStyles'
 
 import pickProps from '../../utils/pickProps'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
@@ -31,6 +29,8 @@ export type AutocompleteBaseProps = {
   onOpen?: (open: boolean) => void
   renderOption?: (option: any) => ReactNode
   noOptionsNode?: ReactNode
+  value?: string
+  onChange?: (value: string) => void
 }
 
 export type AutocompleteProps = InputBaseProps & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
@@ -44,6 +44,8 @@ const autocompletePropTypes = {
   onOpen: PropTypes.func,
   renderOption: PropTypes.func,
   noOptionsNode: PropTypes.node,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 }
 
 const honorableNoValue = `HONORABLE_NO_VALUE_${Math.random()}`
@@ -87,11 +89,11 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     options = [],
     endIcon,
     onOpen,
-    value, // TODO
+    value,
     onChange,
     renderOption = defaultRenderOption,
     noOptionsNode = 'No options',
-    autoHighlight,
+    autoHighlight = true,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -105,9 +107,9 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState])
   const { value: currentOptionValue, event } = menuUsageState
   const previousEvent = usePrevious(event)
-  const filteredOptions = filterOptions(options, search)
-
-  useOverridenProps(props, { focused, search })
+  const filteredOptions = useMemo(() => filterOptions(options, search), [options, search])
+  const workingProps = { ...props }
+  const rootStyles = useRootStyles('Autocomplete', workingProps, theme)
 
   useOutsideClick(autocompleteRef, () => {
     setFocused(false)
@@ -136,7 +138,8 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setSearch(event.target.value)
-    if (typeof onChange === 'function') onChange(event)
+
+    if (typeof onChange === 'function') onChange(event.target.value)
   }
 
   function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -159,6 +162,28 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
         break
       }
+      case 'Enter':
+      case 'Tab': {
+        event.preventDefault()
+
+        const itemIndex = menuState.activeItemIndex === -1 ? menuState.defaultActiveItemIndex : menuState.activeItemIndex
+
+        const item = filteredOptions[itemIndex]
+
+        if (item) {
+          const optionValue = typeof item === 'string'
+            ? item
+            : typeof item === 'object'
+              ? item.value
+              // @ts-expect-error
+              : item.toString()
+
+          setSearch(optionValue)
+          setMenuState(x => ({ ...x, defaultActiveItemIndex: 0 }))
+
+          if (typeof onChange === 'function') onChange(optionValue)
+        }
+      }
     }
   }
 
@@ -167,6 +192,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       ref={forkedRef}
       display="inline-block"
       position="relative"
+      {...rootStyles}
       {...divProps}
     >
       <Input
@@ -192,6 +218,8 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           left={0}
           zIndex={100}
           display={focused ? 'block' : 'none'}
+          maxHeight={256}
+          overflowY="auto"
           {...resolvePartStyles('Menu', props, theme)}
         >
           {filteredOptions.length > 0 && filteredOptions.map(option => (
@@ -218,10 +246,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   )
 }
 
-AutocompleteRef.displayName = 'Autocomplete'
+export const Autocomplete = forwardRef(AutocompleteRef)
 
-const ForwardedInput = forwardRef(AutocompleteRef)
-
-ForwardedInput.propTypes = autocompletePropTypes
-
-export const Autocomplete = withHonorable<AutocompleteProps>(ForwardedInput, 'Autocomplete')
+Autocomplete.displayName = 'Autocomplete'
+Autocomplete.propTypes = autocompletePropTypes
