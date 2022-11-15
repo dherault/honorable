@@ -124,11 +124,6 @@ const theme = {
         paddingRight: 16,
       },
     ],
-    ChildrenWrapper: [
-      {
-        transition: 'height 200ms ease',
-      },
-    ],
     Children: [
       {
         paddingTop: 0,

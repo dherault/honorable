@@ -42,6 +42,8 @@ export const accordionPropTypes = {
   expandIcon: PropTypes.node,
 }
 
+const expandTransitionDuration = 200
+
 function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const {
     expanded,
@@ -56,13 +58,19 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const childrenRef = useRef<HTMLDivElement>()
   const [childrenHeight, setChildrenHeight] = useState<number | 'auto'>('auto')
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ?? false)
+  const [isExpanding, setIsExpanding] = useState(false)
   const actualExpanded = expanded ?? uncontrolledExpanded
-  const workingProps = { ...props, expanded: actualExpanded }
+  const workingProps = { ...props, expanded: actualExpanded, isExpanding }
   const rootStyles = useRootStyles('Accordion', workingProps, theme)
 
   const handleExpand = useCallback(() => {
+    setIsExpanding(true)
     setUncontrolledExpanded(!actualExpanded)
     if (typeof onExpand === 'function') onExpand(!actualExpanded)
+
+    setTimeout(() => {
+      setIsExpanding(false)
+    }, expandTransitionDuration)
   }, [actualExpanded, onExpand])
 
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
@@ -73,7 +81,15 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   }, [handleExpand])
 
   useEffect(() => {
-    setChildrenHeight(childrenRef.current.offsetHeight)
+    const resizeObserver = new ResizeObserver(() => {
+      setChildrenHeight(childrenRef.current.offsetHeight)
+    })
+
+    resizeObserver.observe(childrenRef.current)
+
+    return () => {
+      resizeObserver.disconnect()
+    }
   }, [children])
 
   return (
@@ -104,6 +120,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       </Div>
       <Div
         height={actualExpanded ? childrenHeight : 0}
+        transition={isExpanding ? `height ${expandTransitionDuration}ms ease` : null}
         {...resolvePartStyles('Accordion.ChildrenWrapper', workingProps, theme)}
       >
         <Div

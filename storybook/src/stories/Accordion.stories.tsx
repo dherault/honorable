@@ -1,7 +1,7 @@
 // Icons from https://icons.modulz.app/
 import React, { useState } from 'react'
 
-import { Accordion, Checkbox } from 'honorable'
+import { Accordion, Button, Checkbox, Div, Input } from 'honorable'
 
 export default {
   title: 'Components/Accordion',
@@ -45,6 +45,33 @@ function Template(args: any) {
 function TemplateSolo(args: any) {
   return (
     <Accordion {...args} />
+  )
+}
+
+function TemplateResponsive(args: any) {
+  const [n, setN] = useState(1)
+
+  return (
+    <>
+      <Button onClick={() => setN(n + 1)}>
+        Add child
+      </Button>
+      <Accordion
+        defaultExpanded
+        marginTop={16}
+        {...args}
+      >
+        <Input
+          multiline
+          width="100%"
+        />
+        {Array(n).fill(true).map((_, i) => (
+          <Div mt={0.5}>
+            {i}
+          </Div>
+        ))}
+      </Accordion>
+    </>
   )
 }
 
@@ -106,6 +133,12 @@ export const Solo = TemplateSolo.bind({})
 Solo.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  disabled: false,
+}
+
+export const Responsive = TemplateResponsive.bind({})
+Responsive.args = {
+  title: 'An Accordion',
   disabled: false,
 }
 
