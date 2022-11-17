@@ -79,6 +79,7 @@ function Template3() {
         height={64}
       />
       <Tooltip
+        arrow
         label="Tooltip"
         placement="top"
       >
