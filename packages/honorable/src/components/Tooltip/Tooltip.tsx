@@ -299,14 +299,14 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
               top={arrowY ?? ''}
               left={arrowX ?? ''}
               transform="rotate(45deg)"
-              zIndex={0}
+              zIndex={99998}
               {...{ [staticSide]: -arrowSize / 2 }}
               {...resolvePartStyles('Tooltip.Arrow', props, theme)}
             />
           )}
           <Div
             position="relative"
-            zIndex={1}
+            zIndex={99999}
             {...resolvePartStyles('Tooltip.Label', props, theme)}
           >
             {label}
