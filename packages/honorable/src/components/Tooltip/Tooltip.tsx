@@ -287,6 +287,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
           color="white"
           cursor="default"
           zIndex={99997}
+          userSelect="none"
           {...rootStyles}
           {...otherProps}
         >
