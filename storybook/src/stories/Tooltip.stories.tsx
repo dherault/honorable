@@ -70,6 +70,34 @@ function Template2(args: any) {
   )
 }
 
+function Template3() {
+  return (
+    <>
+      <Flex
+        backgroundColor="red"
+        width="100%"
+        height={64}
+      />
+      <Tooltip
+        label="Tooltip"
+        placement="top"
+      >
+        <Flex
+          p={2}
+          align="center"
+          justify="center"
+          minWidth={128 + 64}
+          minHeight={128 + 64}
+          backgroundColor="background-light"
+          userSelect="none"
+        >
+          Hover me!
+        </Flex>
+      </Tooltip>
+    </>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
   label: 'Tooltip',
@@ -88,7 +116,10 @@ DisplayOnClick.args = {
   displayOn: ['click'],
 }
 
-export const onOpen = Template2.bind({})
-onOpen.args = {
+export const OnOpen = Template2.bind({})
+OnOpen.args = {
   label: 'Tooltip',
 }
+
+export const ZIndex = Template3.bind({})
+ZIndex.args = {}
