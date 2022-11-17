@@ -1,9 +1,9 @@
-import resolveMp from '../src/index'
+import resolveGap from '../src/index'
 
-describe('resolveMp', () => {
+describe('resolveGap', () => {
 
-  test('it resolves mp props', () => {
-    expect(resolveMp()({
+  test('it resolves gap props', () => {
+    expect(resolveGap()({
       gap: 2,
     })).toEqual({
       gap: 32,
@@ -11,13 +11,13 @@ describe('resolveMp', () => {
   })
 
   test('it resolves any value', () => {
-    expect(resolveMp()({
+    expect(resolveGap()({
       gap: '2px',
-    })).toEqual({})
+    })).toEqual(false)
   })
 
   test('it mutes other arguments', () => {
-    expect(resolveMp()({
+    expect(resolveGap()({
       foo: 'bar',
       gap: 1,
     })).toEqual({

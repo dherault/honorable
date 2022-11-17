@@ -1,7 +1,7 @@
 {
-  "name": "honorable-recipe-gap",
-  "version": "0.3.0",
-  "description": "A gapping solution recipe for honorable",
+  "name": "honorable-recipe-mapper",
+  "version": "0.2.0",
+  "description": "A mapping solution recipe for honorable",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",

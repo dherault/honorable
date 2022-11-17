@@ -47,6 +47,8 @@
     "patch:honorable-recipe-mp": "(cd packages/honorable-recipe-mp && npm version patch && npm publish)",
     "minor:honorable-recipe-gap": "(cd packages/honorable-recipe-gap && npm version minor && npm publish)",
     "patch:honorable-recipe-gap": "(cd packages/honorable-recipe-gap && npm version patch && npm publish)",
+    "minor:honorable-recipe-mapper": "(cd packages/honorable-recipe-mapper && npm version minor && npm publish)",
+    "patch:honorable-recipe-mapper": "(cd packages/honorable-recipe-mapper && npm version patch && npm publish)",
     "minor:honorable-recipe-xflex": "(cd packages/honorable-recipe-xflex && npm version minor && npm publish)",
     "patch:honorable-recipe-xflex": "(cd packages/honorable-recipe-xflex && npm version patch && npm publish)",
     "docs": "npm run docs:generateComponentsDocs",

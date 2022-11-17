@@ -1,13 +1,5 @@
 function resolveGap(multiplier = 16) {
-  return (props: any) => {
-    if (typeof props.gap === 'number') {
-      return {
-        gap: props.gap * multiplier,
-      }
-    }
-
-    return {}
-  }
+  return (props: any) => typeof props.gap === 'number' && ({ gap: props.gap * multiplier })
 }
 
 export default resolveGap
