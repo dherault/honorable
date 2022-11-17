@@ -73,15 +73,10 @@ function Template2(args: any) {
 function Template3() {
   return (
     <>
-      <Flex
-        backgroundColor="red"
-        width="100%"
-        height={64}
-      />
       <Tooltip
         arrow
         label="Tooltip"
-        placement="top"
+        placement="bottom"
       >
         <Flex
           p={2}
@@ -95,6 +90,11 @@ function Template3() {
           Hover me!
         </Flex>
       </Tooltip>
+      <Flex
+        backgroundColor="red"
+        width="100%"
+        height={64}
+      />
     </>
   )
 }
