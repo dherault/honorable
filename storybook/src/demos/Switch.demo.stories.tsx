@@ -14,7 +14,7 @@ export default {
 // @url https://storybook.honorable.design/iframe.html?args=&id=demos-switch--basic&viewMode=story
 // START-SOURCE
 function SwitchBasic() {
-  const [checked, setChecked] = useState(null)
+  const [checked, setChecked] = useState<any>(null)
 
   return (
     <Switch
@@ -33,7 +33,7 @@ export const Basic = SwitchBasic.bind({}) as any
 // @url https://storybook.honorable.design/iframe.html?args=&id=demos-switch--labels&viewMode=story
 // START-SOURCE
 function SwitchLabels() {
-  const [checked, setChecked] = useState(null)
+  const [checked, setChecked] = useState<any>(null)
 
   return (
     <Div>

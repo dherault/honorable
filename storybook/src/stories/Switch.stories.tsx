@@ -2,15 +2,13 @@ import React, { useState } from 'react'
 
 import { Switch } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate'
-
 export default {
   title: 'Components/Switch',
   component: Switch,
 }
 
 function Template(args: any) {
-  const [checked, setChecked] = useState(null)
+  const [checked, setChecked] = useState<any>(null)
 
   return (
     <Switch

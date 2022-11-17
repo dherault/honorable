@@ -11,7 +11,7 @@ export default {
 
 function Template(args: any) {
   const [useHonorable, setUseHonorable] = useState(true)
-  const nodes = []
+  const nodes: any[] = []
 
   for (let i = 0; i < 32; i++) {
     nodes.push(

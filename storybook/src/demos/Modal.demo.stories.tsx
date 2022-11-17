@@ -98,7 +98,7 @@ export const NoOpen = ModalNoOpen.bind({}) as any
 // @url https://storybook.honorable.design/iframe.html?args=&id=demos-modal--real-world&viewMode=story
 // START-SOURCE
 function ModalNoRealWorld() {
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState<any>(null)
 
   return (
     <>
