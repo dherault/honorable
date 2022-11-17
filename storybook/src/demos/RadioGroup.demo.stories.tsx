@@ -31,7 +31,7 @@ function RadioGroupBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = RadioGroupBasic.bind({})
+export const Basic = RadioGroupBasic.bind({}) as any
 
 // START-DEMO
 // @name Controlled
@@ -60,7 +60,7 @@ function RadioGroupControlled() {
 // END-SOURCE
 // END-DEMO
 
-export const Controlled = RadioGroupControlled.bind({})
+export const Controlled = RadioGroupControlled.bind({}) as any
 
 // START-DEMO
 // @name Disabled
@@ -92,7 +92,7 @@ function RadioGroupDisabled() {
 // END-SOURCE
 // END-DEMO
 
-export const Disabled = RadioGroupDisabled.bind({})
+export const Disabled = RadioGroupDisabled.bind({}) as any
 
 // START-DEMO
 // @name Row
@@ -125,7 +125,7 @@ function RadioGroupRow() {
 // END-SOURCE
 // END-DEMO
 
-export const Row = RadioGroupRow.bind({})
+export const Row = RadioGroupRow.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -134,7 +134,7 @@ export const Parts = createPartsTemplate(
   ),
   'RadioGroup',
   ['Children']
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: [
     <Radio value={0} />,

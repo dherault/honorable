@@ -32,7 +32,7 @@ function AccordionUncontrolledDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Uncontrolled = AccordionUncontrolledDemo.bind({})
+export const Uncontrolled = AccordionUncontrolledDemo.bind({}) as any
 
 // START-DEMO
 // @name Controlled
@@ -70,7 +70,7 @@ function AccordionControlledDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Controlled = AccordionControlledDemo.bind({})
+export const Controlled = AccordionControlledDemo.bind({}) as any
 
 // START-DEMO
 // @name Default expanded
@@ -97,7 +97,7 @@ function AccordionDefaultExpandedDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const DefaultExpanded = AccordionDefaultExpandedDemo.bind({})
+export const DefaultExpanded = AccordionDefaultExpandedDemo.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-accordion--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -109,7 +109,7 @@ export const Parts = createPartsTemplate(
     'ChildrenWrapper',
     'Children',
   ],
-).bind({})
+).bind({}) as any
 
 Parts.args = {
   defaultExpanded: true,

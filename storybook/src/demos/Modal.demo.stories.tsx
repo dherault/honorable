@@ -36,7 +36,7 @@ function ModalBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = ModalBasic.bind({})
+export const Basic = ModalBasic.bind({}) as any
 
 // START-DEMO
 // @name NoFade
@@ -66,7 +66,7 @@ function ModalNoFade() {
 // END-SOURCE
 // END-DEMO
 
-export const NoFade = ModalNoFade.bind({})
+export const NoFade = ModalNoFade.bind({}) as any
 
 // START-DEMO
 // @name Open
@@ -91,7 +91,7 @@ function ModalNoOpen() {
 // END-SOURCE
 // END-DEMO
 
-export const NoOpen = ModalNoOpen.bind({})
+export const NoOpen = ModalNoOpen.bind({}) as any
 
 // START-DEMO
 // @name RealWorld
@@ -128,7 +128,7 @@ function ModalNoRealWorld() {
 // END-SOURCE
 // END-DEMO
 
-export const NoRealWorld = ModalNoRealWorld.bind({})
+export const NoRealWorld = ModalNoRealWorld.bind({}) as any
 
 // START-DEMO
 // @name CloseButton
@@ -157,7 +157,7 @@ function ModalCloseButton() {
 // END-SOURCE
 // END-DEMO
 
-export const CloseButton = ModalCloseButton.bind({})
+export const CloseButton = ModalCloseButton.bind({}) as any
 
 // START-DEMO
 // @name WillChangeContainer
@@ -179,7 +179,7 @@ function ModalWillChangeContainer() {
 // END-SOURCE
 // END-DEMO
 
-export const WillChangeContainer = ModalWillChangeContainer.bind({})
+export const WillChangeContainer = ModalWillChangeContainer.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-modal--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -188,7 +188,7 @@ export const Parts = createPartsTemplate(
   ),
   'Modal',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {
   open: true,
 }

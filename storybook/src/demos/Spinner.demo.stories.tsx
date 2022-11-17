@@ -21,7 +21,7 @@ function SpinnerBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = SpinnerBasic.bind({})
+export const Basic = SpinnerBasic.bind({}) as any
 
 // START-DEMO
 // @name Large
@@ -35,7 +35,7 @@ function SpinnerLarge() {
 // END-SOURCE
 // END-DEMO
 
-export const Large = SpinnerLarge.bind({})
+export const Large = SpinnerLarge.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-spinner--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -46,5 +46,5 @@ export const Parts = createPartsTemplate(
   ),
   'Spinner',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {}

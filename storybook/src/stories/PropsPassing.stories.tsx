@@ -13,7 +13,7 @@ function Template1() {
   )
 }
 
-export const AlignCenter = Template1.bind({})
+export const AlignCenter = Template1.bind({}) as any
 AlignCenter.args = {
 }
 
@@ -36,7 +36,7 @@ function Template2() {
   )
 }
 
-export const AsAnchor = Template2.bind({})
+export const AsAnchor = Template2.bind({}) as any
 AsAnchor.args = {
 }
 
@@ -76,7 +76,7 @@ function Template3() {
   )
 }
 
-export const BorderRadius = Template3.bind({})
+export const BorderRadius = Template3.bind({}) as any
 BorderRadius.args = {
 }
 
@@ -91,7 +91,7 @@ function Template4() {
   )
 }
 
-export const AccordionColor = Template4.bind({})
+export const AccordionColor = Template4.bind({}) as any
 AccordionColor.args = {
 }
 
@@ -117,7 +117,7 @@ function Template5() {
   )
 }
 
-export const AnchorHover = Template5.bind({})
+export const AnchorHover = Template5.bind({}) as any
 AnchorHover.args = {
 }
 
@@ -134,7 +134,7 @@ function Template6() {
   )
 }
 
-export const PartProps = Template6.bind({})
+export const PartProps = Template6.bind({}) as any
 PartProps.args = {
 }
 
@@ -146,6 +146,6 @@ function Template7() {
   )
 }
 
-export const CustomPropsBreakpoints = Template7.bind({})
+export const CustomPropsBreakpoints = Template7.bind({}) as any
 CustomPropsBreakpoints.args = {
 }

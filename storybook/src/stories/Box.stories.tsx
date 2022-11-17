@@ -12,7 +12,7 @@ function Template(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   width: 64,
   height: 64,

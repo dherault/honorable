@@ -26,7 +26,7 @@ function SwitchBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = SwitchBasic.bind({}) 
+export const Basic = SwitchBasic.bind({}) as any
 
 // START-DEMO
 // @name Labels
@@ -73,7 +73,7 @@ function SwitchLabels() {
 // END-SOURCE
 // END-DEMO
 
-export const Labels = SwitchLabels.bind({}) 
+export const Labels = SwitchLabels.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-switch--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -82,7 +82,7 @@ export const Parts = createPartsTemplate(
   ),
   'Switch',
   ['Children']
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: 'A Switch',
 }

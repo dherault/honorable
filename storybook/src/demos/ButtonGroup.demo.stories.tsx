@@ -25,7 +25,7 @@ function ButtonGroupBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = ButtonGroupBasic.bind({})
+export const Basic = ButtonGroupBasic.bind({}) as any
 
 // START-DEMO
 // @name Column
@@ -43,7 +43,7 @@ function ButtonGroupColumn() {
 // END-SOURCE
 // END-DEMO
 
-export const Column = ButtonGroupColumn.bind({})
+export const Column = ButtonGroupColumn.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-buttongroup--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -59,7 +59,7 @@ export const Parts = createPartsTemplate(
   ),
   'ButtonGroup',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: 'Button',
 }

@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Flex, Tooltip } from 'honorable'
 
-import createPartsTemplate from '../helpers/createPartsTemplate'
-
 export default {
   title: 'Components/Tooltip',
   component: Tooltip,
@@ -99,28 +97,37 @@ function Template3() {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   label: 'Tooltip',
 }
 
-export const Arrow = Template.bind({})
+export const Arrow = Template.bind({}) as any
 Arrow.args = {
   arrow: true,
   label: 'Tooltip',
 }
 
-export const DisplayOnClick = Template.bind({})
+export const DisplayOnClick = Template.bind({}) as any
 DisplayOnClick.args = {
   arrow: true,
   label: 'Tooltip',
   displayOn: ['click'],
 }
 
-export const OnOpen = Template2.bind({})
+export const OnOpen = Template2.bind({}) as any
 OnOpen.args = {
   label: 'Tooltip',
 }
 
-export const ZIndex = Template3.bind({})
+export const ZIndex = Template3.bind({}) as any
 ZIndex.args = {}
+
+export const Padding = Template.bind({}) as any
+Padding.args = {
+  arrow: true,
+  label: 'Tooltip',
+  arrowPadding: 8,
+  offsetPadding: 8,
+  offset: 8,
+}

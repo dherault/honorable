@@ -56,7 +56,7 @@ function MenuBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = MenuBasic.bind({})
+export const Basic = MenuBasic.bind({}) as any
 
 // START-DEMO
 // @name SubMenu
@@ -88,7 +88,7 @@ function MenuSubMenu() {
 // END-SOURCE
 // END-DEMO
 
-export const SubMenu = MenuSubMenu.bind({})
+export const SubMenu = MenuSubMenu.bind({}) as any
 
 // START-DEMO
 // @name Fade
@@ -120,7 +120,7 @@ function MenuFade() {
 // END-SOURCE
 // END-DEMO
 
-export const Fade = MenuFade.bind({})
+export const Fade = MenuFade.bind({}) as any
 
 // START-DEMO
 // @name Closed
@@ -152,7 +152,7 @@ function MenuClosed() {
 // END-SOURCE
 // END-DEMO
 
-export const Closed = MenuClosed.bind({})
+export const Closed = MenuClosed.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-menu--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -161,7 +161,7 @@ export const Parts = createPartsTemplate(
   ),
   'Menu',
   ['children']
-).bind({})
+).bind({}) as any
 Parts.args = {
   children:
       items.map(({ text, value }: any) => (

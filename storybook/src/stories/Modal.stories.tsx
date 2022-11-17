@@ -143,51 +143,141 @@ function Template5(args: any) {
         onClose={() => setOpen(false)}
         {...args}
       >
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
-        Content <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
+        Content 
+        {' '}
+        <br />
       </Modal>
     </>
   )
@@ -241,55 +331,55 @@ function Template8(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
 }
 
-export const NoFade = Template.bind({})
+export const NoFade = Template.bind({}) as any
 NoFade.args = {
   fade: false,
 }
 
-export const Open = Template.bind({})
+export const Open = Template.bind({}) as any
 Open.args = {
   open: true,
 }
 
-export const Extended = Template2.bind({})
+export const Extended = Template2.bind({}) as any
 Extended.args = {
 }
 
-export const NoOnClose = Template3.bind({})
+export const NoOnClose = Template3.bind({}) as any
 NoOnClose.args = {
 }
 
-export const OpenNoOnClose = Template3.bind({})
+export const OpenNoOnClose = Template3.bind({}) as any
 OpenNoOnClose.args = {
   open: true,
 }
 
-export const DisableEscapeKey = Template.bind({})
+export const DisableEscapeKey = Template.bind({}) as any
 DisableEscapeKey.args = {
   disableEscapeKey: true,
 }
 
-export const RealWorld = Template4.bind({})
+export const RealWorld = Template4.bind({}) as any
 RealWorld.args = {
 }
 
-export const RealWorld2 = Template5.bind({})
+export const RealWorld2 = Template5.bind({}) as any
 RealWorld2.args = {
 }
 
-export const Naked = Template6.bind({})
+export const Naked = Template6.bind({}) as any
 Naked.args = {
 }
 
-export const CloseButton = Template7.bind({})
+export const CloseButton = Template7.bind({}) as any
 CloseButton.args = {
 }
 
-export const WillChangeContainer = Template8.bind({})
+export const WillChangeContainer = Template8.bind({}) as any
 WillChangeContainer.args = {
   portal: true,
 }

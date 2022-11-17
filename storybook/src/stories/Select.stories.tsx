@@ -151,54 +151,54 @@ function Template4(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   items,
 }
 
-export const MenuOnTop = Template.bind({})
+export const MenuOnTop = Template.bind({}) as any
 MenuOnTop.args = {
   items,
   menuOnTop: true,
 }
 
-export const DefaultOpen = Template.bind({})
+export const DefaultOpen = Template.bind({}) as any
 DefaultOpen.args = {
   items,
   defaultOpen: true,
 }
 
-export const Selected = Template.bind({})
+export const Selected = Template.bind({}) as any
 Selected.args = {
   items,
   initialValue: 'Lovers',
 }
 
-export const SubMenu = Template.bind({})
+export const SubMenu = Template.bind({}) as any
 SubMenu.args = {
   items: makeItems(items, 6),
 }
 
-export const Controlled = Template2.bind({})
+export const Controlled = Template2.bind({}) as any
 Controlled.args = {
   items,
 }
 
-export const ControlledChanging = Template3.bind({})
+export const ControlledChanging = Template3.bind({}) as any
 ControlledChanging.args = {
   items,
 }
 
-export const ControlledChangingSubMenu = Template3.bind({})
+export const ControlledChangingSubMenu = Template3.bind({}) as any
 ControlledChangingSubMenu.args = {
   items: makeItems(items, 6),
 }
 
-export const LongItems = Template4.bind({})
+export const LongItems = Template4.bind({}) as any
 LongItems.args = {
 }
 
-export const StartIcon = Template.bind({})
+export const StartIcon = Template.bind({}) as any
 StartIcon.args = {
   items,
   startIcon: (
@@ -218,7 +218,7 @@ StartIcon.args = {
   ),
 }
 
-export const EndIcon = Template.bind({})
+export const EndIcon = Template.bind({}) as any
 EndIcon.args = {
   items,
   endIcon: (
@@ -238,13 +238,13 @@ EndIcon.args = {
   ),
 }
 
-export const EndIconFalse = Template.bind({})
+export const EndIconFalse = Template.bind({}) as any
 EndIconFalse.args = {
   items,
   endIcon: false,
 }
 
-export const RenderSelectedFn = Template.bind({})
+export const RenderSelectedFn = Template.bind({}) as any
 RenderSelectedFn.args = {
   items,
   renderSelected: (value: any) => `${value} (custom)`,

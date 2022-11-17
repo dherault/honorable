@@ -49,7 +49,7 @@ function makeItems(items: any[], depth = 1): any[] {
 function DropdownButtonBasicDemo() {
   return (
     <Div>
-      <DropdownButton 
+      <DropdownButton
         label="Drop it!"
       >
         {items.map(renderItem)}
@@ -57,7 +57,7 @@ function DropdownButtonBasicDemo() {
       <Div mt={1}>
         Am I underneath?
       </Div>
-      <DropdownButton 
+      <DropdownButton
         label="Drop it!"
         disabled
         mt={1}
@@ -70,7 +70,7 @@ function DropdownButtonBasicDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = DropdownButtonBasicDemo.bind({})
+export const Basic = DropdownButtonBasicDemo.bind({}) as any
 
 // START-DEMO
 // @name DefaultOpen
@@ -79,7 +79,7 @@ export const Basic = DropdownButtonBasicDemo.bind({})
 function DropdownButtonDefaultOpenDemo() {
   return (
     <Div>
-      <DropdownButton 
+      <DropdownButton
         label="Drop it!"
         defaultOpen
       >
@@ -94,7 +94,7 @@ function DropdownButtonDefaultOpenDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const DefaultOpen = DropdownButtonDefaultOpenDemo.bind({})
+export const DefaultOpen = DropdownButtonDefaultOpenDemo.bind({}) as any
 
 // START-DEMO
 // @name SubMenu
@@ -103,7 +103,7 @@ export const DefaultOpen = DropdownButtonDefaultOpenDemo.bind({})
 function DropdownButtonSubMenuDemo() {
   return (
     <Div>
-      <DropdownButton 
+      <DropdownButton
         label="Drop it!"
       >
         {makeItems(items, 6).map(renderItem)}
@@ -117,7 +117,7 @@ function DropdownButtonSubMenuDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const SubMenu = DropdownButtonSubMenuDemo.bind({})
+export const SubMenu = DropdownButtonSubMenuDemo.bind({}) as any
 
 // START-DEMO
 // @name Controlled
@@ -140,7 +140,7 @@ function DropdownButtonControlledDemo() {
         userSelect="none"
         onClick={() => setOpen(prev => !prev)}
       >
-        Toggle 
+        Toggle
       </A>
     </Flex>
   )
@@ -148,7 +148,7 @@ function DropdownButtonControlledDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Controlled = DropdownButtonControlledDemo.bind({})
+export const Controlled = DropdownButtonControlledDemo.bind({}) as any
 
 // START-DEMO
 // @name Extended
@@ -178,7 +178,7 @@ function DropdownButtonExtendedDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Extended = DropdownButtonExtendedDemo.bind({})
+export const Extended = DropdownButtonExtendedDemo.bind({}) as any
 
 // START-DEMO
 // @name Fade
@@ -187,7 +187,7 @@ export const Extended = DropdownButtonExtendedDemo.bind({})
 function DropdownButtonFadeDemo() {
   return (
     <Div>
-      <DropdownButton 
+      <DropdownButton
         label="Drop it!"
         fade
       >
@@ -202,7 +202,7 @@ function DropdownButtonFadeDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Fade = DropdownButtonFadeDemo.bind({})
+export const Fade = DropdownButtonFadeDemo.bind({}) as any
 
 // START-DEMO
 // @name EndIcon
@@ -238,7 +238,7 @@ function DropdownButtonEndIconDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const EndIcon = DropdownButtonEndIconDemo.bind({})
+export const EndIcon = DropdownButtonEndIconDemo.bind({}) as any
 
 // START-DEMO
 // @name EventOrder
@@ -263,18 +263,18 @@ function DropdownButtonEventOrderDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const EventOrder = DropdownButtonEventOrderDemo.bind({})
+export const EventOrder = DropdownButtonEventOrderDemo.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--parts&viewMode=story
 export const Parts = createPartsTemplate(
   (args: any) => (
-    <DropdownButton 
+    <DropdownButton
       {...args}
     />
   ),
   'DropdownButton',
   ['label', 'Children', 'endIcon']
-).bind({})
+).bind({}) as any
 Parts.args = {
   label: 'Drop it!',
   defaultOpen: true,

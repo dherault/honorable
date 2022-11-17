@@ -43,47 +43,47 @@ function TemplateCounter(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   disabled: false,
 }
 
-export const Width100 = Template.bind({})
+export const Width100 = Template.bind({}) as any
 Width100.args = {
   disabled: false,
   width: '100%',
 }
 
-export const Placeholder = Template.bind({})
+export const Placeholder = Template.bind({}) as any
 Placeholder.args = {
   disabled: false,
   placeholder: 'Type me if you can!',
 }
 
-export const DefaultValue = Template.bind({})
+export const DefaultValue = Template.bind({}) as any
 DefaultValue.args = {
   defaultValue: 'Text me if you can',
   disabled: false,
 }
 
-export const Controlled = TemplateControlled.bind({})
+export const Controlled = TemplateControlled.bind({}) as any
 Controlled.args = {
   disabled: false,
 }
 
-export const TypeNumber = Template.bind({})
+export const TypeNumber = Template.bind({}) as any
 TypeNumber.args = {
   type: 'number',
   disabled: false,
 }
 
-export const AutoFocus = Template.bind({})
+export const AutoFocus = Template.bind({}) as any
 AutoFocus.args = {
   disabled: false,
   autoFocus: true,
 }
 
-export const StartIcon = Template.bind({})
+export const StartIcon = Template.bind({}) as any
 StartIcon.args = {
   disabled: false,
   startIcon: (
@@ -103,7 +103,7 @@ StartIcon.args = {
   ),
 }
 
-export const EndIcon = Template.bind({})
+export const EndIcon = Template.bind({}) as any
 EndIcon.args = {
   disabled: false,
   endIcon: (
@@ -123,7 +123,7 @@ EndIcon.args = {
   ),
 }
 
-export const EndIconKg = Template.bind({})
+export const EndIconKg = Template.bind({}) as any
 EndIconKg.args = {
   disabled: false,
   endIcon: (
@@ -133,38 +133,38 @@ EndIconKg.args = {
   ),
 }
 
-export const Disabled = Template.bind({})
+export const Disabled = Template.bind({}) as any
 Disabled.args = {
   disabled: true,
 }
 
-export const Multiline = Template.bind({})
+export const Multiline = Template.bind({}) as any
 Multiline.args = {
   multiline: true,
   disabled: false,
 }
 
-export const MultilineControlled = TemplateControlled.bind({})
+export const MultilineControlled = TemplateControlled.bind({}) as any
 MultilineControlled.args = {
   multiline: true,
   disabled: false,
 }
 
-export const MultilineMinRows = Template.bind({})
+export const MultilineMinRows = Template.bind({}) as any
 MultilineMinRows.args = {
   multiline: true,
   minRows: 2,
   disabled: false,
 }
 
-export const MultilineMaxRows = Template.bind({})
+export const MultilineMaxRows = Template.bind({}) as any
 MultilineMaxRows.args = {
   multiline: true,
   maxRows: 4,
   disabled: false,
 }
 
-export const MultilineMinRowsMaxRows = Template.bind({})
+export const MultilineMinRowsMaxRows = Template.bind({}) as any
 MultilineMinRowsMaxRows.args = {
   multiline: true,
   minRows: 2,
@@ -172,7 +172,7 @@ MultilineMinRowsMaxRows.args = {
   disabled: false,
 }
 
-export const MultilineStartIcon = Template.bind({})
+export const MultilineStartIcon = Template.bind({}) as any
 MultilineStartIcon.args = {
   multiline: true,
   disabled: false,
@@ -193,7 +193,7 @@ MultilineStartIcon.args = {
   ),
 }
 
-export const MultilineEndIcon = Template.bind({})
+export const MultilineEndIcon = Template.bind({}) as any
 MultilineEndIcon.args = {
   multiline: true,
   disabled: false,
@@ -214,13 +214,13 @@ MultilineEndIcon.args = {
   ),
 }
 
-export const MultilineDisabled = Template.bind({})
+export const MultilineDisabled = Template.bind({}) as any
 MultilineDisabled.args = {
   multiline: true,
   disabled: true,
 }
 
-export const OnEnter = TemplateCounter.bind({})
+export const OnEnter = TemplateCounter.bind({}) as any
 OnEnter.args = {
   multiline: false,
   disabled: false,

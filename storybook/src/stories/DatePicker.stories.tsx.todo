@@ -44,37 +44,37 @@ function Template3(args: any) {
   )
 }
 
-export const UncontrolledMoment = Template.bind({})
+export const UncontrolledMoment = Template.bind({}) as any
 UncontrolledMoment.args = {
   monthSpan: 1,
   startDay: 0,
 }
 
-export const UncontrolledLuxon = Template2.bind({})
+export const UncontrolledLuxon = Template2.bind({}) as any
 UncontrolledLuxon.args = {
   monthSpan: 1,
   startDay: 0,
 }
 
-export const Controlled = Template3.bind({})
+export const Controlled = Template3.bind({}) as any
 Controlled.args = {
   monthSpan: 1,
   startDay: 0,
 }
 
-export const MonthSpan = Template.bind({})
+export const MonthSpan = Template.bind({}) as any
 MonthSpan.args = {
   monthSpan: 2,
   startDay: 0,
 }
 
-export const StartDay = Template.bind({})
+export const StartDay = Template.bind({}) as any
 StartDay.args = {
   monthSpan: 1,
   startDay: 1,
 }
 
-export const StartDate = Template.bind({})
+export const StartDate = Template.bind({}) as any
 StartDate.args = {
   monthSpan: 1,
   startDay: 1,

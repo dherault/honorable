@@ -30,12 +30,12 @@ function BoxDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = BoxDemo.bind({})
+export const Basic = BoxDemo.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-box--parts&viewMode=story
 export const Parts = createPartsTemplate(
   Box,
   'Box',
   [],
-).bind({})
+).bind({}) as any
 Parts.args = {}

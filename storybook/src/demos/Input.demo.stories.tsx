@@ -21,7 +21,7 @@ function InputBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = InputBasic.bind({})
+export const Basic = InputBasic.bind({}) as any
 
 // START-DEMO
 // @name Width100
@@ -35,7 +35,7 @@ function InputWidth100() {
 // END-SOURCE
 // END-DEMO
 
-export const Width100 = InputWidth100.bind({})
+export const Width100 = InputWidth100.bind({}) as any
 
 // START-DEMO
 // @name Placeholder
@@ -49,7 +49,7 @@ function InputPlaceholder() {
 // END-SOURCE
 // END-DEMO
 
-export const Placeholder = InputPlaceholder.bind({})
+export const Placeholder = InputPlaceholder.bind({}) as any
 
 // START-DEMO
 // @name DefaultValue
@@ -63,7 +63,7 @@ function InputDefaultValue() {
 // END-SOURCE
 // END-DEMO
 
-export const DefaultValue = InputDefaultValue.bind({})
+export const DefaultValue = InputDefaultValue.bind({}) as any
 
 // START-DEMO
 // @name TypeNumber
@@ -77,7 +77,7 @@ function InputTypeNumber() {
 // END-SOURCE
 // END-DEMO
 
-export const TypeNumber = InputTypeNumber.bind({})
+export const TypeNumber = InputTypeNumber.bind({}) as any
 
 // START-DEMO
 // @name Controlled
@@ -96,7 +96,7 @@ function InputControlled() {
 // END-SOURCE
 // END-DEMO
 
-export const Controlled = InputControlled.bind({})
+export const Controlled = InputControlled.bind({}) as any
 
 // START-DEMO
 // @name Counter
@@ -119,7 +119,7 @@ function InputCounter() {
 // END-SOURCE
 // END-DEMO
 
-export const Counter = InputCounter.bind({})
+export const Counter = InputCounter.bind({}) as any
 
 // START-DEMO
 // @name StartIcon
@@ -148,7 +148,7 @@ function InputStartIcon() {
 // END-SOURCE
 // END-DEMO
 
-export const StartIcon = InputStartIcon.bind({})
+export const StartIcon = InputStartIcon.bind({}) as any
 
 // START-DEMO
 // @name EndIcon
@@ -177,7 +177,7 @@ function InputEndIcon() {
 // END-SOURCE
 // END-DEMO
 
-export const EndIcon = InputEndIcon.bind({})
+export const EndIcon = InputEndIcon.bind({}) as any
 
 // START-DEMO
 // @name AutoFocus
@@ -191,7 +191,7 @@ function InputAutoFocus() {
 // END-SOURCE
 // END-DEMO
 
-export const AutoFocus = InputAutoFocus.bind({})
+export const AutoFocus = InputAutoFocus.bind({}) as any
 
 // START-DEMO
 // @name Multiline
@@ -205,7 +205,7 @@ function InputMultiline() {
 // END-SOURCE
 // END-DEMO
 
-export const Multiline = InputMultiline.bind({})
+export const Multiline = InputMultiline.bind({}) as any
 
 // START-DEMO
 // @name MultilineMinMaxRows
@@ -223,7 +223,7 @@ function InputMultilineMinMaxRows() {
 // END-SOURCE
 // END-DEMO
 
-export const MultilineMinMaxRows = InputMultilineMinMaxRows.bind({})
+export const MultilineMinMaxRows = InputMultilineMinMaxRows.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-input--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -232,7 +232,7 @@ export const Parts = createPartsTemplate(
   ),
   'Input',
   ['startIcon', 'endIcon']
-).bind({})
+).bind({}) as any
 Parts.args = {
   endIcon: (
     <svg

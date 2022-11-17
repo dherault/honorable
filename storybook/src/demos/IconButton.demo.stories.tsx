@@ -36,7 +36,7 @@ function IconButtonBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = IconButtonBasic.bind({})
+export const Basic = IconButtonBasic.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-iconbutton--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -45,7 +45,7 @@ export const Parts = createPartsTemplate(
   ),
   'IconButton',
   ['children', 'color']
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: (
     <svg

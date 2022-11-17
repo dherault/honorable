@@ -72,19 +72,19 @@ function Template3(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
 }
 
-export const Controlled = Template2.bind({})
+export const Controlled = Template2.bind({}) as any
 Controlled.args = {
 }
 
-export const Disabled = Template3.bind({})
+export const Disabled = Template3.bind({}) as any
 Disabled.args = {
 }
 
-export const Row = Template3.bind({})
+export const Row = Template3.bind({}) as any
 Row.args = {
   row: true,
 }

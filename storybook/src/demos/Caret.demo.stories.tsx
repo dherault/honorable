@@ -21,8 +21,8 @@ function CaretBasicDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = CaretBasicDemo.bind({})
-export const Rotated = CaretBasicDemo.bind({})
+export const Basic = CaretBasicDemo.bind({}) as any
+export const Rotated = CaretBasicDemo.bind({}) as any
 Rotated.args = {
   rotation: -90,
 }
@@ -34,5 +34,5 @@ export const Parts = createPartsTemplate(
   ),
   'Caret',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {}

@@ -40,7 +40,7 @@ function FormBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = FormBasic.bind({})
+export const Basic = FormBasic.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-form--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -58,7 +58,7 @@ export const Parts = createPartsTemplate(
   ),
   'Select',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {
   items,
 }

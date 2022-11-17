@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import React, { A, Menu, MenuItem } from 'honorable'
-
-import createPartsTemplate from '../helpers/createPartsTemplate'
+import { A, Menu, MenuItem } from 'honorable'
 
 export default {
   title: 'Components/Menu',
@@ -82,29 +80,29 @@ function makeItems(items: any[], depth = 1): any[] {
   }))
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   items,
 }
 
-export const SubMenu = Template.bind({})
+export const SubMenu = Template.bind({}) as any
 SubMenu.args = {
   items: makeItems(items, 6),
 }
 
-export const Fade = Template.bind({})
+export const Fade = Template.bind({}) as any
 Fade.args = {
   fade: true,
   items: makeItems(items, 6),
 }
 
-export const Closed = Template.bind({})
+export const Closed = Template.bind({}) as any
 Closed.args = {
   items,
   open: false,
 }
 
-export const ClosedFade = Template2.bind({})
+export const ClosedFade = Template2.bind({}) as any
 ClosedFade.args = {
   items,
   fade: true,

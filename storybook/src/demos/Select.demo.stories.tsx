@@ -73,7 +73,7 @@ function SelectBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = SelectBasic.bind({})
+export const Basic = SelectBasic.bind({}) as any
 
 // START-DEMO
 // @name DefaultOpen
@@ -95,7 +95,7 @@ function SelectDefaultOpen() {
 // END-SOURCE
 // END-DEMO
 
-export const DefaultOpen = SelectDefaultOpen.bind({})
+export const DefaultOpen = SelectDefaultOpen.bind({}) as any
 
 // START-DEMO
 // @name SubMenu
@@ -117,7 +117,7 @@ function SelectSubMenu() {
 // END-SOURCE
 // END-DEMO
 
-export const SubMenu = SelectSubMenu.bind({})
+export const SubMenu = SelectSubMenu.bind({}) as any
 
 // START-DEMO
 // @name Controlled
@@ -161,7 +161,7 @@ function SelectControlled() {
 // END-SOURCE
 // END-DEMO
 
-export const Controlled = SelectControlled.bind({})
+export const Controlled = SelectControlled.bind({}) as any
 
 // START-DEMO
 // @name LongItems
@@ -190,7 +190,7 @@ function SelectLongItems() {
 // END-SOURCE
 // END-DEMO
 
-export const LongItems = SelectLongItems.bind({})
+export const LongItems = SelectLongItems.bind({}) as any
 
 // START-DEMO
 // @name Icons
@@ -241,7 +241,7 @@ function SelectIcons() {
 // END-SOURCE
 // END-DEMO
 
-export const Icons = SelectIcons.bind({})
+export const Icons = SelectIcons.bind({}) as any
 
 // START-DEMO
 // @name RenderSelectedFn
@@ -254,7 +254,13 @@ function SelectRenderSelectedFn() {
     <Select
       value={value}
       onChange={event => setValue(event.target.value)}
-      renderSelected={(value: any) => <>{value} (custom)</>}
+      renderSelected={(value: any) => (
+        <>
+          {value}
+          {' '}
+          (custom)
+        </>
+      )}
     >
       {items.map(renderItem)}
     </Select>
@@ -263,7 +269,7 @@ function SelectRenderSelectedFn() {
 // END-SOURCE
 // END-DEMO
 
-export const RenderSelectedFn = SelectRenderSelectedFn.bind({})
+export const RenderSelectedFn = SelectRenderSelectedFn.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-select--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -274,7 +280,7 @@ export const Parts = createPartsTemplate(
   ),
   'Select',
   ['startIcon', 'endIcon']
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: items.map(renderItem),
   startIcon: (

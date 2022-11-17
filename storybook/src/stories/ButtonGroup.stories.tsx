@@ -16,11 +16,11 @@ function Template(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
 }
 
-export const Column = Template.bind({})
+export const Column = Template.bind({}) as any
 Column.args = {
   direction: 'column',
 }

@@ -38,50 +38,50 @@ function Template2(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   disabled: false,
 }
 
-export const Controlled = Template2.bind({})
+export const Controlled = Template2.bind({}) as any
 Controlled.args = {
   disabled: false,
 }
 
-export const Disabled = Template.bind({})
+export const Disabled = Template.bind({}) as any
 Disabled.args = {
   disabled: true,
   children: 'A Radio',
 }
 
-export const Label = Template.bind({})
+export const Label = Template.bind({}) as any
 Label.args = {
   disabled: false,
   children: 'A Radio',
 }
 
-export const LabelPositionLeft = Template.bind({})
+export const LabelPositionLeft = Template.bind({}) as any
 LabelPositionLeft.args = {
   disabled: false,
   children: 'A Radio',
   labelPosition: 'left',
 }
 
-export const LabelPositionTop = Template.bind({})
+export const LabelPositionTop = Template.bind({}) as any
 LabelPositionTop.args = {
   disabled: false,
   children: 'A Radio',
   labelPosition: 'top',
 }
 
-export const LabelPositionBottom = Template.bind({})
+export const LabelPositionBottom = Template.bind({}) as any
 LabelPositionBottom.args = {
   disabled: false,
   children: 'A Radio',
   labelPosition: 'bottom',
 }
 
-export const LabelSmall = Template.bind({})
+export const LabelSmall = Template.bind({}) as any
 LabelSmall.args = {
   disabled: false,
   children: (

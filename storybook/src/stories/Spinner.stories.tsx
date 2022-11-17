@@ -1,6 +1,4 @@
-import React, { Spinner } from 'honorable'
-
-import createPartsTemplate from '../helpers/createPartsTemplate'
+import { Spinner } from 'honorable'
 
 export default {
   title: 'Components/Spinner',
@@ -13,11 +11,11 @@ function Template(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
 }
 
-export const Large = Template.bind({})
+export const Large = Template.bind({}) as any
 Large.args = {
   size: 64,
 }

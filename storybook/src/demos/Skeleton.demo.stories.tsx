@@ -36,7 +36,7 @@ function SkeletonBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = SkeletonBasic.bind({})
+export const Basic = SkeletonBasic.bind({}) as any
 
 // START-DEMO
 // @name WaveAnimation
@@ -68,7 +68,7 @@ function SkeletonWaveAnimation() {
 // END-SOURCE
 // END-DEMO
 
-export const WaveAnimation = SkeletonWaveAnimation.bind({})
+export const WaveAnimation = SkeletonWaveAnimation.bind({}) as any
 
 // START-DEMO
 // @name NoAmination
@@ -100,7 +100,7 @@ function SkeletonNoAmination() {
 // END-SOURCE
 // END-DEMO
 
-export const NoAmination = SkeletonNoAmination.bind({})
+export const NoAmination = SkeletonNoAmination.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-skeleton--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -109,8 +109,8 @@ export const Parts = createPartsTemplate(
   ),
   'Skeleton',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {
   width: 256,
-  height: 256, 
+  height: 256,
 }

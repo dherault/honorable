@@ -115,6 +115,6 @@ function Node({ useHonorable = false }) {
   return useHonorable ? <Div {...style} /> : <div style={style} />
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
 }

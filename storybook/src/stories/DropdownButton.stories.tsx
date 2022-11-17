@@ -115,52 +115,52 @@ function makeItems(items: any[], depth = 1): any[] {
   }))
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   label: 'Drop it!',
   items,
 }
 
-export const DefaultOpen = Template.bind({})
+export const DefaultOpen = Template.bind({}) as any
 DefaultOpen.args = {
   label: 'Drop it!',
   items,
   defaultOpen: true,
 }
 
-export const SubMenu = Template.bind({})
+export const SubMenu = Template.bind({}) as any
 SubMenu.args = {
   label: 'Drop it!',
   items: makeItems(items, 6),
 }
 
-export const Controlled = Template2.bind({})
+export const Controlled = Template2.bind({}) as any
 Controlled.args = {
   label: 'Drop it!',
   items,
 }
 
-export const Disabled = Template.bind({})
+export const Disabled = Template.bind({}) as any
 Disabled.args = {
   label: 'Drop it!',
   items,
   disabled: true,
 }
 
-export const Extended = Template3.bind({})
+export const Extended = Template3.bind({}) as any
 Extended.args = {
   label: 'Drop it!',
   items,
 }
 
-export const Fade = Template.bind({})
+export const Fade = Template.bind({}) as any
 Fade.args = {
   fade: true,
   label: 'Drop it!',
   items,
 }
 
-export const EndIcon = Template.bind({})
+export const EndIcon = Template.bind({}) as any
 EndIcon.args = {
   label: 'Drop it!',
   items,
@@ -179,7 +179,7 @@ EndIcon.args = {
   ),
 }
 
-export const EventOrder = Template4.bind({})
+export const EventOrder = Template4.bind({}) as any
 EventOrder.args = {
   label: 'Drop it!',
   items,

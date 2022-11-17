@@ -1,6 +1,6 @@
 // Inspired from https://mui.com/material-ui/api/Tooltip/
 import { Children, ReactElement, ReactNode, Ref, cloneElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
-import { arrow as arrowMiddleware, autoUpdate, offset, shift, useFloating } from '@floating-ui/react-dom'
+import { arrow as arrowMiddleware, autoUpdate, offset as offsetMiddleware, shift as shiftMiddleware, useFloating } from '@floating-ui/react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
@@ -31,6 +31,18 @@ export type TooltipBaseProps = {
    * If `arrow`, the  size of the arrow
    */
   arrowSize?: number
+  /**
+   * The distance padding to the window borders
+   */
+  arrowPadding?: number
+  /**
+   * The distance to the child node
+   */
+  offset?: number
+  /**
+   * The distance padding to the window borders
+   */
+  offsetPadding?: number
   /**
    * The states the Tooltip should be displayed with
    */
@@ -83,6 +95,9 @@ export const TooltipPropTypes = {
   label: PropTypes.node,
   arrow: PropTypes.bool,
   arrowSize: PropTypes.number,
+  arrowPadding: PropTypes.number,
+  offset: PropTypes.number,
+  offsetPadding: PropTypes.number,
   displayOn: PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'click'])),
   transitionDuration: PropTypes.number,
   enterDelay: PropTypes.number,
@@ -113,6 +128,9 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     label = '',
     arrow = false,
     arrowSize = 8,
+    arrowPadding = 8,
+    offset = 8,
+    offsetPadding = 8,
     displayOn = ['hover', 'focus', 'click'],
     transitionDuration = 150,
     enterDelay,
@@ -126,12 +144,13 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   const theme = useTheme()
   const rootStyles = useRootStyles('Tooltip', props, theme)
 
+  console.log('offset', offset)
   const arrowRef = useRef()
   const childRef = useRef<HTMLElement>()
-  const middleware = [offset(8), shift({ padding: 8 })]
+  const middleware = [offsetMiddleware(offset), shiftMiddleware({ padding: offsetPadding })]
 
   if (arrow) {
-    middleware.push(arrowMiddleware({ element: arrowRef, padding: 8 }))
+    middleware.push(arrowMiddleware({ element: arrowRef, padding: arrowPadding }))
   }
 
   const {

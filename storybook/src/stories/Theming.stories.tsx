@@ -66,10 +66,10 @@ function Template2() {
   )
 }
 
-export const Theming1 = Template1.bind({})
+export const Theming1 = Template1.bind({}) as any
 Theming1.args = {
 }
 
-export const Theming2 = Template2.bind({})
+export const Theming2 = Template2.bind({}) as any
 Theming2.args = {
 }

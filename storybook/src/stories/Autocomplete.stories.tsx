@@ -139,39 +139,39 @@ const top100Films = [
 
 const top100FilmsObject = top100Films.map(title => ({ value: title, label: title }))
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   options: top100Films,
   disabled: false,
 }
 
-export const ObjectOptions = Template.bind({})
+export const ObjectOptions = Template.bind({}) as any
 ObjectOptions.args = {
   options: top100FilmsObject,
   disabled: false,
 }
 
-export const DefaultValue = Template.bind({})
+export const DefaultValue = Template.bind({}) as any
 DefaultValue.args = {
   defaultValue: 'Text me if you can',
   options: top100Films,
   disabled: false,
 }
 
-export const Controlled = TemplateControlled.bind({})
+export const Controlled = TemplateControlled.bind({}) as any
 Controlled.args = {
   options: top100Films,
   disabled: false,
 }
 
-export const AutoFocus = Template.bind({})
+export const AutoFocus = Template.bind({}) as any
 AutoFocus.args = {
   options: top100Films,
   disabled: false,
   autoFocus: true,
 }
 
-export const StartIcon = Template.bind({})
+export const StartIcon = Template.bind({}) as any
 StartIcon.args = {
   options: top100Films,
   disabled: false,
@@ -192,7 +192,7 @@ StartIcon.args = {
   ),
 }
 
-export const EndIcon = Template.bind({})
+export const EndIcon = Template.bind({}) as any
 EndIcon.args = {
   options: top100Films,
   disabled: false,
@@ -213,26 +213,26 @@ EndIcon.args = {
   ),
 }
 
-export const Disabled = Template.bind({})
+export const Disabled = Template.bind({}) as any
 Disabled.args = {
   disabled: true,
 }
 
-export const Multiline = Template.bind({})
+export const Multiline = Template.bind({}) as any
 Multiline.args = {
   multiline: true,
   options: top100Films,
   disabled: false,
 }
 
-export const MultilineControlled = TemplateControlled.bind({})
+export const MultilineControlled = TemplateControlled.bind({}) as any
 MultilineControlled.args = {
   multiline: true,
   options: top100Films,
   disabled: false,
 }
 
-export const AutoHighlight = Template.bind({})
+export const AutoHighlight = Template.bind({}) as any
 AutoHighlight.args = {
   autoHighlight: true,
   options: top100Films,

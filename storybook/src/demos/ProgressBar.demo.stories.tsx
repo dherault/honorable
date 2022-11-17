@@ -34,7 +34,7 @@ function ProgressBarBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = ProgressBarBasic.bind({})
+export const Basic = ProgressBarBasic.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -46,5 +46,5 @@ export const Parts = createPartsTemplate(
   ),
   'ProgressBar',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {}

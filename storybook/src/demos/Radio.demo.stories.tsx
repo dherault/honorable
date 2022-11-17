@@ -27,7 +27,7 @@ function RadioBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = RadioBasic.bind({})
+export const Basic = RadioBasic.bind({}) as any
 
 // START-DEMO
 // @name Controlled
@@ -55,7 +55,7 @@ function RadioControlled() {
 // END-SOURCE
 // END-DEMO
 
-export const Controlled = RadioControlled.bind({})
+export const Controlled = RadioControlled.bind({}) as any
 
 // START-DEMO
 // @name Label
@@ -91,7 +91,7 @@ function RadioLabel() {
 // END-SOURCE
 // END-DEMO
 
-export const Label = RadioLabel.bind({})
+export const Label = RadioLabel.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-radio--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -102,7 +102,7 @@ export const Parts = createPartsTemplate(
   ),
   'Radio',
   ['Children']
-).bind({})
+).bind({}) as any
 Parts.args = {
-  children: 'A Radio', 
+  children: 'A Radio',
 }

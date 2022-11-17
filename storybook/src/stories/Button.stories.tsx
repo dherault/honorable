@@ -15,14 +15,14 @@ function Template(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   children: 'Button',
   disabled: false,
   loading: false,
 }
 
-export const Width100 = Template.bind({})
+export const Width100 = Template.bind({}) as any
 Width100.args = {
   children: 'Button',
   width: '100%',
@@ -30,7 +30,7 @@ Width100.args = {
   loading: false,
 }
 
-export const StartIcon = Template.bind({})
+export const StartIcon = Template.bind({}) as any
 StartIcon.args = {
   children: 'Button',
   disabled: false,
@@ -52,7 +52,7 @@ StartIcon.args = {
   ),
 }
 
-export const StartIcon2 = Template.bind({})
+export const StartIcon2 = Template.bind({}) as any
 StartIcon2.args = {
   children: 'Button',
   disabled: false,
@@ -74,7 +74,7 @@ StartIcon2.args = {
   ),
 }
 
-export const EndIcon = Template.bind({})
+export const EndIcon = Template.bind({}) as any
 EndIcon.args = {
   children: 'Button',
   disabled: false,
@@ -96,7 +96,7 @@ EndIcon.args = {
   ),
 }
 
-export const EndIcon2 = Template.bind({})
+export const EndIcon2 = Template.bind({}) as any
 EndIcon2.args = {
   children: 'Button',
   disabled: false,
@@ -118,14 +118,14 @@ EndIcon2.args = {
   ),
 }
 
-export const Loading = Template.bind({})
+export const Loading = Template.bind({}) as any
 Loading.args = {
   children: 'Button',
   loading: true,
   disabled: false,
 }
 
-export const Loading100 = Template.bind({})
+export const Loading100 = Template.bind({}) as any
 Loading100.args = {
   children: 'Button',
   loading: true,
@@ -133,7 +133,7 @@ Loading100.args = {
   width: '100%',
 }
 
-export const LoadingIndicator = Template.bind({})
+export const LoadingIndicator = Template.bind({}) as any
 LoadingIndicator.args = {
   children: 'Button',
   loading: true,
@@ -141,7 +141,7 @@ LoadingIndicator.args = {
   loadingIndicator: 'Loading...',
 }
 
-export const LoadingWonky = Template.bind({})
+export const LoadingWonky = Template.bind({}) as any
 LoadingWonky.args = {
   children: 'x',
   loading: true,
@@ -149,7 +149,7 @@ LoadingWonky.args = {
   loadingIndicator: 'Loading...',
 }
 
-export const ChildIcon = Template.bind({})
+export const ChildIcon = Template.bind({}) as any
 ChildIcon.args = {
   children: (
     <svg
@@ -189,7 +189,7 @@ export const Parts = createPartsTemplate(
     'Children',
     'EndIcon',
   ],
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: 'Button',
   startIcon: (

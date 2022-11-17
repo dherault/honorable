@@ -29,7 +29,7 @@ function ButtonBasicDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = ButtonBasicDemo.bind({})
+export const Basic = ButtonBasicDemo.bind({}) as any
 
 // START-DEMO
 // @name StartIcon
@@ -84,7 +84,7 @@ function ButtonStartIconDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const StartIcon = ButtonStartIconDemo.bind({})
+export const StartIcon = ButtonStartIconDemo.bind({}) as any
 
 // START-DEMO
 // @name EndIcon
@@ -139,7 +139,7 @@ function ButtonEndIconDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const EndIcon = ButtonEndIconDemo.bind({})
+export const EndIcon = ButtonEndIconDemo.bind({}) as any
 
 // START-DEMO
 // @name Loading
@@ -182,7 +182,7 @@ function ButtonLoadingDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Loading = ButtonLoadingDemo.bind({})
+export const Loading = ButtonLoadingDemo.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-button--parts&viewMode=story
 export const Parts = createPartsTemplate(
@@ -198,7 +198,7 @@ export const Parts = createPartsTemplate(
   ),
   'Button',
   ['StartIcon', 'LoadingIndicator', 'Spinner', 'Children', 'EndIcon']
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: 'Button',
   startIcon: (

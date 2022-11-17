@@ -24,14 +24,14 @@ function CardBasic() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = CardBasic.bind({})
+export const Basic = CardBasic.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-card--parts&viewMode=story
 export const Parts = createPartsTemplate(
   (args: any) => <Card {...args} />,
   'Card',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {
   width: 256,
   height: 256,

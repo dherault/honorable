@@ -12,11 +12,11 @@ function Template(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
 }
 
-export const Rotation = Template.bind({})
+export const Rotation = Template.bind({}) as any
 Rotation.args = {
   rotation: -90,
 }

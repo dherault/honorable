@@ -62,10 +62,10 @@ function AvatarDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = AvatarDemo.bind({})
+export const Basic = AvatarDemo.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-avatar--parts&viewMode=story
-export const Parts = createPartsTemplate(Avatar, 'Avatar', []).bind({})
+export const Parts = createPartsTemplate(Avatar, 'Avatar', []).bind({}) as any
 Parts.args = {
   name: 'Jane Smith',
 }

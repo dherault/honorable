@@ -27,7 +27,7 @@ function CheckboxBasicDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Basic = CheckboxBasicDemo.bind({})
+export const Basic = CheckboxBasicDemo.bind({}) as any
 
 // START-DEMO
 // @name Controlled
@@ -55,7 +55,7 @@ function CheckboxControlledDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Controlled = CheckboxControlledDemo.bind({})
+export const Controlled = CheckboxControlledDemo.bind({}) as any
 
 // START-DEMO
 // @name Label
@@ -98,7 +98,7 @@ function CheckboxLabelDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Label = CheckboxLabelDemo.bind({})
+export const Label = CheckboxLabelDemo.bind({}) as any
 
 // START-DEMO
 // @name Multiple
@@ -113,7 +113,6 @@ function CheckboxMultipleDemo() {
         <Checkbox>A checkbox</Checkbox>
         <Checkbox>A checkbox</Checkbox>
       </Div>
-
       <Div mt={0.5}>
         <Checkbox>
           <P fontSize="0.5rem">A checkbox</P>
@@ -134,14 +133,14 @@ function CheckboxMultipleDemo() {
 // END-SOURCE
 // END-DEMO
 
-export const Multiple = CheckboxMultipleDemo.bind({})
+export const Multiple = CheckboxMultipleDemo.bind({}) as any
 
 // @parts https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--parts&viewMode=story
 export const Parts = createPartsTemplate(
   (args: any) => <Checkbox {...args} />,
   'Checkbox',
   ['Children']
-).bind({})
+).bind({}) as any
 Parts.args = {
   children: <P fontSize="0.5rem">A small checkbox</P>,
 }

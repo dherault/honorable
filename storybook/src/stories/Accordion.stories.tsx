@@ -28,7 +28,7 @@ function AccordionUncontrolled() {
 }
 // END-DEMO
 
-export const DemoUncontrolled = AccordionUncontrolled.bind({})
+export const DemoUncontrolled = AccordionUncontrolled.bind({}) as any
 DemoUncontrolled.args = {
 }
 
@@ -99,14 +99,14 @@ function TemplateControlled(args: any) {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = Template.bind({}) as any
 Default.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
   disabled: false,
 }
 
-export const ExpandIcon = Template.bind({})
+export const ExpandIcon = Template.bind({}) as any
 ExpandIcon.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -129,27 +129,27 @@ ExpandIcon.args = {
   ),
 }
 
-export const Solo = TemplateSolo.bind({})
+export const Solo = TemplateSolo.bind({}) as any
 Solo.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
   disabled: false,
 }
 
-export const Responsive = TemplateResponsive.bind({})
+export const Responsive = TemplateResponsive.bind({}) as any
 Responsive.args = {
   title: 'An Accordion',
   disabled: false,
 }
 
-export const Controlled = TemplateControlled.bind({})
+export const Controlled = TemplateControlled.bind({}) as any
 Controlled.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
   disabled: false,
 }
 
-export const DefaultExpanded = TemplateSolo.bind({})
+export const DefaultExpanded = TemplateSolo.bind({}) as any
 DefaultExpanded.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -157,7 +157,7 @@ DefaultExpanded.args = {
   defaultExpanded: true,
 }
 
-export const WithCheckboxes = Template.bind({})
+export const WithCheckboxes = Template.bind({}) as any
 WithCheckboxes.args = {
   title: 'An Accordion',
   children: (
