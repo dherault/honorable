@@ -235,6 +235,18 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     }, leaveDelay)
   }, [displayOn, uncontrolledOpen, leaveDelay, onOpen])
 
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    if (!childRef.current) return
+    if (!uncontrolledOpen) return
+
+    const { offsetTop, offsetLeft } = childRef.current
+    const { width, height } = childRef.current.getBoundingClientRect()
+
+    if (!(event.pageX >= offsetLeft && event.pageX <= offsetLeft + width && event.pageY >= offsetTop && event.pageY <= offsetTop + height)) {
+      setUncontrolledOpen(false)
+    }
+  }, [uncontrolledOpen])
+
   useOutsideClick(childRef, handleOutsideClick)
 
   useEffect(() => {
@@ -256,6 +268,16 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
       current.removeEventListener('blur', handleBlur)
     }
   }, [handleMouseEnter, handleMouseLeave, handleClick, handleFocus, handleBlur])
+
+  useEffect(() => {
+    if (!childRef.current) return
+
+    window.addEventListener('mousemove', handleMouseMove)
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [handleMouseMove])
 
   function wrapFade(element: ReactElement) {
     const positionStyles = {
