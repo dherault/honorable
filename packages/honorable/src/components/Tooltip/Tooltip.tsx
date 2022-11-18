@@ -144,7 +144,6 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   const theme = useTheme()
   const rootStyles = useRootStyles('Tooltip', props, theme)
 
-  console.log('offset', offset)
   const arrowRef = useRef()
   const childRef = useRef<HTMLElement>()
   const middleware = [offsetMiddleware(offset), shiftMiddleware({ padding: offsetPadding })]
