@@ -4,7 +4,7 @@ import { A, Button, Div, ExtendTheme, Modal, P } from 'honorable'
 
 export default {
   title: 'Components/Modal',
-  component: Modal,
+  component: Div, // Weird sb bug
 }
 
 function Template(args: any) {
@@ -19,9 +19,9 @@ function Template(args: any) {
         Open
       </A>
       <Modal
+        {...args}
         open={open}
         onClose={() => setOpen(false)}
-        {...args}
       >
         Content
       </Modal>
@@ -29,7 +29,7 @@ function Template(args: any) {
   )
 }
 
-const transitionDuration = 333
+const transitionDuration = 1000
 const extendedTheme = {
   Modal: {
     InnerDefaultStyle: [
@@ -60,10 +60,10 @@ function Template2(args: any) {
         Open
       </A>
       <Modal
+        {...args}
         open={open}
         onClose={() => setOpen(false)}
         transitionDuration={transitionDuration}
-        {...args}
       >
         Content
       </Modal>
@@ -83,8 +83,8 @@ function Template3(args: any) {
         Open
       </A>
       <Modal
-        open={open}
         {...args}
+        open={open}
       >
         Content
       </Modal>
@@ -112,9 +112,9 @@ function Template4(args: any) {
         {value ?? 'null'}
       </P>
       <Modal
+        {...args}
         open={!!value}
         onClose={() => setValue(null)}
-        {...args}
       >
         {value}
         <Div mt={2}>
@@ -139,9 +139,9 @@ function Template5(args: any) {
         Open
       </A>
       <Modal
+        {...args}
         open={open}
         onClose={() => setOpen(false)}
-        {...args}
       >
         Content
         {' '}
@@ -305,9 +305,9 @@ function Template7(args: any) {
         Open
       </A>
       <Modal
+        {...args}
         open={open}
         onClose={() => setOpen(false)}
-        {...args}
       >
         <Button onClick={() => setOpen(false)}>Close</Button>
       </Modal>
@@ -340,9 +340,10 @@ NoFade.args = {
   fade: false,
 }
 
-export const Open = Template.bind({}) as any
+export const Open = Template6.bind({}) as any
 Open.args = {
   open: true,
+  onClose: null, // Weird sb bug
 }
 
 export const Extended = Template2.bind({}) as any
@@ -356,6 +357,7 @@ NoOnClose.args = {
 export const OpenNoOnClose = Template3.bind({}) as any
 OpenNoOnClose.args = {
   open: true,
+  onClose: null, // Weird sb bug
 }
 
 export const DisableEscapeKey = Template.bind({}) as any

@@ -182,6 +182,85 @@ function Template4() {
   )
 }
 
+function Template4Bis() {
+  const nodes: any[] = []
+
+  for (let i = 0; i < 4; i++) {
+    nodes.push(
+      <Flex
+        key={i}
+        p={2}
+        mt={2}
+        align="center"
+        justify="center"
+        minWidth={32}
+        minHeight={32}
+        backgroundColor="background-light"
+        userSelect="none"
+      >
+        Hover me!
+      </Flex>
+    )
+  }
+
+  const divNodes: any[] = []
+
+  for (let i = 0; i < 4; i++) {
+    divNodes.push(
+      <Div
+        maxHeight={128}
+        overflowY="scroll"
+        backgroundColor="lightskyblue"
+        p={1}
+        mt={2}
+      >
+        {nodes}
+      </Div>
+    )
+  }
+
+  return (
+    <>
+      <Div
+        maxHeight={512}
+        overflowY="scroll"
+        backgroundColor="red"
+        p={1}
+        mt={2}
+      >
+        {divNodes}
+      </Div>
+      <Div
+        maxHeight={512}
+        overflowY="scroll"
+        backgroundColor="red"
+        p={1}
+        mt={2}
+      >
+        {divNodes}
+      </Div>
+      <Div
+        maxHeight={512}
+        overflowY="scroll"
+        backgroundColor="red"
+        p={1}
+        mt={2}
+      >
+        {divNodes}
+      </Div>
+      <Div
+        maxHeight={512}
+        overflowY="scroll"
+        backgroundColor="red"
+        p={1}
+        mt={2}
+      >
+        {divNodes}
+      </Div>
+    </>
+  )
+}
+
 function Template5() {
   return (
     <Div
@@ -252,6 +331,10 @@ Padding.args = {
 
 export const Scrolling = Template4.bind({}) as any
 Scrolling.args = {
+}
+
+export const ScrollingPerformanceDiff = Template4Bis.bind({}) as any
+ScrollingPerformanceDiff.args = {
 }
 
 export const PositionAbsolute = Template5.bind({}) as any

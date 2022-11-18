@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-import { A, Flex, Menu, MenuItem, Select } from 'honorable'
+import { A, Div, Flex, Menu, MenuItem, Select } from 'honorable'
 
 export default {
   title: 'Components/Select',
-  component: Select,
+  component: Div,
 }
 
 const items = [

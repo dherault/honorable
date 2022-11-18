@@ -4,7 +4,7 @@ import { A, Div, DropdownButton, ExtendTheme, Flex, Menu, MenuItem } from 'honor
 
 export default {
   title: 'Components/DropdownButton',
-  component: DropdownButton,
+  component: Div,
 }
 
 const items = [
