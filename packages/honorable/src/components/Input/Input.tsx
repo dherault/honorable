@@ -174,7 +174,6 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onChange={handleChange}
           placeholder={placeholder}
           width="100%"
-          {...inputProps}
           onFocus={event => {
             if (typeof onFocus === 'function') onFocus(event)
           }}
@@ -188,6 +187,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           onKeyUp={onKeyUp}
           {...resolvePartStyles('Input.InputBase', workingProps, theme)}
           flexGrow={1}
+          {...inputProps}
         />
       )}
       {multiline && (
@@ -215,6 +215,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
             width: '100%',
             ...resolvePartStyles('Input.TextArea', workingProps, theme),
           }}
+          {...inputProps}
         />
       )}
       {!!endIcon && (
