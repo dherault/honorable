@@ -447,7 +447,7 @@ const theme = {
         minHeight: 38,
         paddingLeft: 8,
         paddingRight: 8,
-        color: 'text',
+        color: 'inherit',
         border: '1px solid border',
         borderRadius: 4,
       },
@@ -477,7 +477,7 @@ const theme = {
     ],
     TextArea: [
       {
-        color: 'text',
+        color: 'inherit',
         paddingTop: 8,
         paddingBottom: 8,
         paddingLeft: 0,
