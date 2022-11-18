@@ -239,8 +239,9 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     if (!childRef.current) return
     if (!uncontrolledOpen) return
 
-    const { offsetTop, offsetLeft } = childRef.current
-    const { width, height } = childRef.current.getBoundingClientRect()
+    const { width, height, left, top } = childRef.current.getBoundingClientRect()
+    const offsetTop = window.scrollY + top
+    const offsetLeft = window.scrollX + left
 
     if (!(event.pageX >= offsetLeft && event.pageX <= offsetLeft + width && event.pageY >= offsetTop && event.pageY <= offsetTop + height)) {
       setUncontrolledOpen(false)
