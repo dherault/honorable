@@ -86,7 +86,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
   const viewportWidthBase = monthSpan * monthWidth
   const viewportWidth = viewportWidthBase + (monthSpan - 1) * monthMargin
 
-  console.log('goal', transitionGoal)
+  // console.log('goal', transitionGoal)
   // console.log('goal -> current', transitionGoal, transitionDirection)
 
   useEffect(() => {
