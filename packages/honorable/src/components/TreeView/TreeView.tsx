@@ -1,9 +1,10 @@
-import { MouseEvent, ReactNode, Ref, forwardRef, useCallback, useRef, useState } from 'react'
+import { ReactNode, Ref, forwardRef, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useTheme from '../../hooks/useTheme'
-import useForkedRef from '../../hooks/useForkedRef'
 import useRootStyles from '../../hooks/useRootStyles'
+
+import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import { Div, DivProps } from '../tags'
 
@@ -35,37 +36,35 @@ export const treeViewPropTypes = {
   onClick: PropTypes.func,
 }
 
-function TreeViewRef({ expanded, defaultExpanded = false, label = null, onClick, onExpand, children, ...props }: TreeViewProps, ref: Ref<any>) {
+function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand, children, ...props }: TreeViewProps, ref: Ref<any>) {
   const theme = useTheme()
-  const rootRef = useRef<HTMLDivElement>(null)
-  const forkedRef = useForkedRef(ref, rootRef)
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded)
   const actualExpanded = expanded ?? uncontrolledExpanded
-  const rootStyles = useRootStyles('TreeView', { ...props, defaultExpanded, label, expanded: actualExpanded }, theme)
+  const workingProps = { ...props, defaultExpanded, label, expanded: actualExpanded }
+  const rootStyles = useRootStyles('TreeView', workingProps, theme)
 
-  const handleClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
-    if (typeof onClick === 'function') onClick(event)
-
-    if (!rootRef.current) return
-    if (event.target !== rootRef.current) return
-
+  const handleClick = useCallback(() => {
     setUncontrolledExpanded(!actualExpanded)
 
     if (typeof onExpand === 'function') onExpand(!actualExpanded)
-  }, [onClick, onExpand, actualExpanded])
+  }, [onExpand, actualExpanded])
 
   return (
     <Div
-      ref={forkedRef}
+      ref={ref}
       display="flex"
       flexDirection="column"
       position="relative"
       width="100%"
       {...rootStyles}
       {...props}
-      onClick={handleClick}
     >
-      {label}
+      <Div
+        onClick={handleClick}
+        {...resolvePartStyles('TreeView.Label', workingProps, theme)}
+      >
+        {label}
+      </Div>
       <Div
         flexShrink={1}
         position="relative"
@@ -73,6 +72,7 @@ function TreeViewRef({ expanded, defaultExpanded = false, label = null, onClick,
         height={actualExpanded ? 'fit-content' : 0}
         transition="height 250ms ease"
         overflowY="hidden"
+        {...resolvePartStyles('TreeView.Children', workingProps, theme)}
       >
         {children}
       </Div>

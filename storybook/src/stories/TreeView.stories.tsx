@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, TreeView } from 'honorable'
+import { Button, Div, TreeView } from 'honorable'
 
 export default {
   title: 'Components/TreeView',
@@ -27,7 +27,6 @@ function createItems(items, maxDepth, depth = 0) {
 createItems(items, 3)
 
 function Template() {
-
   function renderTreeView(items: any[]) {
     return items.map(item => (
       <TreeView
@@ -78,8 +77,30 @@ function Template2() {
   )
 }
 
+function Template3() {
+  function renderTreeView(items: any[]) {
+    return items.map(item => (
+      <TreeView
+        key={item.id}
+        label={<Div color="lightskyblue">{item.label}</Div>}
+      >
+        {item.children.length > 0 && renderTreeView(item.children)}
+      </TreeView>
+    ))
+  }
+
+  return (
+    <TreeView label="Hierarchy">
+      {renderTreeView(items)}
+    </TreeView>
+  )
+}
+
 export const Default = Template.bind({}) as any
 Default.args = {}
 
 export const Controlled = Template2.bind({}) as any
 Controlled.args = {}
+
+export const LabelNode = Template3.bind({}) as any
+LabelNode.args = {}
