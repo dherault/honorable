@@ -64,6 +64,8 @@ export * from './components/Text/Text'
 
 export * from './components/Tooltip/Tooltip'
 
+export * from './components/TreeView/TreeView'
+
 // Hooks
 export { default as useTheme } from './hooks/useTheme'
 
