@@ -4,13 +4,8 @@ function useOutsideClick(ref: RefObject<HTMLElement>, handler: (event: MouseEven
   const [firstFire, setFirstFire] = useState(true)
 
   useEffect(() => {
-    console.log('effect')
-
     function handleClick(event: MouseEvent | TouchEvent) {
-      console.log('click', ref.current)
-
       if (!ref.current && preventFirstFire && !firstFire) {
-        console.log('reset')
         setFirstFire(true)
 
         return
@@ -19,7 +14,6 @@ function useOutsideClick(ref: RefObject<HTMLElement>, handler: (event: MouseEven
       if (!ref.current || ref.current.contains(event.target as Node)) return
 
       if (firstFire && preventFirstFire) {
-        console.log('prevented')
         setFirstFire(false)
 
         return
