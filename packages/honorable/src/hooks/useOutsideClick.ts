@@ -1,37 +1,31 @@
-import { RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { RefObject, useEffect, useState } from 'react'
 
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
-
-function useOutsideClick(ref: RefObject<HTMLElement>, handler: (event: MouseEvent) => void, preventFirstFire = false) {
-  const savedHandler = useRef(handler)
-  const savedElement = useRef(ref.current)
+function useOutsideClick(ref: RefObject<HTMLElement>, handler: (event: MouseEvent | TouchEvent) => void, preventFirstFire = false) {
   const [firstFire, setFirstFire] = useState(true)
 
-  useIsomorphicLayoutEffect(() => {
-    savedHandler.current = handler
-  }, [handler])
-
-  useIsomorphicLayoutEffect(() => {
-    savedElement.current = ref.current
-  }, [ref.current])
-
   useEffect(() => {
-    if (!savedElement) return // Somehow this is important, not savedElement.current
+    console.log('effect')
 
-    function handleClick(event: MouseEvent) {
-      if (!savedElement.current && preventFirstFire && !firstFire) {
+    function handleClick(event: MouseEvent | TouchEvent) {
+      console.log('click', ref.current)
+
+      if (!ref.current && preventFirstFire && !firstFire) {
+        console.log('reset')
         setFirstFire(true)
 
         return
       }
-      if (!savedElement.current || savedElement.current.contains(event.target as Node)) return
+
+      if (!ref.current || ref.current.contains(event.target as Node)) return
+
       if (firstFire && preventFirstFire) {
+        console.log('prevented')
         setFirstFire(false)
 
         return
       }
 
-      savedHandler.current(event)
+      handler(event)
     }
 
     document.addEventListener('click', handleClick)
@@ -41,7 +35,7 @@ function useOutsideClick(ref: RefObject<HTMLElement>, handler: (event: MouseEven
       document.removeEventListener('click', handleClick)
       document.removeEventListener('touchstart', handleClick)
     }
-  }, [savedElement, firstFire, preventFirstFire])
+  }, [ref, firstFire, preventFirstFire, handler])
 }
 
 export default useOutsideClick

@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 
-import { Button, Div, useOutsideClick } from 'honorable'
+import { Button, Div, WithOutsideClick, useOutsideClick } from 'honorable'
 
 export default {
   title: 'Hooks/useOutsideClick',
@@ -102,6 +102,46 @@ function Template() {
   )
 }
 
+function Template2() {
+  const [visible, setVisible] = useState(false)
+
+  const handle = useCallback(() => {
+    console.log('handle')
+    setVisible(false)
+  }, [])
+
+  return (
+    <>
+      <Div
+        display="flex"
+        gap="16px"
+        mt={2}
+      >
+        {visible && (
+          <WithOutsideClick
+            preventFirstFire
+            onOutsideClick={handle}
+          >
+            <Div
+              {...divProps}
+            />
+          </WithOutsideClick>
+        )}
+      </Div>
+      <Button
+        mt={2}
+        onClick={() => setVisible(x => !x)}
+      >
+        Toggle div 1
+      </Button>
+    </>
+  )
+}
+
 export const UseCases = Template.bind({}) as any
 UseCases.args = {
+}
+
+export const UseCases2 = Template2.bind({}) as any
+UseCases2.args = {
 }
