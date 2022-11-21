@@ -59,8 +59,7 @@ function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand
       ref={ref}
       display="flex"
       flexDirection="column"
-      position="relative"
-      width="100%"
+      width="fit-content"
       {...rootStyles}
       {...props}
     >
@@ -72,10 +71,8 @@ function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand
       </Div>
       <Div
         flexShrink={1}
-        position="relative"
-        left={childrenOffset}
+        paddingLeft={childrenOffset}
         height={actualExpanded ? 'fit-content' : 0}
-        transition="height 250ms ease"
         overflowY="hidden"
         {...resolvePartStyles('TreeView.Children', workingProps, theme)}
       >
