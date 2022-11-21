@@ -25,6 +25,10 @@ export type TreeViewBaseProps = {
    * The expand callback
    */
   onExpand?: (expanded: boolean) => void
+  /**
+   * The offset of the children
+   */
+  childrenOffset?: number | string
 }
 
 export type TreeViewProps = Omit<DivProps, 'onClick'> & TreeViewBaseProps
@@ -34,13 +38,14 @@ export const treeViewPropTypes = {
   defaultExpanded: PropTypes.bool,
   label: PropTypes.node,
   onClick: PropTypes.func,
+  childrenOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
-function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand, children, ...props }: TreeViewProps, ref: Ref<any>) {
+function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand, childrenOffset = 16, children, ...props }: TreeViewProps, ref: Ref<any>) {
   const theme = useTheme()
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded)
   const actualExpanded = expanded ?? uncontrolledExpanded
-  const workingProps = { ...props, defaultExpanded, label, expanded: actualExpanded }
+  const workingProps = { ...props, defaultExpanded, label, childrenOffset, expanded: actualExpanded }
   const rootStyles = useRootStyles('TreeView', workingProps, theme)
 
   const handleClick = useCallback(() => {
@@ -68,7 +73,7 @@ function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand
       <Div
         flexShrink={1}
         position="relative"
-        left={16}
+        left={childrenOffset}
         height={actualExpanded ? 'fit-content' : 0}
         transition="height 250ms ease"
         overflowY="hidden"

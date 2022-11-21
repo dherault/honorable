@@ -31,6 +31,7 @@ export type PseudoSelectorProps = {
 }
 
 export type StylesProperties = typeof stylesProperties[number]
+
 export type StylesProps = AnyProps & CssProps & PseudoSelectorProps & {
   [stylesKey in StylesProperties]?: any
 }
@@ -46,16 +47,19 @@ export type StyledTagHonorableProps = {
 export type Mode = 'light' | 'dark' | string
 
 export type ColorKey = string
+
 export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
 export type StylesArrayFunction = (props: object, theme: HonorableTheme) => StylesProps
+
 export type StylesArray = (StylesProps | StylesArrayFunction)[]
 
 export type PartProps = {
   [partName: string]: StylesArray | PartProps
 }
+
 export type ComponentProps = PartProps & {
   Root?: StylesArray
 }
@@ -227,6 +231,7 @@ export type HonorableTheme = {
   Switch?: ComponentProps
   Text?: ComponentProps
   Tooltip?: ComponentProps
+  TreeView?: ComponentProps
 }
 
 export type TargetWithValue<T> = T & {

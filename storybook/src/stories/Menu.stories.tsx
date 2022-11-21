@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { A, Menu, MenuItem } from 'honorable'
+import { A, Menu, MenuItem, Modal } from 'honorable'
 
 export default {
   title: 'Components/Menu',
@@ -12,6 +12,34 @@ const items = [
   { text: 'Lovers', value: 'Lovers' },
   { text: 'And', value: 'And' },
 ]
+
+function MenuItem0() {
+  return (
+    <MenuItem value="0">
+      Item 0
+    </MenuItem>
+  )
+}
+
+function Template0() {
+  return (
+    <Menu>
+      <MenuItem0 />
+      <MenuItem value="1">
+        Item 1
+      </MenuItem>
+      <MenuItem value="2">
+        Item 2
+      </MenuItem>
+      <MenuItem value="3">
+        Item 3
+      </MenuItem>
+      <Modal open={false}>
+        Foo
+      </Modal>
+    </Menu>
+  )
+}
 
 function Template({ items, ...args }: any) {
   function renderItem({ text, value, items }: any) {
@@ -107,3 +135,6 @@ ClosedFade.args = {
   items,
   fade: true,
 }
+
+export const StrangerMenuItem = Template0.bind({}) as any
+StrangerMenuItem.args = {}
