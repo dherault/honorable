@@ -460,6 +460,9 @@ const theme = {
       },
     ],
     InputBase: [
+      {
+        paddingTop: 2,
+      },
       ({ disabled }: any) => disabled && {
         cursor: 'not-allowed',
         backgroundColor: 'background-light',
@@ -467,11 +470,13 @@ const theme = {
     ],
     StartIcon: [
       {
+        paddingTop: 8,
         paddingRight: 8,
       },
     ],
     EndIcon: [
       {
+        paddingTop: 8,
         paddingLeft: 8,
       },
     ],

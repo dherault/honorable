@@ -152,6 +152,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       ref={ref}
       display="inline-flex"
       justifyContent="flex-start"
+      alignItems="flex-start"
       {...rootStyles}
       {...otherProps}
     >
@@ -160,6 +161,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          flexShrink={0}
           {...resolvePartStyles('Input.StartIcon', workingProps, theme)}
         >
           {startIcon}
@@ -173,7 +175,9 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           value={actualValue}
           onChange={handleChange}
           placeholder={placeholder}
-          width="100%"
+          flexGrow={1}
+          flexShrink={1}
+          minWidth={0} // https://stackoverflow.com/questions/42421361/input-button-elements-not-shrinking-in-a-flex-container
           onFocus={event => {
             if (typeof onFocus === 'function') onFocus(event)
           }}
@@ -186,7 +190,6 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           }}
           onKeyUp={onKeyUp}
           {...resolvePartStyles('Input.InputBase', workingProps, theme)}
-          flexGrow={1}
           {...inputProps}
         />
       )}
@@ -212,7 +215,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           maxRows={maxRows}
           style={{
             flexGrow: 1,
-            width: '100%',
+            flexShrink: 1,
+            minWidth: 0,
             ...resolvePartStyles('Input.TextArea', workingProps, theme),
           }}
           {...inputProps}
@@ -223,6 +227,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          flexShrink={0}
           {...resolvePartStyles('Input.EndIcon', workingProps, theme)}
         >
           {endIcon}

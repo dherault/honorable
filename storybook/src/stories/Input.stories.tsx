@@ -88,7 +88,7 @@ StartIcon.args = {
   disabled: false,
   startIcon: (
     <svg
-      width={16}
+      width={18}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -103,12 +103,18 @@ StartIcon.args = {
   ),
 }
 
+export const StartIconLarge = Template.bind({}) as any
+StartIconLarge.args = {
+  disabled: false,
+  startIcon: 'npm install --save',
+}
+
 export const EndIcon = Template.bind({}) as any
 EndIcon.args = {
   disabled: false,
   endIcon: (
     <svg
-      width={16}
+      width={18}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +184,7 @@ MultilineStartIcon.args = {
   disabled: false,
   startIcon: (
     <svg
-      width={16}
+      width={18}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -193,13 +199,20 @@ MultilineStartIcon.args = {
   ),
 }
 
+export const MultilineStartIconLarge = Template.bind({}) as any
+MultilineStartIconLarge.args = {
+  multiline: true,
+  disabled: false,
+  startIcon: 'npm install --save',
+}
+
 export const MultilineEndIcon = Template.bind({}) as any
 MultilineEndIcon.args = {
   multiline: true,
   disabled: false,
   endIcon: (
     <svg
-      width={16}
+      width={18}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
