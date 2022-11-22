@@ -470,13 +470,13 @@ const theme = {
     ],
     StartIcon: [
       {
-        paddingTop: 8,
+        paddingTop: 9,
         paddingRight: 8,
       },
     ],
     EndIcon: [
       {
-        paddingTop: 8,
+        paddingTop: 9,
         paddingLeft: 8,
       },
     ],
