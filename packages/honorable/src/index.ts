@@ -75,6 +75,14 @@ export { default as useMediaQuery } from './hooks/useMediaQuery'
 
 export { default as useOutsideClick } from './hooks/useOutsideClick'
 
+export { default as useGlobalStyles } from './hooks/useGlobalStyles'
+
+export { default as useDebounce } from './hooks/useDebounce'
+
+export { default as usePrevious } from './hooks/usePrevious'
+
+export { default as usePreviousWithDefault } from './hooks/usePreviousWithDefault'
+
 // Utils
 export { default as mergeTheme } from './utils/mergeTheme'
 
