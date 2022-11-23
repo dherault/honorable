@@ -152,7 +152,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       ref={ref}
       display="inline-flex"
       justifyContent="flex-start"
-      alignItems="flex-start"
+      alignItems="stretch"
       {...rootStyles}
       {...otherProps}
     >
