@@ -243,7 +243,10 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       setHasFound(true)
       setMenuState(x => ({ ...x, activeItemIndex: autoHighlight ? 0 : -1 }))
 
-      const option = findInOptions(options, currentOptionValue)
+      const option = findInOptions(allOptions, currentOptionValue)
+
+      if (!option) return
+
       const { value, label } = getOptionValueAndLabel(option)
 
       setSearch(label)
@@ -252,7 +255,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       if (typeof onChange === 'function') onChange(value)
       if (typeof onSelect === 'function') onSelect(value)
     }
-  }, [previousEvent, event, options, currentOptionValue, autoHighlight, onSelect, onChange])
+  }, [previousEvent, event, allOptions, currentOptionValue, autoHighlight, onSelect, onChange])
 
   useEffect(() => {
     if (hasFound) {
