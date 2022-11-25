@@ -29,6 +29,7 @@ export type AutocompleteBaseProps = {
   onOpen?: (open: boolean) => void
   renderOption?: (option: any) => ReactNode
   noOptionsNode?: ReactNode
+  anyOption?: AutocompleteOptionType
   value?: string
   onChange?: (value: string) => void
   onSelect?: (option: AutocompleteOptionType) => void
@@ -45,6 +46,7 @@ const autocompletePropTypes = {
   onOpen: PropTypes.func,
   renderOption: PropTypes.func,
   noOptionsNode: PropTypes.node,
+  anyOption: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })]),
   value: PropTypes.string,
   onChange: PropTypes.func,
   onSelect: PropTypes.func,
@@ -60,12 +62,13 @@ function defaultRenderOption(option: AutocompleteOptionType) {
   return option.toString()
 }
 
-function filterOptions(options: AutocompleteOptionType[], search: string): AutocompleteOptionType[] {
+function filterOptions(options: AutocompleteOptionType[], search: string, anyOption?: AutocompleteOptionType): AutocompleteOptionType[] {
   if (!Array.isArray(options)) return []
 
   const lowerCaseSearch = search?.toLowerCase() ?? ''
 
   return options.filter(option => {
+    if (anyOption && option === anyOption) return true
     if (typeof option === 'string') return option.toLowerCase().includes(lowerCaseSearch)
     if (typeof option === 'object') return option.label.toLowerCase().includes(lowerCaseSearch)
 
@@ -104,6 +107,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     onSelect,
     renderOption = defaultRenderOption,
     noOptionsNode = 'No options',
+    anyOption,
     autoHighlight = true,
     ...otherProps
   } = props
@@ -116,12 +120,13 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const [hasFound, setHasFound] = useState(false)
   const [search, setSearch] = useState('')
   const [uncontrolledValue, setUncontrolledValue] = useState('')
-  const [menuState, setMenuState] = useState<MenuStateType>({ defaultActiveItemIndex: autoHighlight ? 0 : -1 })
+  const [menuState, setMenuState] = useState<MenuStateType>({ activeItemIndex: autoHighlight ? 0 : -1 })
   const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
   const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState])
   const { value: currentOptionValue, event } = menuUsageState
   const previousEvent = usePrevious(event)
-  const filteredOptions = useMemo(() => filterOptions(options, uncontrolledValue), [options, uncontrolledValue])
+  const allOptions = useMemo(() => anyOption ? [...options, anyOption] : options, [anyOption, options])
+  const filteredOptions = useMemo(() => filterOptions(allOptions, uncontrolledValue, anyOption), [allOptions, uncontrolledValue, anyOption])
   const actualValue = value ?? uncontrolledValue
 
   const workingProps = { ...props, value: actualValue }
@@ -130,6 +135,10 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const handleUnfocus = useCallback(() => {
     setFocused(false)
     setHasFound(false)
+  }, [])
+
+  const handleMenuFocus = useCallback(() => {
+    inputRef.current?.focus()
   }, [])
 
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -146,19 +155,23 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const handleInputKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     switch (event.key) {
       case 'ArrowUp': {
-        const nextDefaultActiveItemIndex = Math.max(0, menuState.defaultActiveItemIndex - 1)
+        event.preventDefault()
 
-        if (menuState.defaultActiveItemIndex !== nextDefaultActiveItemIndex) {
-          setMenuState(x => ({ ...x, defaultActiveItemIndex: nextDefaultActiveItemIndex }))
+        const nextActiveItemIndex = Math.max(0, menuState.activeItemIndex - 1)
+
+        if (menuState.activeItemIndex !== nextActiveItemIndex) {
+          setMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex }))
         }
 
         break
       }
       case 'ArrowDown': {
-        const nextDefaultActiveItemIndex = Math.min(filteredOptions.length - 1, menuState.defaultActiveItemIndex + 1)
+        event.preventDefault()
 
-        if (menuState.defaultActiveItemIndex !== nextDefaultActiveItemIndex) {
-          setMenuState(x => ({ ...x, defaultActiveItemIndex: nextDefaultActiveItemIndex }))
+        const nextActiveItemIndex = Math.min(filteredOptions.length - 1, menuState.activeItemIndex + 1)
+
+        if (menuState.activeItemIndex !== nextActiveItemIndex) {
+          setMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex }))
         }
 
         break
@@ -167,16 +180,14 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       case 'Tab': {
         event.preventDefault()
 
-        const optionIndex = menuState.activeItemIndex === -1 ? menuState.defaultActiveItemIndex : menuState.activeItemIndex
-
-        const option = filteredOptions[optionIndex]
+        const option = filteredOptions[menuState.activeItemIndex]
 
         if (option) {
           const { value, label } = getOptionValueAndLabel(option)
 
           setSearch(label)
           setUncontrolledValue(value)
-          setMenuState(x => ({ ...x, defaultActiveItemIndex: 0 }))
+          setMenuState(x => ({ ...x, activeItemIndex: 0 }))
           setFocused(false)
           setHasFound(true)
 
@@ -201,7 +212,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   useOutsideClick(autocompleteRef, handleUnfocus)
 
   useEffect(() => {
-    const option = findInOptions(options, value)
+    const option = findInOptions(allOptions, value)
 
     if (option) {
       const { label } = getOptionValueAndLabel(option)
@@ -214,7 +225,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
     setUncontrolledValue(value)
 
-  }, [value, options])
+  }, [value, allOptions])
 
   useEffect(() => {
     if (!(focused && inputRef.current)) return
@@ -230,7 +241,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     if (event && previousEvent !== event) {
       setFocused(false)
       setHasFound(true)
-      setMenuState(x => ({ ...x, defaultActiveItemIndex: autoHighlight ? 0 : -1 }))
+      setMenuState(x => ({ ...x, activeItemIndex: autoHighlight ? 0 : -1 }))
 
       const option = findInOptions(options, currentOptionValue)
       const { value, label } = getOptionValueAndLabel(option)
@@ -290,21 +301,24 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           display={focused && !hasFound ? 'block' : 'none'}
           maxHeight={256}
           overflowY="auto"
+          onFocus={handleMenuFocus}
           {...resolvePartStyles('Menu', props, theme)}
         >
           {filteredOptions.length > 0 && filteredOptions.map(option => (
             <MenuItem
               key={typeof option === 'object' ? option.value : option}
               value={typeof option === 'object' ? option.value : option}
+              onFocus={handleMenuFocus}
               {...resolvePartStyles('Autocomplete.MenuItem', props, theme)}
             >
               {renderOption(option)}
             </MenuItem>
           ))}
-          {filteredOptions.length === 0 && (
+          {!!noOptionsNode && filteredOptions.length === 0 && (
             <MenuItem
               disabled
               value={honorableNoValue}
+              onFocus={handleMenuFocus}
               {...resolvePartStyles('Autocomplete.NoOption', props, theme)}
             >
               {noOptionsNode}

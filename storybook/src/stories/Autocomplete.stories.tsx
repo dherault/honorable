@@ -278,3 +278,15 @@ AutoHighlight.args = {
   autoHighlight: true,
   options: top100Films,
 }
+
+export const AnyOption = Template.bind({}) as any
+AnyOption.args = {
+  options: top100Films,
+  anyOption: 'Any option!',
+}
+
+export const AnyOptionWithValue = TemplateControlled.bind({}) as any
+AnyOptionWithValue.args = {
+  options: top100Films,
+  anyOption: { label: 'Any option!', value: '*' },
+}
