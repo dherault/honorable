@@ -86,6 +86,14 @@ function findInOptions(options: AutocompleteOptionType[], value: string): Autoco
   })
 }
 
+function getOptionValueAndLabel(option: AutocompleteOptionType) {
+  if (typeof option === 'string') return { value: option, label: option }
+  if (typeof option === 'object') return { value: option.value, label: option.label }
+
+  // @ts-expect-error
+  return { value: option.toString(), label: option.toString() }
+}
+
 function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const {
     options = [],
@@ -107,29 +115,32 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const [focused, setFocused] = useState(false)
   const [hasFound, setHasFound] = useState(false)
   const [search, setSearch] = useState('')
+  const [uncontrolledValue, setUncontrolledValue] = useState('')
   const [menuState, setMenuState] = useState<MenuStateType>({ defaultActiveItemIndex: autoHighlight ? 0 : -1 })
   const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
   const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState])
   const { value: currentOptionValue, event } = menuUsageState
   const previousEvent = usePrevious(event)
-  const filteredOptions = useMemo(() => filterOptions(options, search), [options, search])
-  const workingProps = { ...props }
+  const filteredOptions = useMemo(() => filterOptions(options, uncontrolledValue), [options, uncontrolledValue])
+  const actualValue = value ?? uncontrolledValue
+
+  const workingProps = { ...props, value: actualValue }
   const rootStyles = useRootStyles('Autocomplete', workingProps, theme)
 
   const handleUnfocus = useCallback(() => {
-    console.log('handleUnfocus')
     setFocused(false)
     setHasFound(false)
   }, [])
 
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setSearch(event.target.value)
+    setUncontrolledValue(event.target.value)
+
+    if (typeof onChange === 'function') onChange(event.target.value)
 
     if (!hasFound) {
       setFocused(true)
     }
-
-    if (typeof onChange === 'function') onChange(event.target.value)
   }, [onChange, hasFound])
 
   const handleInputKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -161,20 +172,16 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         const option = filteredOptions[optionIndex]
 
         if (option) {
-          const optionValue = typeof option === 'string'
-            ? option
-            : typeof option === 'object'
-              ? option.value
-              // @ts-expect-error
-              : option.toString()
+          const { value, label } = getOptionValueAndLabel(option)
 
-          setSearch(optionValue)
+          setSearch(label)
+          setUncontrolledValue(value)
           setMenuState(x => ({ ...x, defaultActiveItemIndex: 0 }))
           setFocused(false)
           setHasFound(true)
 
-          if (typeof onChange === 'function') onChange(optionValue)
-          if (typeof onSelect === 'function') onSelect(option)
+          if (typeof onChange === 'function') onChange(value)
+          if (typeof onSelect === 'function') onSelect(value)
         }
       }
     }
@@ -194,8 +201,20 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   useOutsideClick(autocompleteRef, handleUnfocus)
 
   useEffect(() => {
-    setSearch(value)
-  }, [value])
+    const option = findInOptions(options, value)
+
+    if (option) {
+      const { label } = getOptionValueAndLabel(option)
+
+      setSearch(label)
+    }
+    else {
+      setSearch(value)
+    }
+
+    setUncontrolledValue(value)
+
+  }, [value, options])
 
   useEffect(() => {
     if (!(focused && inputRef.current)) return
@@ -214,24 +233,21 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       setMenuState(x => ({ ...x, defaultActiveItemIndex: autoHighlight ? 0 : -1 }))
 
       const option = findInOptions(options, currentOptionValue)
-      const optionLabel = typeof option === 'string'
-        ? option
-        : typeof option === 'object'
-          ? option.label
-          // @ts-expect-error
-          : option.toString()
+      const { value, label } = getOptionValueAndLabel(option)
 
-      setSearch(optionLabel)
+      setSearch(label)
+      setUncontrolledValue(value)
 
-      if (typeof onSelect === 'function') onSelect(option)
+      if (typeof onChange === 'function') onChange(value)
+      if (typeof onSelect === 'function') onSelect(value)
     }
-  }, [previousEvent, event, options, currentOptionValue, autoHighlight, onSelect])
+  }, [previousEvent, event, options, currentOptionValue, autoHighlight, onSelect, onChange])
 
   useEffect(() => {
     if (hasFound) {
       setHasFound(false)
     }
-  }, [hasFound, search]) // !
+  }, [hasFound, uncontrolledValue]) // !
 
   return (
     <Div

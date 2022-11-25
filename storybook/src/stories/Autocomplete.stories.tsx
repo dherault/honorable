@@ -33,9 +33,9 @@ function TemplateControlled(args: any) {
       />
       <Button
         mt={1}
-        onClick={() => setValue('foo')}
+        onClick={() => setValue('')}
       >
-        Set value to 'foo'
+        Set value to ''
       </Button>
     </>
   )
@@ -171,7 +171,7 @@ const top100Films = [
   'Monty Python and the Holy Grail',
 ]
 
-const top100FilmsObject = top100Films.map(title => ({ value: title, label: title }))
+const top100FilmsObject = top100Films.map(title => ({ value: `_value_${title}`, label: title }))
 
 export const Default = Template.bind({}) as any
 Default.args = {
@@ -191,6 +191,11 @@ OnSelect.args = {
 
 export const ObjectOptions = Template.bind({}) as any
 ObjectOptions.args = {
+  options: top100FilmsObject,
+}
+
+export const ObjectOptionsControlled = TemplateControlled.bind({}) as any
+ObjectOptionsControlled.args = {
   options: top100FilmsObject,
 }
 
