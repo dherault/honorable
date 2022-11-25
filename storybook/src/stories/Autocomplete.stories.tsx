@@ -28,6 +28,34 @@ function TemplateControlled(args: any) {
       <Autocomplete
         value={value}
         onChange={(value: any) => setValue(value)}
+        mt={1}
+        {...args}
+      />
+    </>
+  )
+}
+
+function TemplateOnSelect(args: any) {
+  const [value, setValue] = useState('')
+  const [selected, setSelected] = useState('')
+
+  return (
+    <>
+      <div>
+        Value:
+        {' '}
+        {value}
+      </div>
+      <div>
+        Selected:
+        {' '}
+        {selected}
+      </div>
+      <Autocomplete
+        value={value}
+        onChange={setValue}
+        onSelect={setSelected}
+        mt={1}
         {...args}
       />
     </>
@@ -142,46 +170,44 @@ const top100FilmsObject = top100Films.map(title => ({ value: title, label: title
 export const Default = Template.bind({}) as any
 Default.args = {
   options: top100Films,
-  disabled: false,
 }
 
 export const Width100 = Template.bind({}) as any
 Width100.args = {
   options: top100Films,
-  disabled: false,
   width: '100%',
+}
+
+export const OnSelect = TemplateOnSelect.bind({}) as any
+OnSelect.args = {
+  options: top100Films,
 }
 
 export const ObjectOptions = Template.bind({}) as any
 ObjectOptions.args = {
   options: top100FilmsObject,
-  disabled: false,
 }
 
 export const DefaultValue = Template.bind({}) as any
 DefaultValue.args = {
   defaultValue: 'Text me if you can',
   options: top100Films,
-  disabled: false,
 }
 
 export const Controlled = TemplateControlled.bind({}) as any
 Controlled.args = {
   options: top100Films,
-  disabled: false,
 }
 
 export const AutoFocus = Template.bind({}) as any
 AutoFocus.args = {
   options: top100Films,
-  disabled: false,
   autoFocus: true,
 }
 
 export const StartIcon = Template.bind({}) as any
 StartIcon.args = {
   options: top100Films,
-  disabled: false,
   startIcon: (
     <svg
       width={16}
@@ -202,7 +228,6 @@ StartIcon.args = {
 export const EndIcon = Template.bind({}) as any
 EndIcon.args = {
   options: top100Films,
-  disabled: false,
   endIcon: (
     <svg
       width={16}
@@ -229,19 +254,16 @@ export const Multiline = Template.bind({}) as any
 Multiline.args = {
   multiline: true,
   options: top100Films,
-  disabled: false,
 }
 
 export const MultilineControlled = TemplateControlled.bind({}) as any
 MultilineControlled.args = {
   multiline: true,
   options: top100Films,
-  disabled: false,
 }
 
 export const AutoHighlight = Template.bind({}) as any
 AutoHighlight.args = {
   autoHighlight: true,
   options: top100Films,
-  disabled: false,
 }

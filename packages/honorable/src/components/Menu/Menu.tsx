@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
@@ -19,6 +19,7 @@ export type MenuBaseProps = {
   fade?: boolean
   open?: boolean
   transtionDuration?: number
+  noFocus?: boolean
 }
 
 export type MenuProps = DivProps & MenuBaseProps
@@ -30,6 +31,7 @@ export const menuPropTypes = {
   fade: PropTypes.bool,
   open: PropTypes.bool,
   transtionDuration: PropTypes.number,
+  noFocus: PropTypes.bool,
 }
 
 const defaultMenuState: MenuStateType = {
@@ -55,6 +57,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     isSubMenu,
     transtionDuration = 300,
     children,
+    noFocus,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -76,10 +79,77 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const workingProps = { ...props, ...actualMenuState }
   const rootStyles = useRootStyles('Menu', workingProps, theme)
 
-  // On outside click, unset active item
-  useOutsideClick(menuRef, () => {
+  const handleOutsideClick = useCallback(() => {
     setActualMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
-  })
+  }, [setActualMenuState])
+
+  // Handle up and down keys
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+    event.preventDefault()
+
+    if (!actualMenuState.active || actualMenuState.locked) return
+
+    switch (event.key) {
+      case 'ArrowUp': {
+        const nextActiveItemIndex = Math.max(0, actualActiveItemIndex - 1)
+
+        if (actualActiveItemIndex !== nextActiveItemIndex) {
+          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
+        }
+
+        break
+      }
+      case 'ArrowDown': {
+        const nextActiveItemIndex = Math.min(Children.count(children) - 1, actualActiveItemIndex + 1)
+
+        if (actualActiveItemIndex !== nextActiveItemIndex) {
+          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
+        }
+
+        break
+      }
+    }
+  }, [actualActiveItemIndex, actualMenuState.active, actualMenuState.locked, children, setActualMenuState])
+
+  // On mouse leave, unset the active item
+  const handleMouseLeave = useCallback(() => {
+    setActualMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
+  }, [setActualMenuState])
+
+  const wrapFade = useCallback((element: ReactElement) => {
+    if (!fade) return element
+
+    const defaultStyle = {
+      opacity: 0,
+      transition: `opacity ${transtionDuration}ms ease`,
+    }
+
+    const transitionStyles = {
+      entering: { opacity: 1 },
+      entered: { opacity: 1 },
+      exiting: { opacity: 0 },
+      exited: { opacity: 0 },
+    }
+
+    return (
+      <Transition
+        in={actualOpen}
+        appear
+        timeout={transtionDuration}
+        onEntered={() => setActualMenuState(x => ({ ...x, locked: false }))}
+        onExit={() => setActualMenuState(x => ({ ...x, locked: true }))}
+      >
+        {(state: string) => cloneElement(element, {
+          ...element.props,
+          ...defaultStyle,
+          ...transitionStyles[state],
+        })}
+      </Transition>
+    )
+  }, [actualOpen, fade, transtionDuration, setActualMenuState])
+
+  // On outside click, unset active item
+  useOutsideClick(menuRef, handleOutsideClick)
 
   useEffect(() => {
     if (!menuRef.current) return
@@ -129,71 +199,6 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     }
   }, [actualOpen, fade, transtionDuration, setActualMenuState])
 
-  // Handle up and down keys
-  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    event.preventDefault()
-
-    if (!actualMenuState.active || actualMenuState.locked) return
-
-    switch (event.key) {
-      case 'ArrowUp': {
-        const nextActiveItemIndex = Math.max(0, actualActiveItemIndex - 1)
-
-        if (actualActiveItemIndex !== nextActiveItemIndex) {
-          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
-        }
-
-        break
-      }
-      case 'ArrowDown': {
-        const nextActiveItemIndex = Math.min(Children.count(children) - 1, actualActiveItemIndex + 1)
-
-        if (actualActiveItemIndex !== nextActiveItemIndex) {
-          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
-        }
-
-        break
-      }
-    }
-  }
-
-  // On mouse leave, unset the active item
-  function handleMouseLeave() {
-    setActualMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
-  }
-
-  function wrapFade(element: ReactElement) {
-    if (!fade) return element
-
-    const defaultStyle = {
-      opacity: 0,
-      transition: `opacity ${transtionDuration}ms ease`,
-    }
-
-    const transitionStyles = {
-      entering: { opacity: 1 },
-      entered: { opacity: 1 },
-      exiting: { opacity: 0 },
-      exited: { opacity: 0 },
-    }
-
-    return (
-      <Transition
-        in={actualOpen}
-        appear
-        timeout={transtionDuration}
-        onEntered={() => setActualMenuState(x => ({ ...x, locked: false }))}
-        onExit={() => setActualMenuState(x => ({ ...x, locked: true }))}
-      >
-        {(state: string) => cloneElement(element, {
-          ...element.props,
-          ...defaultStyle,
-          ...transitionStyles[state],
-        })}
-      </Transition>
-    )
-  }
-
   if (!(actualOpen || transitionOpen)) return null
 
   return (
@@ -219,6 +224,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
             if (child?.type === MenuItem) {
               return cloneElement(child, {
                 fade,
+                noFocus,
                 isSubMenuItem: isSubMenu,
                 itemIndex: index,
                 active: index === actualActiveItemIndex,

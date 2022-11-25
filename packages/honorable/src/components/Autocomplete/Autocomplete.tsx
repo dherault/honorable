@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { MenuStateType } from '../../contexts/MenuContext'
@@ -31,6 +31,7 @@ export type AutocompleteBaseProps = {
   noOptionsNode?: ReactNode
   value?: string
   onChange?: (value: string) => void
+  onSelect?: (option: AutocompleteOptionType) => void
 }
 
 export type AutocompleteProps = Omit<InputProps, 'onChange'> & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
@@ -46,6 +47,7 @@ const autocompletePropTypes = {
   noOptionsNode: PropTypes.node,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onSelect: PropTypes.func,
 }
 
 const honorableNoValue = `HONORABLE_NO_VALUE_${Math.random()}`
@@ -88,9 +90,10 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const {
     options = [],
     endIcon,
-    onOpen,
     value,
+    onOpen,
     onChange,
+    onSelect,
     renderOption = defaultRenderOption,
     noOptionsNode = 'No options',
     autoHighlight = true,
@@ -98,9 +101,11 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   } = props
   const theme = useTheme()
   const [inputProps, divProps]: [InputProps, DivProps] = pickProps(otherProps, inputPropTypes)
-  const autocompleteRef = useRef()
+  const autocompleteRef = useRef<HTMLDivElement>(null)
   const forkedRef = useForkedRef(autocompleteRef, ref)
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
   const [focused, setFocused] = useState(false)
+  const [hasFound, setHasFound] = useState(false)
   const [search, setSearch] = useState('')
   const [menuState, setMenuState] = useState<MenuStateType>({ defaultActiveItemIndex: autoHighlight ? 0 : -1 })
   const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
@@ -111,41 +116,23 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const workingProps = { ...props }
   const rootStyles = useRootStyles('Autocomplete', workingProps, theme)
 
-  console.log('inputProps', inputProps)
   const handleUnfocus = useCallback(() => {
+    console.log('handleUnfocus')
     setFocused(false)
+    setHasFound(false)
   }, [])
 
-  useOutsideClick(autocompleteRef, handleUnfocus)
-
-  useEffect(() => {
-    if (typeof onOpen === 'function') onOpen(focused)
-  }, [onOpen, focused])
-
-  useEffect(() => {
-    if (event && previousEvent !== event) {
-      setFocused(false)
-      setMenuState(x => ({ ...x, defaultActiveItemIndex: autoHighlight ? 0 : -1 }))
-
-      const option = findInOptions(options, currentOptionValue)
-      const optionLabel = typeof option === 'string'
-        ? option
-        : typeof option === 'object'
-          ? option.label
-          // @ts-expect-error
-          : option.toString()
-
-      setSearch(optionLabel)
-    }
-  }, [previousEvent, event, options, currentOptionValue, autoHighlight])
-
-  function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setSearch(event.target.value)
 
-    if (typeof onChange === 'function') onChange(event.target.value)
-  }
+    if (!hasFound) {
+      setFocused(true)
+    }
 
-  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    if (typeof onChange === 'function') onChange(event.target.value)
+  }, [onChange, hasFound])
+
+  const handleInputKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     switch (event.key) {
       case 'ArrowUp': {
         const nextDefaultActiveItemIndex = Math.max(0, menuState.defaultActiveItemIndex - 1)
@@ -169,26 +156,78 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       case 'Tab': {
         event.preventDefault()
 
-        const itemIndex = menuState.activeItemIndex === -1 ? menuState.defaultActiveItemIndex : menuState.activeItemIndex
+        const optionIndex = menuState.activeItemIndex === -1 ? menuState.defaultActiveItemIndex : menuState.activeItemIndex
 
-        const item = filteredOptions[itemIndex]
+        const option = filteredOptions[optionIndex]
 
-        if (item) {
-          const optionValue = typeof item === 'string'
-            ? item
-            : typeof item === 'object'
-              ? item.value
+        if (option) {
+          const optionValue = typeof option === 'string'
+            ? option
+            : typeof option === 'object'
+              ? option.value
               // @ts-expect-error
-              : item.toString()
+              : option.toString()
 
           setSearch(optionValue)
           setMenuState(x => ({ ...x, defaultActiveItemIndex: 0 }))
+          setFocused(false)
+          setHasFound(true)
 
           if (typeof onChange === 'function') onChange(optionValue)
+          if (typeof onSelect === 'function') onSelect(option)
         }
       }
     }
-  }
+  }, [filteredOptions, menuState, onChange, onSelect])
+
+  const handleInputFocus = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
+    setFocused(true)
+
+    if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
+  }, [inputProps])
+
+  const handleEndIconClick = useCallback(() => {
+    setFocused(x => !x)
+    setHasFound(false)
+  }, [])
+
+  useOutsideClick(autocompleteRef, handleUnfocus)
+
+  useEffect(() => {
+    if (!(focused && inputRef.current)) return
+
+    inputRef.current.focus()
+  }, [focused])
+
+  useEffect(() => {
+    if (typeof onOpen === 'function') onOpen(focused)
+  }, [onOpen, focused])
+
+  useEffect(() => {
+    if (event && previousEvent !== event) {
+      setFocused(false)
+      setHasFound(true)
+      setMenuState(x => ({ ...x, defaultActiveItemIndex: autoHighlight ? 0 : -1 }))
+
+      const option = findInOptions(options, currentOptionValue)
+      const optionLabel = typeof option === 'string'
+        ? option
+        : typeof option === 'object'
+          ? option.label
+          // @ts-expect-error
+          : option.toString()
+
+      setSearch(optionLabel)
+
+      if (typeof onSelect === 'function') onSelect(option)
+    }
+  }, [previousEvent, event, options, currentOptionValue, autoHighlight, onSelect])
+
+  useEffect(() => {
+    if (hasFound) {
+      setHasFound(false)
+    }
+  }, [hasFound, search]) // !
 
   return (
     <Div
@@ -200,14 +239,21 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     >
       <Input
         {...inputProps}
+        inputProps={{ ref: inputRef }}
         value={search}
         onChange={handleInputChange}
-        endIcon={endIcon || <Caret rotation={focused ? 180 : 0} />}
-        onFocus={event => {
-          setFocused(true)
-          if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
-        }}
         onKeyDown={handleInputKeyDown}
+        onFocus={handleInputFocus}
+        endIcon={(
+          <Div
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            onClick={handleEndIconClick}
+          >
+            {endIcon || <Caret rotation={focused ? 180 : 0} />}
+          </Div>
+        )}
         width="100%"
         {...resolvePartStyles('Autocomplete.Input', props, theme)}
       />
@@ -218,10 +264,10 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           setMenuState={setMenuState}
           position="absolute"
           top="100%"
-          right={0}
-          left={0}
+          right={1}
+          left={1}
           zIndex={100}
-          display={focused ? 'block' : 'none'}
+          display={focused && !hasFound ? 'block' : 'none'}
           maxHeight={256}
           overflowY="auto"
           {...resolvePartStyles('Menu', props, theme)}
