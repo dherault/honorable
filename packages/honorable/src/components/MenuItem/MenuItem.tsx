@@ -170,7 +170,9 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     else if (event.key === 'Enter') {
       handleSelect(event)
     }
-  }, [active, handleSelect, isSubMenuItem, menuState, setMenuState, setParentMenuState, setSubMenuState, subMenu])
+
+    if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
+  }, [active, handleSelect, isSubMenuItem, menuState, setMenuState, setParentMenuState, setSubMenuState, subMenu, props])
 
   const handleMouseMove = useCallback(() => {
     if ((active && menuState.active && menuState.activeItemIndex === itemIndex) || menuState.locked) return
@@ -183,8 +185,11 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     }))
     setSubMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
     setParentMenuState(x => ({ ...x, active: false }))
-    menuItemRef.current.focus()
-  }, [active, itemIndex, menuState, setMenuState, setParentMenuState])
+
+    if (!noFocus) {
+      menuItemRef.current.focus()
+    }
+  }, [active, itemIndex, menuState, setMenuState, setParentMenuState, noFocus])
 
   // Set height for the submenu's triangle
   // times 1.5 to make the triangle large enough
@@ -216,10 +221,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       tabIndex={itemIndex}
       {...rootStyles}
       {...otherProps}
-      onKeyDown={event => {
-        handleKeyDown(event)
-        if (typeof props.onKeyDown === 'function') props.onKeyDown(event)
-      }}
+      onKeyDown={handleKeyDown}
     >
       <Div
         display="flex"

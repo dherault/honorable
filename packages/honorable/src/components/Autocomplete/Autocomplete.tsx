@@ -63,7 +63,7 @@ function defaultRenderOption(option: AutocompleteOptionType) {
 function filterOptions(options: AutocompleteOptionType[], search: string): AutocompleteOptionType[] {
   if (!Array.isArray(options)) return []
 
-  const lowerCaseSearch = search.toLowerCase()
+  const lowerCaseSearch = search?.toLowerCase() ?? ''
 
   return options.filter(option => {
     if (typeof option === 'string') return option.toLowerCase().includes(lowerCaseSearch)
@@ -192,6 +192,10 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   }, [])
 
   useOutsideClick(autocompleteRef, handleUnfocus)
+
+  useEffect(() => {
+    setSearch(value)
+  }, [value])
 
   useEffect(() => {
     if (!(focused && inputRef.current)) return

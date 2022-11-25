@@ -1,7 +1,7 @@
 // Icons from https://icons.modulz.app/
 // Top 100 films from https://mui.com/material-ui/react-autocomplete/
 import React, { useState } from 'react'
-import { Autocomplete } from 'honorable'
+import { Autocomplete, Button } from 'honorable'
 
 export default {
   title: 'Components/Autocomplete',
@@ -31,6 +31,12 @@ function TemplateControlled(args: any) {
         mt={1}
         {...args}
       />
+      <Button
+        mt={1}
+        onClick={() => setValue('foo')}
+      >
+        Set value to 'foo'
+      </Button>
     </>
   )
 }
