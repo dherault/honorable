@@ -16,7 +16,7 @@ import resolvePartStyles from '../../resolvers/resolvePartStyles'
 import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'
 import { MenuItem } from '../MenuItem/MenuItem'
-import { Input, InputBaseProps, inputPropTypes } from '../Input/Input'
+import { Input, InputProps, inputPropTypes } from '../Input/Input'
 import { Div, DivProps } from '../tags'
 
 export type AutocompleteOptionType = string | { label?: string; value?: string }
@@ -33,7 +33,7 @@ export type AutocompleteBaseProps = {
   onChange?: (value: string) => void
 }
 
-export type AutocompleteProps = InputBaseProps & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
+export type AutocompleteProps = Omit<InputProps, 'onChange'> & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
 
 const autocompletePropTypes = {
   ...inputPropTypes,
@@ -97,7 +97,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const [inputProps, divProps]: [any, DivProps] = pickProps(otherProps, inputPropTypes)
+  const [inputProps, divProps]: [InputProps, DivProps] = pickProps(otherProps, inputPropTypes)
   const autocompleteRef = useRef()
   const forkedRef = useForkedRef(autocompleteRef, ref)
   const [focused, setFocused] = useState(false)
@@ -205,7 +205,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
         }}
         onKeyDown={handleInputKeyDown}
-        {...resolvePartStyles('Input', props, theme)}
+        {...resolvePartStyles('Autocomplete.Input', props, theme)}
       />
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
@@ -226,7 +226,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
             <MenuItem
               key={typeof option === 'object' ? option.value : option}
               value={typeof option === 'object' ? option.value : option}
-              {...resolvePartStyles('MenuItem', props, theme)}
+              {...resolvePartStyles('Autocomplete.MenuItem', props, theme)}
             >
               {renderOption(option)}
             </MenuItem>
@@ -235,7 +235,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
             <MenuItem
               disabled
               value={honorableNoValue}
-              {...resolvePartStyles('NoOption', props, theme)}
+              {...resolvePartStyles('Autocomplete.NoOption', props, theme)}
             >
               {noOptionsNode}
             </MenuItem>
