@@ -145,6 +145,13 @@ Default.args = {
   disabled: false,
 }
 
+export const Width100 = Template.bind({}) as any
+Width100.args = {
+  options: top100Films,
+  disabled: false,
+  width: '100%',
+}
+
 export const ObjectOptions = Template.bind({}) as any
 ObjectOptions.args = {
   options: top100FilmsObject,

@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useEffect, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { MenuStateType } from '../../contexts/MenuContext'
@@ -111,9 +111,12 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const workingProps = { ...props }
   const rootStyles = useRootStyles('Autocomplete', workingProps, theme)
 
-  useOutsideClick(autocompleteRef, () => {
+  console.log('inputProps', inputProps)
+  const handleUnfocus = useCallback(() => {
     setFocused(false)
-  })
+  }, [])
+
+  useOutsideClick(autocompleteRef, handleUnfocus)
 
   useEffect(() => {
     if (typeof onOpen === 'function') onOpen(focused)
@@ -205,6 +208,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
         }}
         onKeyDown={handleInputKeyDown}
+        width="100%"
         {...resolvePartStyles('Autocomplete.Input', props, theme)}
       />
       <MenuUsageContext.Provider value={menuUsageValue}>
