@@ -33,6 +33,7 @@ export type AutocompleteBaseProps = {
   value?: string
   onChange?: (value: string) => void
   onSelect?: (option: AutocompleteOptionType) => void
+  inputProps: Record<string, any>
 }
 
 export type AutocompleteProps = Omit<InputProps, 'onChange'> & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
@@ -50,6 +51,7 @@ const autocompletePropTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   onSelect: PropTypes.func,
+  inputProps: PropTypes.object,
 }
 
 const honorableNoValue = `HONORABLE_NO_VALUE_${Math.random()}`
@@ -109,10 +111,11 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     noOptionsNode = 'No options',
     anyOption,
     autoHighlight = true,
+    inputProps = {},
     ...otherProps
   } = props
   const theme = useTheme()
-  const [inputProps, divProps]: [InputProps, DivProps] = pickProps(otherProps, inputPropTypes)
+  const [baseInputProps, divProps]: [InputProps, DivProps] = pickProps(otherProps, inputPropTypes)
   const autocompleteRef = useRef<HTMLDivElement>(null)
   const forkedRef = useForkedRef(autocompleteRef, ref)
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
@@ -201,8 +204,8 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const handleInputFocus = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     setFocused(true)
 
-    if (typeof inputProps.onFocus === 'function') inputProps.onFocus(event)
-  }, [inputProps])
+    if (typeof baseInputProps.onFocus === 'function') baseInputProps.onFocus(event)
+  }, [baseInputProps])
 
   const handleEndIconClick = useCallback(() => {
     setFocused(x => !x)
@@ -272,8 +275,8 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       {...divProps}
     >
       <Input
-        {...inputProps}
-        inputProps={{ ref: inputRef }}
+        {...baseInputProps}
+        inputProps={{ ref: inputRef, ...inputProps }}
         value={search}
         onChange={handleInputChange}
         onKeyDown={handleInputKeyDown}

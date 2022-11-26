@@ -290,3 +290,11 @@ AnyOptionWithValue.args = {
   options: top100Films,
   anyOption: { label: 'Any option!', value: '*' },
 }
+
+export const InputProps = Template.bind({}) as any
+InputProps.args = {
+  options: top100Films,
+  inputProps: {
+    color: 'red',
+  },
+}
