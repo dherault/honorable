@@ -131,7 +131,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const { value: currentOptionValue, event } = menuUsageState
   const previousEvent = usePrevious(event)
   const allOptions = useMemo(() => anyOption ? [...options, anyOption] : options, [anyOption, options])
-  const filteredOptions = useMemo(() => filterOptions(allOptions, uncontrolledValue, anyOption), [allOptions, uncontrolledValue, anyOption])
+  const filteredOptions = useMemo(() => filterOptions(allOptions, search, anyOption), [allOptions, search, anyOption])
   const actualValue = value ?? uncontrolledValue
 
   const workingProps = { ...props, value: actualValue }
