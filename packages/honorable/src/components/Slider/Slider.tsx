@@ -32,7 +32,7 @@ export type SliderBaseProps = {
   disabled?: boolean
   knobSize?: number
   markOffset?: number
-  labelTooltipDisplay: 'on' | 'off'| 'auto'
+  labelTooltipDisplay?: 'on' | 'off'| 'auto'
 }
 
 export type SliderProps = Omit<DivProps, 'onChange'> & SliderBaseProps
@@ -119,10 +119,10 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
   const sliderRef = useRef<HTMLDivElement>()
   const forkedRef = useForkedRef(ref, sliderRef)
   const [currentKnobIndex, setCurrentKnobIndex] = useState(-1)
-  const [currentKnobValues, setCurrentKnobValues] = useState([0, 0, 0])
-  const [currentPosition, setCurrenPosition] = useState(0)
+  const [currentKnobValues, setCurrentKnobValues] = useState([0, 0, 0]) // min, current, max
+  const [currentPosition, setCurrentPosition] = useState(0)
   const [uncontrolledValues, setUncontrolledValues] = useState<number[]>(Array.isArray(defaultValue) ? defaultValue : [defaultValue || min])
-  const actualValues = useMemo(() => (value ? Array.isArray(value) ? value : [value] : undefined) ?? uncontrolledValues, [value, uncontrolledValues])
+  const actualValues = useMemo(() => (typeof value !== 'undefined' && value !== null ? Array.isArray(value) ? value : [value] : undefined) ?? uncontrolledValues, [value, uncontrolledValues])
   const isHorizontal = orientation === 'horizontal'
   const rootStyles = useRootStyles('Slider', props, theme)
 
@@ -169,7 +169,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
   function handleKnobMouseDown(event: ReactMouseEvent<HTMLDivElement>, index: number) {
     setCurrentKnobIndex(index)
     setCurrentKnobValues([actualValues[index - 1] || min, actualValues[index], actualValues[index + 1] || max])
-    setCurrenPosition(isHorizontal ? event.clientX : event.clientY)
+    setCurrentPosition(isHorizontal ? event.clientX : event.clientY)
   }
 
   useEffect(() => {

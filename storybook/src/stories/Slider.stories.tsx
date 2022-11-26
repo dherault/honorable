@@ -12,12 +12,16 @@ function Template({ initialValue, isVertical, ...props }: any) {
   const [value, setValue] = useState(initialValue)
 
   return (
-    <Slider
-      {...props}
-      orientation={isVertical ? 'vertical' : 'horizontal'}
-      value={value}
-      onChange={(event, value) => setValue(value)}
-    />
+    <>
+      {value}
+      <Slider
+        {...props}
+        orientation={isVertical ? 'vertical' : 'horizontal'}
+        value={value}
+        onChange={(event, value) => setValue(value)}
+        mt={1}
+      />
+    </>
   )
 }
 
@@ -25,18 +29,21 @@ function Template2({ initialValues, isVertical, ...props }: any) {
   const [values, setValues] = useState<number[]>(initialValues)
 
   return (
-    <Slider
-      {...props}
-      orientation={isVertical ? 'vertical' : 'horizontal'}
-      value={values}
-      onChange={(event, value, index) => {
-        const nextValues = [...values]
+    <>
+      {values.join(' ')}
+      <Slider
+        {...props}
+        orientation={isVertical ? 'vertical' : 'horizontal'}
+        value={values}
+        onChange={(event, value, index) => {
+          const nextValues = [...values]
 
-        nextValues[index] = value
+          nextValues[index] = value
 
-        setValues(nextValues)
-      }}
-    />
+          setValues(nextValues)
+        }}
+      />
+    </>
   )
 }
 
@@ -86,9 +93,25 @@ Max.args = {
 export const MinMax = Template.bind({}) as any
 MinMax.args = {
   isVertical: false,
-  initialValue: 1.5,
-  min: 1,
-  max: 2.75,
+  initialValue: 0,
+  min: -8,
+  max: 4,
+}
+
+export const MinMax2 = Template.bind({}) as any
+MinMax2.args = {
+  isVertical: false,
+  initialValue: 2,
+  min: -8,
+  max: 4,
+}
+
+export const MinMaxEqualMinus = Template.bind({}) as any
+MinMaxEqualMinus.args = {
+  isVertical: false,
+  initialValue: 0,
+  min: -10,
+  max: 10,
 }
 
 export const MinMaxStep = Template.bind({}) as any
