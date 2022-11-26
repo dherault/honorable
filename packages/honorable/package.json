@@ -1,6 +1,6 @@
 {
   "name": "honorable",
-  "version": "0.180.0",
+  "version": "0.181.0",
   "description": "An extensible React component librarie for 2022 and beyond",
   "main": "dist/index.js",
   "scripts": {

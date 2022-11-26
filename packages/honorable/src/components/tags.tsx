@@ -664,9 +664,9 @@ export type SymbolProps = StyleProps & ElementProps<'symbol'>
 
 export const Symbol = withHonorableTag<SymbolProps>('symbol', 'Symbol')
 
-export type TextProps = StyleProps & ElementProps<'text'>
+export type SvgTextProps = StyleProps & ElementProps<'text'>
 
-export const Text = withHonorableTag<TextProps>('text', 'Text')
+export const SvgText = withHonorableTag<SvgTextProps>('text', 'Text')
 
 export type TextPathProps = StyleProps & ElementProps<'textPath'>
 
