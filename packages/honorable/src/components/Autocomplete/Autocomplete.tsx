@@ -193,7 +193,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         if (option) {
           const { value, label } = getOptionValueAndLabel(option)
 
-          setSearch(option === anyOption ? '' : label)
+          setSearch(label)
           setUncontrolledValue(value)
           setMenuState(x => ({ ...x, activeItemIndex: 0 }))
           setFocused(false)
@@ -204,7 +204,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         }
       }
     }
-  }, [filteredOptions, anyOption, menuState, onChange, onSelect])
+  }, [filteredOptions, menuState, onChange, onSelect])
 
   const handleInputFocus = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     setFocused(true)
@@ -256,13 +256,13 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
       const { value, label } = getOptionValueAndLabel(option)
 
-      setSearch(label)
+      setSearch(option === anyOption ? '' : label)
       setUncontrolledValue(value)
 
       if (typeof onChange === 'function') onChange(value)
       if (typeof onSelect === 'function') onSelect(value)
     }
-  }, [previousEvent, event, allOptions, currentOptionValue, autoHighlight, onSelect, onChange])
+  }, [previousEvent, event, allOptions, anyOption, currentOptionValue, autoHighlight, onSelect, onChange])
 
   useEffect(() => {
     if (hasFound) {
