@@ -81,6 +81,8 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   }, [handleExpand])
 
   useEffect(() => {
+    if (!childrenRef.current) return
+
     const resizeObserver = new ResizeObserver(() => {
       setChildrenHeight(childrenRef.current.offsetHeight)
     })
