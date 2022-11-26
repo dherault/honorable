@@ -69,6 +69,8 @@ function filterOptions(options: AutocompleteOptionType[], search: string, anyOpt
 
   const lowerCaseSearch = search?.toLowerCase() ?? ''
 
+  if (!lowerCaseSearch) return options
+
   return options.filter(option => {
     if (anyOption && option === anyOption) return true
     if (typeof option === 'string') return option.toLowerCase().includes(lowerCaseSearch)
