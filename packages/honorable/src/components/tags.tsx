@@ -2,6 +2,10 @@ import { ElementProps, StylesProps } from '../types'
 
 import withHonorableTag from '../withHonorableTag'
 
+/* --
+  * HTML
+-- */
+
 export type ButtonBaseBaseProps = StylesProps & ElementProps<'button'>
 
 export const ButtonBase = withHonorableTag<ButtonBaseBaseProps>('button', 'ButtonBase')
@@ -447,3 +451,235 @@ export const Video = withHonorableTag<VideoProps>('video', 'Video')
 export type WbrProps = StylesProps & ElementProps<'wbr'>
 
 export const Wbr = withHonorableTag<WbrProps>('wbr', 'Wbr')
+
+/* --
+  * SVG
+-- */
+
+export type AnimateProps = StyleProps & ElementProps<'animate'>
+
+export const Animate = withHonorableTag<AnimateProps>('animate', 'Animate')
+
+export type AnimateMotionProps = StyleProps & ElementProps<'animateMotion'>
+
+export const AnimateMotion = withHonorableTag<AnimateMotionProps>('animateMotion', 'AnimateMotion')
+
+export type AnimateTransformProps = StyleProps & ElementProps<'animateTransform'>
+
+export const AnimateTransform = withHonorableTag<AnimateTransformProps>('animateTransform', 'AnimateTransform')
+
+export type CircleProps = StyleProps & ElementProps<'circle'>
+
+export const Circle = withHonorableTag<CircleProps>('circle', 'Circle')
+
+export type ClipPathProps = StyleProps & ElementProps<'clipPath'>
+
+export const ClipPath = withHonorableTag<ClipPathProps>('clipPath', 'ClipPath')
+
+export type DefsProps = StyleProps & ElementProps<'defs'>
+
+export const Defs = withHonorableTag<DefsProps>('defs', 'Defs')
+
+export type DescProps = StyleProps & ElementProps<'desc'>
+
+export const Desc = withHonorableTag<DescProps>('desc', 'Desc')
+
+export type EllipseProps = StyleProps & ElementProps<'ellipse'>
+
+export const Ellipse = withHonorableTag<EllipseProps>('ellipse', 'Ellipse')
+
+export type FeBlendProps = StyleProps & ElementProps<'feBlend'>
+
+export const FeBlend = withHonorableTag<FeBlendProps>('feBlend', 'FeBlend')
+
+export type FeColorMatrixProps = StyleProps & ElementProps<'feColorMatrix'>
+
+export const FeColorMatrix = withHonorableTag<FeColorMatrixProps>('feColorMatrix', 'FeColorMatrix')
+
+export type FeComponentTransferProps = StyleProps & ElementProps<'feComponentTransfer'>
+
+export const FeComponentTransfer = withHonorableTag<FeComponentTransferProps>('feComponentTransfer', 'FeComponentTransfer')
+
+export type FeCompositeProps = StyleProps & ElementProps<'feComposite'>
+
+export const FeComposite = withHonorableTag<FeCompositeProps>('feComposite', 'FeComposite')
+
+export type FeConvolveMatrixProps = StyleProps & ElementProps<'feConvolveMatrix'>
+
+export const FeConvolveMatrix = withHonorableTag<FeConvolveMatrixProps>('feConvolveMatrix', 'FeConvolveMatrix')
+
+export type FeDiffuseLightingProps = StyleProps & ElementProps<'feDiffuseLighting'>
+
+export const FeDiffuseLighting = withHonorableTag<FeDiffuseLightingProps>('feDiffuseLighting', 'FeDiffuseLighting')
+
+export type FeDisplacementMapProps = StyleProps & ElementProps<'feDisplacementMap'>
+
+export const FeDisplacementMap = withHonorableTag<FeDisplacementMapProps>('feDisplacementMap', 'FeDisplacementMap')
+
+export type FeDistantLightProps = StyleProps & ElementProps<'feDistantLight'>
+
+export const FeDistantLight = withHonorableTag<FeDistantLightProps>('feDistantLight', 'FeDistantLight')
+
+export type FeDropShadowProps = StyleProps & ElementProps<'feDropShadow'>
+
+export const FeDropShadow = withHonorableTag<FeDropShadowProps>('feDropShadow', 'FeDropShadow')
+
+export type FeFloodProps = StyleProps & ElementProps<'feFlood'>
+
+export const FeFlood = withHonorableTag<FeFloodProps>('feFlood', 'FeFlood')
+
+export type FeFuncAProps = StyleProps & ElementProps<'feFuncA'>
+
+export const FeFuncA = withHonorableTag<FeFuncAProps>('feFuncA', 'FeFuncA')
+
+export type FeFuncBProps = StyleProps & ElementProps<'feFuncB'>
+
+export const FeFuncB = withHonorableTag<FeFuncBProps>('feFuncB', 'FeFuncB')
+
+export type FeFuncGProps = StyleProps & ElementProps<'feFuncG'>
+
+export const FeFuncG = withHonorableTag<FeFuncGProps>('feFuncG', 'FeFuncG')
+
+export type FeFuncRProps = StyleProps & ElementProps<'feFuncR'>
+
+export const FeFuncR = withHonorableTag<FeFuncRProps>('feFuncR', 'FeFuncR')
+
+export type FeGaussianBlurProps = StyleProps & ElementProps<'feGaussianBlur'>
+
+export const FeGaussianBlur = withHonorableTag<FeGaussianBlurProps>('feGaussianBlur', 'FeGaussianBlur')
+
+export type FeImageProps = StyleProps & ElementProps<'feImage'>
+
+export const FeImage = withHonorableTag<FeImageProps>('feImage', 'FeImage')
+
+export type FeMergeProps = StyleProps & ElementProps<'feMerge'>
+
+export const FeMerge = withHonorableTag<FeMergeProps>('feMerge', 'FeMerge')
+
+export type FeMergeNodeProps = StyleProps & ElementProps<'feMergeNode'>
+
+export const FeMergeNode = withHonorableTag<FeMergeNodeProps>('feMergeNode', 'FeMergeNode')
+
+export type FeMorphologyProps = StyleProps & ElementProps<'feMorphology'>
+
+export const FeMorphology = withHonorableTag<FeMorphologyProps>('feMorphology', 'FeMorphology')
+
+export type FeOffsetProps = StyleProps & ElementProps<'feOffset'>
+
+export const FeOffset = withHonorableTag<FeOffsetProps>('feOffset', 'FeOffset')
+
+export type FePointLightProps = StyleProps & ElementProps<'fePointLight'>
+
+export const FePointLight = withHonorableTag<FePointLightProps>('fePointLight', 'FePointLight')
+
+export type FeSpecularLightingProps = StyleProps & ElementProps<'feSpecularLighting'>
+
+export const FeSpecularLighting = withHonorableTag<FeSpecularLightingProps>('feSpecularLighting', 'FeSpecularLighting')
+
+export type FeSpotLightProps = StyleProps & ElementProps<'feSpotLight'>
+
+export const FeSpotLight = withHonorableTag<FeSpotLightProps>('feSpotLight', 'FeSpotLight')
+
+export type FeTileProps = StyleProps & ElementProps<'feTile'>
+
+export const FeTile = withHonorableTag<FeTileProps>('feTile', 'FeTile')
+
+export type FeTurbulenceProps = StyleProps & ElementProps<'feTurbulence'>
+
+export const FeTurbulence = withHonorableTag<FeTurbulenceProps>('feTurbulence', 'FeTurbulence')
+
+export type FilterProps = StyleProps & ElementProps<'filter'>
+
+export const Filter = withHonorableTag<FilterProps>('filter', 'Filter')
+
+export type ForeignObjectProps = StyleProps & ElementProps<'foreignObject'>
+
+export const ForeignObject = withHonorableTag<ForeignObjectProps>('foreignObject', 'ForeignObject')
+
+export type GProps = StyleProps & ElementProps<'g'>
+
+export const G = withHonorableTag<GProps>('g', 'G')
+
+export type ImageProps = StyleProps & ElementProps<'image'>
+
+export const Image = withHonorableTag<ImageProps>('image', 'Image')
+
+export type LineProps = StyleProps & ElementProps<'line'>
+
+export const Line = withHonorableTag<LineProps>('line', 'Line')
+
+export type LinearGradientProps = StyleProps & ElementProps<'linearGradient'>
+
+export const LinearGradient = withHonorableTag<LinearGradientProps>('linearGradient', 'LinearGradient')
+
+export type MarkerProps = StyleProps & ElementProps<'marker'>
+
+export const Marker = withHonorableTag<MarkerProps>('marker', 'Marker')
+
+export type MaskProps = StyleProps & ElementProps<'mask'>
+
+export const Mask = withHonorableTag<MaskProps>('mask', 'Mask')
+
+export type MetadataProps = StyleProps & ElementProps<'metadata'>
+
+export const Metadata = withHonorableTag<MetadataProps>('metadata', 'Metadata')
+
+export type MpathProps = StyleProps & ElementProps<'mpath'>
+
+export const Mpath = withHonorableTag<MpathProps>('mpath', 'Mpath')
+
+export type PathProps = StyleProps & ElementProps<'path'>
+
+export const Path = withHonorableTag<PathProps>('path', 'Path')
+
+export type PatternProps = StyleProps & ElementProps<'pattern'>
+
+export const Pattern = withHonorableTag<PatternProps>('pattern', 'Pattern')
+
+export type PolygonProps = StyleProps & ElementProps<'polygon'>
+
+export const Polygon = withHonorableTag<PolygonProps>('polygon', 'Polygon')
+
+export type PolylineProps = StyleProps & ElementProps<'polyline'>
+
+export const Polyline = withHonorableTag<PolylineProps>('polyline', 'Polyline')
+
+export type RadialGradientProps = StyleProps & ElementProps<'radialGradient'>
+
+export const RadialGradient = withHonorableTag<RadialGradientProps>('radialGradient', 'RadialGradient')
+
+export type RectProps = StyleProps & ElementProps<'rect'>
+
+export const Rect = withHonorableTag<RectProps>('rect', 'Rect')
+
+export type StopProps = StyleProps & ElementProps<'stop'>
+
+export const Stop = withHonorableTag<StopProps>('stop', 'Stop')
+
+export type SvgSwitchProps = StyleProps & ElementProps<'switch'>
+
+export const SvgSwitch = withHonorableTag<SvgSwitchProps>('switch', 'Switch')
+
+export type SymbolProps = StyleProps & ElementProps<'symbol'>
+
+export const Symbol = withHonorableTag<SymbolProps>('symbol', 'Symbol')
+
+export type TextProps = StyleProps & ElementProps<'text'>
+
+export const Text = withHonorableTag<TextProps>('text', 'Text')
+
+export type TextPathProps = StyleProps & ElementProps<'textPath'>
+
+export const TextPath = withHonorableTag<TextPathProps>('textPath', 'TextPath')
+
+export type TspanProps = StyleProps & ElementProps<'tspan'>
+
+export const Tspan = withHonorableTag<TspanProps>('tspan', 'Tspan')
+
+export type UseProps = StyleProps & ElementProps<'use'>
+
+export const Use = withHonorableTag<UseProps>('use', 'Use')
+
+export type ViewProps = StyleProps & ElementProps<'view'>
+
+export const View = withHonorableTag<ViewProps>('view', 'View')
