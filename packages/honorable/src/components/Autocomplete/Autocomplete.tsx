@@ -33,7 +33,7 @@ export type AutocompleteBaseProps = {
   value?: string
   onChange?: (value: string) => void
   onSelect?: (option: AutocompleteOptionType) => void
-  inputProps: Record<string, any>
+  inputProps?: Record<string, any>
 }
 
 export type AutocompleteProps = Omit<InputProps, 'onChange'> & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
@@ -142,6 +142,11 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
   const handleMenuFocus = useCallback(() => {
     inputRef.current?.focus()
+  }, [])
+
+  const handleInputClick = useCallback(() => {
+    setFocused(true)
+    setHasFound(false)
   }, [])
 
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -278,6 +283,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         {...baseInputProps}
         inputProps={{ ref: inputRef, ...inputProps }}
         value={search}
+        onClick={handleInputClick}
         onChange={handleInputChange}
         onKeyDown={handleInputKeyDown}
         onFocus={handleInputFocus}
@@ -297,6 +303,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
           noFocus
+          noOutsideClick
           menuState={menuState}
           setMenuState={setMenuState}
           position="absolute"

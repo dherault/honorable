@@ -1,7 +1,7 @@
 // Icons from https://icons.modulz.app/
 // Top 100 films from https://mui.com/material-ui/react-autocomplete/
-import React, { useState } from 'react'
-import { Autocomplete, Button } from 'honorable'
+import { useCallback, useMemo, useState } from 'react'
+import { Autocomplete, Button, Div } from 'honorable'
 
 export default {
   title: 'Components/Autocomplete',
@@ -65,6 +65,59 @@ function TemplateOnSelect(args: any) {
         {...args}
       />
     </>
+  )
+}
+
+const allClasses = [
+  'hero',
+  'hero-body',
+  'container',
+  'columns',
+  'rows',
+]
+
+const ecuCreateOption = `__ecu_create_option__${Math.random()}`
+
+function CssClassesSelector() {
+  const [classes, setClasses] = useState<string[]>([])
+  const [value, setValue] = useState('')
+
+  const options = useMemo(() => allClasses.filter(c => !classes.includes(c)), [classes])
+
+  const handleSelect = useCallback((selectedValue: any) => {
+    setClasses(x => [...new Set(selectedValue === ecuCreateOption ? !value ? x : [...x, value] : [...x, selectedValue])])
+    setValue('')
+  }, [setClasses, value])
+
+  return (
+    <Div
+      xflex="x41"
+      position="relative"
+      fontSize="0.85rem"
+      backgroundColor="white"
+      border="1px solid border"
+      borderRadius="medium"
+      gap={0.25}
+      p={0.25}
+    >
+      {classes.map(className => (
+        <Div key={className}>
+          {className}
+        </Div>
+      ))}
+      <Autocomplete
+        autoHighlight
+        placeholder={`${classes.length ? 'Combine' : 'Choose'} or create class`}
+        options={options}
+        anyOption={{ value: ecuCreateOption, label: 'Create new class' }}
+        value={value}
+        onChange={setValue}
+        onSelect={handleSelect}
+        flexGrow
+        flexShrink={1}
+        position="initial" // Give the menu to the parent
+      />
+    </Div>
   )
 }
 
@@ -297,4 +350,9 @@ InputProps.args = {
   inputProps: {
     color: 'red',
   },
+}
+
+export const Selector = CssClassesSelector.bind({}) as any
+Selector.args = {
+  options: top100Films,
 }

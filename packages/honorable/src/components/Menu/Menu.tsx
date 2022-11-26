@@ -20,6 +20,7 @@ export type MenuBaseProps = {
   open?: boolean
   transtionDuration?: number
   noFocus?: boolean
+  noOutsideClick?: boolean
 }
 
 export type MenuProps = DivProps & MenuBaseProps
@@ -32,6 +33,7 @@ export const menuPropTypes = {
   open: PropTypes.bool,
   transtionDuration: PropTypes.number,
   noFocus: PropTypes.bool,
+  noOutsideClick: PropTypes.bool,
 }
 
 const defaultMenuState: MenuStateType = {
@@ -58,6 +60,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     transtionDuration = 300,
     children,
     noFocus,
+    noOutsideClick,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -80,8 +83,10 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const rootStyles = useRootStyles('Menu', workingProps, theme)
 
   const handleOutsideClick = useCallback(() => {
+    if (noOutsideClick) return
+
     setActualMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
-  }, [setActualMenuState])
+  }, [noOutsideClick, setActualMenuState])
 
   // Handle up and down keys
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
