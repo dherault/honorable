@@ -4,7 +4,7 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 
 export type WithOutsideClickProps = PropsWithChildren<{
   preventFirstFire?: boolean
-  onOutsideClick: () => void
+  onOutsideClick: (event: MouseEvent | TouchEvent) => void
 }>
 
 export function WithOutsideClick({ children, onOutsideClick, preventFirstFire = false }: WithOutsideClickProps) {

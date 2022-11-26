@@ -35,7 +35,7 @@ export type SliderBaseProps = {
   labelTooltipDisplay: 'on' | 'off'| 'auto'
 }
 
-export type SliderProps = DivProps & SliderBaseProps
+export type SliderProps = Omit<DivProps, 'onChange'> & SliderBaseProps
 
 type MarkProps = {
   label: ReactNode
