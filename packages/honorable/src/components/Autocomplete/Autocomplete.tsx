@@ -308,7 +308,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           maxHeight={256}
           overflowY="auto"
           onFocus={handleMenuFocus}
-          {...resolvePartStyles('Menu', props, theme)}
+          {...resolvePartStyles('Autocomplete.Menu', props, theme)}
         >
           {filteredOptions.length > 0 && filteredOptions.map(option => (
             <MenuItem
