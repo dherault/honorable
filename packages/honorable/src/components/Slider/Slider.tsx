@@ -161,16 +161,18 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
   }, [currentKnobIndex, currentKnobValues, currentPosition, isHorizontal, min, max, step, handleChange, noSwap, disabled])
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
+    if (currentKnobIndex === -1 || disabled) return
+
     if (typeof onChangeCommited === 'function') onChangeCommited(event, actualValues[currentKnobIndex], currentKnobIndex)
 
     setCurrentKnobIndex(-1)
-  }, [onChangeCommited, actualValues, currentKnobIndex])
+  }, [onChangeCommited, actualValues, currentKnobIndex, disabled])
 
-  function handleKnobMouseDown(event: ReactMouseEvent<HTMLDivElement>, index: number) {
+  const handleKnobMouseDown = useCallback((event: ReactMouseEvent<HTMLDivElement>, index: number) => {
     setCurrentKnobIndex(index)
     setCurrentKnobValues([actualValues[index - 1] || min, actualValues[index], actualValues[index + 1] || max])
     setCurrentPosition(isHorizontal ? event.clientX : event.clientY)
-  }
+  }, [actualValues, isHorizontal, min, max])
 
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove)

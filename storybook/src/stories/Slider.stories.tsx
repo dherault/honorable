@@ -69,6 +69,13 @@ KnobSize.args = {
   knobSize: 42,
 }
 
+export const KnobSize2 = Template.bind({}) as any
+KnobSize2.args = {
+  isVertical: false,
+  initialValue: 0,
+  knobSize: 8,
+}
+
 export const Step = Template.bind({}) as any
 Step.args = {
   isVertical: false,
