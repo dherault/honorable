@@ -33,6 +33,8 @@ export type AutocompleteBaseProps = {
   onChange?: (value: string) => void
   onSelect?: (option: AutocompleteOptionType) => void
   inputProps?: Record<string, any>
+  forceOpen?: boolean
+  onForceOpen?: () => void
 }
 
 export type AutocompleteProps = Omit<InputProps, 'onChange'> & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
@@ -50,6 +52,8 @@ const autocompletePropTypes = {
   onChange: PropTypes.func,
   onSelect: PropTypes.func,
   inputProps: PropTypes.object,
+  forceOpen: PropTypes.bool,
+  onForceOpen: PropTypes.func,
 }
 
 const honorableNoValue = `HONORABLE_NO_VALUE_${Math.random()}`
@@ -111,6 +115,8 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     noOptionsNode = 'No options',
     anyOption,
     inputProps = {},
+    forceOpen,
+    onForceOpen,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -136,10 +142,12 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const rootStyles = useRootStyles('Autocomplete', workingProps, theme)
 
   const handleUnfocus = useCallback(() => {
+    if (forceOpen) return
+
     setFocused(false)
-    setHasFound(false)
     setIsMenuOpen(false)
-  }, [])
+    setHasFound(false)
+  }, [forceOpen])
 
   const handleMenuFocus = useCallback(() => {
     inputRef.current?.focus()
@@ -268,6 +276,19 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     }
   }, [hasFound, uncontrolledValue]) // !
 
+  useEffect(() => {
+    if (!forceOpen) return
+    console.log('forceOpen', forceOpen)
+
+    setFocused(true)
+    setIsMenuOpen(true)
+    setHasFound(false)
+
+    if (typeof onForceOpen === 'function') onForceOpen()
+  }, [forceOpen, onForceOpen])
+
+  console.log('focused, isMenuOpen, hasFound', focused, isMenuOpen, hasFound)
+
   return (
     <Div
       ref={forkedRef}
@@ -284,18 +305,14 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
         onKeyDown={handleInputKeyDown}
         onFocus={handleInputFocus}
         endIcon={(
-          <Div
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            {typeof endIcon !== 'undefined' ? endIcon : (
+          typeof endIcon !== 'undefined'
+            ? endIcon
+            : (
               <Caret
                 onClick={handleEndIconClick}
                 rotation={focused ? 180 : 0}
               />
-            )}
-          </Div>
+            )
         )}
         width="100%"
         {...resolvePartStyles('Autocomplete.Input', props, theme)}

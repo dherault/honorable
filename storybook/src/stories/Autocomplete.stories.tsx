@@ -135,6 +135,27 @@ function TemplateOnOpen(args: any) {
   )
 }
 
+function TemplateForceOpen(args: any) {
+  const [forceOpen, setForceOpen] = useState(false)
+
+  return (
+    <>
+      <Button
+        onClick={() => setForceOpen(true)}
+        mb={1}
+      >
+        Force Open
+      </Button>
+      <Autocomplete
+        forceOpen={forceOpen}
+        onForceOpen={() => setForceOpen(false)}
+        {...args}
+      />
+
+    </>
+  )
+}
+
 const top100Films = [
   'The Shawshank Redemption',
   'The Godfather',
@@ -367,5 +388,10 @@ Selector.args = {
 
 export const OnOpen = TemplateOnOpen.bind({}) as any
 OnOpen.args = {
+  options: top100Films,
+}
+
+export const ForceOpen = TemplateForceOpen.bind({}) as any
+ForceOpen.args = {
   options: top100Films,
 }
