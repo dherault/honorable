@@ -122,6 +122,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const [hasFound, setHasFound] = useState(false)
   const [search, setSearch] = useState('')
   const [uncontrolledValue, setUncontrolledValue] = useState('')
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [menuState, setMenuState] = useState<MenuStateType>({ activeItemIndex: 0 })
   const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
   const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState])
@@ -137,15 +138,11 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const handleUnfocus = useCallback(() => {
     setFocused(false)
     setHasFound(false)
+    setIsMenuOpen(false)
   }, [])
 
   const handleMenuFocus = useCallback(() => {
     inputRef.current?.focus()
-  }, [])
-
-  const handleInputClick = useCallback(() => {
-    setFocused(true)
-    setHasFound(false)
   }, [])
 
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -207,12 +204,14 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
   const handleInputFocus = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     setFocused(true)
+    setIsMenuOpen(true)
 
     if (typeof baseInputProps.onFocus === 'function') baseInputProps.onFocus(event)
   }, [baseInputProps])
 
   const handleEndIconClick = useCallback(() => {
     setFocused(x => !x)
+    setIsMenuOpen(x => !x)
     setHasFound(false)
   }, [])
 
@@ -240,8 +239,8 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   }, [focused])
 
   useEffect(() => {
-    if (typeof onOpen === 'function') onOpen(focused)
-  }, [onOpen, focused])
+    if (typeof onOpen === 'function') onOpen(isMenuOpen && focused && !hasFound)
+  }, [onOpen, isMenuOpen, focused, hasFound])
 
   useEffect(() => {
     if (event && previousEvent !== event) {
@@ -279,9 +278,8 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     >
       <Input
         {...baseInputProps}
-        inputProps={{ ref: inputRef, ...inputProps }}
         value={search}
-        onClick={handleInputClick}
+        inputProps={{ ref: inputRef, ...inputProps }}
         onChange={handleInputChange}
         onKeyDown={handleInputKeyDown}
         onFocus={handleInputFocus}
@@ -290,9 +288,13 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            onClick={handleEndIconClick}
           >
-            {endIcon || <Caret rotation={focused ? 180 : 0} />}
+            {endIcon || (
+              <Caret
+                onClick={handleEndIconClick}
+                rotation={focused ? 180 : 0}
+              />
+            )}
           </Div>
         )}
         width="100%"
@@ -310,7 +312,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
           right={1}
           left={1}
           zIndex={100}
-          display={focused && !hasFound ? 'block' : 'none'}
+          display={isMenuOpen && focused && !hasFound ? 'block' : 'none'}
           maxHeight={256}
           overflowY="auto"
           onFocus={handleMenuFocus}

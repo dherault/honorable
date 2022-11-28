@@ -1,6 +1,6 @@
 // Icons from https://icons.modulz.app/
 // Top 100 films from https://mui.com/material-ui/react-autocomplete/
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Autocomplete, Button, Div } from 'honorable'
 
 export default {
@@ -118,6 +118,20 @@ function CssClassesSelector() {
         position="initial" // Give the menu to the parent
       />
     </Div>
+  )
+}
+
+function TemplateOnOpen(args: any) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      {open ? 'Open' : 'Closed'}
+      <Autocomplete
+        onOpen={setOpen}
+        {...args}
+      />
+    </>
   )
 }
 
@@ -348,5 +362,10 @@ InputProps.args = {
 
 export const Selector = CssClassesSelector.bind({}) as any
 Selector.args = {
+  options: top100Films,
+}
+
+export const OnOpen = TemplateOnOpen.bind({}) as any
+OnOpen.args = {
   options: top100Films,
 }
