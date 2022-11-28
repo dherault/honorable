@@ -278,7 +278,6 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
   useEffect(() => {
     if (!forceOpen) return
-    console.log('forceOpen', forceOpen)
 
     setFocused(true)
     setIsMenuOpen(true)
@@ -286,8 +285,6 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
 
     if (typeof onForceOpen === 'function') onForceOpen()
   }, [forceOpen, onForceOpen])
-
-  console.log('focused, isMenuOpen, hasFound', focused, isMenuOpen, hasFound)
 
   return (
     <Div
