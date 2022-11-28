@@ -24,7 +24,6 @@ export type AutocompleteOptionType = string | { label?: string; value?: string }
 export type AutocompleteBaseProps = {
   options?: AutocompleteOptionType[],
   autoComplete?: boolean
-  autoHighlight?: boolean
   freeSolo?: boolean
   onOpen?: (open: boolean) => void
   renderOption?: (option: any) => ReactNode
@@ -42,7 +41,6 @@ const autocompletePropTypes = {
   ...inputPropTypes,
   options: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })])),
   autoComplete: PropTypes.bool,
-  autoHighlight: PropTypes.bool,
   freeSolo: PropTypes.bool,
   onOpen: PropTypes.func,
   renderOption: PropTypes.func,
@@ -112,7 +110,6 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     renderOption = defaultRenderOption,
     noOptionsNode = 'No options',
     anyOption,
-    autoHighlight = true,
     inputProps = {},
     ...otherProps
   } = props
@@ -125,7 +122,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   const [hasFound, setHasFound] = useState(false)
   const [search, setSearch] = useState('')
   const [uncontrolledValue, setUncontrolledValue] = useState('')
-  const [menuState, setMenuState] = useState<MenuStateType>({ activeItemIndex: autoHighlight ? 0 : -1 })
+  const [menuState, setMenuState] = useState<MenuStateType>({ activeItemIndex: 0 })
   const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
   const menuUsageValue = useMemo<MenuUsageContextType>(() => [menuUsageState, setMenuUsageState], [menuUsageState])
   const { value: currentOptionValue, event } = menuUsageState
@@ -250,7 +247,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     if (event && previousEvent !== event) {
       setFocused(false)
       setHasFound(true)
-      setMenuState(x => ({ ...x, activeItemIndex: autoHighlight ? 0 : -1 }))
+      setMenuState(x => ({ ...x, activeItemIndex: 0 }))
 
       const option = findInOptions(allOptions, currentOptionValue)
 
@@ -264,7 +261,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       if (typeof onChange === 'function') onChange(value)
       if (typeof onSelect === 'function') onSelect(value)
     }
-  }, [previousEvent, event, allOptions, anyOption, currentOptionValue, autoHighlight, onSelect, onChange])
+  }, [previousEvent, event, allOptions, anyOption, currentOptionValue, onSelect, onChange])
 
   useEffect(() => {
     if (hasFound) {
@@ -304,6 +301,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       <MenuUsageContext.Provider value={menuUsageValue}>
         <Menu
           noFocus
+          noFocusLoss
           noOutsideClick
           menuState={menuState}
           setMenuState={setMenuState}

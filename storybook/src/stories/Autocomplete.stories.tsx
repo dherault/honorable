@@ -326,12 +326,6 @@ MultilineControlled.args = {
   options: top100Films,
 }
 
-export const AutoHighlight = Template.bind({}) as any
-AutoHighlight.args = {
-  autoHighlight: true,
-  options: top100Films,
-}
-
 export const AnyOption = Template.bind({}) as any
 AnyOption.args = {
   options: top100Films,

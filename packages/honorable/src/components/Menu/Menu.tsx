@@ -20,6 +20,7 @@ export type MenuBaseProps = {
   open?: boolean
   transtionDuration?: number
   noFocus?: boolean
+  noFocusLoss?: boolean
   noOutsideClick?: boolean
 }
 
@@ -33,6 +34,7 @@ export const menuPropTypes = {
   open: PropTypes.bool,
   transtionDuration: PropTypes.number,
   noFocus: PropTypes.bool,
+  noFocusLoss: PropTypes.bool,
   noOutsideClick: PropTypes.bool,
 }
 
@@ -60,6 +62,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     transtionDuration = 300,
     children,
     noFocus,
+    noFocusLoss,
     noOutsideClick,
     ...otherProps
   } = props
@@ -118,8 +121,10 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
 
   // On mouse leave, unset the active item
   const handleMouseLeave = useCallback(() => {
+    if (noFocusLoss) return
+
     setActualMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
-  }, [setActualMenuState])
+  }, [noFocusLoss, setActualMenuState])
 
   const wrapFade = useCallback((element: ReactElement) => {
     if (!fade) return element
