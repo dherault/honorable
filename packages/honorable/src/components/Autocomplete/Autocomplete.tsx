@@ -289,7 +289,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
             alignItems="center"
             justifyContent="center"
           >
-            {endIcon || (
+            {typeof endIcon !== 'undefined' ? endIcon : (
               <Caret
                 onClick={handleEndIconClick}
                 rotation={focused ? 180 : 0}
