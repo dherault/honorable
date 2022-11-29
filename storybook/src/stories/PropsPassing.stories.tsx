@@ -1,5 +1,5 @@
 import React from 'react'
-import { A, Accordion, Div, ExtendTheme, Flex, P } from 'honorable'
+import { A, Accordion, Button, Div, ExtendTheme, Flex, P } from 'honorable'
 
 export default {
   title: 'Components/Props Passing',
@@ -8,7 +8,11 @@ export default {
 function Template1() {
   return (
     <P align="center">
-      I have an `align="center"` prop, is it passed to the DOM?
+      I have an `align="center"` prop,
+      <br />
+      is it passed to the DOM?
+      <br />
+      (failing!)
     </P>
   )
 }
@@ -41,7 +45,8 @@ AsAnchor.args = {
 }
 
 const borderRadiuses = {
-  normal: 6,
+  normal: 3,
+  large: 6,
 }
 
 function Template3() {
@@ -61,12 +66,12 @@ function Template3() {
         backgroundColor="blue"
         color="white"
       >
-        I should have a 6px border radius.
+        I should have a 3px border radius.
       </Div>
       <Flex
         mt={1}
         p={0.5}
-        borderRadius="normal"
+        borderRadius="large"
         backgroundColor="blue"
         color="white"
       >
@@ -141,11 +146,42 @@ PartProps.args = {
 function Template7() {
   return (
     <Div red-mobile-down>
-      I should be red on mobile
+      I should be red on mobile (failing!)
     </Div>
   )
 }
 
 export const CustomPropsBreakpoints = Template7.bind({}) as any
 CustomPropsBreakpoints.args = {
+}
+
+function Template8() {
+  return (
+    <ExtendTheme
+      theme={{
+        colors: {
+          'some-red': {
+            light: 'red',
+            dark: 'green',
+          },
+        },
+        Button: {
+          Root: [
+            ({ coolColor }: any) => coolColor && {
+              color: 'some-red',
+              backgroundColor: 'yellow',
+            },
+          ],
+        },
+      }}
+    >
+      <Button coolColor>
+        Do I have a red text?
+      </Button>
+    </ExtendTheme>
+  )
+}
+
+export const DeepColorResolution = Template8.bind({}) as any
+DeepColorResolution.args = {
 }
