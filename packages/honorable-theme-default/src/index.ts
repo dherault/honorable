@@ -103,7 +103,6 @@ const theme = {
         elevation: 1,
         backgroundColor: 'background',
         borderBottom: '1px solid border',
-        overflow: 'hidden',
         userSelect: 'none',
         '&:first-of-type': {
           borderTopLeftRadius: 4,
@@ -122,6 +121,11 @@ const theme = {
         paddingBottom: 16,
         paddingLeft: 16,
         paddingRight: 16,
+      },
+    ],
+    ChildrenWrapper: [
+      ({ expanded, isExpanding }: any) => !expanded && !isExpanding && {
+        overflow: 'hidden',
       },
     ],
     Children: [

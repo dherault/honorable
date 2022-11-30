@@ -164,3 +164,24 @@ WithCheckboxes.args = {
     <Checkbox>Checkbox</Checkbox>
   ),
 }
+
+export const WithAbsoluteChildren = TemplateSolo.bind({}) as any
+WithAbsoluteChildren.args = {
+  title: 'An Accordion',
+  children: (
+    <Div
+      position="relative"
+      width={64}
+      height={64}
+    >
+      <Div
+        position="absolute"
+        top={-100}
+        left={0}
+        right={0}
+        bottom={0}
+        backgroundColor="red"
+      />
+    </Div>
+  ),
+}
