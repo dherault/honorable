@@ -73,6 +73,8 @@ export { default as useForkedRef } from './hooks/useForkedRef'
 
 export { default as useMediaQuery } from './hooks/useMediaQuery'
 
+export { default as useImageLoad } from './hooks/useImageLoad'
+
 export { default as useOutsideClick } from './hooks/useOutsideClick'
 
 export { default as useGlobalStyles } from './hooks/useGlobalStyles'
