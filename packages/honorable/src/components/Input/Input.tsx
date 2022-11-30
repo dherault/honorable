@@ -213,12 +213,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           value={actualValue}
           onChange={handleChange}
           placeholder={placeholder}
-          onFocus={event => {
-            if (typeof onFocus === 'function') onFocus(event)
-          }}
-          onBlur={event => {
-            if (typeof onBlur === 'function') onBlur(event)
-          }}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onKeyDown={event => {
             handleKeyDown(event)
             if (typeof onKeyDown === 'function') onKeyDown(event)
