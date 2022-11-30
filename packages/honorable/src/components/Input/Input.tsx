@@ -194,12 +194,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           flexGrow={1}
           flexShrink={1}
           minWidth={0} // https://stackoverflow.com/questions/42421361/input-button-elements-not-shrinking-in-a-flex-container
-          onFocus={event => {
-            if (typeof onFocus === 'function') onFocus(event)
-          }}
-          onBlur={event => {
-            if (typeof onBlur === 'function') onBlur(event)
-          }}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onKeyDown={event => {
             handleKeyDown(event)
             if (typeof onKeyDown === 'function') onKeyDown(event)
