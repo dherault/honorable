@@ -1,9 +1,10 @@
-import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useState } from 'react'
+import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
+import useForkedRef from '../../hooks/useForkedRef'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
@@ -70,6 +71,10 @@ export type InputBaseProps = {
    */
   autoFocus?: boolean
   /**
+   * Weither the Input text should be selected on mount or not. autoFocus must be true for this to work
+   */
+  autoSelect?: boolean
+  /**
    * Weither the Input is mutliline or not. If so, a <textarea> is rendered
    */
   multiline?: boolean
@@ -104,6 +109,7 @@ export const inputPropTypes = {
   endIcon: PropTypes.node,
   disabled: PropTypes.bool,
   autoFocus: PropTypes.bool,
+  autoSelect: PropTypes.bool,
   multiline: PropTypes.bool,
   minRows: PropTypes.number,
   maxRows: PropTypes.number,
@@ -126,6 +132,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     endIcon,
     disabled,
     autoFocus,
+    autoSelect,
     multiline,
     minRows,
     maxRows,
@@ -133,6 +140,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+  const forkedRef = useForkedRef(inputRef, inputProps.ref)
   const [uncontrolledValue, setUncontrolledValue] = useState<InputValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
   const workingProps = { ...props, value: actualValue }
@@ -146,6 +155,12 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
     if (event.key === 'Enter' && typeof onEnter === 'function') onEnter(event)
   }
+
+  useEffect(() => {
+    if (!(inputRef.current && autoFocus && autoSelect)) return
+
+    inputRef.current.select()
+  }, [autoFocus, autoSelect])
 
   return (
     <Div
@@ -169,6 +184,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       )}
       {!multiline && (
         <InputBase
+          ref={forkedRef}
           type={type}
           autoFocus={autoFocus}
           disabled={disabled}
@@ -195,6 +211,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       )}
       {multiline && (
         <TextareaAutosize
+          ref={forkedRef}
           autoFocus={autoFocus}
           disabled={disabled}
           value={actualValue}

@@ -83,6 +83,14 @@ AutoFocus.args = {
   autoFocus: true,
 }
 
+export const AutoSelect = Template.bind({}) as any
+AutoSelect.args = {
+  defaultValue: 'Selected',
+  disabled: false,
+  autoFocus: true,
+  autoSelect: true,
+}
+
 export const StartIcon = Template.bind({}) as any
 StartIcon.args = {
   disabled: false,
