@@ -197,6 +197,11 @@ const theme = {
         },
       },
     ],
+    Children: [
+      {
+        minWidth: 0, // To allow ellipsis
+      },
+    ],
     StartIcon: [
       {
         marginLeft: -6,
