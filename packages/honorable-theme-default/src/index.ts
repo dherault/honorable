@@ -124,7 +124,7 @@ const theme = {
       },
     ],
     ChildrenWrapper: [
-      ({ expanded, isExpanding }: any) => (expanded && !isExpanding) || (!expanded && isExpanding) && {
+      ({ expanded, isExpanding }: any) => ((expanded && !isExpanding) || !expanded || isExpanding) && {
         overflow: 'hidden',
       },
     ],
