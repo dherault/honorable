@@ -53,7 +53,7 @@ const theme = {
     },
     shadow: {
       light: 'rgba(0, 0, 0, 0.2)',
-      dark: 'rgba(96, 96, 96, 0.5)',
+      dark: 'rgba(12, 12, 12, 0.5)',
     },
     success: '#64db5c',
     error: '#ff4d4d',
