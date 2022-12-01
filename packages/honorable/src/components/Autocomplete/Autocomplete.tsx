@@ -1,6 +1,8 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
 
@@ -13,31 +15,15 @@ import useRootStyles from '../../hooks/useRootStyles'
 import pickProps from '../../utils/pickProps'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
 import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'
 import { MenuItem } from '../MenuItem/MenuItem'
-import { Input, InputProps, inputPropTypes } from '../Input/Input'
+import { Input, InputBaseProps, inputPropTypes } from '../Input/Input'
 import { Div, DivProps } from '../tags'
 
-export type AutocompleteOptionType = string | { label?: string; value?: string }
-
-export type AutocompleteBaseProps = {
-  options?: AutocompleteOptionType[],
-  autoComplete?: boolean
-  freeSolo?: boolean
-  onOpen?: (open: boolean) => void
-  renderOption?: (option: any) => ReactNode
-  noOptionsNode?: ReactNode
-  anyOption?: AutocompleteOptionType
-  value?: string
-  onChange?: (value: string) => void
-  onSelect?: (option: AutocompleteOptionType) => void
-  inputProps?: Record<string, any>
-  forceOpen?: boolean
-  onForceOpen?: () => void
-}
-
-export type AutocompleteProps = Omit<InputProps, 'onChange'> & Omit<DivProps, 'onChange'> & AutocompleteBaseProps
+export const autocompleteParts = ['Input', 'Menu', 'MenuItem', 'NoOption'] as const
 
 const autocompletePropTypes = {
   ...inputPropTypes,
@@ -55,6 +41,26 @@ const autocompletePropTypes = {
   forceOpen: PropTypes.bool,
   onForceOpen: PropTypes.func,
 }
+
+export type AutocompleteOptionType = string | { label?: string; value?: string }
+
+export type AutocompleteBaseProps = InputBaseProps & {
+  options?: AutocompleteOptionType[],
+  autoComplete?: boolean
+  freeSolo?: boolean
+  onOpen?: (open: boolean) => void
+  renderOption?: (option: any) => ReactNode
+  noOptionsNode?: ReactNode
+  anyOption?: AutocompleteOptionType
+  value?: string
+  onChange?: (value: string) => void
+  onSelect?: (option: AutocompleteOptionType) => void
+  inputProps?: Record<string, any>
+  forceOpen?: boolean
+  onForceOpen?: () => void
+}
+
+export type AutocompleteProps = ComponentProps<AutocompleteBaseProps, 'div', typeof autocompleteParts[number]>
 
 const honorableNoValue = `HONORABLE_NO_VALUE_${Math.random()}`
 
@@ -120,7 +126,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const [baseInputProps, divProps]: [InputProps, DivProps] = pickProps(otherProps, inputPropTypes)
+  const [baseInputProps, divProps] = pickProps<InputBaseProps, DivProps>(otherProps, inputPropTypes)
   const autocompleteRef = useRef<HTMLDivElement>(null)
   const forkedRef = useForkedRef(autocompleteRef, ref)
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
@@ -292,7 +298,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       display="inline-block"
       position="relative"
       {...rootStyles}
-      {...divProps}
+      {...filterUndefinedValues(divProps)}
     >
       <Input
         {...baseInputProps}

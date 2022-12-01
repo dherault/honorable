@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useRootStyles from '../../hooks/useRootStyles'
@@ -33,7 +35,7 @@ export type SnackBarBaseProps = {
   offsetHorizontal?: number | string
 }
 
-export type SnackBarProps = DivProps & SnackBarBaseProps
+export type SnackBarProps = DivProps & SnackBarBaseProps & PartProps<typeof SnackBarParts[number]>
 
 export const snackBarPropTypes = {
   open: PropTypes.bool,
@@ -133,7 +135,7 @@ function SnackBarRef(props: SnackBarProps, ref: Ref<any>) {
       ref={ref}
       position="fixed"
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       {children}
     </Div>

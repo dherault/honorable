@@ -3,18 +3,17 @@ import { Ref, forwardRef } from 'react'
 import { css, keyframes } from '@emotion/react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-import { Div, DivProps } from '../tags'
+import { Div } from '../tags'
 
-export type SkeletonBaseProps = {
-  animation?: 'wave' | boolean | string
-}
-
-export type SkeletonProps = Omit<DivProps, 'animation'> & SkeletonBaseProps
+export const skeletonParts = ['Selected', 'Menu'] as const
 
 export const SkeletonPropTypes = {
   animation: PropTypes.oneOfType([
@@ -22,6 +21,12 @@ export const SkeletonPropTypes = {
     PropTypes.bool,
   ]),
 }
+
+export type SkeletonBaseProps = {
+  animation?: 'wave' | boolean | string
+}
+
+export type SkeletonProps = ComponentProps<SkeletonBaseProps, 'div', typeof skeletonParts[number]>
 
 const pulseKeyframe = keyframes`
   0% {
@@ -88,7 +93,7 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
       position="relative"
       width={children ? undefined : '100%'}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       <Div
         position="absolute"

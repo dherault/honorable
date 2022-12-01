@@ -1,15 +1,21 @@
 import { Ref, forwardRef } from 'react'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { P, PProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-export type TextBaseProps = unknown
+import { P } from '../tags'
 
-export type TextProps = PProps & TextBaseProps
+export const textParts: readonly string[] = [] as const
 
 export const TextPropTypes = {}
+
+export type TextBaseProps = object
+
+export type TextProps = ComponentProps<TextBaseProps, 'p', typeof textParts[number]>
 
 // An alias for P
 function TextRef(props: TextProps, ref: Ref<any>) {
@@ -20,7 +26,7 @@ function TextRef(props: TextProps, ref: Ref<any>) {
     <P
       ref={ref}
       {...rootStyles}
-      {...props}
+      {...filterUndefinedValues(props)}
     />
   )
 }

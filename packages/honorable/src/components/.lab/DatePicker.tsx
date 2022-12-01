@@ -1,6 +1,8 @@
 import { Ref, forwardRef, useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import DateTimeContext from '../../contexts/DateTimeContext'
@@ -34,7 +36,7 @@ export type DatePickerBaseProps = {
   monthMargin?: number
 }
 
-export type DatePickerProps = DivProps & DatePickerBaseProps
+export type DatePickerProps = DivProps & DatePickerBaseProps & PartProps<typeof DatePickerParts[number]>
 
 export const DatePickerPropTypes = {
   onChange: PropTypes.func,
@@ -360,7 +362,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
       width={viewportWidth}
       position="relative"
       userSelect="none"
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       {areYearsDisplayed ? renderYears() : renderMonths()}
       <Flex
@@ -422,7 +424,7 @@ export type DatePickerDayBaseProps = {
   active?: boolean
 }
 
-export type DatePickerDayProps = DivProps & DatePickerDayBaseProps
+export type DatePickerDayProps = DivProps & DatePickerDayBaseProps & PartProps<typeof DatePickerDayParts[number]>
 
 export const DatePickerDayPropTypes = {
   day: PropTypes.string,
@@ -441,7 +443,7 @@ function DatePickerDayRef(props: DatePickerDayProps, ref: Ref<any>) {
     return (
       <Div
         ref={ref}
-        {...otherProps}
+        {...filterUndefinedValues(otherProps)}
       />
     )
   }
@@ -454,7 +456,7 @@ function DatePickerDayRef(props: DatePickerDayProps, ref: Ref<any>) {
     <Flex
       cursor="pointer"
       {...styles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       <Flex
         flexGrow={1}
@@ -489,7 +491,7 @@ export type DatePickerYearsBaseProps = {
   onYearClick: (year: number) => void,
 }
 
-export type DatePickerYearsProps = DivProps & DatePickerYearsBaseProps
+export type DatePickerYearsProps = DivProps & DatePickerYearsBaseProps & PartProps<typeof DatePickerYearsParts[number]>
 
 export const DatePickerYearsPropTypes = {
   minYear: PropTypes.number,
@@ -537,7 +539,7 @@ ref: Ref<any>
       align="flex-start"
       justify="flex-start"
       overflowY="auto"
-      {...props}
+      {...filterUndefinedValues(props)}
     >
       {yearNodes}
     </Flex>
@@ -561,7 +563,7 @@ export type DatePickerYearBaseProps = {
   active: boolean
 }
 
-export type DatePickerYearProps = DivProps & DatePickerYearBaseProps
+export type DatePickerYearProps = DivProps & DatePickerYearBaseProps & PartProps<typeof DatePickerYearParts[number]>
 
 export const DatePickerYearPropTypes = {
   dimensions: PropTypes.shape({
@@ -591,7 +593,7 @@ ref: Ref<any>
       borderColor={active ? 'black' : 'transparent'}
       width="25%"
       _hover={{ borderColor: 'black' }}
-      {...props}
+      {...filterUndefinedValues(props)}
     >
       {year}
     </Flex>

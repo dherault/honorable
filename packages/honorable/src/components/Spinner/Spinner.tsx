@@ -1,10 +1,21 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { Span, SpanProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Span } from '../tags'
+
+export const spinnerParts: readonly string[] = [] as const
+
+export const spinnerPropTypes = {
+  size: PropTypes.number,
+  color: PropTypes.string,
+}
 
 export type SpinnerBaseProps = {
   /**
@@ -17,12 +28,7 @@ export type SpinnerBaseProps = {
   color?: string
 }
 
-export type SpinnerProps = SpanProps & SpinnerBaseProps
-
-export const spinnerPropTypes = {
-  size: PropTypes.number,
-  color: PropTypes.string,
-}
+export type SpinnerProps = ComponentProps<SpinnerBaseProps, 'div', typeof spinnerParts[number]>
 
 function SpinnerRef({ size, color, ...props }: SpinnerProps, ref: Ref<any>) {
   const theme = useTheme()
@@ -32,7 +38,7 @@ function SpinnerRef({ size, color, ...props }: SpinnerProps, ref: Ref<any>) {
     <Span
       ref={ref}
       {...rootStyles}
-      {...props}
+      {...filterUndefinedValues(props)}
     />
   )
 }

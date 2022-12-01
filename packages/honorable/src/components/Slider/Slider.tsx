@@ -2,14 +2,19 @@
 import { MouseEvent as ReactMouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-import { Div, DivProps } from '../tags'
+import { Div } from '../tags'
 import { Tooltip } from '../Tooltip/Tooltip'
+
+export const sliderParts = ['Track', 'Knob', 'Mark', 'MarkInner'] as const
 
 export type SliderMarkType = {
   label?: ReactNode
@@ -35,7 +40,7 @@ export type SliderBaseProps = {
   labelTooltipDisplay?: 'on' | 'off'| 'auto'
 }
 
-export type SliderProps = Omit<DivProps, 'onChange'> & SliderBaseProps
+export type SliderProps = ComponentProps<SliderBaseProps, 'div', typeof sliderParts[number]>
 
 type MarkProps = {
   label: ReactNode
@@ -207,7 +212,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
       height={isHorizontal ? 8 : 256}
       width={isHorizontal ? 256 : 8}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       <Div
         width={isHorizontal ? '100%' : 8}
@@ -237,7 +242,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
           position={valueToPosition(value)}
           markOffset={markOffset}
           isHorizontal={isHorizontal}
-          styles={resolvePartStyles('Mark', props, theme)}
+          styles={resolvePartStyles('Slider.Mark', props, theme)}
           innerStyles={resolvePartStyles('Slider.MarkInner', props, theme)}
         />
       ))}

@@ -3,13 +3,28 @@ import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useEscapeKey from '../../hooks/useEscapeKey'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div } from '../tags'
+
+export const modalParts = ['Backdrop'] as const
+
+export const modalPropTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  fade: PropTypes.bool,
+  transitionDuration: PropTypes.number,
+  disableEscapeKey: PropTypes.bool,
+  portal: PropTypes.bool,
+}
 
 export type ModalBaseProps = {
   open?: boolean
@@ -20,16 +35,7 @@ export type ModalBaseProps = {
   portal?: boolean
 }
 
-export type ModalProps = DivProps & ModalBaseProps
-
-export const modalPropTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.func,
-  fade: PropTypes.bool,
-  transitionDuration: PropTypes.number,
-  disableEscapeKey: PropTypes.bool,
-  portal: PropTypes.bool,
-}
+export type ModalProps = ComponentProps<ModalBaseProps, 'div', typeof modalParts[number]>
 
 function ModalRef(props: ModalProps, ref: Ref<any>) {
   const {
@@ -193,7 +199,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
           overflowY="auto"
           margin={32}
           {...rootStyles}
-          {...otherProps}
+          {...filterUndefinedValues(otherProps)}
         />
       )}
     </Div>

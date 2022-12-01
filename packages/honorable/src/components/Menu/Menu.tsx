@@ -2,6 +2,8 @@ import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, u
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../../contexts/MenuContext'
 
 import useTheme from '../../hooks/useTheme'
@@ -9,8 +11,24 @@ import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div } from '../tags'
 import { MenuItem } from '../MenuItem/MenuItem'
+
+export const menuParts: readonly string[] = [] as const
+
+export const menuPropTypes = {
+  menuState: PropTypes.object,
+  setMenuState: PropTypes.func,
+  isSubMenu: PropTypes.bool,
+  fade: PropTypes.bool,
+  open: PropTypes.bool,
+  transtionDuration: PropTypes.number,
+  noFocus: PropTypes.bool,
+  noFocusLoss: PropTypes.bool,
+  noOutsideClick: PropTypes.bool,
+}
 
 export type MenuBaseProps = {
   menuState?: MenuStateType
@@ -24,19 +42,7 @@ export type MenuBaseProps = {
   noOutsideClick?: boolean
 }
 
-export type MenuProps = DivProps & MenuBaseProps
-
-export const menuPropTypes = {
-  menuState: PropTypes.object,
-  setMenuState: PropTypes.func,
-  isSubMenu: PropTypes.bool,
-  fade: PropTypes.bool,
-  open: PropTypes.bool,
-  transtionDuration: PropTypes.number,
-  noFocus: PropTypes.bool,
-  noFocusLoss: PropTypes.bool,
-  noOutsideClick: PropTypes.bool,
-}
+export type MenuProps = ComponentProps<MenuBaseProps, 'div', typeof menuParts[number]>
 
 const defaultMenuState: MenuStateType = {
   activeItemIndex: -1,
@@ -219,7 +225,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
           tabIndex={0}
           display="inline-block"
           {...rootStyles}
-          {...otherProps}
+          {...filterUndefinedValues(otherProps)}
           onKeyDown={event => {
             handleKeyDown(event)
             if (typeof props.onKeyDown === 'function') props.onKeyDown(event)

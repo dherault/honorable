@@ -1,6 +1,8 @@
 import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
 
@@ -11,14 +13,29 @@ import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import pickProps from '../../utils/pickProps'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
+
+import pickProps from '../../utils/pickProps'
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
 import { Button, ButtonProps, buttonPropTypes } from '../Button/Button'
 import { Caret } from '../Caret/Caret'
 import { Menu } from '../Menu/Menu'
-import { Div, DivProps } from '../tags'
+import { Div } from '../tags'
+
+export const dropdownButtonParts = ['Button', 'Menu'] as const
+
+export const dropdownButtonPropTypes = {
+  ...buttonPropTypes,
+  open: PropTypes.bool,
+  defaultOpen: PropTypes.bool,
+  label: PropTypes.string,
+  fade: PropTypes.bool,
+  endIcon: PropTypes.node,
+  onChange: PropTypes.func,
+  onOpen: PropTypes.func,
+}
 
 export type DropdownButtonBaseProps = {
   /**
@@ -51,21 +68,10 @@ export type DropdownButtonBaseProps = {
   onOpen?: (open: boolean) => void
 }
 
-export type DropdownButtonProps = Omit<DivProps & ButtonProps, 'onChange'> & DropdownButtonBaseProps
-
-export const dropdownButtonPropTypes = {
-  ...buttonPropTypes,
-  open: PropTypes.bool,
-  defaultOpen: PropTypes.bool,
-  label: PropTypes.string,
-  fade: PropTypes.bool,
-  endIcon: PropTypes.node,
-  onChange: PropTypes.func,
-  onOpen: PropTypes.func,
-}
+export type DropdownButtonProps = ComponentProps<DropdownButtonBaseProps, 'div', typeof dropdownButtonParts[number]>
 
 function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
-  const [buttonProps, rootProps]: [ButtonProps, DivProps] = pickProps(props, buttonPropTypes)
+  const [buttonProps, rootProps]: [ButtonProps, DropdownButtonProps] = pickProps(props, buttonPropTypes)
   const {
     open,
     defaultOpen,
@@ -124,7 +130,7 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
       position="relative"
       display="inline-block"
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       <Button
         endIcon={endIcon || (

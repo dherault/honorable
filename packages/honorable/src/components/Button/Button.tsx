@@ -1,14 +1,28 @@
 import { ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
 import { Spinner } from '../Spinner/Spinner'
-import { ButtonBase, ButtonBaseBaseProps, Span } from '../tags'
+import { ButtonBase, Span } from '../tags'
+
+export const buttonParts = ['StartIcon', 'LoadingIndicator', 'Spinner', 'Children', 'EndIcon'] as const
+
+export const buttonPropTypes = {
+  startIcon: PropTypes.node,
+  endIcon: PropTypes.node,
+  loading: PropTypes.bool,
+  loadingIndicator: PropTypes.node,
+  disabled: PropTypes.bool,
+}
 
 export type ButtonBaseProps = {
   /**
@@ -31,22 +45,9 @@ export type ButtonBaseProps = {
    * Weither the Button is disabled or not
    */
   disabled?: boolean
-  /**
-   * The Button's Spinner color
-   */
-  spinnerColor?: string
 }
 
-export type ButtonProps = ButtonBaseBaseProps & ButtonBaseProps
-
-export const buttonPropTypes = {
-  startIcon: PropTypes.node,
-  endIcon: PropTypes.node,
-  loading: PropTypes.bool,
-  loadingIndicator: PropTypes.node,
-  disabled: PropTypes.bool,
-  spinnerColor: PropTypes.string,
-}
+export type ButtonProps = ComponentProps<ButtonBaseProps, 'button', typeof buttonParts[number]>
 
 function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   const {
@@ -55,7 +56,6 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
     children,
     loading,
     loadingIndicator,
-    spinnerColor = 'white',
     ...otherProps
   } = props
   const theme = useTheme()
@@ -78,7 +78,7 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
       disabled={loading}
       position="relative"
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       {!!startIcon && (
         <Span
@@ -105,9 +105,9 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
         >
           {(loadingIndicator || (
             <Spinner
-              color={spinnerColor}
+              color="white"
               size={typeof height === 'number' ? height * 3 / 5 : 16}
-              {...resolvePartStyles('Spinner', props, theme)}
+              {...resolvePartStyles('Button.Spinner', props, theme)}
             />
           ))}
         </Span>

@@ -1,15 +1,21 @@
 import { Ref, forwardRef } from 'react'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-export type CardBaseProps = unknown
+import { Div } from '../tags'
 
-export type CardProps = DivProps & CardBaseProps
+export const cardParts: readonly string[] = [] as const
 
 export const CardPropTypes = {}
+
+export type CardBaseProps = object
+
+export type CardProps = ComponentProps<CardBaseProps, 'div', typeof cardParts[number]>
 
 function CardRef(props: CardProps, ref: Ref<any>) {
   const theme = useTheme()
@@ -19,7 +25,7 @@ function CardRef(props: CardProps, ref: Ref<any>) {
     <Div
       ref={ref}
       {...rootStyles}
-      {...props}
+      {...filterUndefinedValues(props)}
     />
   )
 }

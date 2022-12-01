@@ -1,20 +1,29 @@
 import { Ref, forwardRef } from 'react'
+import PropTypes from 'prop-types'
+
+import { ComponentProps } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div } from '../tags'
+
+export const buttonGroupParts: readonly string[] = [] as const
+
+export const buttonGroupPropTypes = {
+  direction: PropTypes.oneOf(['row', 'column']),
+}
 
 export type ButtonGroupBaseProps = {
   /**
    * The direction of the ButtonGroup
    */
-  direction?: 'row' | 'column' | string
+  direction?: 'row' | 'column'
 }
 
-export type ButtonGroupProps = Omit<DivProps, 'direction'> & ButtonGroupBaseProps
-
-export const buttonGroupPropTypes = {}
+export type ButtonGroupProps = ComponentProps<ButtonGroupBaseProps, 'div', typeof buttonGroupParts[number]>
 
 function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   const {
@@ -31,7 +40,7 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
       display="inline-flex"
       flexDirection={direction}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     />
   )
 }
@@ -39,4 +48,5 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
 export const ButtonGroup = forwardRef(ButtonGroupRef)
 
 ButtonGroup.displayName = 'ButtonGroup'
+// @ts-expect-error
 ButtonGroup.propTypes = buttonGroupPropTypes

@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithChecked } from '../../types'
+import { CSSProperties, ComponentProps, TargetWithChecked } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
@@ -9,8 +9,20 @@ import useRootStyles from '../../hooks/useRootStyles'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-import { Div, DivProps, Span } from '../tags'
+import { Div, Span } from '../tags'
+
+export const checkboxParts = ['Control', 'Children'] as const
+
+export const checkboxPropTypes = {
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  icon: PropTypes.node,
+  onChange: PropTypes.func,
+  labelPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
+}
 
 export type CheckboxBaseProps = {
   /**
@@ -39,16 +51,7 @@ export type CheckboxBaseProps = {
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
-export type CheckboxProps = Omit<DivProps, 'onChange'> & CheckboxBaseProps
-
-export const checkboxPropTypes = {
-  checked: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  icon: PropTypes.node,
-  onChange: PropTypes.func,
-  labelPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
-}
+export type CheckboxProps = ComponentProps<CheckboxBaseProps, 'div', typeof checkboxParts[number]>
 
 const defaultIcon = (
   <svg
@@ -90,7 +93,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
   }
   const rootStyles = useRootStyles('Checkbox', workingProps, theme)
 
-  const flexProps = labelPosition === 'left'
+  const flexProps: CSSProperties = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
     : labelPosition === 'top'
       ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
@@ -121,7 +124,7 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
       userSelect="none"
       {...flexProps}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
       onClick={event => {
         handleChange(event)
         if (typeof props.onClick === 'function') props.onClick(event)

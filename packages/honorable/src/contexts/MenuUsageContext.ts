@@ -7,6 +7,7 @@ export type MenuUsageStateType = {
 }
 
 export type MenuUsageStateDispatcherType = Dispatch<SetStateAction<MenuUsageStateType>>
+
 export type MenuUsageContextType = [MenuUsageStateType, MenuUsageStateDispatcherType]
 
 export default createContext<MenuUsageContextType>([{}, () => {}])

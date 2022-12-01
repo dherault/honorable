@@ -1,15 +1,21 @@
 import { Ref, forwardRef } from 'react'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { Span, SpanProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-export type IconBaseProps = unknown
+import { Span } from '../tags'
 
-export type IconProps = SpanProps & IconBaseProps
+export const iconParts: readonly string[] = [] as const
 
 export const iconPropTypes = {}
+
+export type IconBaseProps = object
+
+export type IconProps = ComponentProps<IconBaseProps, 'span', typeof iconParts[number]>
 
 function IconRef(props: IconProps, ref: Ref<any>) {
   const theme = useTheme()
@@ -22,7 +28,7 @@ function IconRef(props: IconProps, ref: Ref<any>) {
       alignItems="center"
       justifyContent="center"
       {...rootStyles}
-      {...props}
+      {...filterUndefinedValues(props)}
     />
   )
 }

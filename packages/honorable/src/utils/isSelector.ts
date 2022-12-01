@@ -10,4 +10,5 @@ function isSelector(property: any) {
 
   return property.startsWith(' ') || selectorPrefixes.some(prefix => trimmedProperty.startsWith(prefix))
 }
+
 export default isSelector

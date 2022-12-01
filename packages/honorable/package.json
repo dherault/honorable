@@ -6,13 +6,15 @@
   "scripts": {
     "test": "jest",
     "test:watch": "nodemon --watch src --watch tests --ext ts,tsx,snap --exec \"npm run test\"",
+    "lint": "eslint src tests",
+    "lint:fix": "eslint --fix src tests",
     "dev": "npm run clean:build && nodemon --watch src --ext ts,tsx --exec \"npm run build\"",
     "build": "npx tsc --declaration",
     "clean": "npm run clean:build && npm run clean:node-modules && npm i --force",
     "clean:node-modules": "rimraf node_module package-lock.json",
     "clean:build": "rimraf dist",
     "clean:peerDependencies": "rimraf node_modules/react node_modules/react-dom",
-    "prepublishOnly": "npm run clean && npm test && npm run build"
+    "prepublishOnly": "npm run clean && npm run lint && npm test && npm run build"
   },
   "repository": {
     "type": "git",
@@ -35,7 +37,9 @@
   ],
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.0",
+    "@emotion/utils": "^1.2.0",
     "@floating-ui/react-dom": "^1.0.1",
+    "csstype": "^3.1.1",
     "lodash.merge": "^4.6.2",
     "lodash.mergewith": "^4.6.2",
     "prop-types": "^15.8.1",

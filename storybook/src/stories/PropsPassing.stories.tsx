@@ -165,19 +165,47 @@ function Template8() {
             dark: 'green',
           },
         },
-        Button: {
-          Root: [
-            ({ coolColor }: any) => coolColor && {
-              color: 'some-red',
-              backgroundColor: 'yellow',
-            },
-          ],
-        },
+        global: [
+          ({ coolColor }: any) => coolColor && {
+            color: 'some-red',
+          },
+        ],
       }}
     >
-      <Button coolColor>
+      <Button
+        coolColor
+        color={null}
+      >
+        Do I NOT have a red text?
+      </Button>
+      <Button
+        coolColor
+        color={undefined}
+      >
         Do I have a red text?
       </Button>
+      <Button
+        coolColor
+      >
+        Do I have a red text?
+      </Button>
+      <Div
+        coolColor
+        color={null}
+      >
+        Do I have a red text?
+      </Div>
+      <Div
+        coolColor
+        color={undefined}
+      >
+        Do I have a red text?
+      </Div>
+      <Div
+        coolColor
+      >
+        Do I have a red text?
+      </Div>
     </ExtendTheme>
   )
 }

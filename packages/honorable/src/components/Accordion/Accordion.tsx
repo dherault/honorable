@@ -1,13 +1,27 @@
 import { KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
 import { Caret } from '../Caret/Caret'
-import { Div, DivProps } from '../tags'
+import { Div } from '../tags'
+
+export const accordionParts = ['Title', 'ExpandIcon', 'ChildrenWrapper', 'Children'] as const
+
+export const accordionPropTypes = {
+  expanded: PropTypes.bool,
+  defaultExpanded: PropTypes.bool,
+  onExpand: PropTypes.func,
+  title: PropTypes.node,
+  expandIcon: PropTypes.node,
+}
 
 export type AccordionBaseProps = {
   /**
@@ -32,15 +46,7 @@ export type AccordionBaseProps = {
   expandIcon?: ReactNode
 }
 
-export type AccordionProps = Omit<DivProps, 'title'> & AccordionBaseProps
-
-export const accordionPropTypes = {
-  expanded: PropTypes.bool,
-  defaultExpanded: PropTypes.bool,
-  onExpand: PropTypes.func,
-  title: PropTypes.node,
-  expandIcon: PropTypes.node,
-}
+export type AccordionProps = ComponentProps<AccordionBaseProps, 'div', typeof accordionParts[number]>
 
 const expandTransitionDuration = 200
 
@@ -100,7 +106,7 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
     <Div
       ref={ref}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       <Div
         tabIndex={0}

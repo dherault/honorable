@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithChecked, TargetWithValue } from '../../types'
+import { CSSProperties, ComponentProps, TargetWithChecked, TargetWithValue } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
@@ -9,8 +9,11 @@ import useRootStyles from '../../hooks/useRootStyles'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-import { Div, DivProps, Span } from '../tags'
+import { Div, Span } from '../tags'
+
+export const radioParts = ['Control', 'Children'] as const
 
 export type RadioBaseProps = {
   /**
@@ -44,10 +47,10 @@ export type RadioBaseProps = {
   /**
    * The position of the label relative to the control
    */
-  labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
+  labelPosition?: 'left' | 'right' | 'top' | 'bottom'
 }
 
-export type RadioProps = Omit<DivProps, 'onChange'> & RadioBaseProps
+export type RadioProps = ComponentProps<RadioBaseProps, 'div', typeof radioParts[number]>
 
 export const radioPropTypes = {
   value: PropTypes.any,
@@ -124,7 +127,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
   }
   const rootStyles = useRootStyles('Radio', workingProps, theme)
 
-  const flexProps = labelPosition === 'left'
+  const flexProps: CSSProperties = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
     : labelPosition === 'top'
       ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
@@ -155,7 +158,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
       userSelect="none"
       {...flexProps}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
       onClick={event => {
         handleChange(event)
         if (typeof props.onClick === 'function') props.onClick(event)
@@ -185,4 +188,5 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
 export const Radio = forwardRef(RadioRef)
 
 Radio.displayName = 'Radio'
+// @ts-expect-error
 Radio.propTypes = radioPropTypes

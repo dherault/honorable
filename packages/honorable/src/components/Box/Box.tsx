@@ -1,15 +1,21 @@
 import { Ref, forwardRef } from 'react'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-export type BoxBaseProps = unknown
+import { Div } from '../tags'
 
-export type BoxProps = DivProps & BoxBaseProps
+export const boxParts: readonly string[] = [] as const
 
 export const BoxPropTypes = {}
+
+export type BoxBaseProps = object
+
+export type BoxProps = ComponentProps<BoxBaseProps, 'div', typeof boxParts[number]>
 
 function BoxRef(props: BoxProps, ref: Ref<any>) {
   const theme = useTheme()
@@ -19,7 +25,7 @@ function BoxRef(props: BoxProps, ref: Ref<any>) {
     <Div
       ref={ref}
       {...rootStyles}
-      {...props}
+      {...filterUndefinedValues(props)}
     />
   )
 }

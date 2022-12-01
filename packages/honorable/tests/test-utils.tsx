@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { RenderOptions, render } from '@testing-library/react'
 import { matchers } from '@emotion/jest'
 

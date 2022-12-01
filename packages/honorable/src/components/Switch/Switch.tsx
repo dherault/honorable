@@ -1,7 +1,7 @@
 import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithChecked } from '../../types'
+import { CSSProperties, ComponentProps, TargetWithChecked } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyle from '../../hooks/useRootStyles'
@@ -9,8 +9,11 @@ import useRootStyle from '../../hooks/useRootStyles'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-import { Div, DivProps, Span } from '../tags'
+import { Div, Span } from '../tags'
+
+export const switchParts = ['Control', 'CheckedBackground', 'UncheckedBackground', 'Handle', 'Children'] as const
 
 export type SwitchBaseProps = {
   /**
@@ -45,7 +48,7 @@ export type SwitchBaseProps = {
   labelPosition?: 'left' | 'right' | 'top' | 'bottom' | string
 }
 
-export type SwitchProps = Omit<DivProps, 'onChange'> & SwitchBaseProps
+export type SwitchProps = ComponentProps<SwitchBaseProps, 'div', typeof switchParts[number]>
 
 export const switchPropTypes = {
   checked: PropTypes.bool,
@@ -76,7 +79,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const workingProps = { ...props, checked: actualChecked }
   const rootStyles = useRootStyle('Switch', workingProps, theme)
 
-  const flexProps = labelPosition === 'left'
+  const flexProps: CSSProperties = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
     : labelPosition === 'top'
       ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }
@@ -101,7 +104,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
       cursor="pointer"
       {...flexProps}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
       onClick={event => {
         if (disabled) return
         if (typeof onChange === 'function') onChange(enhanceEventTarget(event, { checked: !actualChecked }))

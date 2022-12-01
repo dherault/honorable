@@ -1,6 +1,8 @@
 import { Ref, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import withHonorable from '../../withHonorable'
 
 import usePropWithBreakpoints from '../../hooks/usePropWithBreakpoints'
@@ -18,7 +20,7 @@ export type GridBaseProps = {
   zeroMinWidth?: boolean
 }
 
-export type GridProps = FlexProps & GridBaseProps
+export type GridProps = FlexProps & GridBaseProps & PartProps<typeof GridParts[number]>
 
 export const GridPropTypes = {
   ...FlexPropTypes,
@@ -50,8 +52,8 @@ function GridRef(props: GridProps, ref: Ref<any>) {
     <Flex
       ref={ref}
       display="Grid"
-      {...otherProps}
-      {...props}
+      {...filterUndefinedValues(otherProps)}
+      {...filterUndefinedValues(props)}
     />
   )
 }

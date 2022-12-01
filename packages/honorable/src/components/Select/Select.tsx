@@ -1,7 +1,7 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithValue } from '../../types'
+import { ComponentProps, TargetWithValue } from '../../types'
 
 import { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
@@ -15,12 +15,28 @@ import useOutsideClick from '../../hooks/useOutsideClick'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
 
-import { Div, DivProps, Span } from '../tags'
+import { Div, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
+
+export const selectParts = ['Selected', 'Menu'] as const
+
+export const selectPropTypes = {
+  open: PropTypes.bool,
+  defaultOpen: PropTypes.bool,
+  value: PropTypes.any,
+  onChange: PropTypes.func,
+  onOpen: PropTypes.func,
+  fade: PropTypes.bool,
+  renderSelected: PropTypes.func,
+  startIcon: PropTypes.element,
+  endIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
+  menuOnTop: PropTypes.bool,
+}
 
 export type SelectBaseProps = {
   open?: boolean
@@ -35,20 +51,7 @@ export type SelectBaseProps = {
   menuOnTop?: boolean
 }
 
-export type SelectProps = Omit<DivProps, 'onChange'> & SelectBaseProps
-
-export const selectPropTypes = {
-  open: PropTypes.bool,
-  defaultOpen: PropTypes.bool,
-  value: PropTypes.any,
-  onChange: PropTypes.func,
-  onOpen: PropTypes.func,
-  fade: PropTypes.bool,
-  renderSelected: PropTypes.func,
-  startIcon: PropTypes.element,
-  endIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
-  menuOnTop: PropTypes.bool,
-}
+export type SelectProps = ComponentProps<SelectBaseProps, 'div', typeof selectParts[number]>
 
 function SelectRef(props: SelectProps, ref: Ref<any>) {
   const {
@@ -171,7 +174,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
       minWidth={128 + 32 + 8 + 2}
       position="relative"
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       <Div
         display="flex"

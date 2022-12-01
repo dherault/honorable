@@ -1,6 +1,8 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import MenuContext, { MenuStateType } from '../../contexts/MenuContext'
 import MenuUsageContext from '../../contexts/MenuUsageContext'
 
@@ -10,9 +12,24 @@ import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
-import { Div, DivProps, Span } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
+
+export const menuItemParts = ['Children', 'Caret'] as const
+
+export const menuItemPropTypes = {
+  value: PropTypes.any,
+  itemIndex: PropTypes.number,
+  active: PropTypes.bool,
+  isSubMenuItem: PropTypes.bool,
+  fade: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  noFocus: PropTypes.bool,
+}
 
 export type MenuItemBaseProps = {
   value?: any
@@ -25,18 +42,7 @@ export type MenuItemBaseProps = {
   noFocus?: boolean
 }
 
-export type MenuItemProps = DivProps & MenuItemBaseProps
-
-export const menuItemPropTypes = {
-  value: PropTypes.any,
-  itemIndex: PropTypes.number,
-  active: PropTypes.bool,
-  isSubMenuItem: PropTypes.bool,
-  fade: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-  noFocus: PropTypes.bool,
-}
+export type MenuItemProps = ComponentProps<MenuItemBaseProps, 'div', typeof menuItemParts[number]>
 
 // A triangle to smooth the user interaction with the submenus
 // Prevents losing focus when hovering on a submenu
@@ -220,7 +226,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       position="relative"
       tabIndex={itemIndex}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
       onKeyDown={handleKeyDown}
     >
       <Div

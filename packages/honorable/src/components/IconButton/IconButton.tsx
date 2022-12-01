@@ -1,16 +1,22 @@
 import { Ref, forwardRef, useEffect, useRef, useState } from 'react'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useRootStyles from '../../hooks/useRootStyles'
 
-import { ButtonBase, ButtonBaseBaseProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
-export type IconButtonBaseProps = unknown
+import { ButtonBase } from '../tags'
 
-export type IconButtonProps = ButtonBaseBaseProps & IconButtonBaseProps
+export const iconButtonParts: readonly string[] = [] as const
 
 export const iconButtonPropTypes = {}
+
+export type IconButtonBaseProps = object
+
+export type IconButtonProps = ComponentProps<IconButtonBaseProps, 'button', typeof iconButtonParts[number]>
 
 function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
   const theme = useTheme()
@@ -30,10 +36,10 @@ function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
       ref={forkedRef}
       height={height}
       display="inline-flex"
-      alignItem="center"
+      alignItems="center"
       justifyContent="center"
       {...rootStyles}
-      {...props}
+      {...filterUndefinedValues(props)}
     />
   )
 }

@@ -1,12 +1,12 @@
 import merge from 'lodash.merge'
 
-import { HonorableTheme, StylesProps } from '../types'
+import { HonorableTheme } from '../types'
 
 import resolveAll from './resolveAll'
 import resolveStyles from './resolveStyles'
 
 // Return the style object of applied part styles
-function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme): StylesProps {
+function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme) {
   const originArray = partKey.split('.')
   const name = originArray.shift()
   const key = originArray.join('.')

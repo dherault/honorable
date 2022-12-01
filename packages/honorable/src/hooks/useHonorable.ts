@@ -40,7 +40,9 @@ function useHonorable(name: string, props: object, overridenProps: object = {}, 
         )
         && !propTypeKeys.includes(key)
       ) {
-        stylesProps[key] = value
+        if (typeof value !== 'undefined') {
+          stylesProps[key] = value
+        }
       }
       else {
         otherProps[key] = value

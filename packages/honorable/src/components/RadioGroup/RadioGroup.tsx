@@ -1,7 +1,7 @@
 import { ChangeEvent, Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { TargetWithValue } from '../../types'
+import { ComponentProps, TargetWithValue } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
@@ -9,10 +9,20 @@ import useRootStyles from '../../hooks/useRootStyles'
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
 import enhanceEventTarget from '../../utils/enhanceEventTarget'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
 import { Radio } from '../Radio/Radio'
-import { Flex, FlexProps } from '../Flex/Flex'
+import { Flex } from '../Flex/Flex'
 import { Div } from '../tags'
+
+export const radioGroupParts = ['Radio'] as const
+
+export const radioGroupPropTypes = {
+  value: PropTypes.any,
+  defaultValue: PropTypes.any,
+  onChange: PropTypes.func,
+  row: PropTypes.bool,
+}
 
 export type RadioGroupBaseProps = {
   /**
@@ -33,21 +43,14 @@ export type RadioGroupBaseProps = {
   row?: boolean
 }
 
-export type RadioGroupProps = Omit<FlexProps, 'onChange'> & RadioGroupBaseProps
-
-export const radioGroupPropTypes = {
-  value: PropTypes.any,
-  defaultValue: PropTypes.any,
-  onChange: PropTypes.func,
-  row: PropTypes.bool,
-}
+export type RadioGroupProps = ComponentProps<RadioGroupBaseProps, 'div', typeof radioGroupParts[number]>
 
 function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
   const {
     value,
     defaultValue,
     onChange,
-    row = false,
+    row,
     children,
     ...otherProps
   } = props
@@ -92,10 +95,11 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
   return (
     <Flex
       ref={ref}
-      direction={row ? 'row' : 'column' as FlexProps['direction']}
+      direction="column"
+      // direction={row ? 'row' : 'column'}
       tabIndex={0}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
       onKeyDown={event => {
         handleKeyDown(event)
         if (typeof props.onKeyDown === 'function') props.onKeyDown(event)

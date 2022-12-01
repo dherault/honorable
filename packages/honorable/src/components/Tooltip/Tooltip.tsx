@@ -4,6 +4,8 @@ import { arrow as arrowMiddleware, autoUpdate, offset as offsetMiddleware, shift
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useForkedRef from '../../hooks/useForkedRef'
 import useOutsideClick from '../../hooks/useOutsideClick'
@@ -11,7 +13,42 @@ import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div } from '../tags'
+
+export const tooltipParts = ['Arrow', 'Label'] as const
+
+export const TooltipPropTypes = {
+  children: PropTypes.node.isRequired,
+  label: PropTypes.node,
+  arrow: PropTypes.bool,
+  arrowSize: PropTypes.number,
+  arrowPadding: PropTypes.number,
+  offset: PropTypes.number,
+  offsetPadding: PropTypes.number,
+  displayOn: PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'click'])),
+  transitionDuration: PropTypes.number,
+  enterDelay: PropTypes.number,
+  leaveDelay: PropTypes.number,
+  followCursor: PropTypes.bool,
+  onOpen: PropTypes.func,
+  open: PropTypes.bool,
+  placement: PropTypes.oneOf([
+    'bottom-end',
+    'bottom-start',
+    'bottom',
+    'left-end',
+    'left-start',
+    'left',
+    'right-end',
+    'right-start',
+    'right',
+    'top-end',
+    'top-start',
+    'top',
+  ]),
+}
 
 export type TooltipBaseProps = {
   /**
@@ -88,38 +125,7 @@ export type TooltipBaseProps = {
     | 'top'
 }
 
-export type TooltipProps = DivProps & TooltipBaseProps
-
-export const TooltipPropTypes = {
-  children: PropTypes.node.isRequired,
-  label: PropTypes.node,
-  arrow: PropTypes.bool,
-  arrowSize: PropTypes.number,
-  arrowPadding: PropTypes.number,
-  offset: PropTypes.number,
-  offsetPadding: PropTypes.number,
-  displayOn: PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'click'])),
-  transitionDuration: PropTypes.number,
-  enterDelay: PropTypes.number,
-  leaveDelay: PropTypes.number,
-  followCursor: PropTypes.bool,
-  onOpen: PropTypes.func,
-  open: PropTypes.bool,
-  placement: PropTypes.oneOf([
-    'bottom-end',
-    'bottom-start',
-    'bottom',
-    'left-end',
-    'left-start',
-    'left',
-    'right-end',
-    'right-start',
-    'right',
-    'top-end',
-    'top-start',
-    'top',
-  ]),
-}
+export type TooltipProps = ComponentProps<TooltipBaseProps, 'div', typeof tooltipParts[number]>
 
 // TODO v1 loading
 function TooltipRef(props: TooltipProps, ref: Ref<any>) {
@@ -330,7 +336,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
           zIndex={99997}
           userSelect="none"
           {...rootStyles}
-          {...otherProps}
+          {...filterUndefinedValues(otherProps)}
         >
           {!!arrow && (
             <Div

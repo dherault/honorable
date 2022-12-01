@@ -1,12 +1,26 @@
 import { ReactNode, Ref, forwardRef, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div } from '../tags'
+
+export const treeViewParts = ['Label', 'Children'] as const
+
+export const treeViewPropTypes = {
+  expanded: PropTypes.bool,
+  defaultExpanded: PropTypes.bool,
+  label: PropTypes.node,
+  onClick: PropTypes.func,
+  childrenOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
 
 export type TreeViewBaseProps = {
   /**
@@ -31,15 +45,7 @@ export type TreeViewBaseProps = {
   childrenOffset?: number | string
 }
 
-export type TreeViewProps = Omit<DivProps, 'onClick'> & TreeViewBaseProps
-
-export const treeViewPropTypes = {
-  expanded: PropTypes.bool,
-  defaultExpanded: PropTypes.bool,
-  label: PropTypes.node,
-  onClick: PropTypes.func,
-  childrenOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
+export type TreeViewProps = ComponentProps<TreeViewBaseProps, 'div', typeof treeViewParts[number]>
 
 function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand, childrenOffset = 16, children, ...props }: TreeViewProps, ref: Ref<any>) {
   const theme = useTheme()
@@ -61,7 +67,7 @@ function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand
       flexDirection="column"
       width="fit-content"
       {...rootStyles}
-      {...props}
+      {...filterUndefinedValues(props)}
     >
       <Div
         onClick={handleClick}

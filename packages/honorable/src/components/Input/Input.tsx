@@ -2,13 +2,41 @@ import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, use
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 import useForkedRef from '../../hooks/useForkedRef'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
-import { Div, DivProps, InputBase } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div, InputBase } from '../tags'
+
+export const inputParts = ['StartIcon', 'InputBase', 'TextArea', 'EndIcon'] as const
+
+export const inputPropTypes = {
+  type: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  onEnter: PropTypes.func,
+  startIcon: PropTypes.node,
+  endIcon: PropTypes.node,
+  disabled: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  autoSelect: PropTypes.bool,
+  multiline: PropTypes.bool,
+  minRows: PropTypes.number,
+  maxRows: PropTypes.number,
+  inputProps: PropTypes.object,
+}
 
 export type InputValueType = (string | number | readonly string[]) & string | number
 
@@ -92,29 +120,7 @@ export type InputBaseProps = {
   inputProps?: any
 }
 
-export type InputProps = Omit<DivProps, 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onKeyUp'> & InputBaseProps
-
-export const inputPropTypes = {
-  type: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onKeyDown: PropTypes.func,
-  onKeyUp: PropTypes.func,
-  onEnter: PropTypes.func,
-  startIcon: PropTypes.node,
-  endIcon: PropTypes.node,
-  disabled: PropTypes.bool,
-  autoFocus: PropTypes.bool,
-  autoSelect: PropTypes.bool,
-  multiline: PropTypes.bool,
-  minRows: PropTypes.number,
-  maxRows: PropTypes.number,
-  inputProps: PropTypes.object,
-}
+export type InputProps = ComponentProps<InputBaseProps, 'div', typeof inputParts[number]>
 
 function InputRef(props: InputProps, ref: Ref<any>) {
   const {
@@ -169,7 +175,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
       justifyContent="flex-start"
       alignItems="stretch"
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       {!!startIcon && (
         <Div

@@ -1,11 +1,19 @@
 import { Ref, forwardRef } from 'react'
 
+import { ComponentProps } from '../../types'
+
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
 
 import resolvePartStyles from '../../resolvers/resolvePartStyles'
 
-import { Div, DivProps } from '../tags'
+import filterUndefinedValues from '../../utils/filterUndefinedValues'
+
+import { Div } from '../tags'
+
+export const progressBarParts = ['Bar'] as const
+
+export const progressBarPropTypes = {}
 
 export type ProgressBarBaseProps = {
   /**
@@ -14,9 +22,7 @@ export type ProgressBarBaseProps = {
   value: number
 }
 
-export type ProgressBarProps = DivProps & ProgressBarBaseProps
-
-export const progressBarPropTypes = {}
+export type ProgressBarProps = ComponentProps<ProgressBarBaseProps, 'div', typeof progressBarParts[number]>
 
 function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
   const {
@@ -33,7 +39,7 @@ function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
       justifyContent="flex-start"
       height={8}
       {...rootStyles}
-      {...otherProps}
+      {...filterUndefinedValues(otherProps)}
     >
       <Div
         backgroundColor="black"
