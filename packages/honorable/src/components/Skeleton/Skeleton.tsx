@@ -13,7 +13,7 @@ import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
 import { Div } from '../tags'
 
-export const skeletonParts = ['Selected', 'Menu'] as const
+export const skeletonParts = ['Inner', 'Children'] as const
 
 export const SkeletonPropTypes = {
   animation: PropTypes.oneOfType([

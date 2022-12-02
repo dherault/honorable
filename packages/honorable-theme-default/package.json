@@ -29,6 +29,7 @@
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
+    "honorable": ">=1.0.0-beta.1",
     "@emotion/react": ">=10.0.0"
   }
 }

@@ -83,6 +83,8 @@ type CSSObject = CSSProperties & CSSPseudos
   COMPONENTS
 */
 
+type AnyProps = Record<string, any>
+
 export type CssProps = CSSObject
 
 type BaseElementProps<Tag> = PropsWithChildren<
@@ -93,13 +95,13 @@ type BaseElementProps<Tag> = PropsWithChildren<
 
 type CommonElementProps<Tag> = Omit<BaseElementProps<Tag>, keyof CssProps> & CssProps
 
-export type ElementProps<Tag> = CommonElementProps<Tag> | Record<string, any>
+export type ElementProps<Tag> = CommonElementProps<Tag> | AnyProps
 
 type PartProps<T extends string> = Partial<Record<`${T}Props`, CssProps>>
 
 type BaseComponentProps<Base, Tag, Part extends string> = Base & Omit<CommonElementProps<Tag>, keyof Base> & PartProps<Part>
 
-export type ComponentProps<Base, Tag, Part extends string> = BaseComponentProps<Base, Tag, Part> | Record<string, any>
+export type ComponentProps<Base, Tag, Part extends string> = BaseComponentProps<Base, Tag, Part> | AnyProps
 
 /*
   THEME
@@ -113,11 +115,11 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
-type StylesArrayFunction = (props: object, theme: HonorableTheme) => CSSObject | false | null | undefined | 0
+type StylesArrayFunction = (props: object, theme: HonorableTheme) => CSSObject | AnyProps | false | null | undefined | 0
 
-export type StylesArray = (CSSObject | StylesArrayFunction)[]
+export type StylesArray = (CSSObject | AnyProps | StylesArrayFunction)[]
 
-export type ComponentThemePart<Part extends string> = Record<Part, StylesArray> & {
+export type ComponentThemePart<Part extends string> = Partial<Record<Part, StylesArray>> & {
   Root?: StylesArray
 }
 

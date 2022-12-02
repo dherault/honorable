@@ -1,4 +1,5 @@
 import { keyframes } from '@emotion/react'
+import { HonorableTheme } from 'honorable'
 
 import createElevation from './createElevation'
 
@@ -13,7 +14,7 @@ const withLabelPosition = ({ labelPosition }: any) => ({
   marginBottom: labelPosition === 'top' ? 8 : 0,
 })
 
-const theme = {
+const theme: HonorableTheme = {
   name: 'Default',
   mode: 'light' as const,
   breakpoints: {
@@ -69,8 +70,8 @@ const theme = {
         fontSize: 16,
         color: 'text',
         backgroundColor: 'background',
-        webkitFontSmoothing: 'antialiased',
-        mozOsxFontSmoothing: 'grayscale',
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
         textRendering: 'optimizeLegibility',
         boxSizing: 'border-box',
       },
@@ -91,7 +92,7 @@ const theme = {
         color: 'primary',
         textDecoration: 'none',
         cursor: 'pointer',
-        '&:hover': {
+        ':hover': {
           textDecoration: 'underline',
         },
       },
@@ -270,7 +271,7 @@ const theme = {
   Checkbox: {
     Root: [
       {
-        '&:hover > span': {
+        ':hover > span': {
           border: '1px solid primary',
         },
       },
@@ -305,60 +306,6 @@ const theme = {
     Children: [
       withLabelPosition,
     ],
-  },
-  DatePicker: {
-    WeekDays: [
-      {
-        fontWeight: 500,
-        color: 'text-xlight',
-        fontSize: '0.85rem',
-      },
-    ],
-    MonthAndYearInner: [
-      {
-        fontWeight: 500,
-      },
-    ],
-    Caret: [
-      {
-        '&:hover': {
-          borderColor: 'transparent',
-          backgroundColor: 'hover',
-        },
-      },
-    ],
-  },
-  DatePickerDay: {
-    Root: [
-      {
-        '& > div': {
-          borderColor: 'transparent',
-        },
-        '&:hover > div': {
-          borderColor: 'transparent',
-          backgroundColor: 'hover',
-        },
-      },
-    ],
-    Inner: [
-      {
-        borderColor: 'transparent',
-      },
-      ({ active }: any) => active && {
-        backgroundColor: 'primary !important',
-        color: 'white',
-      },
-    ],
-  },
-  DropdownButton: {
-    Button: {
-      EndIcon: [
-        {
-          marginLeft: 8,
-          marginRight: -6,
-        },
-      ],
-    },
   },
   H1: {
     Root: [
