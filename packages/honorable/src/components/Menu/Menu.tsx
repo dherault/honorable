@@ -94,11 +94,11 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const handleOutsideClick = useCallback(() => {
     if (noOutsideClick) return
 
-    setActualMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
+    setActualMenuState((x: MenuStateType) => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
   }, [noOutsideClick, setActualMenuState])
 
   // Handle up and down keys
-  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLElement>) => {
     event.preventDefault()
 
     if (!actualMenuState.active || actualMenuState.locked) return
@@ -108,7 +108,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
         const nextActiveItemIndex = Math.max(0, actualActiveItemIndex - 1)
 
         if (actualActiveItemIndex !== nextActiveItemIndex) {
-          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
+          setActualMenuState((x: MenuStateType) => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
         }
 
         break
@@ -117,7 +117,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
         const nextActiveItemIndex = Math.min(Children.count(children) - 1, actualActiveItemIndex + 1)
 
         if (actualActiveItemIndex !== nextActiveItemIndex) {
-          setActualMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
+          setActualMenuState((x: MenuStateType) => ({ ...x, activeItemIndex: nextActiveItemIndex, isSubMenuVisible: true }))
         }
 
         break
@@ -129,7 +129,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const handleMouseLeave = useCallback(() => {
     if (noFocusLoss) return
 
-    setActualMenuState(x => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
+    setActualMenuState((x: MenuStateType) => ({ ...x, active: false, activeItemIndex: -1, isSubMenuVisible: false }))
   }, [noFocusLoss, setActualMenuState])
 
   const wrapFade = useCallback((element: ReactElement) => {
@@ -152,8 +152,8 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
         in={actualOpen}
         appear
         timeout={transtionDuration}
-        onEntered={() => setActualMenuState(x => ({ ...x, locked: false }))}
-        onExit={() => setActualMenuState(x => ({ ...x, locked: true }))}
+        onEntered={() => setActualMenuState((x: MenuStateType) => ({ ...x, locked: false }))}
+        onExit={() => setActualMenuState((x: MenuStateType) => ({ ...x, locked: true }))}
       >
         {(state: string) => cloneElement(element, {
           ...element.props,
@@ -173,7 +173,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     if (actualMenuState.shouldFocus) {
       menuRef.current.focus()
 
-      setActualMenuState(x => ({
+      setActualMenuState((x: MenuStateType) => ({
         ...x,
         active: true,
         shouldFocus: false,
@@ -187,7 +187,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
         ...x,
         shouldSyncWithParent: true,
       }))
-      setActualMenuState(x => ({
+      setActualMenuState((x: MenuStateType) => ({
         ...x,
         active: false,
         activeItemIndex: -1,
@@ -198,7 +198,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
 
   useEffect(() => {
     if (!actualOpen) {
-      setActualMenuState(x => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
+      setActualMenuState((x: MenuStateType) => ({ ...x, activeItemIndex: -1, isSubMenuVisible: false }))
 
       if (fade) {
         setTimeout(() => {
@@ -210,7 +210,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
       }
     }
     else {
-      setActualMenuState(x => ({ ...x, active: true }))
+      setActualMenuState((x: MenuStateType) => ({ ...x, active: true }))
       setTransitionOpen(true)
     }
   }, [actualOpen, fade, transtionDuration, setActualMenuState])

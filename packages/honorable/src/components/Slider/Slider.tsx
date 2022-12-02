@@ -121,7 +121,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const sliderRef = useRef<HTMLDivElement>()
+  const sliderRef = useRef<HTMLElement>()
   const forkedRef = useForkedRef(ref, sliderRef)
   const [currentKnobIndex, setCurrentKnobIndex] = useState(-1)
   const [currentKnobValues, setCurrentKnobValues] = useState([0, 0, 0]) // min, current, max
@@ -173,7 +173,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
     setCurrentKnobIndex(-1)
   }, [onChangeCommited, actualValues, currentKnobIndex, disabled])
 
-  const handleKnobMouseDown = useCallback((event: ReactMouseEvent<HTMLDivElement>, index: number) => {
+  const handleKnobMouseDown = useCallback((event: ReactMouseEvent<HTMLElement>, index: number) => {
     setCurrentKnobIndex(index)
     setCurrentKnobValues([actualValues[index - 1] || min, actualValues[index], actualValues[index + 1] || max])
     setCurrentPosition(isHorizontal ? event.clientX : event.clientY)
@@ -253,5 +253,4 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
 export const Slider = forwardRef(SliderRef)
 
 Slider.displayName = 'Slider'
-// @ts-expect-error
 Slider.propTypes = SliderPropTypes

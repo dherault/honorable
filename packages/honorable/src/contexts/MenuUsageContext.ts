@@ -1,9 +1,9 @@
-import { Dispatch, KeyboardEvent, MouseEvent, ReactNode, SetStateAction, createContext } from 'react'
+import { Dispatch, MouseEvent, ReactNode, SetStateAction, createContext } from 'react'
 
 export type MenuUsageStateType = {
   value?: any
   renderedItem?: ReactNode
-  event?: MouseEvent | KeyboardEvent
+  event?: MouseEvent
 }
 
 export type MenuUsageStateDispatcherType = Dispatch<SetStateAction<MenuUsageStateType>>

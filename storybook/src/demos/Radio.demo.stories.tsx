@@ -68,17 +68,20 @@ function RadioLabel() {
       <Radio
         mt={1}
         labelPosition="top"
-      >A Radio
+      >
+        A Radio
       </Radio>
       <Radio
         mt={1}
         labelPosition="left"
-      >A Radio
+      >
+        A Radio
       </Radio>
       <Radio
         mt={1}
         labelPosition="bottom"
-      >A Radio
+      >
+        A Radio
       </Radio>
       <Radio mt={1}>
         <P fontSize="0.5rem">

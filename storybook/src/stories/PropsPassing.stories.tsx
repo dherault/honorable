@@ -107,7 +107,7 @@ function Template5() {
         A: {
           Root: [
             {
-              '&:hover': {
+              ':hover': {
                 textDecoration: 'underline',
               },
             },
@@ -175,11 +175,13 @@ function Template8() {
       <Button
         coolColor
         color={null}
+        onClick={event => console.log(event)}
       >
         Do I NOT have a red text?
       </Button>
       <Button
         coolColor
+        cool
         color={undefined}
       >
         Do I have a red text?
@@ -193,7 +195,7 @@ function Template8() {
         coolColor
         color={null}
       >
-        Do I have a red text?
+        Do I NOT have a red text?
       </Div>
       <Div
         coolColor

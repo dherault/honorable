@@ -61,27 +61,27 @@ export type InputBaseProps = {
   /**
    * Callback function called when the Input value changes
    */
-  onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onChange?: (event: ChangeEvent<HTMLElement>) => void
   /**
    * Callback function called when the Input gains focus
    */
-  onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onFocus?: (event: FocusEvent<HTMLElement>) => void
   /**
    * Callback function called when the Input looses focus
    */
-  onBlur?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onBlur?: (event: FocusEvent<HTMLElement>) => void
   /**
    * Callback function called when the Input received a keydown event
    */
-  onKeyDown?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onKeyDown?: (event: KeyboardEvent<HTMLElement>) => void
   /**
    * Callback function called when the Input received a keyup event
    */
-  onKeyUp?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onKeyUp?: (event: KeyboardEvent<HTMLElement>) => void
   /**
    * Callback function called when the Input received a "Enter" keydown event
    */
-  onEnter?: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onEnter?: (event: KeyboardEvent<HTMLElement>) => void
   /**
    * The icon react node at the start of the Input
    */
@@ -146,19 +146,19 @@ function InputRef(props: InputProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const forkedRef = useForkedRef(inputRef, inputProps.ref)
   const [uncontrolledValue, setUncontrolledValue] = useState<InputValueType>(defaultValue ?? '')
   const actualValue = value ?? uncontrolledValue
   const workingProps = { ...props, value: actualValue }
   const rootStyles = useRootStyles('Input', workingProps, theme)
 
-  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setUncontrolledValue(event.target.value)
     if (typeof onChange === 'function') onChange(event)
   }
 
-  function handleKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
     if (event.key === 'Enter' && typeof onEnter === 'function') onEnter(event)
   }
 

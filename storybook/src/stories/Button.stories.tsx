@@ -15,6 +15,15 @@ function Template(args: any) {
   )
 }
 
+function Template2(args: any) {
+  return (
+    <Button
+      onClick={event => console.log(event)}
+      {...args}
+    />
+  )
+}
+
 export const Default = Template.bind({}) as any
 Default.args = {
   children: 'Button',

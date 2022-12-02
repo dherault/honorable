@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, PropsWithRef } from 'react'
+import React, { PropsWithChildren, PropsWithRef, ReactNode } from 'react'
 import { SerializedStyles } from '@emotion/utils'
 import * as CSS from 'csstype'
 
@@ -89,17 +89,23 @@ export interface CSSOthersObject {
 }
 
 // This is the custom type that requires all of this
-export interface CSSObject extends CSSProperties, CSSPseudos {}
+export type CSSObject = CSSProperties & CSSPseudos
+
+/*
+  REACT TYPES
+*/
 
 /*
   COMPONENTS
 */
 
-export type AnyProps = {
-  [key: string]: any
-}
+// type AnyProps<T> = {
+//   [P in keyof T as T[P] extends never ? any : P]?: T[P] extends never ? any : T[P]
+// }
 
-export type StylesProps = CSSObject // & CssProp
+type NotFunction<T> = T extends Function ? never : T;
+
+export type StylesProps = CSSObject
 
 export type BaseElementProps<Tag> = PropsWithChildren<
   PropsWithRef<
@@ -107,11 +113,15 @@ export type BaseElementProps<Tag> = PropsWithChildren<
   >
 >
 
-export type ElementProps<Tag> = Omit<BaseElementProps<Tag>, keyof StylesProps> & StylesProps
+export type CommonElementProps<Tag> = Omit<BaseElementProps<Tag>, keyof StylesProps> & StylesProps
+
+export type ElementProps<Tag> = CommonElementProps<Tag> | Record<string, any>
 
 export type PartProps<T extends string> = Partial<Record<`${T}Props`, StylesProps>>
 
-export type ComponentProps<Base, Tag, Part extends string> = Base & Omit<ElementProps<Tag>, keyof Base> & PartProps<Part>
+export type BaseComponentProps<Base, Tag, Part extends string> = Base & Omit<CommonElementProps<Tag>, keyof Base> & PartProps<Part>
+
+export type ComponentProps<Base, Tag, Part extends string> = BaseComponentProps<Base, Tag, Part> | Record<string, any>
 
 /*
   THEME
@@ -125,7 +135,7 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
-export type StylesArrayFunction = (props: object, theme: HonorableTheme) => CSSObject
+export type StylesArrayFunction = (props: object, theme: HonorableTheme) => CSSObject | false | null | undefined | 0
 
 export type StylesArray = (CSSObject | StylesArrayFunction)[]
 

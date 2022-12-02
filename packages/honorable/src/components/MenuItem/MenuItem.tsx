@@ -105,7 +105,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     return subMenu
   }, [children])
 
-  const handleSelect = useCallback((event: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>) => {
+  const handleSelect = useCallback((event: MouseEvent<HTMLDivElement>) => {
     if (disabled || menuState.locked) return
 
     event.persist()
@@ -174,7 +174,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       }
     }
     else if (event.key === 'Enter') {
-      handleSelect(event)
+      handleSelect(event as any as MouseEvent<HTMLDivElement>)
     }
 
     if (typeof props.onKeyDown === 'function') props.onKeyDown(event)

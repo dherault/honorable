@@ -48,5 +48,4 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
 export const ButtonGroup = forwardRef(ButtonGroupRef)
 
 ButtonGroup.displayName = 'ButtonGroup'
-// @ts-expect-error
 ButtonGroup.propTypes = buttonGroupPropTypes

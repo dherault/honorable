@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, MouseEventHandler, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -61,7 +61,7 @@ export type DropdownButtonBaseProps = {
   /**
    * Callback function called when the DropdownButton returns a value
    */
-  onChange?: (event: MouseEvent | KeyboardEvent) => void
+  onChange?: MouseEventHandler<HTMLButtonElement>
   /**
    * Callback function called when the DropdownButton is opened or closed
    */

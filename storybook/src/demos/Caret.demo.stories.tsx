@@ -22,6 +22,7 @@ function CaretBasicDemo() {
 // END-DEMO
 
 export const Basic = CaretBasicDemo.bind({}) as any
+
 export const Rotated = CaretBasicDemo.bind({}) as any
 Rotated.args = {
   rotation: -90,

@@ -188,5 +188,4 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
 export const Radio = forwardRef(RadioRef)
 
 Radio.displayName = 'Radio'
-// @ts-expect-error
 Radio.propTypes = radioPropTypes

@@ -369,5 +369,4 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
 export const Tooltip = forwardRef(TooltipRef)
 
 Tooltip.displayName = 'Tooltip'
-// @ts-expect-error
 Tooltip.propTypes = TooltipPropTypes

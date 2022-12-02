@@ -89,5 +89,4 @@ function FlexRef(props: FlexProps, ref: Ref<any>) {
 export const Flex = forwardRef(FlexRef)
 
 Flex.displayName = 'Flex'
-// @ts-expect-error
 Flex.propTypes = FlexPropTypes
