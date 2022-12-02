@@ -1,6 +1,6 @@
 {
   "name": "honorable-theme-default",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.3",
   "description": "The default honorable theme",
   "main": "dist/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "honorable": ">=1.0.0-beta.1",
+    "honorable": ">=1.0.0-beta.3",
     "@emotion/react": ">=10.0.0"
   }
 }
