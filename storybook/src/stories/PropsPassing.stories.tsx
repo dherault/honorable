@@ -192,13 +192,13 @@ function Template8() {
         Do I have a red text?
       </Button>
       <Div
-        coolColor
+        coolColor // means red
         color={null}
       >
         Do I NOT have a red text?
       </Div>
       <Div
-        coolColor
+        coolColor // means red
         color={undefined}
       >
         Do I have a red text?
