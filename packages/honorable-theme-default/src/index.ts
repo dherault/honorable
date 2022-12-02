@@ -15,7 +15,7 @@ const withLabelPosition = ({ labelPosition }: any) => ({
 
 const theme = {
   name: 'Default',
-  mode: 'light',
+  mode: 'light' as const,
   breakpoints: {
     mobile: 600,
     tablet: 900,
