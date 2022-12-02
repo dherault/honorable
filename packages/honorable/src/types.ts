@@ -109,9 +109,9 @@ export type ComponentProps<Base, Tag, Part extends string> = BaseComponentProps<
 
 export type Mode = 'light' | 'dark'
 
-export type ColorKey = string
+type ColorKey = string
 
-export type ColorValue = string | ColorKey | {
+export type ColorValue = (string | ColorKey) & Record<string, string> & {
   [modeKey in Mode]: string | ColorKey
 }
 
