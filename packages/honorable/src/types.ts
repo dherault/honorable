@@ -107,11 +107,11 @@ export type ComponentProps<Base, Tag, Part extends string> = BaseComponentProps<
   THEME
 */
 
-export type Mode = 'light' | 'dark'
+export type Mode = 'light' | 'dark' | string // Allow custom modes
 
 type ColorKey = string
 
-export type ColorValue = (string | ColorKey) & Record<string, string> & {
+export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
@@ -130,7 +130,7 @@ export type HonorableTheme = {
     [breakpointName: string]: number
   }
   colors?: {
-    [colorName: ColorKey]: ColorValue
+    [colorName: ColorKey]: ColorValue | Record<string, ColorValue>
   }
   aliases?: {
     [alias: string]: string
