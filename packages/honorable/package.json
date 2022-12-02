@@ -1,7 +1,7 @@
 {
   "name": "honorable",
-  "version": "0.194.0",
-  "description": "An extensible React component librarie for 2022 and beyond",
+  "version": "1.0.0-beta.0",
+  "description": "An extensible React component librarie for 2023 and beyond",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
@@ -63,7 +63,7 @@
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.merge": "^4.6.7",
     "@types/lodash.mergewith": "^4.6.7",
-    "@types/node": "^18.11.9",
+    "@types/node": "^18.11.10",
     "@types/react": "^18.0.25",
     "@types/react-test-renderer": "^18.0.0",
     "@types/react-transition-group": "^4.4.5",
