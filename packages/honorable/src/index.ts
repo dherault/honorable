@@ -1,11 +1,12 @@
+// Types
+export * from './types'
+
 // Special components
 export * from './components/tags'
 
 export * from './components/ThemeProvider/ThemeProvider'
 
 export * from './components/CssBaseline/CssBaseline'
-
-export * from './components/DateTimeProvider/DateTimeProvider'
 
 export * from './components/WithOutsideClick/WithOutsideClick'
 
@@ -15,8 +16,6 @@ export * from './components/Accordion/Accordion'
 export * from './components/Autocomplete/Autocomplete'
 
 export * from './components/Avatar/Avatar'
-
-export * from './components/Box/Box'
 
 export * from './components/Button/Button'
 
@@ -60,8 +59,6 @@ export * from './components/Spinner/Spinner'
 
 export * from './components/Switch/Switch'
 
-export * from './components/Text/Text'
-
 export * from './components/Tooltip/Tooltip'
 
 export * from './components/TreeView/TreeView'
@@ -93,6 +90,3 @@ export { default as resolveColor } from './resolvers/resolveColor'
 export { default as transparency } from './utils/transparency'
 
 export { lighten, darken } from './utils/lightenAndDarken'
-
-// Types
-export * from './types'

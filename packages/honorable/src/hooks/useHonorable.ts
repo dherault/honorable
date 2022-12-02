@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import merge from 'lodash.merge'
 
-import { StylesProps } from '../types'
+import { CssProps } from '../types'
 
 import styleProperties from '../data/stylesProperties'
 import propToPseudoSelectors from '../data/propToPseudoSelectors'
@@ -24,7 +24,7 @@ function useHonorable(name: string, props: object, overridenProps: object = {}, 
     const workingProps = { ...props, ...overridenProps }
     const aliases = Object.keys(filterObject(theme.aliases))
     const suffixedAliases = aliases.map(x => `${x}-`)
-    const stylesProps: StylesProps = {}
+    const stylesProps: CssProps = {}
     const resolvedRootStyles = resolveStyles(theme[name]?.Root, workingProps, theme)
     const otherProps: Record<string, any> = {}
 

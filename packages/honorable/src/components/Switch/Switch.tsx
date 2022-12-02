@@ -1,7 +1,7 @@
 import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { CSSProperties, ComponentProps, TargetWithChecked } from '../../types'
+import { ComponentProps, CssProps, TargetWithChecked } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyle from '../../hooks/useRootStyles'
@@ -79,7 +79,7 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   const workingProps = { ...props, checked: actualChecked }
   const rootStyles = useRootStyle('Switch', workingProps, theme)
 
-  const flexProps: CSSProperties = labelPosition === 'left'
+  const flexProps: CssProps = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
     : labelPosition === 'top'
       ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }

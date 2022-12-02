@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { CSSProperties, ComponentProps, TargetWithChecked, TargetWithValue } from '../../types'
+import { ComponentProps, CssProps, TargetWithChecked, TargetWithValue } from '../../types'
 
 import useTheme from '../../hooks/useTheme'
 import useRootStyles from '../../hooks/useRootStyles'
@@ -127,7 +127,7 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
   }
   const rootStyles = useRootStyles('Radio', workingProps, theme)
 
-  const flexProps: CSSProperties = labelPosition === 'left'
+  const flexProps: CssProps = labelPosition === 'left'
     ? { justifyContent: 'flex-start', flexDirection: 'row-reverse' }
     : labelPosition === 'top'
       ? { justifyContent: 'flex-end', flexDirection: 'column-reverse' }

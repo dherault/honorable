@@ -1,6 +1,6 @@
 import {
   HonorableTheme,
-  StylesProps,
+  CssProps,
 } from '../types'
 
 import resolveColor, { resolveColorString } from '../resolvers/resolveColor'
@@ -11,7 +11,7 @@ function enhanceTheme(theme: HonorableTheme) {
     ...theme,
     utils: {
       resolveColorString: (color: string) => resolveColorString(color, theme),
-      resolveColorObject: (object: StylesProps) => resolveColor(object, theme),
+      resolveColorObject: (object: CssProps) => resolveColor(object, theme),
     },
   } as HonorableTheme
 }

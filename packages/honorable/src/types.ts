@@ -1,11 +1,10 @@
-import React, { PropsWithChildren, PropsWithRef, ReactNode } from 'react'
+import React, { PropsWithChildren, PropsWithRef } from 'react'
 import { SerializedStyles } from '@emotion/utils'
 import * as CSS from 'csstype'
 
 import { accordionParts } from './components/Accordion/Accordion'
 import { autocompleteParts } from './components/Autocomplete/Autocomplete'
 import { avatarParts } from './components/Avatar/Avatar'
-import { boxParts } from './components/Box/Box'
 import { buttonParts } from './components/Button/Button'
 import { buttonGroupParts } from './components/ButtonGroup/ButtonGroup'
 import { cardParts } from './components/Card/Card'
@@ -27,7 +26,6 @@ import { skeletonParts } from './components/Skeleton/Skeleton'
 import { sliderParts } from './components/Slider/Slider'
 import { spinnerParts } from './components/Spinner/Spinner'
 import { switchParts } from './components/Switch/Switch'
-import { textParts } from './components/Text/Text'
 import { tooltipParts } from './components/Tooltip/Tooltip'
 import { treeViewParts } from './components/TreeView/TreeView'
 
@@ -37,41 +35,35 @@ export const noParts: readonly string[] = [] as const
   EMOTION TYPES
 */
 
-export type ArrayInterpolation<Props> = Array<Interpolation<Props>>
+type ArrayInterpolation<Props> = Array<Interpolation<Props>>
 
-export interface FunctionInterpolation<Props> {
+interface FunctionInterpolation<Props> {
   (props: Props): Interpolation<Props>
 }
 
-export interface ComponentSelector {
+interface ComponentSelector {
   __emotion_styles: any
 }
 
-export type Keyframes = {
+type Keyframes = {
   name: string
   styles: string
   anim: number
   toString: () => string
 } & string
 
-export type Interpolation<Props> =
+type Interpolation<Props> =
   | InterpolationPrimitive
   | ArrayInterpolation<Props>
   | FunctionInterpolation<Props>
 
-export type CSSProperties = CSS.PropertiesFallback<number | string>
+type CSSProperties = CSS.PropertiesFallback<number | string>
 
-// export type CSSPropertiesWithMultiValues = {
-//   [K in keyof CSSProperties]:
-//     | CSSProperties[K]
-//     | Array<Extract<CSSProperties[K], string>>
-// }
+type CSSPseudos = { [K in CSS.Pseudos]?: CSSObject }
 
-export type CSSPseudos = { [K in CSS.Pseudos]?: CSSObject }
+type ArrayCSSInterpolation = Array<CSSInterpolation>
 
-export type ArrayCSSInterpolation = Array<CSSInterpolation>
-
-export type InterpolationPrimitive =
+type InterpolationPrimitive =
   | null
   | undefined
   | boolean
@@ -82,44 +74,30 @@ export type InterpolationPrimitive =
   | SerializedStyles
   | CSSObject
 
-export type CSSInterpolation = InterpolationPrimitive | ArrayCSSInterpolation
-
-export interface CSSOthersObject {
-  [propertiesName: string]: CSSInterpolation
-}
+type CSSInterpolation = InterpolationPrimitive | ArrayCSSInterpolation
 
 // This is the custom type that requires all of this
-export type CSSObject = CSSProperties & CSSPseudos
-
-/*
-  REACT TYPES
-*/
+type CSSObject = CSSProperties & CSSPseudos
 
 /*
   COMPONENTS
 */
 
-// type AnyProps<T> = {
-//   [P in keyof T as T[P] extends never ? any : P]?: T[P] extends never ? any : T[P]
-// }
+export type CssProps = CSSObject
 
-type NotFunction<T> = T extends Function ? never : T;
-
-export type StylesProps = CSSObject
-
-export type BaseElementProps<Tag> = PropsWithChildren<
+type BaseElementProps<Tag> = PropsWithChildren<
   PropsWithRef<
     Tag extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[Tag] : never
   >
 >
 
-export type CommonElementProps<Tag> = Omit<BaseElementProps<Tag>, keyof StylesProps> & StylesProps
+type CommonElementProps<Tag> = Omit<BaseElementProps<Tag>, keyof CssProps> & CssProps
 
 export type ElementProps<Tag> = CommonElementProps<Tag> | Record<string, any>
 
-export type PartProps<T extends string> = Partial<Record<`${T}Props`, StylesProps>>
+type PartProps<T extends string> = Partial<Record<`${T}Props`, CssProps>>
 
-export type BaseComponentProps<Base, Tag, Part extends string> = Base & Omit<CommonElementProps<Tag>, keyof Base> & PartProps<Part>
+type BaseComponentProps<Base, Tag, Part extends string> = Base & Omit<CommonElementProps<Tag>, keyof Base> & PartProps<Part>
 
 export type ComponentProps<Base, Tag, Part extends string> = BaseComponentProps<Base, Tag, Part> | Record<string, any>
 
@@ -127,7 +105,7 @@ export type ComponentProps<Base, Tag, Part extends string> = BaseComponentProps<
   THEME
 */
 
-export type Mode = 'light' | 'dark' | string
+export type Mode = 'light' | 'dark'
 
 export type ColorKey = string
 
@@ -135,15 +113,13 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
-export type StylesArrayFunction = (props: object, theme: HonorableTheme) => CSSObject | false | null | undefined | 0
+type StylesArrayFunction = (props: object, theme: HonorableTheme) => CSSObject | false | null | undefined | 0
 
 export type StylesArray = (CSSObject | StylesArrayFunction)[]
 
-export type ThemePartProps = {
-  [partName: string]: StylesArray | ThemePartProps
+export type ComponentThemePart<Part extends string> = Record<Part, StylesArray> & {
+  Root?: StylesArray
 }
-
-export type ComponentPartProps<Part extends string> = Record<Part, StylesArray> & { Root?: StylesArray }
 
 export type HonorableTheme = {
   name?: string
@@ -166,153 +142,202 @@ export type HonorableTheme = {
     resolveColorObject: (color: object) => object
   }
   cache?: Record<string, object>
+  // extended Tags
+  ButtonBase?: ComponentThemePart<typeof noParts[number]>
+  InputBase?: ComponentThemePart<typeof noParts[number]>
+  MenuBase?: ComponentThemePart<typeof noParts[number]>
+  SelectBase?: ComponentThemePart<typeof noParts[number]>
   // Tags
-  ButtonBase?: ComponentPartProps<typeof noParts[number]>
-  InputBase?: ComponentPartProps<typeof noParts[number]>
-  MenuBase?: ComponentPartProps<typeof noParts[number]>
-  SelectBase?: ComponentPartProps<typeof noParts[number]>
-  A?: ComponentPartProps<typeof noParts[number]>
-  Abbr?: ComponentPartProps<typeof noParts[number]>
-  Address?: ComponentPartProps<typeof noParts[number]>
-  Area?: ComponentPartProps<typeof noParts[number]>
-  Article?: ComponentPartProps<typeof noParts[number]>
-  Aside?: ComponentPartProps<typeof noParts[number]>
-  Audio?: ComponentPartProps<typeof noParts[number]>
-  B?: ComponentPartProps<typeof noParts[number]>
-  Base?: ComponentPartProps<typeof noParts[number]>
-  Bdi?: ComponentPartProps<typeof noParts[number]>
-  Bdo?: ComponentPartProps<typeof noParts[number]>
-  Blockquote?: ComponentPartProps<typeof noParts[number]>
-  Body?: ComponentPartProps<typeof noParts[number]>
-  Br?: ComponentPartProps<typeof noParts[number]>
-  Canvas?: ComponentPartProps<typeof noParts[number]>
-  Caption?: ComponentPartProps<typeof noParts[number]>
-  Cite?: ComponentPartProps<typeof noParts[number]>
-  Code?: ComponentPartProps<typeof noParts[number]>
-  Col?: ComponentPartProps<typeof noParts[number]>
-  Colgroup?: ComponentPartProps<typeof noParts[number]>
-  Data?: ComponentPartProps<typeof noParts[number]>
-  Datalist?: ComponentPartProps<typeof noParts[number]>
-  Dd?: ComponentPartProps<typeof noParts[number]>
-  Del?: ComponentPartProps<typeof noParts[number]>
-  Details?: ComponentPartProps<typeof noParts[number]>
-  Dfn?: ComponentPartProps<typeof noParts[number]>
-  Dialog?: ComponentPartProps<typeof noParts[number]>
-  Div?: ComponentPartProps<typeof noParts[number]>
-  Dl?: ComponentPartProps<typeof noParts[number]>
-  Dt?: ComponentPartProps<typeof noParts[number]>
-  Em?: ComponentPartProps<typeof noParts[number]>
-  Embed?: ComponentPartProps<typeof noParts[number]>
-  Fieldset?: ComponentPartProps<typeof noParts[number]>
-  Figcaption?: ComponentPartProps<typeof noParts[number]>
-  Figure?: ComponentPartProps<typeof noParts[number]>
-  Footer?: ComponentPartProps<typeof noParts[number]>
-  Form?: ComponentPartProps<typeof noParts[number]>
-  H1?: ComponentPartProps<typeof noParts[number]>
-  H2?: ComponentPartProps<typeof noParts[number]>
-  H3?: ComponentPartProps<typeof noParts[number]>
-  H4?: ComponentPartProps<typeof noParts[number]>
-  H5?: ComponentPartProps<typeof noParts[number]>
-  H6?: ComponentPartProps<typeof noParts[number]>
-  Head?: ComponentPartProps<typeof noParts[number]>
-  Header?: ComponentPartProps<typeof noParts[number]>
-  Hr?: ComponentPartProps<typeof noParts[number]>
-  // Html?: ComponentPartProps2<typeof noParts[number]>
-  I?: ComponentPartProps<typeof noParts[number]>
-  Iframe?: ComponentPartProps<typeof noParts[number]>
-  Img?: ComponentPartProps<typeof noParts[number]>
-  Ins?: ComponentPartProps<typeof noParts[number]>
-  Kbd?: ComponentPartProps<typeof noParts[number]>
-  Label?: ComponentPartProps<typeof noParts[number]>
-  Legend?: ComponentPartProps<typeof noParts[number]>
-  Li?: ComponentPartProps<typeof noParts[number]>
-  Link?: ComponentPartProps<typeof noParts[number]>
-  Main?: ComponentPartProps<typeof noParts[number]>
-  Map?: ComponentPartProps<typeof noParts[number]>
-  Mark?: ComponentPartProps<typeof noParts[number]>
-  Meta?: ComponentPartProps<typeof noParts[number]>
-  Meter?: ComponentPartProps<typeof noParts[number]>
-  Nav?: ComponentPartProps<typeof noParts[number]>
-  Noscript?: ComponentPartProps<typeof noParts[number]>
-  // Object?: ComponentPartProps2<typeof noParts[number]>
-  Ol?: ComponentPartProps<typeof noParts[number]>
-  Optgroup?: ComponentPartProps<typeof noParts[number]>
-  Option?: ComponentPartProps<typeof noParts[number]>
-  Output?: ComponentPartProps<typeof noParts[number]>
-  P?: ComponentPartProps<typeof noParts[number]>
-  Param?: ComponentPartProps<typeof noParts[number]>
-  Picture?: ComponentPartProps<typeof noParts[number]>
-  Portal?: ComponentPartProps<typeof noParts[number]>
-  Pre?: ComponentPartProps<typeof noParts[number]>
-  Progress?: ComponentPartProps<typeof noParts[number]>
-  Q?: ComponentPartProps<typeof noParts[number]>
-  Rp?: ComponentPartProps<typeof noParts[number]>
-  Rt?: ComponentPartProps<typeof noParts[number]>
-  Ruby?: ComponentPartProps<typeof noParts[number]>
-  S?: ComponentPartProps<typeof noParts[number]>
-  Samp?: ComponentPartProps<typeof noParts[number]>
-  Script?: ComponentPartProps<typeof noParts[number]>
-  Section?: ComponentPartProps<typeof noParts[number]>
-  Slot?: ComponentPartProps<typeof noParts[number]>
-  Small?: ComponentPartProps<typeof noParts[number]>
-  Source?: ComponentPartProps<typeof noParts[number]>
-  Span?: ComponentPartProps<typeof noParts[number]>
-  Strong?: ComponentPartProps<typeof noParts[number]>
-  Style?: ComponentPartProps<typeof noParts[number]>
-  Sub?: ComponentPartProps<typeof noParts[number]>
-  Summary?: ComponentPartProps<typeof noParts[number]>
-  Sup?: ComponentPartProps<typeof noParts[number]>
-  Svg?: ComponentPartProps<typeof noParts[number]>
-  Table?: ComponentPartProps<typeof noParts[number]>
-  Tbody?: ComponentPartProps<typeof noParts[number]>
-  Td?: ComponentPartProps<typeof noParts[number]>
-  Template?: ComponentPartProps<typeof noParts[number]>
-  Textarea?: ComponentPartProps<typeof noParts[number]>
-  Tfoot?: ComponentPartProps<typeof noParts[number]>
-  Th?: ComponentPartProps<typeof noParts[number]>
-  Thead?: ComponentPartProps<typeof noParts[number]>
-  Time?: ComponentPartProps<typeof noParts[number]>
-  Title?: ComponentPartProps<typeof noParts[number]>
-  Tr?: ComponentPartProps<typeof noParts[number]>
-  Track?: ComponentPartProps<typeof noParts[number]>
-  U?: ComponentPartProps<typeof noParts[number]>
-  Ul?: ComponentPartProps<typeof noParts[number]>
-  Var?: ComponentPartProps<typeof noParts[number]>
-  Video?: ComponentPartProps<typeof noParts[number]>
-  Wbr?: ComponentPartProps<typeof noParts[number]>
+  A?: ComponentThemePart<typeof noParts[number]>
+  Abbr?: ComponentThemePart<typeof noParts[number]>
+  Address?: ComponentThemePart<typeof noParts[number]>
+  Area?: ComponentThemePart<typeof noParts[number]>
+  Article?: ComponentThemePart<typeof noParts[number]>
+  Aside?: ComponentThemePart<typeof noParts[number]>
+  Audio?: ComponentThemePart<typeof noParts[number]>
+  B?: ComponentThemePart<typeof noParts[number]>
+  Base?: ComponentThemePart<typeof noParts[number]>
+  Bdi?: ComponentThemePart<typeof noParts[number]>
+  Bdo?: ComponentThemePart<typeof noParts[number]>
+  Blockquote?: ComponentThemePart<typeof noParts[number]>
+  Body?: ComponentThemePart<typeof noParts[number]>
+  Br?: ComponentThemePart<typeof noParts[number]>
+  Canvas?: ComponentThemePart<typeof noParts[number]>
+  Caption?: ComponentThemePart<typeof noParts[number]>
+  Cite?: ComponentThemePart<typeof noParts[number]>
+  Code?: ComponentThemePart<typeof noParts[number]>
+  Col?: ComponentThemePart<typeof noParts[number]>
+  Colgroup?: ComponentThemePart<typeof noParts[number]>
+  Data?: ComponentThemePart<typeof noParts[number]>
+  Datalist?: ComponentThemePart<typeof noParts[number]>
+  Dd?: ComponentThemePart<typeof noParts[number]>
+  Del?: ComponentThemePart<typeof noParts[number]>
+  Details?: ComponentThemePart<typeof noParts[number]>
+  Dfn?: ComponentThemePart<typeof noParts[number]>
+  Dialog?: ComponentThemePart<typeof noParts[number]>
+  Div?: ComponentThemePart<typeof noParts[number]>
+  Dl?: ComponentThemePart<typeof noParts[number]>
+  Dt?: ComponentThemePart<typeof noParts[number]>
+  Em?: ComponentThemePart<typeof noParts[number]>
+  Embed?: ComponentThemePart<typeof noParts[number]>
+  Fieldset?: ComponentThemePart<typeof noParts[number]>
+  Figcaption?: ComponentThemePart<typeof noParts[number]>
+  Figure?: ComponentThemePart<typeof noParts[number]>
+  Footer?: ComponentThemePart<typeof noParts[number]>
+  Form?: ComponentThemePart<typeof noParts[number]>
+  H1?: ComponentThemePart<typeof noParts[number]>
+  H2?: ComponentThemePart<typeof noParts[number]>
+  H3?: ComponentThemePart<typeof noParts[number]>
+  H4?: ComponentThemePart<typeof noParts[number]>
+  H5?: ComponentThemePart<typeof noParts[number]>
+  H6?: ComponentThemePart<typeof noParts[number]>
+  Head?: ComponentThemePart<typeof noParts[number]>
+  Header?: ComponentThemePart<typeof noParts[number]>
+  Hr?: ComponentThemePart<typeof noParts[number]>
+  I?: ComponentThemePart<typeof noParts[number]>
+  Iframe?: ComponentThemePart<typeof noParts[number]>
+  Img?: ComponentThemePart<typeof noParts[number]>
+  Ins?: ComponentThemePart<typeof noParts[number]>
+  Kbd?: ComponentThemePart<typeof noParts[number]>
+  Label?: ComponentThemePart<typeof noParts[number]>
+  Legend?: ComponentThemePart<typeof noParts[number]>
+  Li?: ComponentThemePart<typeof noParts[number]>
+  Link?: ComponentThemePart<typeof noParts[number]>
+  Main?: ComponentThemePart<typeof noParts[number]>
+  Map?: ComponentThemePart<typeof noParts[number]>
+  Mark?: ComponentThemePart<typeof noParts[number]>
+  Meta?: ComponentThemePart<typeof noParts[number]>
+  Meter?: ComponentThemePart<typeof noParts[number]>
+  Nav?: ComponentThemePart<typeof noParts[number]>
+  Noscript?: ComponentThemePart<typeof noParts[number]>
+  Ol?: ComponentThemePart<typeof noParts[number]>
+  Optgroup?: ComponentThemePart<typeof noParts[number]>
+  Option?: ComponentThemePart<typeof noParts[number]>
+  Output?: ComponentThemePart<typeof noParts[number]>
+  P?: ComponentThemePart<typeof noParts[number]>
+  Param?: ComponentThemePart<typeof noParts[number]>
+  Picture?: ComponentThemePart<typeof noParts[number]>
+  Pre?: ComponentThemePart<typeof noParts[number]>
+  Progress?: ComponentThemePart<typeof noParts[number]>
+  Q?: ComponentThemePart<typeof noParts[number]>
+  Rp?: ComponentThemePart<typeof noParts[number]>
+  Rt?: ComponentThemePart<typeof noParts[number]>
+  Ruby?: ComponentThemePart<typeof noParts[number]>
+  S?: ComponentThemePart<typeof noParts[number]>
+  Samp?: ComponentThemePart<typeof noParts[number]>
+  Script?: ComponentThemePart<typeof noParts[number]>
+  Section?: ComponentThemePart<typeof noParts[number]>
+  Slot?: ComponentThemePart<typeof noParts[number]>
+  Small?: ComponentThemePart<typeof noParts[number]>
+  Source?: ComponentThemePart<typeof noParts[number]>
+  Span?: ComponentThemePart<typeof noParts[number]>
+  Strong?: ComponentThemePart<typeof noParts[number]>
+  Style?: ComponentThemePart<typeof noParts[number]>
+  Sub?: ComponentThemePart<typeof noParts[number]>
+  Summary?: ComponentThemePart<typeof noParts[number]>
+  Sup?: ComponentThemePart<typeof noParts[number]>
+  Svg?: ComponentThemePart<typeof noParts[number]>
+  Table?: ComponentThemePart<typeof noParts[number]>
+  Tbody?: ComponentThemePart<typeof noParts[number]>
+  Td?: ComponentThemePart<typeof noParts[number]>
+  Template?: ComponentThemePart<typeof noParts[number]>
+  Textarea?: ComponentThemePart<typeof noParts[number]>
+  Tfoot?: ComponentThemePart<typeof noParts[number]>
+  Th?: ComponentThemePart<typeof noParts[number]>
+  Thead?: ComponentThemePart<typeof noParts[number]>
+  Time?: ComponentThemePart<typeof noParts[number]>
+  Title?: ComponentThemePart<typeof noParts[number]>
+  Tr?: ComponentThemePart<typeof noParts[number]>
+  Track?: ComponentThemePart<typeof noParts[number]>
+  U?: ComponentThemePart<typeof noParts[number]>
+  Ul?: ComponentThemePart<typeof noParts[number]>
+  Var?: ComponentThemePart<typeof noParts[number]>
+  Video?: ComponentThemePart<typeof noParts[number]>
+  Wbr?: ComponentThemePart<typeof noParts[number]>
+  Animate?: ComponentThemePart<typeof noParts[number]>
+  AnimateMotion?: ComponentThemePart<typeof noParts[number]>
+  AnimateTransform?: ComponentThemePart<typeof noParts[number]>
+  Circle?: ComponentThemePart<typeof noParts[number]>
+  ClipPath?: ComponentThemePart<typeof noParts[number]>
+  Defs?: ComponentThemePart<typeof noParts[number]>
+  Desc?: ComponentThemePart<typeof noParts[number]>
+  Ellipse?: ComponentThemePart<typeof noParts[number]>
+  FeBlend?: ComponentThemePart<typeof noParts[number]>
+  FeColorMatrix?: ComponentThemePart<typeof noParts[number]>
+  FeComponentTransfer?: ComponentThemePart<typeof noParts[number]>
+  FeComposite?: ComponentThemePart<typeof noParts[number]>
+  FeConvolveMatrix?: ComponentThemePart<typeof noParts[number]>
+  FeDiffuseLighting?: ComponentThemePart<typeof noParts[number]>
+  FeDisplacementMap?: ComponentThemePart<typeof noParts[number]>
+  FeDistantLight?: ComponentThemePart<typeof noParts[number]>
+  FeDropShadow?: ComponentThemePart<typeof noParts[number]>
+  FeFlood?: ComponentThemePart<typeof noParts[number]>
+  FeFuncA?: ComponentThemePart<typeof noParts[number]>
+  FeFuncB?: ComponentThemePart<typeof noParts[number]>
+  FeFuncG?: ComponentThemePart<typeof noParts[number]>
+  FeFuncR?: ComponentThemePart<typeof noParts[number]>
+  FeGaussianBlur?: ComponentThemePart<typeof noParts[number]>
+  FeImage?: ComponentThemePart<typeof noParts[number]>
+  FeMerge?: ComponentThemePart<typeof noParts[number]>
+  FeMergeNode?: ComponentThemePart<typeof noParts[number]>
+  FeMorphology?: ComponentThemePart<typeof noParts[number]>
+  FeOffset?: ComponentThemePart<typeof noParts[number]>
+  FePointLight?: ComponentThemePart<typeof noParts[number]>
+  FeSpecularLighting?: ComponentThemePart<typeof noParts[number]>
+  FeSpotLight?: ComponentThemePart<typeof noParts[number]>
+  FeTile?: ComponentThemePart<typeof noParts[number]>
+  FeTurbulence?: ComponentThemePart<typeof noParts[number]>
+  Filter?: ComponentThemePart<typeof noParts[number]>
+  ForeignObject?: ComponentThemePart<typeof noParts[number]>
+  G?: ComponentThemePart<typeof noParts[number]>
+  Image?: ComponentThemePart<typeof noParts[number]>
+  Line?: ComponentThemePart<typeof noParts[number]>
+  LinearGradient?: ComponentThemePart<typeof noParts[number]>
+  Marker?: ComponentThemePart<typeof noParts[number]>
+  Mask?: ComponentThemePart<typeof noParts[number]>
+  Metadata?: ComponentThemePart<typeof noParts[number]>
+  Mpath?: ComponentThemePart<typeof noParts[number]>
+  Path?: ComponentThemePart<typeof noParts[number]>
+  Pattern?: ComponentThemePart<typeof noParts[number]>
+  Polygon?: ComponentThemePart<typeof noParts[number]>
+  Polyline?: ComponentThemePart<typeof noParts[number]>
+  RadialGradient?: ComponentThemePart<typeof noParts[number]>
+  Rect?: ComponentThemePart<typeof noParts[number]>
+  Stop?: ComponentThemePart<typeof noParts[number]>
+  SvgSwitch?: ComponentThemePart<typeof noParts[number]>
+  Symbol?: ComponentThemePart<typeof noParts[number]>
+  Text?: ComponentThemePart<typeof noParts[number]>
+  TextPath?: ComponentThemePart<typeof noParts[number]>
+  Tspan?: ComponentThemePart<typeof noParts[number]>
+  Use?: ComponentThemePart<typeof noParts[number]>
+  View?: ComponentThemePart<typeof noParts[number]>
   // Components
-  Accordion?: ComponentPartProps<typeof accordionParts[number]>
-  Autocomplete?: ComponentPartProps<typeof autocompleteParts[number]>
-  Avatar?: ComponentPartProps<typeof avatarParts[number]>
-  Box?: ComponentPartProps<typeof boxParts[number]>
-  Button?: ComponentPartProps<typeof buttonParts[number]>
-  ButtonGroup?: ComponentPartProps<typeof buttonGroupParts[number]>
-  Card?: ComponentPartProps<typeof cardParts[number]>
-  Caret?: ComponentPartProps<typeof caretParts[number]>
-  Checkbox?: ComponentPartProps<typeof checkboxParts[number]>
-  // DatePicker?: ComponentPartProps<typeof datePickerParts[number]>
-  // DatePickerDay?: ComponentPartProps<typeof datePickerDayParts[number]>
-  // DatePickerYears?: ComponentPartProps<typeof datePickerYearsParts[number]>
-  // DatePickerYear?: ComponentPartProps<typeof datePickerYearParts[number]>
-  DropdownButton?: ComponentPartProps<typeof dropdownButtonParts[number]>
-  Flex?: ComponentPartProps<typeof flexParts[number]>
-  Icon?: ComponentPartProps<typeof iconParts[number]>
-  IconButton?: ComponentPartProps<typeof iconButtonParts[number]>
-  Input?: ComponentPartProps<typeof inputParts[number]>
-  Menu?: ComponentPartProps<typeof menuParts[number]>
-  MenuItem?: ComponentPartProps<typeof menuItemParts[number]>
-  Modal?: ComponentPartProps<typeof modalParts[number]>
-  ProgressBar?: ComponentPartProps<typeof progressBarParts[number]>
-  Radio?: ComponentPartProps<typeof radioParts[number]>
-  RadioGroup?: ComponentPartProps<typeof radioGroupParts[number]>
-  Select?: ComponentPartProps<typeof selectParts[number]>
-  Skeleton?: ComponentPartProps<typeof skeletonParts[number]>
-  Slider?: ComponentPartProps<typeof sliderParts[number]>
-  Spinner?: ComponentPartProps<typeof spinnerParts[number]>
-  Switch?: ComponentPartProps<typeof switchParts[number]>
-  Text?: ComponentPartProps<typeof textParts[number]>
-  Tooltip?: ComponentPartProps<typeof tooltipParts[number]>
-  TreeView?: ComponentPartProps<typeof treeViewParts[number]>
+  Accordion?: ComponentThemePart<typeof accordionParts[number]>
+  Autocomplete?: ComponentThemePart<typeof autocompleteParts[number]>
+  Avatar?: ComponentThemePart<typeof avatarParts[number]>
+  Button?: ComponentThemePart<typeof buttonParts[number]>
+  ButtonGroup?: ComponentThemePart<typeof buttonGroupParts[number]>
+  Card?: ComponentThemePart<typeof cardParts[number]>
+  Caret?: ComponentThemePart<typeof caretParts[number]>
+  Checkbox?: ComponentThemePart<typeof checkboxParts[number]>
+  DropdownButton?: ComponentThemePart<typeof dropdownButtonParts[number]>
+  Flex?: ComponentThemePart<typeof flexParts[number]>
+  Icon?: ComponentThemePart<typeof iconParts[number]>
+  IconButton?: ComponentThemePart<typeof iconButtonParts[number]>
+  Input?: ComponentThemePart<typeof inputParts[number]>
+  Menu?: ComponentThemePart<typeof menuParts[number]>
+  MenuItem?: ComponentThemePart<typeof menuItemParts[number]>
+  Modal?: ComponentThemePart<typeof modalParts[number]>
+  ProgressBar?: ComponentThemePart<typeof progressBarParts[number]>
+  Radio?: ComponentThemePart<typeof radioParts[number]>
+  RadioGroup?: ComponentThemePart<typeof radioGroupParts[number]>
+  Select?: ComponentThemePart<typeof selectParts[number]>
+  Skeleton?: ComponentThemePart<typeof skeletonParts[number]>
+  Slider?: ComponentThemePart<typeof sliderParts[number]>
+  Spinner?: ComponentThemePart<typeof spinnerParts[number]>
+  Switch?: ComponentThemePart<typeof switchParts[number]>
+  Tooltip?: ComponentThemePart<typeof tooltipParts[number]>
+  TreeView?: ComponentThemePart<typeof treeViewParts[number]>
 }
 
 export type TargetWithValue<T> = T & {
