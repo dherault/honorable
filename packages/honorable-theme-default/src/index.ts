@@ -663,6 +663,17 @@ const theme: HonorableTheme = {
         userSelect: 'none',
       },
     ],
+    Menu: [
+      {
+        maxHeight: 256,
+        overflowY: 'auto',
+      },
+    ],
+    Placeholder: [
+      {
+        color: 'text-xlight',
+      },
+    ],
   },
   Slider: {
     Root: [
