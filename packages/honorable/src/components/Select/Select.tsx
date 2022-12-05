@@ -23,7 +23,7 @@ import { Div, Span } from '../tags'
 import { Menu } from '../Menu/Menu'
 import { Caret } from '../Caret/Caret'
 
-export const selectParts = ['Selected', 'Menu'] as const
+export const selectParts = ['Selected', 'Menu', 'Placeholder'] as const
 
 export const selectPropTypes = {
   open: PropTypes.bool,
@@ -36,6 +36,7 @@ export const selectPropTypes = {
   startIcon: PropTypes.element,
   endIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
   menuOnTop: PropTypes.bool,
+  placeholder: PropTypes.string,
 }
 
 export type SelectBaseProps = {
@@ -49,6 +50,7 @@ export type SelectBaseProps = {
   startIcon?: ReactElement
   endIcon?: ReactElement | boolean
   menuOnTop?: boolean
+  placeholder?: string
 }
 
 export type SelectProps = ComponentProps<SelectBaseProps, 'div', typeof selectParts[number]>
@@ -67,6 +69,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     endIcon = null,
     menuOnTop = false,
     children,
+    placeholder,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -94,6 +97,67 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   useEscapeKey(handleCloseIfOpen)
   useOutsideClick(selectRef, handleCloseIfOpen)
 
+  const renderSelectedItem = useCallback(() => {
+    if (!renderedItem) {
+      return (
+        <Div {...resolvePartStyles('Select.Placeholder', props, theme)}>
+          {placeholder || '\u00a0'}
+        </Div>
+      )
+    }
+
+    if (typeof renderSelected === 'function') {
+      return renderSelected(currentValue)
+    }
+
+    const nodes: ReactElement[] = []
+
+    Children.forEach(renderedItem, (child: ReactElement) => {
+      if (child?.type === Menu) return
+
+      nodes.push(child)
+    })
+
+    return nodes
+  }, [renderedItem, currentValue, renderSelected, placeholder, props, theme])
+
+  const renderStartIcon = useCallback(() => {
+    if (!startIcon) return null
+
+    return (
+      <Span
+        paddingLeft={4}
+        paddingRight={8}
+        display="inline-flex"
+        alignItems="center"
+        justifyContent="center"
+        userSelect="none"
+        {...resolvePartStyles('Select.StartIcon', props, theme)}
+      >
+        {startIcon}
+      </Span>
+    )
+  }, [startIcon, props, theme])
+
+  const renderEndIcon = useCallback(() => {
+    if (endIcon === false) return null
+
+    return (
+      <Span
+        padding={8}
+        display="inline-flex"
+        alignItems="center"
+        justifyContent="center"
+        userSelect="none"
+        {...resolvePartStyles('Select.EndIcon', props, theme)}
+      >
+        {endIcon || (
+          <Caret rotation={actualOpen ? 180 : 0} />
+        )}
+      </Span>
+    )
+  }, [endIcon, actualOpen, props, theme])
+
   useEffect(() => {
     if (typeof open === 'undefined' || previousOpen === open) return
     handleOpen(open)
@@ -112,61 +176,6 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
       setMenuState(x => ({ ...x, activeItemIndex: -1 }))
     }
   }, [previousEvent, event, currentValue, onChange, handleOpen])
-
-  function renderSelectedItem() {
-    if (!renderedItem) return '\u00a0'
-
-    if (typeof renderSelected === 'function') {
-      return renderSelected(currentValue)
-    }
-
-    const nodes: ReactElement[] = []
-
-    Children.forEach(renderedItem, (child: ReactElement) => {
-      if (child?.type === Menu) return
-
-      nodes.push(child)
-    })
-
-    return nodes
-  }
-
-  function renderStartIcon() {
-    if (!startIcon) return null
-
-    return (
-      <Span
-        paddingLeft={4}
-        paddingRight={8}
-        display="inline-flex"
-        alignItems="center"
-        justifyContent="center"
-        userSelect="none"
-        {...resolvePartStyles('Select.StartIcon', props, theme)}
-      >
-        {startIcon}
-      </Span>
-    )
-  }
-
-  function renderEndIcon() {
-    if (endIcon === false) return null
-
-    return (
-      <Span
-        padding={8}
-        display="inline-flex"
-        alignItems="center"
-        justifyContent="center"
-        userSelect="none"
-        {...resolvePartStyles('Select.EndIcon', props, theme)}
-      >
-        {endIcon || (
-          <Caret rotation={actualOpen ? 180 : 0} />
-        )}
-      </Span>
-    )
-  }
 
   return (
     <Div
