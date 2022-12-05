@@ -36,10 +36,10 @@ function findAllValues(items: any[]) {
   }, [])
 }
 
-function renderItem({ text, value, items }: any) {
+function renderItem({ text, value, items }: any, index: number) {
   return (
     <MenuItem
-      key={text}
+      key={text + index}
       value={value}
     >
       {text}
@@ -154,6 +154,18 @@ function Template4(args: any) {
 export const Default = Template.bind({}) as any
 Default.args = {
   items,
+}
+
+export const LotsOfItems = Template.bind({}) as any
+LotsOfItems.args = {
+  items: [...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items],
+}
+
+export const Placeholder = Template.bind({}) as any
+Placeholder.args = {
+  items,
+  placeholder: 'Select an item',
+  initialValue: null,
 }
 
 export const MenuOnTop = Template.bind({}) as any

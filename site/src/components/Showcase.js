@@ -8,8 +8,6 @@ import {
   mergeTheme,
 } from 'honorable'
 import defaultTheme from 'honorable-theme-default'
-import materialTheme from 'honorable-theme-material'
-import wireframeTheme from 'honorable-theme-wireframe'
 
 import honorableTheme from '../extended-honorable-theme'
 import flexpadTheme from '../flexpad-theme'
@@ -25,14 +23,12 @@ import CodeBlock from './CodeBlock'
 
 const themes = [
   mergeTheme(defaultTheme, flexpadTheme),
-  mergeTheme(materialTheme, flexpadTheme),
   mergeTheme(defaultTheme, flexpadTheme, {
     name: 'Unicorn lovers',
     colors: {
       primary: '#FF1493',
     },
   }),
-  mergeTheme(wireframeTheme, flexpadTheme),
 ]
 
 const themeTransitionPeriod = 3300
@@ -67,7 +63,9 @@ function WithRotatingTheme({ children }) {
         userSelect="none"
         onClick={() => setCurrentTheme(nextTheme)}
       >
-        Theme: {currentTheme.name}
+        Theme: 
+        {' '}
+        {currentTheme.name}
       </A>
       {children}
     </ThemeProvider>
