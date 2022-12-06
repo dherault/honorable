@@ -1,5 +1,5 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
-import TextareaAutosize from 'react-expanding-textarea'
+import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
