@@ -1,5 +1,5 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
-import TextareaAutosize from 'react-textarea-autosize'
+import TextareaAutosize from 'react-expanding-textarea'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -160,7 +160,8 @@ function InputRef(props: InputProps, ref: Ref<any>) {
 
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && typeof onEnter === 'function') onEnter(event)
-  }, [onEnter])
+    if (typeof onKeyDown === 'function') onKeyDown(event)
+  }, [onEnter, onKeyDown])
 
   useEffect(() => {
     if (!(inputRef.current && autoFocus && autoSelect)) return
@@ -202,10 +203,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           minWidth={0} // https://stackoverflow.com/questions/42421361/input-button-elements-not-shrinking-in-a-flex-container
           onFocus={onFocus}
           onBlur={onBlur}
-          onKeyDown={event => {
-            handleKeyDown(event)
-            if (typeof onKeyDown === 'function') onKeyDown(event)
-          }}
+          onKeyDown={handleKeyDown}
           onKeyUp={onKeyUp}
           {...resolvePartStyles('Input.InputBase', workingProps, theme)}
           {...inputProps}
@@ -221,10 +219,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
           placeholder={placeholder}
           onFocus={onFocus}
           onBlur={onBlur}
-          onKeyDown={event => {
-            handleKeyDown(event)
-            if (typeof onKeyDown === 'function') onKeyDown(event)
-          }}
+          onKeyDown={handleKeyDown}
           onKeyUp={onKeyUp}
           minRows={minRows}
           maxRows={maxRows}

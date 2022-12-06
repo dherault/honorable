@@ -1,6 +1,6 @@
 {
   "name": "honorable",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "An extensible React component librarie for 2023 and beyond",
   "main": "dist/index.js",
   "scripts": {
@@ -43,7 +43,7 @@
     "lodash.merge": "^4.6.2",
     "lodash.mergewith": "^4.6.2",
     "prop-types": "^15.8.1",
-    "react-textarea-autosize": "^8.4.0",
+    "react-expanding-textarea": "^2.3.6",
     "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
