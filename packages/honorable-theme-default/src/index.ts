@@ -14,6 +14,8 @@ const withLabelPosition = ({ labelPosition }: any) => ({
   marginBottom: labelPosition === 'top' ? 8 : 0,
 })
 
+const xor = (a: boolean, b: boolean) => (a && !b) || (!a && b)
+
 const theme: HonorableTheme = {
   name: 'Default',
   mode: 'light' as const,
@@ -104,7 +106,6 @@ const theme: HonorableTheme = {
         elevation: 1,
         backgroundColor: 'background',
         borderBottom: '1px solid border',
-        userSelect: 'none',
         '&:first-of-type': {
           borderTopLeftRadius: 4,
           borderTopRightRadius: 4,
@@ -122,6 +123,7 @@ const theme: HonorableTheme = {
         paddingBottom: 16,
         paddingLeft: 16,
         paddingRight: 16,
+        userSelect: 'none',
       },
     ],
     ChildrenWrapper: [
@@ -137,14 +139,18 @@ const theme: HonorableTheme = {
         paddingRight: 16,
       },
     ],
-    ExpandIcon: [
+    ExpandIconWrapper: [
       {
         marginLeft: 16,
+      },
+    ],
+    ExpandIcon: [
+      {
         transition: 'transform 200ms ease',
       },
-      ({ expanded }: any) => expanded && {
-        transform: 'rotate(180deg)',
-      },
+      ({ expanded, invertExpandIcon }: any) => ({
+        transform: xor(expanded, invertExpandIcon) ? 'rotate(180deg)' : 'rotate(0deg)',
+      }),
     ],
   },
   Autocomplete: {
