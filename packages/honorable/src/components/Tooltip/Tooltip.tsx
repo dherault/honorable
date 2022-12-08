@@ -280,11 +280,13 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     if (!childRef.current) return
 
     window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('blur', handleBlur)
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('blur', handleBlur)
     }
-  }, [handleMouseMove])
+  }, [handleMouseMove, handleBlur])
 
   function wrapFade(element: ReactElement) {
     const positionStyles = {
