@@ -48,6 +48,21 @@ function TemplateSolo(args: any) {
   )
 }
 
+function TemplateBorderTitle(args: any) {
+  return (
+    <Accordion
+      title={(
+        <Div borderBottom="1px solid red">
+          title prop and ExpandIconWrapper part have a red borde, Title part has a blue border
+        </Div>
+      )}
+      TitleProps={{ borderBottom: '1px solid blue' }}
+      ExpandIconWrapperProps={{ borderBottom: '1px solid red' }}
+      {...args}
+    />
+  )
+}
+
 function TemplateResponsive(args: any) {
   const [n, setN] = useState(1)
 
@@ -103,14 +118,12 @@ export const Default = Template.bind({}) as any
 Default.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  disabled: false,
 }
 
 export const ExpandIcon = Template.bind({}) as any
 ExpandIcon.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  disabled: false,
   expandIcon: (
     <svg
       width="15"
@@ -133,27 +146,35 @@ export const Solo = TemplateSolo.bind({}) as any
 Solo.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  disabled: false,
+}
+
+export const InvertExpandIcon = TemplateSolo.bind({}) as any
+InvertExpandIcon.args = {
+  title: 'An Accordion',
+  children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  invertExpandIcon: true,
 }
 
 export const Responsive = TemplateResponsive.bind({}) as any
 Responsive.args = {
   title: 'An Accordion',
-  disabled: false,
+}
+
+export const BorderTitle = TemplateBorderTitle.bind({}) as any
+BorderTitle.args = {
+  children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 }
 
 export const Controlled = TemplateControlled.bind({}) as any
 Controlled.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  disabled: false,
 }
 
 export const DefaultExpanded = TemplateSolo.bind({}) as any
 DefaultExpanded.args = {
   title: 'An Accordion',
   children: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  disabled: false,
   defaultExpanded: true,
 }
 
