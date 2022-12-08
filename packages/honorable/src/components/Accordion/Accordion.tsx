@@ -13,7 +13,7 @@ import filterUndefinedValues from '../../utils/filterUndefinedValues'
 import { Caret } from '../Caret/Caret'
 import { Div } from '../tags'
 
-export const accordionParts = ['Title', 'ExpandIcon', 'ChildrenWrapper', 'Children'] as const
+export const accordionParts = ['Title', 'ExpandIconWrapper', 'ExpandIcon', 'ChildrenWrapper', 'Children'] as const
 
 export const accordionPropTypes = {
   expanded: PropTypes.bool,
@@ -21,6 +21,7 @@ export const accordionPropTypes = {
   onExpand: PropTypes.func,
   title: PropTypes.node,
   expandIcon: PropTypes.node,
+  invertExpandIcon: PropTypes.bool,
 }
 
 export type AccordionBaseProps = {
@@ -44,6 +45,10 @@ export type AccordionBaseProps = {
    * The Accordion's expand icon node
    */
   expandIcon?: ReactNode
+  /**
+   * The Accordion's expand icon node
+   */
+  invertExpandIcon?: boolean
 }
 
 export type AccordionProps = ComponentProps<AccordionBaseProps, 'div', typeof accordionParts[number]>
@@ -54,9 +59,9 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   const {
     expanded,
     defaultExpanded,
+    title,
     onExpand,
     expandIcon,
-    title,
     children,
     ...otherProps
   } = props
@@ -111,21 +116,28 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
       <Div
         tabIndex={0}
         display="flex"
-        alignItems="center"
+        alignItems="stretch"
+        justifyContent="space-between"
         cursor="pointer"
         {...resolvePartStyles('Accordion.Title', workingProps, theme)}
         onClick={handleExpand}
         onKeyDown={handleKeyDown}
       >
         {title}
-        <Div flexGrow={1} />
         <Div
           display="flex"
           alignItems="center"
           justifyContent="center"
-          {...resolvePartStyles('Accordion.ExpandIcon', workingProps, theme)}
+          {...resolvePartStyles('Accordion.ExpandIconWrapper', workingProps, theme)}
         >
-          {expandIcon || <Caret />}
+          <Div
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            {...resolvePartStyles('Accordion.ExpandIcon', workingProps, theme)}
+          >
+            {expandIcon || <Caret />}
+          </Div>
         </Div>
       </Div>
       <Div
