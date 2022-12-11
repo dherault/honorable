@@ -10,7 +10,7 @@ export default {
 }
 
 function Template(args: any) {
-  const [useHonorable, setUseHonorable] = useState(true)
+  const [useHonorable, setUseHonorable] = useState(false)
   const nodes: any[] = []
 
   for (let i = 0; i < 32; i++) {
@@ -33,9 +33,11 @@ function Template(args: any) {
         <H1>Performance test</H1>
         <Switch
           checked={useHonorable}
-          ml={2}
+          ml={1}
           onChange={event => setUseHonorable(event.target.checked)}
-        />
+        >
+          Use Honorable
+        </Switch>
       </Flex>
       <Div
         height="100%"

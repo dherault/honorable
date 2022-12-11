@@ -215,3 +215,26 @@ function Template8() {
 export const DeepColorResolution = Template8.bind({}) as any
 DeepColorResolution.args = {
 }
+
+function Template9() {
+  return (
+    <Div
+      display="flex"
+      WebkitFlexDirection="column"
+    >
+      <Div>
+        I should be a webkit column
+      </Div>
+      <Div>
+        I should be a webkit column
+      </Div>
+      <Div>
+        I should be a webkit column
+      </Div>
+    </Div>
+  )
+}
+
+export const Webkit = Template9.bind({}) as any
+Webkit.args = {
+}
