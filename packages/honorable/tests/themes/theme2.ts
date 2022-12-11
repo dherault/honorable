@@ -21,10 +21,6 @@ export default {
     tablet: 900,
     desktop: 1200,
   },
-  aliases: {
-    w: 'width',
-    bg: 'backgroundColor',
-  },
   colors: {
     blue,
     primary: '#3e73dd',

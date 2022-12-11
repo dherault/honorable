@@ -5,7 +5,7 @@ import theme1 from '../themes/theme1'
 
 describe('resolveAll', () => {
 
-  test('Resolves to identity when no breakpoints nor alias nor webkit property nor color is involved', () => {
+  test('Resolves to identity when no breakpoints nor alias nor Webkit property nor color is involved', () => {
     expect(resolveAll({ width: 128 }, {})).toStrictEqual({ width: 128 })
     expect(resolveAll({ width: 128 }, theme1)).toStrictEqual({ width: 128 })
     expect(resolveAll({ 'width-foo': 128 }, theme1)).toStrictEqual({ 'width-foo': 128 })
@@ -14,12 +14,12 @@ describe('resolveAll', () => {
   test('Resolves complex objects', () => {
     expect(
       resolveAll({
-        w: 128,
-        bg: 'primary',
+        width: 128,
+        backgroundColor: 'primary',
         '&:hover': {
-          'w-mobile': 64,
-          'bg-tablet-only': 'secondary',
-          webkitOpacity: 0.5,
+          'width-mobile': 64,
+          'backgroundColor-tablet-only': 'secondary',
+          WebkitOpacity: 0.5,
         },
         '& > div': {
           color: 'blue',

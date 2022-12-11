@@ -6,10 +6,6 @@ export default {
     tablet: 900,
     desktop: 1200,
   },
-  aliases: {
-    w: 'width',
-    bg: 'backgroundColor',
-  },
   colors: {
     primary: '#0000ff',
     secondary: '#ff0000',
