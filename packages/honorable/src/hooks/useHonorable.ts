@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import merge from 'lodash.merge'
 
-import { CssProps } from '../types'
+import { CssProps, HonorableTheme } from '../types'
 
 import styleProperties from '../data/stylesProperties'
 import propToPseudoSelectors from '../data/propToPseudoSelectors'
@@ -10,35 +10,23 @@ import resolveAll from '../resolvers/resolveAll'
 import resolveStyles from '../resolvers/resolveStyles'
 
 import isSelector from '../utils/isSelector'
-import filterObject from '../utils/filterObject'
-
-import useTheme from './useTheme'
 
 const suffixedstyleProperties = styleProperties.map(x => `${x}-`)
 const pseudoSelectorPropKeys = Object.keys(propToPseudoSelectors)
 
-function useHonorable(name: string, props: object, overridenProps: object = {}, propTypeKeys: string[] = []) {
-  const theme = useTheme()
-
+function useHonorable(name: string, props: object, theme: HonorableTheme) {
   return useMemo(() => {
-    const workingProps = { ...props, ...overridenProps }
-    const aliases = Object.keys(filterObject(theme.aliases))
-    const suffixedAliases = aliases.map(x => `${x}-`)
+    const workingProps = { ...props }
     const stylesProps: CssProps = {}
     const resolvedRootStyles = resolveStyles(theme[name]?.Root, workingProps, theme)
     const otherProps: Record<string, any> = {}
 
     Object.entries(props).forEach(([key, value]) => {
       if (
-        (
-          styleProperties.includes(key as typeof styleProperties[number])
-          || suffixedstyleProperties.some(x => key.startsWith(x))
-          || aliases.includes(key)
-          || suffixedAliases.some(x => key.startsWith(x))
-          || isSelector(key)
-          || pseudoSelectorPropKeys.includes(key)
-        )
-        && !propTypeKeys.includes(key)
+        styleProperties.includes(key as typeof styleProperties[number])
+        || suffixedstyleProperties.some(x => key.startsWith(x))
+        || isSelector(key)
+        || pseudoSelectorPropKeys.includes(key)
       ) {
         if (typeof value !== 'undefined') {
           stylesProps[key] = value
@@ -66,7 +54,7 @@ function useHonorable(name: string, props: object, overridenProps: object = {}, 
       ),
       otherProps,
     ]
-  }, [name, props, overridenProps, propTypeKeys, theme])
+  }, [name, props, theme])
 }
 
 export default useHonorable

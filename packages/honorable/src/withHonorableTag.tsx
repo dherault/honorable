@@ -16,7 +16,7 @@ function withHonorableTag<P>(tag: keyof JSX.IntrinsicElements, name: string) {
 
   function Honorable(props: P, ref: Ref<any>) {
     const theme = useTheme()
-    const [honorable, otherProps] = useHonorable(name, props as object)
+    const [honorable, otherProps] = useHonorable(name, props as object, theme)
 
     return (
       <HonorableStyle

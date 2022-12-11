@@ -132,9 +132,6 @@ export type HonorableTheme = {
   colors?: {
     [colorName: ColorKey]: ColorValue | Record<string, ColorValue>
   }
-  aliases?: {
-    [alias: string]: string
-  }
   stylesheet?: {
     [selector: string]: StylesArray
   }
@@ -143,6 +140,7 @@ export type HonorableTheme = {
     resolveColorString: (color: string) => string
     resolveColorObject: (color: object) => object
   }
+  // A cache for color resolution
   cache?: Record<string, object>
   // extended Tags
   ButtonBase?: ComponentThemePart<typeof noParts[number]>
