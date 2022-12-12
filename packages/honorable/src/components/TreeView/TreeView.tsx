@@ -108,28 +108,30 @@ function TreeViewRef({
       >
         {label}
       </Div>
-      <Div
-        display="flex"
-        gap={typeof barOffsetLeft === 'number' ? `${barOffsetLeft}px` : barOffsetLeft}
-      >
+      {!!children && (
         <Div
-          display={noBar ? 'none' : 'block'}
-          width={1}
-          backgroundColor={barColor}
-          marginTop={barOffsetTop}
-          {...resolvePartStyles('TreeView.Bar', workingProps, theme)}
-        />
-        <Div
-          flexShrink={1}
-          height={actualExpanded ? 'fit-content' : 0}
-          marginLeft={noBar ? barOffsetLeft : 0}
-          paddingLeft={childrenOffsetLeft}
-          overflowY="hidden"
-          {...resolvePartStyles('TreeView.Children', workingProps, theme)}
+          display="flex"
+          gap={typeof barOffsetLeft === 'number' ? `${barOffsetLeft}px` : barOffsetLeft}
         >
-          {children}
+          <Div
+            display={noBar ? 'none' : 'block'}
+            width={1}
+            backgroundColor={barColor}
+            marginTop={barOffsetTop}
+            {...resolvePartStyles('TreeView.Bar', workingProps, theme)}
+          />
+          <Div
+            flexShrink={1}
+            height={actualExpanded ? 'fit-content' : 0}
+            marginLeft={noBar ? barOffsetLeft : 0}
+            paddingLeft={childrenOffsetLeft}
+            overflowY="hidden"
+            {...resolvePartStyles('TreeView.Children', workingProps, theme)}
+          >
+            {children}
+          </Div>
         </Div>
-      </Div>
+      )}
     </Div>
   )
 }
