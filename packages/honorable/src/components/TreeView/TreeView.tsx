@@ -110,7 +110,7 @@ function TreeViewRef({
       </Div>
       <Div
         display="flex"
-        gap={barOffsetLeft}
+        gap={typeof barOffsetLeft === 'number' ? `${barOffsetLeft}px` : barOffsetLeft}
       >
         <Div
           display={noBar ? 'none' : 'block'}
