@@ -1,4 +1,4 @@
-import { ReactNode, Ref, forwardRef, useCallback, useState } from 'react'
+import { Children, ReactNode, Ref, forwardRef, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -108,9 +108,9 @@ function TreeViewRef({
       >
         {label}
       </Div>
-      {!!children && (
+      {Children.toArray(children).length > 0 && (
         <Div
-          display="flex"
+          display={actualExpanded ? 'flex' : 'none'}
           gap={typeof barOffsetLeft === 'number' ? `${barOffsetLeft}px` : barOffsetLeft}
         >
           <Div
