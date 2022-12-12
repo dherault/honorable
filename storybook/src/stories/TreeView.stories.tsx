@@ -28,15 +28,19 @@ createItems(items, 3)
 
 function Template(args: any) {
   function renderTreeView(items: any[]) {
-    return items.map(item => (
-      <TreeView
-        key={item.id}
-        label={item.label}
-        {...args}
-      >
-        {item.children.length > 0 && renderTreeView(item.children)}
-      </TreeView>
-    ))
+    return items.map(item => {
+      if (!item || item.label.endsWith('4')) return null
+
+      return (
+        <TreeView
+          key={item.id}
+          label={item.label}
+          {...args}
+        >
+          {renderTreeView(item.children)}
+        </TreeView>
+      )
+    })
   }
 
   return (
@@ -53,16 +57,20 @@ function Template2() {
   const [expanded, setExpanded] = useState(false)
 
   function renderTreeView(items: any[]) {
-    return items.map(item => (
-      <TreeView
-        expanded={expanded}
-        onExpand={setExpanded}
-        key={item.id}
-        label={item.label}
-      >
-        {item.children.length > 0 && renderTreeView(item.children)}
-      </TreeView>
-    ))
+    return items.map(item => {
+      if (!item) return null
+
+      return (
+        <TreeView
+          expanded={expanded}
+          onExpand={setExpanded}
+          key={item.id}
+          label={item.label}
+        >
+          {renderTreeView(item.children)}
+        </TreeView>
+      )
+    })
   }
 
   return (
@@ -83,14 +91,18 @@ function Template2() {
 
 function Template3() {
   function renderTreeView(items: any[]) {
-    return items.map(item => (
-      <TreeView
-        key={item.id}
-        label={<Div color="lightskyblue">{item.label}</Div>}
-      >
-        {item.children.length > 0 && renderTreeView(item.children)}
-      </TreeView>
-    ))
+    return items.map(item => {
+      if (!item) return null
+
+      return (
+        <TreeView
+          key={item.id}
+          label={<Div color="lightskyblue">{item.label}</Div>}
+        >
+          {renderTreeView(item.children)}
+        </TreeView>
+      )
+    })
   }
 
   return (
