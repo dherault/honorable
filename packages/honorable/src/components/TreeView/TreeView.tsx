@@ -115,13 +115,14 @@ function TreeViewRef({
         >
           <Div
             display={noBar ? 'none' : 'block'}
+            flexShrink={0}
             width={1}
             backgroundColor={barColor}
             marginTop={barOffsetTop}
             {...resolvePartStyles('TreeView.Bar', workingProps, theme)}
           />
           <Div
-            flexShrink={1}
+            flexGrow={1}
             height={actualExpanded ? 'fit-content' : 0}
             marginLeft={noBar ? barOffsetLeft : 0}
             paddingLeft={childrenOffsetLeft}
