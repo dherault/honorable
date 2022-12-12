@@ -26,12 +26,13 @@ function createItems(items, maxDepth, depth = 0) {
 
 createItems(items, 3)
 
-function Template() {
+function Template(args: any) {
   function renderTreeView(items: any[]) {
     return items.map(item => (
       <TreeView
         key={item.id}
         label={item.label}
+        {...args}
       >
         {item.children.length > 0 && renderTreeView(item.children)}
       </TreeView>
@@ -39,7 +40,10 @@ function Template() {
   }
 
   return (
-    <TreeView label="Hierarchy">
+    <TreeView
+      label="Hierarchy"
+      {...args}
+    >
       {renderTreeView(items)}
     </TreeView>
   )
@@ -99,8 +103,25 @@ function Template3() {
 export const Default = Template.bind({}) as any
 Default.args = {}
 
+export const DefaultExpanded = Template.bind({}) as any
+DefaultExpanded.args = {
+  defaultExpanded: true,
+}
+
 export const Controlled = Template2.bind({}) as any
 Controlled.args = {}
 
 export const LabelNode = Template3.bind({}) as any
 LabelNode.args = {}
+
+export const NoBar = Template.bind({}) as any
+NoBar.args = {
+  defaultExpanded: true,
+  noBar: true,
+}
+
+export const BarColor = Template.bind({}) as any
+BarColor.args = {
+  defaultExpanded: true,
+  barColor: 'deepskyblue',
+}

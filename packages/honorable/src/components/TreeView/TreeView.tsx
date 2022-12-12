@@ -12,14 +12,18 @@ import filterUndefinedValues from '../../utils/filterUndefinedValues'
 
 import { Div } from '../tags'
 
-export const treeViewParts = ['Label', 'Children'] as const
+export const treeViewParts = ['Label', 'Bar', 'Children'] as const
 
 export const treeViewPropTypes = {
   expanded: PropTypes.bool,
   defaultExpanded: PropTypes.bool,
   label: PropTypes.node,
   onClick: PropTypes.func,
-  childrenOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  childrenOffsetLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  noBar: PropTypes.bool,
+  barColor: PropTypes.string,
+  barOffsetTop: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  barOffsetLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export type TreeViewBaseProps = {
@@ -40,18 +44,46 @@ export type TreeViewBaseProps = {
    */
   onExpand?: (expanded: boolean) => void
   /**
-   * The offset of the children
+   * The children offset left
    */
-  childrenOffset?: number | string
+  childrenOffsetLeft?: number | string
+  /**
+   * Whether to hide the bar or not
+   */
+  noBar?: boolean
+  /**
+   * The bar color
+   */
+  barColor?: string
+  /**
+   * The bar top offset
+   */
+  barOffsetTop?: number | string
+  /**
+   * The bar left offset
+   */
+  barOffsetLeft?: number | string
 }
 
 export type TreeViewProps = ComponentProps<TreeViewBaseProps, 'div', typeof treeViewParts[number]>
 
-function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand, childrenOffset = 16, children, ...props }: TreeViewProps, ref: Ref<any>) {
+function TreeViewRef({
+  expanded,
+  defaultExpanded = false,
+  label = null,
+  onExpand,
+  childrenOffsetLeft = 0,
+  noBar = false,
+  barColor = 'text',
+  barOffsetTop = 4,
+  barOffsetLeft = 16,
+  children,
+  ...props
+}: TreeViewProps, ref: Ref<any>) {
   const theme = useTheme()
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded)
   const actualExpanded = expanded ?? uncontrolledExpanded
-  const workingProps = { ...props, defaultExpanded, label, childrenOffset, expanded: actualExpanded }
+  const workingProps = { ...props, defaultExpanded, label, childrenOffsetLeft, noBar, barColor, barOffsetTop, expanded: actualExpanded }
   const rootStyles = useRootStyles('TreeView', workingProps, theme)
 
   const handleClick = useCallback(() => {
@@ -71,18 +103,32 @@ function TreeViewRef({ expanded, defaultExpanded = false, label = null, onExpand
     >
       <Div
         onClick={handleClick}
+        cursor="pointer"
         {...resolvePartStyles('TreeView.Label', workingProps, theme)}
       >
         {label}
       </Div>
       <Div
-        flexShrink={1}
-        paddingLeft={childrenOffset}
-        height={actualExpanded ? 'fit-content' : 0}
-        overflowY="hidden"
-        {...resolvePartStyles('TreeView.Children', workingProps, theme)}
+        display="flex"
+        gap={barOffsetLeft}
       >
-        {children}
+        <Div
+          display={noBar ? 'none' : 'block'}
+          width={1}
+          backgroundColor={barColor}
+          marginTop={barOffsetTop}
+          {...resolvePartStyles('TreeView.Bar', workingProps, theme)}
+        />
+        <Div
+          flexShrink={1}
+          height={actualExpanded ? 'fit-content' : 0}
+          marginLeft={noBar ? barOffsetLeft : 0}
+          paddingLeft={childrenOffsetLeft}
+          overflowY="hidden"
+          {...resolvePartStyles('TreeView.Children', workingProps, theme)}
+        >
+          {children}
+        </Div>
       </Div>
     </Div>
   )
