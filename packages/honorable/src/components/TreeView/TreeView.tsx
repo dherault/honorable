@@ -125,7 +125,6 @@ function TreeViewRef({
             height={actualExpanded ? 'fit-content' : 0}
             marginLeft={noBar ? barOffsetLeft : 0}
             paddingLeft={childrenOffsetLeft}
-            overflowY="hidden"
             {...resolvePartStyles('TreeView.Children', workingProps, theme)}
           >
             {children}
