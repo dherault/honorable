@@ -132,7 +132,7 @@ function Template2() {
         mt={2}
         onClick={() => setVisible(x => !x)}
       >
-        Toggle div 1
+        Toggle div
       </Button>
     </>
   )

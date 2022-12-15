@@ -31,7 +31,6 @@ export const selectPropTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func,
   onOpen: PropTypes.func,
-  fade: PropTypes.bool,
   renderSelected: PropTypes.func,
   startIcon: PropTypes.element,
   endIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
@@ -45,7 +44,6 @@ export type SelectBaseProps = {
   value?: any
   onChange?: (event: TargetWithValue<MouseEvent | KeyboardEvent>) => void
   onOpen?: (open: boolean) => void
-  fade?: boolean
   renderSelected?: (value: any) => ReactElement
   startIcon?: ReactElement
   endIcon?: ReactElement | boolean
@@ -64,7 +62,6 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     onOpen,
     onClick,
     renderSelected,
-    fade = true,
     startIcon = null,
     endIcon = null,
     menuOnTop = false,
@@ -75,6 +72,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   const theme = useTheme()
   const selectRef = useRef()
   const forkedRef = useForkedRef(ref, selectRef)
+  const [initialRender, setInitialRender] = useState(true)
   const [actualOpen, setActualOpen] = useState(open ?? defaultOpen ?? false)
   const [menuState, setMenuState] = useState<MenuStateType>({ })
   const [menuUsageState, setMenuUsageState] = useState<MenuUsageStateType>({ value })
@@ -82,7 +80,8 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   const { value: currentValue, renderedItem, event } = menuUsageState
   const previousEvent = usePrevious(event)
   const previousOpen = usePreviousWithDefault(open)
-  const workingProps = { ...props, open: actualOpen }
+  const previousValue = usePreviousWithDefault(value)
+  const workingProps = { ...props, open: actualOpen, defaultOpen, startIcon, endIcon, menuOnTop }
   const rootStyles = useRootStyles('Select', workingProps, theme)
 
   const handleOpen = useCallback((nextOpen: boolean) => {
@@ -163,19 +162,29 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     handleOpen(open)
   }, [open, previousOpen, handleOpen])
 
+  // Update the menu usage state value on controlled value change
   useEffect(() => {
-    if (value === menuUsageState.value) return
+    if (previousValue === value) return
 
-    setMenuUsageState(x => ({ ...x, value, renderedItem: null }))
-  }, [value, menuUsageState.value])
+    setMenuUsageState(x => ({ ...x, value }))
+    setInitialRender(true)
+  }, [previousValue, value])
 
   useEffect(() => {
-    if (event && previousEvent !== event && typeof onChange === 'function') {
-      onChange(enhanceEventTarget(event, { value: currentValue }))
-      handleOpen(false)
-      setMenuState(x => ({ ...x, activeItemIndex: -1 }))
-    }
+    if (!(event && previousEvent !== event && typeof onChange === 'function')) return
+
+    onChange(enhanceEventTarget(event, { value: currentValue }))
+    handleOpen(false)
+    setMenuState(x => ({ ...x, activeItemIndex: -1 }))
   }, [previousEvent, event, currentValue, onChange, handleOpen])
+
+  // The initial render is used to set the initial value by the MenuItem children
+  // Also used when the controlled value changes
+  useEffect(() => {
+    if (!initialRender) return
+
+    setInitialRender(false)
+  }, [initialRender])
 
   return (
     <Div
@@ -208,21 +217,21 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
         {renderEndIcon()}
       </Div>
       <MenuUsageContext.Provider value={menuUsageValue}>
-        <Menu
-          fade={fade}
-          menuState={menuState}
-          setMenuState={setMenuState}
-          position="absolute"
-          top={menuOnTop ? null : '100%'}
-          bottom={menuOnTop ? '100%' : null}
-          right={-1} // -1 for compensating the border
-          left={-1}
-          zIndex={100}
-          display={actualOpen ? 'block' : 'none'}
-          {...resolvePartStyles('Select.Menu', props, theme)}
-        >
-          {children}
-        </Menu>
+        {(actualOpen || initialRender) && (
+          <Menu
+            menuState={menuState}
+            setMenuState={setMenuState}
+            display={initialRender ? 'none' : undefined}
+            position="absolute"
+            top={menuOnTop ? null : '100%'}
+            bottom={menuOnTop ? '100%' : null}
+            right={-1} // -1 for compensating the border
+            left={-1}
+            {...resolvePartStyles('Select.Menu', props, theme)}
+          >
+            {children}
+          </Menu>
+        )}
       </MenuUsageContext.Provider>
     </Div>
   )

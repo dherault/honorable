@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { A, Div, Flex, Menu, MenuItem, Select } from 'honorable'
+import { A, Button, Div, Flex, Menu, MenuItem, Select } from 'honorable'
 
 export default {
   title: 'Components/Select',
@@ -151,6 +151,30 @@ function Template4(args: any) {
   )
 }
 
+const zeros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+function TemplateChanging() {
+  const [value, setValue] = useState(null)
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <Button onClick={() => setCount(x => x + 1)}>
+        Increment
+      </Button>
+      <Select
+        value={value}
+        onChange={event => setValue(event.target.value)}
+        mt={2}
+      >
+        {zeros.map((_x, i) => (
+          <MenuItem key={i}><div>{count + i}</div></MenuItem>
+        ))}
+      </Select>
+    </>
+  )
+}
+
 export const Default = Template.bind({}) as any
 Default.args = {
   items,
@@ -180,8 +204,8 @@ DefaultOpen.args = {
   defaultOpen: true,
 }
 
-export const Selected = Template.bind({}) as any
-Selected.args = {
+export const InitialValue = Template.bind({}) as any
+InitialValue.args = {
   items,
   initialValue: 'Lovers',
 }
@@ -260,4 +284,40 @@ export const RenderSelectedFn = Template.bind({}) as any
 RenderSelectedFn.args = {
   items,
   renderSelected: (value: any) => `${value} (custom)`,
+}
+
+export const MenuItemComplexChildren = Template.bind({}) as any
+MenuItemComplexChildren.args = {
+  items: [
+    {
+      value: 0,
+      text: <div>0</div>,
+    },
+    {
+      value: 1,
+      text: <div><div>1</div></div>,
+    },
+    {
+      value: 2,
+      text: <div><div><div>2</div></div></div>,
+    },
+  ],
+}
+
+export const MenuItemComplexChildrenChanging = TemplateChanging.bind({}) as any
+MenuItemComplexChildrenChanging.args = {
+  items: [
+    {
+      value: 0,
+      text: <div>0</div>,
+    },
+    {
+      value: 1,
+      text: <div><div>1</div></div>,
+    },
+    {
+      value: 2,
+      text: <div><div><div>2</div></div></div>,
+    },
+  ],
 }

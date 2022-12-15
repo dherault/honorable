@@ -114,7 +114,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       ...x,
       value,
       event,
-      renderedItem: children,
+      renderedItem: Children.toArray(children),
     }))
     setMenuState(x => ({
       ...x,
@@ -215,10 +215,21 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   // Set renderedItem if value matches menuState.value
   // Used by selects with value set on
   useEffect(() => {
-    if (menuUsageState.value === value && menuUsageState.renderedItem !== children) {
-      setMenuUsageState(x => ({ ...x, renderedItem: children }))
-    }
-  }, [menuUsageState, setMenuUsageState, value, children])
+    if (menuUsageState.value !== value) return
+
+    const renderedItem = Children.toArray(children)
+
+    if (
+      menuUsageState.renderedItem?.every((x, i) => {
+        const y = renderedItem[i]
+
+        // @ts-expect-error
+        return typeof x !== 'object' && typeof y !== 'object' ? x === y : x.type === y.type && x.key === y.key
+      })
+    ) return
+
+    setMenuUsageState(x => ({ ...x, renderedItem }))
+  }, [menuUsageState.value, menuUsageState.renderedItem, setMenuUsageState, value, children])
 
   return (
     <Div

@@ -62,14 +62,14 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const {
     menuState: initialMenuState,
     setMenuState: setInitialMenuState,
-    fade,
-    open,
-    isSubMenu,
+    fade = false,
+    open = true,
+    isSubMenu = false,
     transtionDuration = 300,
     children,
-    noFocus,
-    noFocusLoss,
-    noOutsideClick,
+    noFocus = false,
+    noFocusLoss = false,
+    noOutsideClick = false,
     ...otherProps
   } = props
   const theme = useTheme()
@@ -88,7 +88,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const actualOpen = open ?? true
   const [transitionOpen, setTransitionOpen] = useState(actualOpen)
 
-  const workingProps = { ...props, ...actualMenuState }
+  const workingProps = { ...props, fade, open: actualOpen, isSubMenu, transtionDuration, noFocus, noFocusLoss, noOutsideClick, ...actualMenuState }
   const rootStyles = useRootStyles('Menu', workingProps, theme)
 
   const handleOutsideClick = useCallback(() => {

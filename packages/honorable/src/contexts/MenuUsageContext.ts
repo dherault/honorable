@@ -2,7 +2,7 @@ import { Dispatch, MouseEvent, ReactNode, SetStateAction, createContext } from '
 
 export type MenuUsageStateType = {
   value?: any
-  renderedItem?: ReactNode
+  renderedItem?: ReactNode[]
   event?: MouseEvent
 }
 
