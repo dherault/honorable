@@ -1,13 +1,13 @@
 {
   "name": "honorable",
-  "version": "1.0.0-beta.17",
+  "version": "1.0.0-beta.18",
   "description": "An extensible React component librarie for 2023 and beyond",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:watch": "nodemon --watch src --watch tests --ext ts,tsx,snap --exec \"npm run test\"",
     "lint": "eslint src tests",
     "lint:fix": "eslint --fix src tests",
