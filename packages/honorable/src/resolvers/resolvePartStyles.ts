@@ -1,9 +1,9 @@
 import merge from 'lodash.merge'
 
-import { HonorableTheme } from '../types'
+import { HonorableTheme } from '../types.js'
 
-import resolveAll from './resolveAll'
-import resolveStyles from './resolveStyles'
+import resolveAll from './resolveAll.js'
+import resolveStyles from './resolveStyles.js'
 
 // Return the style object of applied part styles
 function resolvePartStyles(partKey: string, props: Record<string, any>, theme: HonorableTheme) {

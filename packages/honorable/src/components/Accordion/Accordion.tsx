@@ -1,17 +1,17 @@
 import { KeyboardEvent, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import useTheme from '../../hooks/useTheme'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Caret } from '../Caret/Caret'
-import { Div } from '../tags'
+import { Caret } from '../Caret/Caret.js'
+import { Div } from '../tags.js'
 
 export const accordionParts = ['Title', 'ExpandIconWrapper', 'ExpandIcon', 'ChildrenWrapper', 'Children'] as const
 

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import createMediaQuery from '../utils/createMediaQuery'
+import createMediaQuery from '../utils/createMediaQuery.js'
 
-import useTheme from './useTheme'
+import useTheme from './useTheme.js'
 
 // useMediaQuery('(min-width:600px)')
 // useMediaQuery('up', 600)

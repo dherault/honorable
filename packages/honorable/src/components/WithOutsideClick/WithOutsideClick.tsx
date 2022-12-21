@@ -1,6 +1,6 @@
 import { Children, PropsWithChildren, ReactElement, cloneElement, memo, useRef } from 'react'
 
-import useOutsideClick from '../../hooks/useOutsideClick'
+import useOutsideClick from '../../hooks/useOutsideClick.js'
 
 export type WithOutsideClickProps = PropsWithChildren<{
   preventFirstFire?: boolean

@@ -1,14 +1,14 @@
 import { Ref, memo, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import withHonorable from '../../withHonorable'
+import withHonorable from '../../withHonorable.js'
 
-import usePropWithBreakpoints from '../../hooks/usePropWithBreakpoints'
+import usePropWithBreakpoints from '../../hooks/usePropWithBreakpoints.js'
 
-import { Flex, FlexBaseProps, FlexPropTypes, FlexProps } from '../Flex/Flex'
-import { Div } from '../tags'
+import { Flex, FlexBaseProps, FlexPropTypes, FlexProps } from '../Flex/Flex.js'
+import { Div } from '../tags.js'
 
 export type GridBaseProps = {
   columns?: number | { [breakpointName: string]: number }

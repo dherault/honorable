@@ -1,19 +1,19 @@
 import { ChangeEvent, Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, memo, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps, TargetWithValue } from '../../types'
+import { ComponentProps, TargetWithValue } from '../../types.js'
 
-import useTheme from '../../hooks/useTheme'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import enhanceEventTarget from '../../utils/enhanceEventTarget'
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import enhanceEventTarget from '../../utils/enhanceEventTarget.js'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Radio } from '../Radio/Radio'
-import { Flex } from '../Flex/Flex'
-import { Div } from '../tags'
+import { Radio } from '../Radio/Radio.js'
+import { Flex } from '../Flex/Flex.js'
+import { Div } from '../tags.js'
 
 export const radioGroupParts = ['Radio'] as const
 

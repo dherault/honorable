@@ -1,6 +1,6 @@
-import { HonorableTheme } from '../types'
+import { HonorableTheme } from '../types.js'
 
-import resolveColor, { resolveColorString } from '../resolvers/resolveColor'
+import resolveColor, { resolveColorString } from '../resolvers/resolveColor.js'
 
 // Add utils to the theme
 function enhanceTheme(theme: HonorableTheme) {

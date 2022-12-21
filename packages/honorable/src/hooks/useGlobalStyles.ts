@@ -2,15 +2,15 @@ import { css } from '@emotion/react'
 
 import { useMemo } from 'react'
 
-import resolveAll from '../resolvers/resolveAll'
+import resolveAll from '../resolvers/resolveAll.js'
 
-import resolveStyles from '../resolvers/resolveStyles'
+import resolveStyles from '../resolvers/resolveStyles.js'
 
-import normalizeCss from '../data/normalizeCss'
+import normalizeCss from '../data/normalizeCss.js'
 
-import assignDefaultFontFamily from '../utils/assignDefaultFontFamily'
+import assignDefaultFontFamily from '../utils/assignDefaultFontFamily.js'
 
-import useTheme from './useTheme'
+import useTheme from './useTheme.js'
 
 // A hook to return the global styles
 // Useful when working with iframes

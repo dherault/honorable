@@ -2,17 +2,17 @@ import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, mem
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import useTheme from '../../hooks/useTheme'
-import useRootStyles from '../../hooks/useRootStyles'
-import useForkedRef from '../../hooks/useForkedRef'
+import useTheme from '../../hooks/useTheme.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Div, InputBase } from '../tags'
+import { Div, InputBase } from '../tags.js'
 
 export const inputParts = ['StartIcon', 'InputBase', 'TextArea', 'EndIcon'] as const
 
@@ -210,6 +210,7 @@ function InputRef(props: InputProps, ref: Ref<any>) {
         />
       )}
       {multiline && (
+        // @ts-expect-error
         <TextareaAutosize
           ref={forkedRef}
           autoFocus={autoFocus}

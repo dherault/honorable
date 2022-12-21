@@ -1,8 +1,8 @@
-import { HonorableTheme } from '../types'
+import { HonorableTheme } from '../types.js'
 
-import resolveBreakpoints from './resolveBreakpoints'
-import resolvePseudoSelectors from './resolvePseudoSelectors'
-import resolveColor from './resolveColor'
+import resolveBreakpoints from './resolveBreakpoints.js'
+import resolvePseudoSelectors from './resolvePseudoSelectors.js'
+import resolveColor from './resolveColor.js'
 
 function resolveAll(props: object, theme: HonorableTheme) {
   return resolveColor(resolvePseudoSelectors(resolveBreakpoints(props, theme)), theme)

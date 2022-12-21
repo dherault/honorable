@@ -1,22 +1,22 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import MenuContext, { MenuStateType } from '../../contexts/MenuContext'
-import MenuUsageContext from '../../contexts/MenuUsageContext'
+import MenuContext, { MenuStateType } from '../../contexts/MenuContext.js'
+import MenuUsageContext from '../../contexts/MenuUsageContext.js'
 
-import useTheme from '../../hooks/useTheme'
-import useForkedRef from '../../hooks/useForkedRef'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Div, Span } from '../tags'
-import { Menu } from '../Menu/Menu'
-import { Caret } from '../Caret/Caret'
+import { Div, Span } from '../tags.js'
+import { Menu } from '../Menu/Menu.js'
+import { Caret } from '../Caret/Caret.js'
 
 export const menuItemParts = ['Children', 'Caret'] as const
 

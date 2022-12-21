@@ -1,14 +1,14 @@
 import { memo } from 'react'
 import { Global, css } from '@emotion/react'
 
-import useTheme from '../../hooks/useTheme'
+import useTheme from '../../hooks/useTheme.js'
 
-import resolveAll from '../../resolvers/resolveAll'
-import resolveStyles from '../../resolvers/resolveStyles'
+import resolveAll from '../../resolvers/resolveAll.js'
+import resolveStyles from '../../resolvers/resolveStyles.js'
 
-import normalizeCss from '../../data/normalizeCss'
+import normalizeCss from '../../data/normalizeCss.js'
 
-import assignDefaultFontFamily from '../../utils/assignDefaultFontFamily'
+import assignDefaultFontFamily from '../../utils/assignDefaultFontFamily.js'
 
 export type CssBaselineBaseProps = unknown
 

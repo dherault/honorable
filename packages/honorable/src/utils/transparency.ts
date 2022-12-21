@@ -1,4 +1,4 @@
-import extendColorHex from './extendColorHex'
+import extendColorHex from './extendColorHex.js'
 
 // Add transparency to a hex color by a given amount
 function transparency(colorHex: string, value = 50) {

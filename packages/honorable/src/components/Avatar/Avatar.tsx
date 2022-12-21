@@ -1,15 +1,15 @@
 import { Ref, forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import useTheme from '../../hooks/useTheme'
-import useImageLoad from '../../hooks/useImageLoad'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useImageLoad from '../../hooks/useImageLoad.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Div, Img } from '../tags'
+import { Div, Img } from '../tags.js'
 
 export const avatarParts: readonly string[] = [] as const
 

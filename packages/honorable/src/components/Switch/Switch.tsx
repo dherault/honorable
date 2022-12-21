@@ -1,17 +1,17 @@
 import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, memo, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps, CssProps, TargetWithChecked } from '../../types'
+import { ComponentProps, CssProps, TargetWithChecked } from '../../types.js'
 
-import useTheme from '../../hooks/useTheme'
-import useRootStyle from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useRootStyle from '../../hooks/useRootStyles.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import enhanceEventTarget from '../../utils/enhanceEventTarget'
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import enhanceEventTarget from '../../utils/enhanceEventTarget.js'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Div, Span } from '../tags'
+import { Div, Span } from '../tags.js'
 
 export const switchParts = ['Control', 'CheckedBackground', 'UncheckedBackground', 'Handle', 'Children'] as const
 

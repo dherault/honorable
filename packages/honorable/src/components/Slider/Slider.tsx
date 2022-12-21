@@ -2,17 +2,17 @@
 import { MouseEvent as ReactMouseEvent, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import useTheme from '../../hooks/useTheme'
-import useForkedRef from '../../hooks/useForkedRef'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Div } from '../tags'
-import { Tooltip } from '../Tooltip/Tooltip'
+import { Div } from '../tags.js'
+import { Tooltip } from '../Tooltip/Tooltip.js'
 
 export const sliderParts = ['Track', 'Knob', 'Mark', 'MarkInner'] as const
 

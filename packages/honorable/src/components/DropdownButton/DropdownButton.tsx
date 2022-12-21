@@ -1,28 +1,28 @@
 import { MouseEventHandler, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import { MenuStateType } from '../../contexts/MenuContext'
-import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
+import { MenuStateType } from '../../contexts/MenuContext.js'
+import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext.js'
 
-import useTheme from '../../hooks/useTheme'
-import usePrevious from '../../hooks/usePrevious'
-import useEscapeKey from '../../hooks/useEscapeKey'
-import useForkedRef from '../../hooks/useForkedRef'
-import useOutsideClick from '../../hooks/useOutsideClick'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import usePrevious from '../../hooks/usePrevious.js'
+import useEscapeKey from '../../hooks/useEscapeKey.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
+import useOutsideClick from '../../hooks/useOutsideClick.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import pickProps from '../../utils/pickProps'
-import enhanceEventTarget from '../../utils/enhanceEventTarget'
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import pickProps from '../../utils/pickProps.js'
+import enhanceEventTarget from '../../utils/enhanceEventTarget.js'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Button, ButtonProps, buttonPropTypes } from '../Button/Button'
-import { Caret } from '../Caret/Caret'
-import { Menu } from '../Menu/Menu'
-import { Div } from '../tags'
+import { Button, ButtonProps, buttonPropTypes } from '../Button/Button.js'
+import { Caret } from '../Caret/Caret.js'
+import { Menu } from '../Menu/Menu.js'
+import { Div } from '../tags.js'
 
 export const dropdownButtonParts = ['Button', 'Menu'] as const
 

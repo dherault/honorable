@@ -1,8 +1,8 @@
 import merge from 'lodash.merge'
 
-import { HonorableTheme, StylesArray } from '../types'
+import { HonorableTheme, StylesArray } from '../types.js'
 
-import filterObject from '../utils/filterObject'
+import filterObject from '../utils/filterObject.js'
 
 function resolveStyles(stylesArray: StylesArray | undefined, props: object, theme: HonorableTheme): object {
   if (Array.isArray(stylesArray)) {

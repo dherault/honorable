@@ -1,4 +1,4 @@
-import extendColorHex from './extendColorHex'
+import extendColorHex from './extendColorHex.js'
 
 // Lighten a hex color by a given amount
 export function lighten(colorHex: string, value = 25) {

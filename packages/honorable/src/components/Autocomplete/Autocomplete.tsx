@@ -1,27 +1,27 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import { MenuStateType } from '../../contexts/MenuContext'
-import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
+import { MenuStateType } from '../../contexts/MenuContext.js'
+import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext.js'
 
-import useTheme from '../../hooks/useTheme'
-import usePrevious from '../../hooks/usePrevious'
-import useForkedRef from '../../hooks/useForkedRef'
-import useOutsideClick from '../../hooks/useOutsideClick'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import usePrevious from '../../hooks/usePrevious.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
+import useOutsideClick from '../../hooks/useOutsideClick.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import pickProps from '../../utils/pickProps'
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import pickProps from '../../utils/pickProps.js'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Caret } from '../Caret/Caret'
-import { Menu } from '../Menu/Menu'
-import { MenuItem } from '../MenuItem/MenuItem'
-import { Input, InputBaseProps, inputPropTypes } from '../Input/Input'
-import { Div, DivProps } from '../tags'
+import { Caret } from '../Caret/Caret.js'
+import { Menu } from '../Menu/Menu.js'
+import { MenuItem } from '../MenuItem/MenuItem.js'
+import { Input, InputBaseProps, inputPropTypes } from '../Input/Input.js'
+import { Div, DivProps } from '../tags.js'
 
 export const autocompleteParts = ['Input', 'Menu', 'MenuItem', 'NoOption'] as const
 

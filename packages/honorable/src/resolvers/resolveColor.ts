@@ -1,12 +1,12 @@
-import { HonorableTheme } from '../types'
+import { HonorableTheme } from '../types.js'
 
-import namedColors from '../data/namedColors'
+import namedColors from '../data/namedColors.js'
 
-import reduceDeep from '../utils/reduceDeep'
-import isSelector from '../utils/isSelector'
-import { darken, lighten } from '../utils/lightenAndDarken'
-import transparency from '../utils/transparency'
-import filterObject from '../utils/filterObject'
+import reduceDeep from '../utils/reduceDeep.js'
+import isSelector from '../utils/isSelector.js'
+import { darken, lighten } from '../utils/lightenAndDarken.js'
+import transparency from '../utils/transparency.js'
+import filterObject from '../utils/filterObject.js'
 
 /*
   resolveColor

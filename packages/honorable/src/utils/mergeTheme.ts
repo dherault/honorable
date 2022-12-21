@@ -1,6 +1,6 @@
 import mergeWith from 'lodash.mergewith'
 
-import { HonorableTheme } from '../types'
+import { HonorableTheme } from '../types.js'
 
 function customizer(target: any, source: any) {
   if (Array.isArray(target)) {

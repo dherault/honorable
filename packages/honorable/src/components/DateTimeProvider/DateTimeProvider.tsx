@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import DateTimeContext from '../../contexts/DateTimeContext'
+import DateTimeContext from '../../contexts/DateTimeContext.js'
 
 export type DateTimeProviderProps = {
   children: React.ReactNode

@@ -1,14 +1,14 @@
 import { Ref, forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import useTheme from '../../hooks/useTheme'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Svg } from '../tags'
+import { Svg } from '../tags.js'
 
 export const caretParts: readonly string[] = [] as const
 

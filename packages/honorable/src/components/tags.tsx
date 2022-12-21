@@ -1,6 +1,6 @@
-import { ElementProps } from '../types'
+import { ElementProps } from '../types.js'
 
-import withHonorableTag from '../withHonorableTag'
+import withHonorableTag from '../withHonorableTag.js'
 
 /* --
   * HTML

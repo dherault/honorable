@@ -2,13 +2,13 @@ import { PropsWithChildren, memo, useContext } from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 import PropTypes from 'prop-types'
 
-import { HonorableTheme } from '../../types'
+import { HonorableTheme } from '../../types.js'
 
-import ThemeContext from '../../contexts/ThemeContext'
-import enhanceTheme from '../../utils/enhanceTheme'
-import mergeTheme from '../../utils/mergeTheme'
+import ThemeContext from '../../contexts/ThemeContext.js'
+import enhanceTheme from '../../utils/enhanceTheme.js'
+import mergeTheme from '../../utils/mergeTheme.js'
 
-import { Div } from '../tags'
+import { Div } from '../tags.js'
 
 export type ThemeProviderBaseProps = {
   theme: HonorableTheme

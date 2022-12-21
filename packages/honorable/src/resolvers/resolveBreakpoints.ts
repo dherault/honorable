@@ -1,8 +1,8 @@
-import { HonorableTheme } from '../types'
+import { HonorableTheme } from '../types.js'
 
-import reduceDeep from '../utils/reduceDeep'
-import filterObject from '../utils/filterObject'
-import createMediaQuery from '../utils/createMediaQuery'
+import reduceDeep from '../utils/reduceDeep.js'
+import filterObject from '../utils/filterObject.js'
+import createMediaQuery from '../utils/createMediaQuery.js'
 
 const validSuffixes = ['up', 'down', 'between', 'only', 'not']
 

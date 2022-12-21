@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import filterObject from '../utils/filterObject'
-import createMediaQuery from '../utils/createMediaQuery'
+import filterObject from '../utils/filterObject.js'
+import createMediaQuery from '../utils/createMediaQuery.js'
 
-import useTheme from './useTheme'
+import useTheme from './useTheme.js'
 
 function usePropWithBreakpoints(prop: any) {
   const theme = useTheme()

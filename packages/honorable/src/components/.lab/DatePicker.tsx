@@ -1,20 +1,20 @@
 import { Ref, memo, forwardRef,useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import withHonorable from '../../withHonorable'
+import withHonorable from '../../withHonorable.js'
 
-import DateTimeContext from '../../contexts/DateTimeContext'
+import DateTimeContext from '../../contexts/DateTimeContext.js'
 
-import useTheme from '../../hooks/useTheme'
-import useForkedRef from '../../hooks/useForkedRef'
+import useTheme from '../../hooks/useTheme.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
 
-import { Div, DivProps } from '../tags'
-import { Flex } from '../Flex/Flex'
-import { Caret } from '../Caret/Caret'
+import { Div, DivProps } from '../tags.js'
+import { Flex } from '../Flex/Flex.js'
+import { Caret } from '../Caret/Caret.js'
 
 type DimensionsType = {
   width: number | 'auto'

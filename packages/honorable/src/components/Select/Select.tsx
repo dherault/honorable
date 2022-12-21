@@ -1,27 +1,27 @@
 import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ComponentProps, TargetWithValue } from '../../types'
+import { ComponentProps, TargetWithValue } from '../../types.js'
 
-import { MenuStateType } from '../../contexts/MenuContext'
-import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext'
+import { MenuStateType } from '../../contexts/MenuContext.js'
+import MenuUsageContext, { MenuUsageContextType, MenuUsageStateType } from '../../contexts/MenuUsageContext.js'
 
-import useTheme from '../../hooks/useTheme'
-import usePrevious from '../../hooks/usePrevious'
-import usePreviousWithDefault from '../../hooks/usePreviousWithDefault'
-import useForkedRef from '../../hooks/useForkedRef'
-import useEscapeKey from '../../hooks/useEscapeKey'
-import useOutsideClick from '../../hooks/useOutsideClick'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import usePrevious from '../../hooks/usePrevious.js'
+import usePreviousWithDefault from '../../hooks/usePreviousWithDefault.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
+import useEscapeKey from '../../hooks/useEscapeKey.js'
+import useOutsideClick from '../../hooks/useOutsideClick.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import resolvePartStyles from '../../resolvers/resolvePartStyles'
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import resolvePartStyles from '../../resolvers/resolvePartStyles.js'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import enhanceEventTarget from '../../utils/enhanceEventTarget'
+import enhanceEventTarget from '../../utils/enhanceEventTarget.js'
 
-import { Div, Span } from '../tags'
-import { Menu } from '../Menu/Menu'
-import { Caret } from '../Caret/Caret'
+import { Div, Span } from '../tags.js'
+import { Menu } from '../Menu/Menu.js'
+import { Caret } from '../Caret/Caret.js'
 
 export const selectParts = ['Selected', 'Menu', 'Placeholder'] as const
 

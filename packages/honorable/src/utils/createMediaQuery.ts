@@ -1,6 +1,6 @@
-import { HonorableTheme } from '../types'
+import { HonorableTheme } from '../types.js'
 
-import filterObject from './filterObject'
+import filterObject from './filterObject.js'
 
 function createBetweenMediaQuery(
   breakpoints: Record<string, number>,

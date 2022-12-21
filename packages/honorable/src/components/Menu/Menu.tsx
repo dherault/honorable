@@ -2,19 +2,19 @@ import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, m
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
-import { ComponentProps } from '../../types'
+import { ComponentProps } from '../../types.js'
 
-import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../../contexts/MenuContext'
+import MenuContext, { MenuContextType, MenuStateDispatcherType, MenuStateType } from '../../contexts/MenuContext.js'
 
-import useTheme from '../../hooks/useTheme'
-import useForkedRef from '../../hooks/useForkedRef'
-import useOutsideClick from '../../hooks/useOutsideClick'
-import useRootStyles from '../../hooks/useRootStyles'
+import useTheme from '../../hooks/useTheme.js'
+import useForkedRef from '../../hooks/useForkedRef.js'
+import useOutsideClick from '../../hooks/useOutsideClick.js'
+import useRootStyles from '../../hooks/useRootStyles.js'
 
-import filterUndefinedValues from '../../utils/filterUndefinedValues'
+import filterUndefinedValues from '../../utils/filterUndefinedValues.js'
 
-import { Div } from '../tags'
-import { MenuItem } from '../MenuItem/MenuItem'
+import { Div } from '../tags.js'
+import { MenuItem } from '../MenuItem/MenuItem.js'
 
 export const menuParts: readonly string[] = [] as const
 

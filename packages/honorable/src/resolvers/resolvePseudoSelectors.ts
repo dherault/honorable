@@ -1,4 +1,4 @@
-import propToPseudoSelectors from '../data/propToPseudoSelectors'
+import propToPseudoSelectors from '../data/propToPseudoSelectors.js'
 
 function resolvePseudoSelectors(props: object): object {
   return Object.entries(props).reduce<Record<string, any>>((accumulator, [key, value]) => {

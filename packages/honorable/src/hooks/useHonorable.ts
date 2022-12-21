@@ -1,15 +1,15 @@
 import { useMemo } from 'react'
 import merge from 'lodash.merge'
 
-import { ComponentNames, CssProps, HonorableTheme } from '../types'
+import { ComponentNames, CssProps, HonorableTheme } from '../types.js'
 
-import styleProperties from '../data/stylesProperties'
-import propToPseudoSelectors from '../data/propToPseudoSelectors'
+import styleProperties from '../data/stylesProperties.js'
+import propToPseudoSelectors from '../data/propToPseudoSelectors.js'
 
-import resolveAll from '../resolvers/resolveAll'
-import resolveStyles from '../resolvers/resolveStyles'
+import resolveAll from '../resolvers/resolveAll.js'
+import resolveStyles from '../resolvers/resolveStyles.js'
 
-import isSelector from '../utils/isSelector'
+import isSelector from '../utils/isSelector.js'
 
 const suffixedstyleProperties = styleProperties.map(x => `${x}-`)
 const pseudoSelectorPropKeys = Object.keys(propToPseudoSelectors)
