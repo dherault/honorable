@@ -1,5 +1,5 @@
 // Inspired from https://mui.com/material-ui/api/Tooltip/
-import { Children, ReactElement, ReactNode, Ref, cloneElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { Children, ReactElement, ReactNode, Ref, cloneElement, forwardRef, memo, useCallback, useEffect, useRef, useState } from 'react'
 import { arrow as arrowMiddleware, autoUpdate, offset as offsetMiddleware, shift as shiftMiddleware, useFloating } from '@floating-ui/react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
@@ -103,7 +103,7 @@ export type TooltipBaseProps = {
   /**
    * Callback function called when the Tooltip is opened or closed
    */
-  onOpen?: (event: MouseEvent | FocusEvent, open: boolean) => void
+  onOpen?: (event: MouseEvent | TouchEvent | FocusEvent, open: boolean) => void
   /**
    * Weither the Tooltip is open or not
    */
@@ -150,8 +150,8 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   const theme = useTheme()
   const rootStyles = useRootStyles('Tooltip', props, theme)
 
-  const arrowRef = useRef()
-  const childRef = useRef<HTMLElement>()
+  const arrowRef = useRef<HTMLDivElement>(null)
+  const childRef = useRef<HTMLElement>(null)
   const middleware = [offsetMiddleware(offset), shiftMiddleware({ padding: offsetPadding })]
 
   if (arrow) {
@@ -180,6 +180,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const actualOpen = open ?? uncontrolledOpen
 
+  // @ts-expect-error
   const staticSide = {
     top: 'bottom',
     right: 'left',
@@ -187,7 +188,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
     left: 'right',
   }[placement.split('-')[0]]
 
-  const handleOutsideClick = useCallback((event: MouseEvent) => {
+  const handleOutsideClick = useCallback((event: MouseEvent | TouchEvent) => {
     if (!uncontrolledOpen || !displayOn.includes('click')) return
 
     setTimeout(() => {
@@ -317,7 +318,7 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
           ...element.props,
           ...positionStyles,
           ...defaultStyles,
-          ...transitionStyles[state],
+          ...transitionStyles[state as keyof typeof transitionStyles],
         })}
       </Transition>
     )
@@ -368,7 +369,9 @@ function TooltipRef(props: TooltipProps, ref: Ref<any>) {
   )
 }
 
-export const Tooltip = forwardRef(TooltipRef)
+const BaseTooltip = forwardRef(TooltipRef)
 
-Tooltip.displayName = 'Tooltip'
-Tooltip.propTypes = TooltipPropTypes
+BaseTooltip.displayName = 'Tooltip'
+BaseTooltip.propTypes = TooltipPropTypes
+
+export const Tooltip = memo(BaseTooltip)

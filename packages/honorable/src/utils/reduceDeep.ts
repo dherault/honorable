@@ -1,7 +1,7 @@
-type ReducerType = (accumulator: any, key: string, value: any, object: object) => any
+type ReducerType = (accumulator: any, key: string, value: any, object: Record<string, any>) => any
 
-function reduceDeep(object: object, reducer: ReducerType): object {
-  return Object.entries(object).reduce((accumulator, [key, value]) => {
+function reduceDeep(object: Record<string, any>, reducer: ReducerType): Record<string, any> {
+  return Object.entries(object).reduce<Record<string, any>>((accumulator, [key, value]) => {
     if (value && typeof value === 'object') {
       accumulator[key] = reduceDeep(value, reducer)
 

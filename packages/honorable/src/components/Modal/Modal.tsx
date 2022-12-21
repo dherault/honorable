@@ -1,4 +1,4 @@
-import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { MouseEvent, ReactElement, Ref, cloneElement, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
@@ -132,7 +132,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
         {(state: string) => cloneElement(element, {
           ...element.props,
           ...defaultStyle,
-          ...transitionStyles[state],
+          ...transitionStyles[state as keyof typeof transitionStyles],
         })}
       </Transition>
     )
@@ -169,7 +169,7 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
         {(state: string) => cloneElement(element, {
           ...element.props,
           ...defaultStyle,
-          ...transitionStyles[state],
+          ...transitionStyles[state as keyof typeof transitionStyles],
         })}
       </Transition>
     )
@@ -206,7 +206,9 @@ function ModalRef(props: ModalProps, ref: Ref<any>) {
   ))
 }
 
-export const Modal = forwardRef(ModalRef)
+const BaseModal = forwardRef(ModalRef)
 
-Modal.displayName = 'Modal'
-Modal.propTypes = modalPropTypes
+BaseModal.displayName = 'Modal'
+BaseModal.propTypes = modalPropTypes
+
+export const Modal = memo(BaseModal)

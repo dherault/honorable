@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, memo, forwardRef,useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
@@ -142,7 +142,9 @@ function SnackBarRef(props: SnackBarProps, ref: Ref<any>) {
   )
 }
 
-export const SnackBar = forwardRef(SnackBarRef)
+const BaseSnackBar = forwardRef(SnackBarRef)
+
+export const SnackBar = memo(BaseSnackBar)
 
 SnackBar.displayName = 'SnackBar'
 // @ts-expect-error

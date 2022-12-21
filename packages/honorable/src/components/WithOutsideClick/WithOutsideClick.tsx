@@ -1,4 +1,4 @@
-import { Children, PropsWithChildren, ReactElement, cloneElement, useRef } from 'react'
+import { Children, PropsWithChildren, ReactElement, cloneElement, memo, useRef } from 'react'
 
 import useOutsideClick from '../../hooks/useOutsideClick'
 
@@ -7,7 +7,7 @@ export type WithOutsideClickProps = PropsWithChildren<{
   onOutsideClick: (event: MouseEvent | TouchEvent) => void
 }>
 
-export function WithOutsideClick({ children, onOutsideClick, preventFirstFire = false }: WithOutsideClickProps) {
+function BaseWithOutsideClick({ children, onOutsideClick, preventFirstFire = false }: WithOutsideClickProps) {
   const ref = useRef(null)
 
   useOutsideClick(ref, onOutsideClick, preventFirstFire)
@@ -16,3 +16,5 @@ export function WithOutsideClick({ children, onOutsideClick, preventFirstFire = 
     ref,
   })
 }
+
+export const WithOutsideClick = memo(BaseWithOutsideClick)

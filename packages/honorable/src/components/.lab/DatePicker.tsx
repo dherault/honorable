@@ -1,4 +1,4 @@
-import { Ref, forwardRef, useContext, useEffect, useRef, useState } from 'react'
+import { Ref, memo, forwardRef,useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -409,7 +409,7 @@ function DatePickerRef(props: DatePickerProps, ref: Ref<any>) {
 
 DatePickerRef.displayName = 'DatePicker'
 
-const ForwardedDatePicker = forwardRef(DatePickerRef)
+const ForwardedDatePicker = memo(forwardRef(DatePickerRef))
 
 ForwardedDatePicker.propTypes = DatePickerPropTypes
 
@@ -474,7 +474,7 @@ function DatePickerDayRef(props: DatePickerDayProps, ref: Ref<any>) {
 
 DatePickerDayRef.displayName = 'DatePickerDay'
 
-const ForwardedDatePickerDay = forwardRef(DatePickerDayRef)
+const ForwardedDatePickerDay = memo(forwardRef(DatePickerDayRef))
 
 ForwardedDatePickerDay.propTypes = DatePickerDayPropTypes
 
@@ -548,7 +548,7 @@ ref: Ref<any>
 
 DatePickerYearsRef.displayName = 'DatePickerYears'
 
-const ForwardedDatePickerYears = forwardRef(DatePickerYearsRef)
+const ForwardedDatePickerYears = memo(forwardRef(DatePickerYearsRef))
 
 ForwardedDatePickerYears.propTypes = DatePickerYearsPropTypes
 
@@ -602,7 +602,7 @@ ref: Ref<any>
 
 DatePickerYearRef.displayName = 'DatePickerYear'
 
-const ForwardedDatePickerYear = forwardRef(DatePickerYearRef)
+const ForwardedDatePickerYear = memo(forwardRef(DatePickerYearRef))
 
 ForwardedDatePickerYear.propTypes = DatePickerYearPropTypes
 

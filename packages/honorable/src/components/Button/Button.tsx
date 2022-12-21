@@ -1,4 +1,4 @@
-import { ReactNode, Ref, forwardRef, useEffect, useRef, useState } from 'react'
+import { ReactNode, Ref, forwardRef, memo, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -136,7 +136,9 @@ function ButtonRef(props: ButtonProps, ref: Ref<any>) {
   )
 }
 
-export const Button = forwardRef(ButtonRef)
+const BaseButton = forwardRef(ButtonRef)
 
-Button.displayName = 'Button'
-Button.propTypes = buttonPropTypes
+BaseButton.displayName = 'Button'
+BaseButton.propTypes = buttonPropTypes
+
+export const Button = memo(BaseButton)

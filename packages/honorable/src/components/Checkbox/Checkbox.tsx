@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, memo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps, CssProps, TargetWithChecked } from '../../types'
@@ -152,7 +152,9 @@ function CheckboxRef(props: CheckboxProps, ref: Ref<any>) {
   )
 }
 
-export const Checkbox = forwardRef(CheckboxRef)
+const BaseCheckbox = forwardRef(CheckboxRef)
 
-Checkbox.displayName = 'Checkbox'
-Checkbox.propTypes = checkboxPropTypes
+BaseCheckbox.displayName = 'Checkbox'
+BaseCheckbox.propTypes = checkboxPropTypes
+
+export const Checkbox = memo(BaseCheckbox)

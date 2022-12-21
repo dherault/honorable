@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, memo, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -60,7 +60,7 @@ function GridRef(props: GridProps, ref: Ref<any>) {
 
 GridRef.displayName = 'Grid'
 
-const ForwardedGrid = forwardRef(GridRef)
+const ForwardedGrid = memo(forwardRef(GridRef))
 
 // @ts-expect-error
 ForwardedGrid.propTypes = GridPropTypes

@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 
 import { ComponentProps } from '../../types'
 
@@ -50,7 +50,9 @@ function ProgressBarRef(props: ProgressBarProps, ref: Ref<any>) {
   )
 }
 
-export const ProgressBar = forwardRef(ProgressBarRef)
+const BaseProgressBar = forwardRef(ProgressBarRef)
 
-ProgressBar.displayName = 'ProgressBar'
-ProgressBar.propTypes = progressBarPropTypes
+BaseProgressBar.displayName = 'ProgressBar'
+BaseProgressBar.propTypes = progressBarPropTypes
+
+export const ProgressBar = memo(BaseProgressBar)

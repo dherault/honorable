@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useRef, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import PropTypes from 'prop-types'
 
@@ -247,7 +247,9 @@ function InputRef(props: InputProps, ref: Ref<any>) {
   )
 }
 
-export const Input = forwardRef(InputRef)
+const BaseInput = forwardRef(InputRef)
 
-Input.displayName = 'Input'
-Input.propTypes = inputPropTypes
+BaseInput.displayName = 'Input'
+BaseInput.propTypes = inputPropTypes
+
+export const Input = memo(BaseInput)

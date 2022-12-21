@@ -7,7 +7,7 @@ import createMediaQuery from '../utils/createMediaQuery'
 const validSuffixes = ['up', 'down', 'between', 'only', 'not']
 
 function resolveBreakpoints(props: object, theme: HonorableTheme): object {
-  const breakpointKeys = Object.keys(filterObject(theme.breakpoints))
+  const breakpointKeys = Object.keys(filterObject(theme.breakpoints!))
     .map(key => [`-${key}`, ...validSuffixes.map(x => `-${key}-${x}`)])
 
   return reduceDeep(props, (accumulator, key, value) => {
@@ -20,7 +20,7 @@ function resolveBreakpoints(props: object, theme: HonorableTheme): object {
 
         let suffix = suffixArray[suffixArray.length - 1]
 
-        suffix = validSuffixes.includes(suffix) ? suffixArray.pop() : 'down'
+        suffix = validSuffixes.includes(suffix) ? suffixArray.pop() as string : 'down'
 
         const breakpointName = suffixArray.join('-')
         const query = createMediaQuery(theme, suffix, breakpointName)

@@ -16,6 +16,8 @@ function useMediaQuery(upOrDownOrBetweenOrOnlyOrNotOrQuery: 'up' | 'down' | 'bet
   const isMatched = useCallback(() => {
     const mediaQuery = createMediaQuery(theme, upOrDownOrBetweenOrOnlyOrNotOrQuery, breakpoint1, breakpoint2)
 
+    if (!mediaQuery) return false
+
     return window.matchMedia(mediaQuery).matches
   }, [theme, upOrDownOrBetweenOrOnlyOrNotOrQuery, breakpoint1, breakpoint2])
 

@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -53,7 +53,9 @@ function CaretRef(props: CaretProps, ref: Ref<any>) {
   )
 }
 
-export const Caret = forwardRef(CaretRef)
+const BaseCaret = forwardRef(CaretRef)
 
-Caret.displayName = 'Caret'
-Caret.propTypes = caretPropTypes
+BaseCaret.displayName = 'Caret'
+BaseCaret.propTypes = caretPropTypes
+
+export const Caret = memo(BaseCaret)

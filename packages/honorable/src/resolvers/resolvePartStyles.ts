@@ -6,11 +6,12 @@ import resolveAll from './resolveAll'
 import resolveStyles from './resolveStyles'
 
 // Return the style object of applied part styles
-function resolvePartStyles(partKey: string, props: object, theme: HonorableTheme) {
+function resolvePartStyles(partKey: string, props: Record<string, any>, theme: HonorableTheme) {
   const originArray = partKey.split('.')
   const name = originArray.shift()
   const key = originArray.join('.')
 
+  // @ts-expect-error
   const partTheme = theme[name]?.[key]
 
   if (!partTheme) return {}

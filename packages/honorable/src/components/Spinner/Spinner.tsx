@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -43,7 +43,9 @@ function SpinnerRef({ size, color, ...props }: SpinnerProps, ref: Ref<any>) {
   )
 }
 
-export const Spinner = forwardRef(SpinnerRef)
+const BaseSpinner = forwardRef(SpinnerRef)
 
-Spinner.displayName = 'Spinner'
-Spinner.propTypes = spinnerPropTypes
+BaseSpinner.displayName = 'Spinner'
+BaseSpinner.propTypes = spinnerPropTypes
+
+export const Spinner = memo(BaseSpinner)

@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, memo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps, CssProps, TargetWithChecked, TargetWithValue } from '../../types'
@@ -185,7 +185,9 @@ function RadioRef(props: RadioProps, ref: Ref<any>) {
   )
 }
 
-export const Radio = forwardRef(RadioRef)
+const BaseRadio = forwardRef(RadioRef)
 
-Radio.displayName = 'Radio'
-Radio.propTypes = radioPropTypes
+BaseRadio.displayName = 'Radio'
+BaseRadio.propTypes = radioPropTypes
+
+export const Radio = memo(BaseRadio)

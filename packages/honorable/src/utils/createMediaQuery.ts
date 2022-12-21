@@ -3,7 +3,7 @@ import { HonorableTheme } from '../types'
 import filterObject from './filterObject'
 
 function createBetweenMediaQuery(
-  breakpoints: object,
+  breakpoints: Record<string, number>,
   breakpoint1: string | number,
   breakpoint2?: string | number,
 ) {
@@ -35,7 +35,7 @@ function createMediaQuery(
   breakpoint1?: string | number,
   breakpoint2?: string | number,
 ) {
-  const breakpoints = filterObject(theme.breakpoints)
+  const breakpoints = filterObject(theme.breakpoints!)
   const breakpoint1Value = (typeof breakpoint1 === 'string' ? breakpoints[breakpoint1] : breakpoint1)
 
   if (typeof breakpoint1Value !== 'number') return null
@@ -48,13 +48,13 @@ function createMediaQuery(
       return `(max-width: ${breakpoint1Value - 1}px)`
     }
     case 'between': {
-      return createBetweenMediaQuery(breakpoints, breakpoint1, breakpoint2)
+      return createBetweenMediaQuery(breakpoints, breakpoint1Value, breakpoint2)
     }
     case 'only': {
-      return createBetweenMediaQuery(breakpoints, breakpoint1)
+      return createBetweenMediaQuery(breakpoints, breakpoint1Value)
     }
     case 'not': {
-      return `not ${createBetweenMediaQuery(breakpoints, breakpoint1)}`
+      return `not ${createBetweenMediaQuery(breakpoints, breakpoint1Value)}`
     }
     default: {
       return upOrDownOrBetweenOrOnlyOrNotOrQuery

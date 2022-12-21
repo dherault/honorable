@@ -2,11 +2,13 @@ import { ComponentType, Ref, forwardRef } from 'react'
 import styled from '@emotion/styled'
 import isPropValid from '@emotion/is-prop-valid'
 
+import { ComponentNames } from './types'
+
 import useTheme from './hooks/useTheme'
 import useHonorable from './hooks/useHonorable'
 
 // React HOC to support style props
-function withHonorableTag<P>(tag: keyof JSX.IntrinsicElements, name: string) {
+function withHonorableTag<P>(tag: keyof JSX.IntrinsicElements, name: ComponentNames) {
   const HonorableStyle = styled(
     tag,
     {

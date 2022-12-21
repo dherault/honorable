@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, useState } from 'react'
+import { KeyboardEvent, MouseEvent, ReactNode, Ref, forwardRef, memo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps, CssProps, TargetWithChecked } from '../../types'
@@ -171,7 +171,9 @@ function SwitchRef(props: SwitchProps, ref: Ref<any>) {
   )
 }
 
-export const Switch = forwardRef(SwitchRef)
+const BaseSwitch = forwardRef(SwitchRef)
 
-Switch.displayName = 'Switch'
-Switch.propTypes = switchPropTypes
+BaseSwitch.displayName = 'Switch'
+BaseSwitch.propTypes = switchPropTypes
+
+export const Switch = memo(BaseSwitch)

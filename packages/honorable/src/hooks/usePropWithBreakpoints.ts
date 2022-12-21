@@ -7,12 +7,13 @@ import useTheme from './useTheme'
 
 function usePropWithBreakpoints(prop: any) {
   const theme = useTheme()
-  const breakpointEntries = useMemo(() => Object.entries(filterObject(theme.breakpoints)).sort(([, valueA], [, valueB]) => valueA - valueB), [theme])
+  const breakpointEntries = useMemo(() => Object.entries(filterObject(theme.breakpoints!)).sort(([, valueA], [, valueB]) => valueA - valueB), [theme])
 
   const getActiveBreakpoint = useCallback(() => {
     for (const [breakpointName] of breakpointEntries) {
       const query = createMediaQuery(theme, 'only', breakpointName)
 
+      if (!query) continue
       if (window.matchMedia(query).matches) return breakpointName
     }
 
@@ -26,7 +27,7 @@ function usePropWithBreakpoints(prop: any) {
     if (!(prop && typeof prop === 'object')) return prop
 
     // Has an active breakpoint key, return that value
-    if (prop[activeBreakpoint]) return prop[activeBreakpoint]
+    if (activeBreakpoint && prop[activeBreakpoint]) return prop[activeBreakpoint]
 
     const possibleBreakpoints = Object.keys(prop)
 

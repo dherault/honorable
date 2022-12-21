@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -96,13 +96,13 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   const rootStyles = useRootStyles('MenuItem', props, theme)
 
   const subMenu = useMemo(() => {
-    let subMenu: ReactElement
+    let subMenu: ReactElement | null = null
 
     Children.forEach(children, (child: ReactElement) => {
       if (!subMenu && child?.type === Menu) subMenu = child
     })
 
-    return subMenu
+    return subMenu as ReactElement | null
   }, [children])
 
   const handleSelect = useCallback((event: MouseEvent<HTMLDivElement>) => {
@@ -114,7 +114,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
       ...x,
       value,
       event,
-      renderedItem: Children.toArray(children),
+      renderedItem: Children.toArray(children) as ReactElement[],
     }))
     setMenuState(x => ({
       ...x,
@@ -155,7 +155,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
         setSubMenuState(x => ({ ...x, active: false, isSubMenuVisible: false }))
 
         if (menuState.isSubMenuVisible) {
-          menuItemRef.current.focus()
+          menuItemRef.current?.focus()
           setMenuState(x => ({ ...x, active: true, isSubMenuVisible: false }))
         }
         else {
@@ -193,14 +193,14 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
     setParentMenuState(x => ({ ...x, active: false }))
 
     if (!noFocus) {
-      menuItemRef.current.focus()
+      menuItemRef.current?.focus()
     }
   }, [active, itemIndex, menuState, setMenuState, setParentMenuState, noFocus])
 
   // Set height for the submenu's triangle
   // times 1.5 to make the triangle large enough
   useEffect(() => {
-    setHeight(menuItemRef.current.offsetHeight * 1.5)
+    setHeight((menuItemRef.current?.offsetHeight ?? 0) * 1.5)
   }, [])
 
   // Focus if active
@@ -208,7 +208,7 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   // Otherwise hide subMenu
   useEffect(() => {
     if (!noFocus && active && menuState.active) {
-      menuItemRef.current.focus()
+      menuItemRef.current?.focus()
     }
   }, [noFocus, active, menuState.active])
 
@@ -217,13 +217,12 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   useEffect(() => {
     if (menuUsageState.value !== value) return
 
-    const renderedItem = Children.toArray(children)
+    const renderedItem = Children.toArray(children) as ReactElement[]
 
     if (
       menuUsageState.renderedItem?.every((x, i) => {
         const y = renderedItem[i]
 
-        // @ts-expect-error
         return typeof x !== 'object' && typeof y !== 'object' ? x === y : x.type === y.type && x.key === y.key
       })
     ) return
@@ -298,7 +297,9 @@ function MenuItemRef(props: MenuItemProps, ref: Ref<any>) {
   )
 }
 
-export const MenuItem = forwardRef(MenuItemRef)
+const BaseMenuItem = forwardRef(MenuItemRef)
 
-MenuItem.displayName = 'MenuItem'
-MenuItem.propTypes = menuItemPropTypes
+BaseMenuItem.displayName = 'MenuItem'
+BaseMenuItem.propTypes = menuItemPropTypes
+
+export const MenuItem = memo(BaseMenuItem)

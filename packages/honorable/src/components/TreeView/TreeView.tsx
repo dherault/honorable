@@ -1,4 +1,4 @@
-import { Children, ReactNode, Ref, forwardRef, useCallback, useState } from 'react'
+import { Children, ReactNode, Ref, forwardRef, memo, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -136,7 +136,9 @@ function TreeViewRef({
   )
 }
 
-export const TreeView = forwardRef(TreeViewRef)
+const BaseTreeView = forwardRef(TreeViewRef)
 
-TreeView.displayName = 'TreeView'
-TreeView.propTypes = treeViewPropTypes
+BaseTreeView.displayName = 'TreeView'
+BaseTreeView.propTypes = treeViewPropTypes
+
+export const TreeView = memo(BaseTreeView)

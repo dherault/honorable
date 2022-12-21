@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -118,7 +118,9 @@ function AvatarRef(props: AvatarProps, ref: Ref<any>) {
   )
 }
 
-export const Avatar = forwardRef(AvatarRef)
+const BaseAvatar = forwardRef(AvatarRef)
 
-Avatar.displayName = 'Avatar'
-Avatar.propTypes = AvatarPropTypes
+BaseAvatar.displayName = 'Avatar'
+BaseAvatar.propTypes = AvatarPropTypes
+
+export const Avatar = memo(BaseAvatar)

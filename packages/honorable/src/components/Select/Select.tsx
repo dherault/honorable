@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, MouseEvent, ReactElement, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps, TargetWithValue } from '../../types'
@@ -70,7 +70,7 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const selectRef = useRef()
+  const selectRef = useRef<HTMLDivElement>(null)
   const forkedRef = useForkedRef(ref, selectRef)
   const [initialRender, setInitialRender] = useState(true)
   const [actualOpen, setActualOpen] = useState(open ?? defaultOpen ?? false)
@@ -237,7 +237,9 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
   )
 }
 
-export const Select = forwardRef(SelectRef)
+const BaseSelect = forwardRef(SelectRef)
 
-Select.displayName = 'Select'
-Select.propTypes = selectPropTypes
+BaseSelect.displayName = 'Select'
+BaseSelect.propTypes = selectPropTypes
+
+export const Select = memo(BaseSelect)

@@ -66,10 +66,10 @@ function resolveColorEntry(key: string | null, value: any, theme: HonorableTheme
 
 export function resolveColorString(value: string, theme: HonorableTheme = {}): string {
   if (!theme.cache) theme.cache = {}
-  if (!theme.cache[theme.mode]) theme.cache[theme.mode] = {}
-  if (theme.cache[theme.mode][value]) return theme.cache[theme.mode][value]
+  if (!theme.cache[theme.mode ?? 'light']) theme.cache[theme.mode ?? 'light'] = {}
+  if (theme.cache[theme.mode ?? 'light'][value]) return theme.cache[theme.mode ?? 'light'][value]
 
-  const colors = Object.entries(filterObject(theme.colors)).reduce((accumulator, [key, value]) => {
+  const colors = Object.entries(filterObject(theme.colors ?? {})).reduce<Record<string, string>>((accumulator, [key, value]) => {
     if (typeof value === 'object') {
       return {
         ...accumulator,
@@ -83,11 +83,11 @@ export function resolveColorString(value: string, theme: HonorableTheme = {}): s
     return accumulator
   }, {})
 
-  return theme.cache[theme.mode][value] = applyColorHelpers(convertThemeColors(value, colors, theme))
+  return theme.cache[theme.mode ?? 'light'][value] = applyColorHelpers(convertThemeColors(value, colors, theme))
 }
 
 function reduceObjectToJsonPathsObject(key: string, value: any) {
-  const object = {}
+  const object: Record<string, any> = {}
 
   Object.entries(value).forEach(([k, v]) => {
     const nextKey = `${key}.${k}`
@@ -111,7 +111,7 @@ function reduceObjectToJsonPathsObject(key: string, value: any) {
   eg: "primary" => "#0070f3"
 */
 
-function convertThemeColors(value: string, colors: object, theme: HonorableTheme, i = 0): string {
+function convertThemeColors(value: string, colors: Record<string, string>, theme: HonorableTheme, i = 0): string {
   if (i >= 64) {
     throw new Error('Could not convert color, you may have a circular color reference in your theme.')
   }
@@ -133,7 +133,7 @@ function convertThemeColors(value: string, colors: object, theme: HonorableTheme
   return converted === value ? converted : convertThemeColors(converted, colors, theme, i + 1)
 }
 
-function resolveThemeColor(color: string, colors: object, theme: HonorableTheme, i = 0): string {
+function resolveThemeColor(color: string, colors: Record<string, string>, theme: HonorableTheme, i = 0): string {
   if (i >= 64) {
     throw new Error('Could not resolve color, you may have a circular color reference in your theme.')
   }
@@ -141,7 +141,8 @@ function resolveThemeColor(color: string, colors: object, theme: HonorableTheme,
   const foundColor = typeof colors[color] === 'string'
     ? colors[color]
     : typeof colors[color] === 'object'
-      ? colors[color][theme.mode || 'light']
+      // @ts-expect-error
+      ? (colors[color][theme.mode ?? 'light'] as string)
       : color
 
   return foundColor === color ? foundColor : resolveThemeColor(foundColor, colors, theme, i + 1)
@@ -176,17 +177,17 @@ const colorHelpers = [
   {
     name: 'lighten',
     regex: /lighten\s*\(\s*(rgba?\s*\([^)]+\)|[^,)]+)(?:\s*,\s*)?([^)\s]*)\s*\)/g,
-    fn: (color: string, intensity: number) => lighten(color, intensity),
+    fn: (color: string, intensity?: number) => lighten(color, intensity),
   },
   {
     name: 'darken',
     regex: /darken\s*\(\s*(rgba?\s*\([^)]+\)|[^,)]+)(?:\s*,\s*)?([^)\s]*)\s*\)/g,
-    fn: (color: string, intensity: number) => darken(color, intensity),
+    fn: (color: string, intensity?: number) => darken(color, intensity),
   },
   {
     name: 'transparency',
     regex: /transparency\s*\(\s*(rgba?\s*\([^)]+\)|[^,)]+)(?:\s*,\s*)?([^)\s]*)\s*\)/g,
-    fn: (color: string, intensity: number) => transparency(color, intensity),
+    fn: (color: string, intensity?: number) => transparency(color, intensity),
   },
 ]
 
@@ -249,5 +250,5 @@ function convertRgbColor(value: string) {
 */
 
 function convertNamedColor(value: string) {
-  return namedColors[value] || value
+  return namedColors[value as keyof typeof namedColors] || value
 }

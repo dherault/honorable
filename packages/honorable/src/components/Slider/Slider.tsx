@@ -1,5 +1,5 @@
 // Inspired from https://mui.com/material-ui/api/slider/
-import { MouseEvent as ReactMouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { MouseEvent as ReactMouseEvent, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -150,7 +150,7 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
 
     const delta = (isHorizontal ? event.clientX : event.clientY) - currentPosition
 
-    const { [isHorizontal ? 'width' : 'height']: size } = sliderRef.current.getBoundingClientRect()
+    const { [isHorizontal ? 'width' : 'height']: size } = sliderRef.current!.getBoundingClientRect()
 
     let nextValue = Math.max(min, Math.min(max, currentKnobValues[1] + delta / size * (max - min)))
 
@@ -250,7 +250,9 @@ function SliderRef(props: SliderProps, ref: Ref<any>) {
   )
 }
 
-export const Slider = forwardRef(SliderRef)
+const BaseSlider = forwardRef(SliderRef)
 
-Slider.displayName = 'Slider'
-Slider.propTypes = SliderPropTypes
+BaseSlider.displayName = 'Slider'
+BaseSlider.propTypes = SliderPropTypes
+
+export const Slider = memo(BaseSlider)

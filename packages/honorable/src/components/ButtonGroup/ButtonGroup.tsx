@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -45,7 +45,9 @@ function ButtonGroupRef(props: ButtonGroupProps, ref: Ref<any>) {
   )
 }
 
-export const ButtonGroup = forwardRef(ButtonGroupRef)
+const BaseButtonGroup = forwardRef(ButtonGroupRef)
 
-ButtonGroup.displayName = 'ButtonGroup'
-ButtonGroup.propTypes = buttonGroupPropTypes
+BaseButtonGroup.displayName = 'ButtonGroup'
+BaseButtonGroup.propTypes = buttonGroupPropTypes
+
+export const ButtonGroup = memo(BaseButtonGroup)

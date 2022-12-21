@@ -1,6 +1,6 @@
 {
   "name": "honorable",
-  "version": "1.0.0-beta.16",
+  "version": "1.0.0-beta.17",
   "description": "An extensible React component librarie for 2023 and beyond",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "eslint src tests",
     "lint:fix": "eslint --fix src tests",
     "dev": "npm run clean:build && nodemon --watch src --ext ts,tsx --exec \"npm run build\"",
-    "build": "npx tsc --declaration",
+    "build": "tsc",
     "clean": "npm run clean:build && npm run clean:node-modules && npm i --force",
     "clean:node-modules": "rimraf node_module package-lock.json",
     "clean:build": "rimraf dist",

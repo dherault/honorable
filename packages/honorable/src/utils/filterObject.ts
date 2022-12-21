@@ -1,6 +1,6 @@
 // Filter out non-object types
-function filterObject(any: any): object {
-  return any && typeof any === 'object' ? any : {}
+function filterObject<T extends object>(any: T): T {
+  return any && typeof any === 'object' ? any : ({} as T)
 }
 
 export default filterObject

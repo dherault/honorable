@@ -1,4 +1,4 @@
-import { PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren, memo, useContext } from 'react'
 import { ThemeProvider as EmotionProvider } from '@emotion/react'
 import PropTypes from 'prop-types'
 
@@ -20,7 +20,7 @@ export const themProviderPropTypes = {
   theme: PropTypes.object,
 }
 
-export function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
+function BaseThemeProvider({ theme = {}, children }: ThemeProviderProps) {
   const userTheme = enhanceTheme(theme)
 
   return (
@@ -33,7 +33,7 @@ export function ThemeProvider({ theme = {}, children }: ThemeProviderProps) {
   )
 }
 
-export function ExtendTheme({ theme = {}, children }: ThemeProviderProps) {
+function BaseExtendTheme({ theme = {}, children }: ThemeProviderProps) {
   const existingTheme = useContext(ThemeContext)
   const extendedTheme = enhanceTheme(mergeTheme(existingTheme, theme))
 
@@ -44,5 +44,9 @@ export function ExtendTheme({ theme = {}, children }: ThemeProviderProps) {
   )
 }
 
-ThemeProvider.propTypes = themProviderPropTypes
-ExtendTheme.propTypes = themProviderPropTypes
+BaseThemeProvider.propTypes = themProviderPropTypes
+BaseExtendTheme.propTypes = themProviderPropTypes
+
+export const ThemeProvider = memo(BaseThemeProvider)
+
+export const ExtendTheme = memo(BaseExtendTheme)

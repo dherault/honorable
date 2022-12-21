@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Global, css } from '@emotion/react'
 
 import useTheme from '../../hooks/useTheme'
@@ -11,7 +12,7 @@ import assignDefaultFontFamily from '../../utils/assignDefaultFontFamily'
 
 export type CssBaselineBaseProps = unknown
 
-export function CssBaseline() {
+function BaseCssBaseline() {
   const theme = useTheme()
   const { html, ...otherSelectors } = theme.stylesheet || {}
 
@@ -36,10 +37,12 @@ export function CssBaseline() {
       <Global
         styles={css`
           :root {
-            ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColorString(colorName)};\n`)}
+            ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils?.resolveColorString(colorName)};\n`)}
           }
         `}
       />
     </>
   )
 }
+
+export const CssBaseline = memo(BaseCssBaseline)

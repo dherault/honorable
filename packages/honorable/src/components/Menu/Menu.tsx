@@ -1,4 +1,4 @@
-import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, KeyboardEvent, ReactElement, Ref, cloneElement, forwardRef, memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Transition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
@@ -73,7 +73,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
     ...otherProps
   } = props
   const theme = useTheme()
-  const menuRef = useRef<HTMLDivElement>()
+  const menuRef = useRef<HTMLDivElement>(null)
   const forkedRef = useForkedRef(ref, menuRef)
   const [menuState, setMenuState] = useState<MenuStateType>({})
   const [parentMenuState, setParentMenuState] = useContext(MenuContext)
@@ -81,9 +81,9 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   const setActualMenuState = useMemo(() => setInitialMenuState ?? setMenuState, [setInitialMenuState, setMenuState])
   const menuValue = useMemo<MenuContextType>(() => [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState], [actualMenuState, setActualMenuState, parentMenuState, setParentMenuState])
 
-  const actualActiveItemIndex = actualMenuState.defaultActiveItemIndex > -1 && actualMenuState.activeItemIndex === -1
+  const actualActiveItemIndex = ((actualMenuState.defaultActiveItemIndex ?? -1) > -1 && actualMenuState.activeItemIndex === -1
     ? actualMenuState.defaultActiveItemIndex
-    : actualMenuState.activeItemIndex
+    : actualMenuState.activeItemIndex) ?? -1
 
   const actualOpen = open ?? true
   const [transitionOpen, setTransitionOpen] = useState(actualOpen)
@@ -158,7 +158,7 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
         {(state: string) => cloneElement(element, {
           ...element.props,
           ...defaultStyle,
-          ...transitionStyles[state],
+          ...transitionStyles[state as keyof typeof transitionStyles],
         })}
       </Transition>
     )
@@ -256,7 +256,9 @@ function MenuRef(props: MenuProps, ref: Ref<any>) {
   )
 }
 
-export const Menu = forwardRef(MenuRef)
+const BaseMenu = forwardRef(MenuRef)
 
-Menu.displayName = 'Menu'
-Menu.propTypes = menuPropTypes
+BaseMenu.displayName = 'Menu'
+BaseMenu.propTypes = menuPropTypes
+
+export const Menu = memo(BaseMenu)

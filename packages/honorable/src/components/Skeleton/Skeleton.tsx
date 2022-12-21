@@ -1,5 +1,5 @@
 // Inspired from https://mui.com/material-ui/react-skeleton
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 import { css, keyframes } from '@emotion/react'
 import PropTypes from 'prop-types'
 
@@ -70,7 +70,7 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
       webkitMaskImage: '-webkit-radial-gradient(white, black)',
       '&::after': {
         animation: `${waveKeyframe} 1.6s linear 0.5s infinite`,
-        background: `linear-gradient(90deg, transparent, ${theme.utils.resolveColorString(theme.mode === 'light' ? 'transparency(white, 66)' : 'lighten(background-light, 5)')}, transparent)`,
+        background: `linear-gradient(90deg, transparent, ${theme.utils?.resolveColorString(theme.mode === 'light' ? 'transparency(white, 66)' : 'lighten(background-light, 5)')}, transparent)`,
         content: '""',
         position: 'absolute',
         transform: 'translateX(-100%)', /* Avoid flash during server-side hydration */
@@ -114,7 +114,9 @@ function SkeletonRef(props: SkeletonProps, ref: Ref<any>) {
   )
 }
 
-export const Skeleton = forwardRef(SkeletonRef)
+const BaseSkeleton = forwardRef(SkeletonRef)
 
-Skeleton.displayName = 'Skeleton'
-Skeleton.propTypes = SkeletonPropTypes
+BaseSkeleton.displayName = 'Skeleton'
+BaseSkeleton.propTypes = SkeletonPropTypes
+
+export const Skeleton = memo(BaseSkeleton)

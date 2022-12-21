@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -42,7 +42,7 @@ const autocompletePropTypes = {
   onForceOpen: PropTypes.func,
 }
 
-export type AutocompleteOptionType = string | { label?: string; value?: string }
+export type AutocompleteOptionType = string | { label: string; value: string }
 
 export type AutocompleteBaseProps = InputBaseProps & {
   options?: AutocompleteOptionType[],
@@ -89,7 +89,7 @@ function filterOptions(options: AutocompleteOptionType[], search: string, anyOpt
   })
 }
 
-function findInOptions(options: AutocompleteOptionType[], value: string): AutocompleteOptionType {
+function findInOptions(options: AutocompleteOptionType[], value: string): AutocompleteOptionType | null {
   if (!Array.isArray(options)) return null
 
   return options.find(option => {
@@ -98,7 +98,7 @@ function findInOptions(options: AutocompleteOptionType[], value: string): Autoco
 
     // @ts-expect-error
     return option.toString() === value
-  })
+  }) ?? null
 }
 
 function getOptionValueAndLabel(option: AutocompleteOptionType) {
@@ -175,7 +175,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       case 'ArrowUp': {
         event.preventDefault()
 
-        const nextActiveItemIndex = Math.max(0, menuState.activeItemIndex - 1)
+        const nextActiveItemIndex = Math.max(0, (menuState.activeItemIndex ?? -1) - 1)
 
         if (menuState.activeItemIndex !== nextActiveItemIndex) {
           setMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex }))
@@ -186,7 +186,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       case 'ArrowDown': {
         event.preventDefault()
 
-        const nextActiveItemIndex = Math.min(filteredOptions.length - 1, menuState.activeItemIndex + 1)
+        const nextActiveItemIndex = Math.min(filteredOptions.length - 1, (menuState.activeItemIndex ?? -1) + 1)
 
         if (menuState.activeItemIndex !== nextActiveItemIndex) {
           setMenuState(x => ({ ...x, activeItemIndex: nextActiveItemIndex }))
@@ -198,7 +198,7 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
       case 'Tab': {
         event.preventDefault()
 
-        const option = filteredOptions[menuState.activeItemIndex]
+        const option = filteredOptions[(menuState.activeItemIndex ?? -1)]
 
         if (option) {
           const { value, label } = getOptionValueAndLabel(option)
@@ -364,7 +364,9 @@ function AutocompleteRef(props: AutocompleteProps, ref: Ref<any>) {
   )
 }
 
-export const Autocomplete = forwardRef(AutocompleteRef)
+const BaseAutocomplete = forwardRef(AutocompleteRef)
 
-Autocomplete.displayName = 'Autocomplete'
-Autocomplete.propTypes = autocompletePropTypes
+BaseAutocomplete.displayName = 'Autocomplete'
+BaseAutocomplete.propTypes = autocompletePropTypes
+
+export const Autocomplete = memo(BaseAutocomplete)

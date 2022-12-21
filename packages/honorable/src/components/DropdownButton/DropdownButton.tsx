@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, Ref, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { MouseEventHandler, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -169,7 +169,9 @@ function DropdownButtonRef(props: DropdownButtonProps, ref: Ref<any>) {
   )
 }
 
-export const DropdownButton = forwardRef(DropdownButtonRef)
+const BaseDropdownButton = forwardRef(DropdownButtonRef)
 
-DropdownButton.displayName = 'DropdownButton'
-DropdownButton.propTypes = dropdownButtonPropTypes
+BaseDropdownButton.displayName = 'DropdownButton'
+BaseDropdownButton.propTypes = dropdownButtonPropTypes
+
+export const DropdownButton = memo(BaseDropdownButton)

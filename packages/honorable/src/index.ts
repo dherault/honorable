@@ -21,8 +21,6 @@ export * from './components/Button/Button'
 
 export * from './components/ButtonGroup/ButtonGroup'
 
-export * from './components/Card/Card'
-
 export * from './components/Caret/Caret'
 
 export * from './components/Checkbox/Checkbox'

@@ -1,4 +1,4 @@
-import { ChangeEvent, Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, useMemo, useState } from 'react'
+import { ChangeEvent, Children, KeyboardEvent, MouseEvent, ReactElement, Ref, cloneElement, forwardRef, memo, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps, TargetWithValue } from '../../types'
@@ -124,7 +124,9 @@ function RadioGroupRef(props: RadioGroupProps, ref: Ref<any>) {
   )
 }
 
-export const RadioGroup = forwardRef(RadioGroupRef)
+const BaseRadioGroup = forwardRef(RadioGroupRef)
 
-RadioGroup.displayName = 'RadioGroup'
-RadioGroup.propTypes = radioGroupPropTypes
+BaseRadioGroup.displayName = 'RadioGroup'
+BaseRadioGroup.propTypes = radioGroupPropTypes
+
+export const RadioGroup = memo(BaseRadioGroup)

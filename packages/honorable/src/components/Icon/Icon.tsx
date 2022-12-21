@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 
 import { ComponentProps } from '../../types'
 
@@ -33,7 +33,9 @@ function IconRef(props: IconProps, ref: Ref<any>) {
   )
 }
 
-export const Icon = forwardRef(IconRef)
+const BaseIcon = forwardRef(IconRef)
 
-Icon.displayName = 'Icon'
-Icon.propTypes = iconPropTypes
+BaseIcon.displayName = 'Icon'
+BaseIcon.propTypes = iconPropTypes
+
+export const Icon = memo(BaseIcon)

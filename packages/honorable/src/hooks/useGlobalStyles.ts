@@ -22,11 +22,11 @@ function useGlobalStyles() {
     const normalizeCssCss = css`${normalizeCss}`
     const rootCss = css`
       :root {
-        ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils.resolveColorString(colorName)};\n`)}
+        ${Object.keys(theme.colors || {}).map(colorName => `\t--color-${colorName}: ${theme.utils!.resolveColorString(colorName)};\n`)}
       }
     `
 
-    const globalStyles = {
+    const globalStyles: Record<string, any> = {
       html: assignDefaultFontFamily(resolveAll(resolveStyles(html, {}, theme), theme)),
     }
 

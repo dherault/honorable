@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import merge from 'lodash.merge'
 
-import { CssProps, HonorableTheme } from '../types'
+import { ComponentNames, CssProps, HonorableTheme } from '../types'
 
 import styleProperties from '../data/stylesProperties'
 import propToPseudoSelectors from '../data/propToPseudoSelectors'
@@ -14,7 +14,7 @@ import isSelector from '../utils/isSelector'
 const suffixedstyleProperties = styleProperties.map(x => `${x}-`)
 const pseudoSelectorPropKeys = Object.keys(propToPseudoSelectors)
 
-function useHonorable(name: string, props: object, theme: HonorableTheme) {
+function useHonorable(name: ComponentNames, props: object, theme: HonorableTheme) {
   return useMemo(() => {
     const workingProps = { ...props }
     const stylesProps: CssProps = {}
@@ -29,6 +29,7 @@ function useHonorable(name: string, props: object, theme: HonorableTheme) {
         || pseudoSelectorPropKeys.includes(key)
       ) {
         if (typeof value !== 'undefined') {
+          // @ts-expect-error
           stylesProps[key] = value
         }
       }

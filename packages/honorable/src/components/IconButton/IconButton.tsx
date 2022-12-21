@@ -1,4 +1,4 @@
-import { Ref, forwardRef, useEffect, useRef, useState } from 'react'
+import { Ref, forwardRef, memo, useEffect, useRef, useState } from 'react'
 
 import { ComponentProps } from '../../types'
 
@@ -44,7 +44,9 @@ function IconButtonRef(props: IconButtonProps, ref: Ref<any>) {
   )
 }
 
-export const IconButton = forwardRef(IconButtonRef)
+const BaseIconButton = forwardRef(IconButtonRef)
 
-IconButton.displayName = 'IconButton'
-IconButton.propTypes = iconButtonPropTypes
+BaseIconButton.displayName = 'IconButton'
+BaseIconButton.propTypes = iconButtonPropTypes
+
+export const IconButton = memo(BaseIconButton)

@@ -1,4 +1,4 @@
-import { Ref, forwardRef } from 'react'
+import { Ref, forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -86,7 +86,9 @@ function FlexRef(props: FlexProps, ref: Ref<any>) {
   )
 }
 
-export const Flex = forwardRef(FlexRef)
+const BaseFlex = forwardRef(FlexRef)
 
-Flex.displayName = 'Flex'
-Flex.propTypes = FlexPropTypes
+BaseFlex.displayName = 'Flex'
+BaseFlex.propTypes = FlexPropTypes
+
+export const Flex = memo(BaseFlex)

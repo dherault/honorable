@@ -1,4 +1,4 @@
-import { KeyboardEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, ReactNode, Ref, forwardRef, memo, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { ComponentProps } from '../../types'
@@ -156,7 +156,9 @@ function AccordionRef(props: AccordionProps, ref: Ref<any>) {
   )
 }
 
-export const Accordion = forwardRef(AccordionRef)
+const BaseAccordion = forwardRef(AccordionRef)
 
-Accordion.displayName = 'Accordion'
-Accordion.propTypes = accordionPropTypes
+BaseAccordion.displayName = 'Accordion'
+BaseAccordion.propTypes = accordionPropTypes
+
+export const Accordion = memo(BaseAccordion)

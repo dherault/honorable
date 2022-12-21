@@ -7,7 +7,6 @@ import { autocompleteParts } from './components/Autocomplete/Autocomplete'
 import { avatarParts } from './components/Avatar/Avatar'
 import { buttonParts } from './components/Button/Button'
 import { buttonGroupParts } from './components/ButtonGroup/ButtonGroup'
-import { cardParts } from './components/Card/Card'
 import { caretParts } from './components/Caret/Caret'
 import { checkboxParts } from './components/Checkbox/Checkbox'
 import { dropdownButtonParts } from './components/DropdownButton/DropdownButton'
@@ -115,6 +114,8 @@ export type ColorValue = string | ColorKey | {
   [modeKey in Mode]: string | ColorKey
 }
 
+export type ColorsType = Record<ColorKey, ColorValue | Record<string, ColorValue>>
+
 type StylesArrayFunction = (props: object, theme: HonorableTheme) => CSSObject | AnyProps | false | null | undefined | 0
 
 export type StylesArray = (CSSObject | AnyProps | StylesArrayFunction)[]
@@ -126,22 +127,16 @@ export type ComponentThemePart<Part extends string> = Partial<Record<Part, Style
 export type HonorableTheme = {
   name?: string
   mode?: Mode
-  breakpoints?: {
-    [breakpointName: string]: number
-  }
-  colors?: {
-    [colorName: ColorKey]: ColorValue | Record<string, ColorValue>
-  }
-  stylesheet?: {
-    [selector: string]: StylesArray
-  }
+  breakpoints?: Record<string, number>
+  colors?: ColorsType
+  stylesheet?: Record<string, StylesArray>
   global?: StylesArray
   utils?: {
     resolveColorString: (color: string) => string
     resolveColorObject: (color: object) => object
   }
   // A cache for color resolution
-  cache?: Record<string, object>
+  cache?: Record<string, Record<string, string>>
   // extended Tags
   ButtonBase?: ComponentThemePart<typeof noParts[number]>
   InputBase?: ComponentThemePart<typeof noParts[number]>
@@ -317,7 +312,6 @@ export type HonorableTheme = {
   Avatar?: ComponentThemePart<typeof avatarParts[number]>
   Button?: ComponentThemePart<typeof buttonParts[number]>
   ButtonGroup?: ComponentThemePart<typeof buttonGroupParts[number]>
-  Card?: ComponentThemePart<typeof cardParts[number]>
   Caret?: ComponentThemePart<typeof caretParts[number]>
   Checkbox?: ComponentThemePart<typeof checkboxParts[number]>
   DropdownButton?: ComponentThemePart<typeof dropdownButtonParts[number]>
@@ -339,6 +333,18 @@ export type HonorableTheme = {
   Tooltip?: ComponentThemePart<typeof tooltipParts[number]>
   TreeView?: ComponentThemePart<typeof treeViewParts[number]>
 }
+
+export type ComponentNames = keyof Omit<
+  HonorableTheme,
+  'name'
+  | 'mode'
+  | 'breakpoints'
+  | 'colors'
+  | 'stylesheet'
+  | 'global'
+  | 'utils'
+  | 'cache'
+>
 
 export type TargetWithValue<T> = T & {
   target: {
