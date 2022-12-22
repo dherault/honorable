@@ -170,6 +170,11 @@ function SelectRef(props: SelectProps, ref: Ref<any>) {
     setInitialRender(true)
   }, [previousValue, value])
 
+  // Allow changing children
+  useEffect(() => {
+    setInitialRender(true)
+  }, [children])
+
   useEffect(() => {
     if (!(event && previousEvent !== event && typeof onChange === 'function')) return
 
