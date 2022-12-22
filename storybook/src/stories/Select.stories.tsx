@@ -175,6 +175,28 @@ function TemplateChanging() {
   )
 }
 
+function TemplateChanging2() {
+  const [value, setValue] = useState('foo')
+  const [toggled, setToggled] = useState(false)
+
+  return (
+    <>
+      <Button onClick={() => setToggled(x => !x)}>
+        Toggle item with current value
+      </Button>
+      <Select
+        value={value}
+        onChange={event => setValue(event.target.value)}
+        mt={2}
+      >
+        <MenuItem value="bar">Bar</MenuItem>
+        <MenuItem value="baz">Baz</MenuItem>
+        {toggled && <MenuItem value="foo">Foo</MenuItem>}
+      </Select>
+    </>
+  )
+}
+
 export const Default = Template.bind({}) as any
 Default.args = {
   items,
@@ -321,3 +343,6 @@ MenuItemComplexChildrenChanging.args = {
     },
   ],
 }
+
+export const MenuItemChanging = TemplateChanging2.bind({}) as any
+MenuItemChanging.args = {}
