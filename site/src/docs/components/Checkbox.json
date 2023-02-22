@@ -2,17 +2,17 @@
   "props": [
     {
       "name": "checked",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither the Checkbox is checked or not"
     },
     {
       "name": "defaultChecked",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither the Checkbox is checked by default or not"
     },
     {
       "name": "disabled",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither the Checkbox is disabled or not"
     },
     {
@@ -22,12 +22,12 @@
     },
     {
       "name": "onChange",
-      "type": "(event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithChecked<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>) => void",
+      "type": "((event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithChecked<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>) => void) | undefined",
       "description": "Callback function called when the Checkbox checked state changes"
     },
     {
       "name": "labelPosition",
-      "type": "string",
+      "type": "string | undefined",
       "description": "The position of the label relative to the Checkbox"
     }
   ],
@@ -48,7 +48,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--label&viewMode=story"
     },
     {
-      "source": "function CheckboxMultipleDemo() {\n  return (\n    <>\n      <Div>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n      </Div>\n\n      <Div mt={0.5}>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n      </Div>\n    </>\n  )\n}\n",
+      "source": "function CheckboxMultipleDemo() {\n  return (\n    <>\n      <Div>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n        <Checkbox>A checkbox</Checkbox>\n      </Div>\n      <Div mt={0.5}>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n        <Checkbox>\n          <P fontSize=\"0.5rem\">A checkbox</P>\n        </Checkbox>\n      </Div>\n    </>\n  )\n}\n",
       "name": "Multiple",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-checkbox--basic&viewMode=story"
     }

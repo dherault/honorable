@@ -2,7 +2,7 @@
   "props": [
     {
       "name": "rotation",
-      "type": "number",
+      "type": "number | undefined",
       "description": "The rotation of the Caret"
     }
   ],

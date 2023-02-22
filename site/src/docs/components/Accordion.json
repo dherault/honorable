@@ -2,17 +2,17 @@
   "props": [
     {
       "name": "expanded",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Whether the Accordion is expanded or not"
     },
     {
       "name": "defaultExpanded",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Whether the Accordion is expanded by default or not"
     },
     {
       "name": "onExpand",
-      "type": "(expanded: boolean) => void",
+      "type": "((expanded: boolean) => void) | undefined",
       "description": "Callback called when the Accordion is expanded or collapsed"
     },
     {
@@ -23,6 +23,11 @@
     {
       "name": "expandIcon",
       "type": "React.ReactNode",
+      "description": "The Accordion's expand icon node"
+    },
+    {
+      "name": "invertExpandIcon",
+      "type": "boolean | undefined",
       "description": "The Accordion's expand icon node"
     }
   ],

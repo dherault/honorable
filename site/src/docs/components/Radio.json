@@ -7,17 +7,17 @@
     },
     {
       "name": "checked",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither the Radio is checked dor not"
     },
     {
       "name": "defaultChecked",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither the Radio is checked or not by default"
     },
     {
       "name": "disabled",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither thhe Radio is disabled or not"
     },
     {
@@ -32,12 +32,12 @@
     },
     {
       "name": "onChange",
-      "type": "(event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithChecked<import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithValue<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>>) => void",
+      "type": "((event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithChecked<import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithValue<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>>) => void) | undefined",
       "description": "Callback called when the Radio is clicked"
     },
     {
       "name": "labelPosition",
-      "type": "string",
+      "type": "\"left\" | \"right\" | \"top\" | \"bottom\" | undefined",
       "description": "The position of the label relative to the control"
     }
   ],
@@ -53,7 +53,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-radio--controlled&viewMode=story"
     },
     {
-      "source": "function RadioLabel() {\n  return (\n    <Div>\n      <Radio>A Radio</Radio>\n      <Radio\n        mt={1}\n        labelPosition=\"top\"\n      >A Radio\n      </Radio>\n      <Radio\n        mt={1}\n        labelPosition=\"left\"\n      >A Radio\n      </Radio>\n      <Radio\n        mt={1}\n        labelPosition=\"bottom\"\n      >A Radio\n      </Radio>\n      <Radio mt={1}>\n        <P fontSize=\"0.5rem\">\n          A small Radio\n        </P>\n      </Radio>\n    </Div>\n  )\n}\n",
+      "source": "function RadioLabel() {\n  return (\n    <Div>\n      <Radio>A Radio</Radio>\n      <Radio\n        mt={1}\n        labelPosition=\"top\"\n      >\n        A Radio\n      </Radio>\n      <Radio\n        mt={1}\n        labelPosition=\"left\"\n      >\n        A Radio\n      </Radio>\n      <Radio\n        mt={1}\n        labelPosition=\"bottom\"\n      >\n        A Radio\n      </Radio>\n      <Radio mt={1}>\n        <P fontSize=\"0.5rem\">\n          A small Radio\n        </P>\n      </Radio>\n    </Div>\n  )\n}\n",
       "name": "Label",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-radio--label&viewMode=story"
     }

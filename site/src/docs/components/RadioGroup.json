@@ -12,12 +12,12 @@
     },
     {
       "name": "onChange",
-      "type": "(event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithValue<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>) => void",
+      "type": "((event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithValue<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>) => void) | undefined",
       "description": "Callback function called when the RadioGroup returns a value"
     },
     {
       "name": "row",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Whether the RadioGroup is in a row or not"
     }
   ],

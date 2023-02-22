@@ -2,93 +2,8 @@
   "props": [
     {
       "name": "type",
-      "type": "string",
+      "type": "string | undefined",
       "description": "The type of the Input"
-    },
-    {
-      "name": "value",
-      "type": "(string | number | readonly string[]) & string | number",
-      "description": "The value of the Input"
-    },
-    {
-      "name": "defaultValue",
-      "type": "(string | number | readonly string[]) & string | number",
-      "description": "The default value of the Input"
-    },
-    {
-      "name": "placeholder",
-      "type": "string",
-      "description": "The placeholder of the Input"
-    },
-    {
-      "name": "onChange",
-      "type": "(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void",
-      "description": "Callback function called when the Input value changes"
-    },
-    {
-      "name": "onFocus",
-      "type": "(event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => void",
-      "description": "Callback function called when the Input gains focus"
-    },
-    {
-      "name": "onBlur",
-      "type": "(event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => void",
-      "description": "Callback function called when the Input looses focus"
-    },
-    {
-      "name": "onKeyDown",
-      "type": "(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void",
-      "description": "Callback function called when the Input received a keydown event"
-    },
-    {
-      "name": "onKeyUp",
-      "type": "(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void",
-      "description": "Callback function called when the Input received a keyup event"
-    },
-    {
-      "name": "onEnter",
-      "type": "(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void",
-      "description": "Callback function called when the Input received a \"Enter\" keydown event"
-    },
-    {
-      "name": "startIcon",
-      "type": "React.ReactNode",
-      "description": "The icon react node at the start of the Input"
-    },
-    {
-      "name": "endIcon",
-      "type": "React.ReactNode",
-      "description": "The icon react node at the end of the Input"
-    },
-    {
-      "name": "disabled",
-      "type": "boolean",
-      "description": "Weither the Input is disabled or not"
-    },
-    {
-      "name": "autoFocus",
-      "type": "boolean",
-      "description": "Weither the Input should focus on mount or not"
-    },
-    {
-      "name": "multiline",
-      "type": "boolean",
-      "description": "Weither the Input is mutliline or not. If so, a <textarea> is rendered"
-    },
-    {
-      "name": "minRows",
-      "type": "number",
-      "description": "If multiline, the minimum number of rows to display"
-    },
-    {
-      "name": "maxRows",
-      "type": "number",
-      "description": "If multiline, the maximum number of rows to display"
-    },
-    {
-      "name": "inputProps",
-      "type": "any",
-      "description": "The props for the input component"
     }
   ],
   "demos": [
@@ -123,7 +38,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-input--controlled&viewMode=story"
     },
     {
-      "source": "function InputCounter() {\n  const [counter, setCounter] = useState(0)\n\n  return (\n    <>\n      <Input\n        onEnter={() => setCounter(prev => x + 1)}\n      />\n      <P mt={1}>\n        {counter}\n      </P>\n    </>\n  )\n}\n",
+      "source": "function InputCounter() {\n  const [counter, setCounter] = useState(0)\n\n  return (\n    <>\n      <Input\n        onEnter={() => setCounter(x => x + 1)}\n      />\n      <P mt={1}>\n        {counter}\n      </P>\n    </>\n  )\n}\n",
       "name": "Counter",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-input--counter&viewMode=story"
     },
@@ -148,7 +63,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-input--multiline&viewMode=story"
     },
     {
-      "source": "function InputMultilineMinMaxRows() {\n  return (\n    <Input\n      multiline \n      minRows={2}\n      maxRows={4} \n    />\n  )\n}\n",
+      "source": "function InputMultilineMinMaxRows() {\n  return (\n    <Input\n      multiline\n      minRows={2}\n      maxRows={4}\n    />\n  )\n}\n",
       "name": "MultilineMinMaxRows",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-input---multiline-min-max-rows&viewMode=story"
     }

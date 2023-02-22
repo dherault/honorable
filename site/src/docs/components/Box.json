@@ -1,5 +1,4 @@
 {
-  "props": [],
   "demos": [
     {
       "source": "function BoxDemo() {\n  return (\n    <>\n      <Box\n        width={128}\n        height={128}\n        backgroundColor=\"background-light\"\n      />\n      <Box marginTop={16}>\n        Box is an alias for Div\n      </Box>\n    </>\n  )\n}\n",

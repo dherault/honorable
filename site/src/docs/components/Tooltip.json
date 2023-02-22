@@ -1,0 +1,87 @@
+{
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "description": "The react node that the Tooltip will be displayed on\nShould be a unique ReactElement able to hold a ref"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "description": "The react node that will be displayed in the Tooltip"
+    },
+    {
+      "name": "arrow",
+      "type": "boolean | undefined",
+      "description": "Weither the Tooltip should display an arrow or not"
+    },
+    {
+      "name": "arrowSize",
+      "type": "number | undefined",
+      "description": "If `arrow`, the  size of the arrow"
+    },
+    {
+      "name": "arrowPadding",
+      "type": "number | undefined",
+      "description": "The distance padding to the window borders"
+    },
+    {
+      "name": "offset",
+      "type": "number | undefined",
+      "description": "The distance to the child node"
+    },
+    {
+      "name": "offsetPadding",
+      "type": "number | undefined",
+      "description": "The distance padding to the window borders"
+    },
+    {
+      "name": "displayOn",
+      "type": "(\"hover\" | \"focus\" | \"click\")[] | undefined",
+      "description": "The states the Tooltip should be displayed with"
+    },
+    {
+      "name": "transitionDuration",
+      "type": "number | undefined",
+      "description": "The transition duration of the Tooltip's fade"
+    },
+    {
+      "name": "enterDelay",
+      "type": "number | undefined",
+      "description": "The enter delay of the Tooltip"
+    },
+    {
+      "name": "leaveDelay",
+      "type": "number | undefined",
+      "description": "The leave delay of the Tooltip"
+    },
+    {
+      "name": "followCursor",
+      "type": "boolean | undefined",
+      "description": "Weither the Tooltip should follow the cursor or not"
+    },
+    {
+      "name": "onOpen",
+      "type": "((event: MouseEvent | TouchEvent | FocusEvent, open: boolean) => void) | undefined",
+      "description": "Callback function called when the Tooltip is opened or closed"
+    },
+    {
+      "name": "open",
+      "type": "boolean | undefined",
+      "description": "Weither the Tooltip is open or not"
+    },
+    {
+      "name": "placement",
+      "type": "\"left\" | \"right\" | \"top\" | \"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left-end\" | \"left-start\" | \"right-end\" | \"right-start\" | \"top-end\" | \"top-start\" | undefined",
+      "description": "The placement of the Tooltip relative to its child"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function TooltipBasic() {\n  const [progress, setProgress] = useState(0.25)\n\n  return (\n    <>\n      <A\n        onClick={() => setProgress(x => (x + 0.25) % 1.0001)}\n        userSelect=\"none\"\n      >\n        Progress\n      </A>\n      <Tooltip\n        mt={1}\n        value={progress}\n      />\n    </>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--basic&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--parts&viewMode=story"
+}

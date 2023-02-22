@@ -2,32 +2,32 @@
   "props": [
     {
       "name": "open",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": ""
     },
     {
       "name": "onClose",
-      "type": "(event: React.MouseEvent<Element, MouseEvent> | KeyboardEvent) => void",
+      "type": "((event: React.MouseEvent<Element, MouseEvent> | KeyboardEvent) => void) | undefined",
       "description": ""
     },
     {
       "name": "fade",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": ""
     },
     {
       "name": "transitionDuration",
-      "type": "number",
+      "type": "number | undefined",
       "description": ""
     },
     {
       "name": "disableEscapeKey",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": ""
     },
     {
       "name": "portal",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": ""
     }
   ],
@@ -48,7 +48,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--open&viewMode=story"
     },
     {
-      "source": "function ModalNoRealWorld() {\n  const [value, setValue] = useState(null)\n\n  return (\n    <>\n      <A\n        onClick={() => {\n          setValue('value')\n          setTimeout(() => {\n            setValue(null)\n          }, 1000)\n        }}\n        userSelect=\"none\"\n      >\n        Set value\n      </A>\n      <P mt={1}>\n        {value ?? 'null'}\n      </P>\n      <Modal\n        open={!!value}\n        onClose={() => setValue(null)}\n      >\n        {value}\n      </Modal>\n    </>\n  )\n}\n",
+      "source": "function ModalNoRealWorld() {\n  const [value, setValue] = useState<any>(null)\n\n  return (\n    <>\n      <A\n        onClick={() => {\n          setValue('value')\n          setTimeout(() => {\n            setValue(null)\n          }, 1000)\n        }}\n        userSelect=\"none\"\n      >\n        Set value\n      </A>\n      <P mt={1}>\n        {value ?? 'null'}\n      </P>\n      <Modal\n        open={!!value}\n        onClose={() => setValue(null)}\n      >\n        {value}\n      </Modal>\n    </>\n  )\n}\n",
       "name": "RealWorld",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--real-world&viewMode=story"
     },

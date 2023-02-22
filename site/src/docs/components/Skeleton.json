@@ -2,7 +2,7 @@
   "props": [
     {
       "name": "animation",
-      "type": "boolean | \"wave\"",
+      "type": "string | boolean | undefined",
       "description": ""
     }
   ],

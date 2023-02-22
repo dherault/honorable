@@ -2,22 +2,22 @@
   "props": [
     {
       "name": "open",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Whether the DropdownButton is open or not"
     },
     {
       "name": "defaultOpen",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Whether the DropdownButton is open by default or not"
     },
     {
       "name": "label",
-      "type": "string",
+      "type": "string | undefined",
       "description": "The label of the DropdownButton"
     },
     {
       "name": "fade",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Whether the DropdownButton's menu should fade in and out or not"
     },
     {
@@ -27,33 +27,33 @@
     },
     {
       "name": "onChange",
-      "type": "(event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>) => void",
+      "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
       "description": "Callback function called when the DropdownButton returns a value"
     },
     {
       "name": "onOpen",
-      "type": "(open: boolean) => void",
+      "type": "((open: boolean) => void) | undefined",
       "description": "Callback function called when the DropdownButton is opened or closed"
     }
   ],
   "demos": [
     {
-      "source": "function DropdownButtonBasicDemo() {\n  return (\n    <Div>\n      <DropdownButton \n        label=\"Drop it!\"\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n      <DropdownButton \n        label=\"Drop it!\"\n        disabled\n        mt={1}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n    </Div>\n  )\n}\n",
+      "source": "function DropdownButtonBasicDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        disabled\n        mt={1}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n    </Div>\n  )\n}\n",
       "name": "Basic",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--basic&viewMode=story"
     },
     {
-      "source": "function DropdownButtonDefaultOpenDemo() {\n  return (\n    <Div>\n      <DropdownButton \n        label=\"Drop it!\"\n        defaultOpen\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "source": "function DropdownButtonDefaultOpenDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        defaultOpen\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
       "name": "DefaultOpen",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--defaultopen&viewMode=story"
     },
     {
-      "source": "function DropdownButtonSubMenuDemo() {\n  return (\n    <Div>\n      <DropdownButton \n        label=\"Drop it!\"\n      >\n        {makeItems(items, 6).map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "source": "function DropdownButtonSubMenuDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n      >\n        {makeItems(items, 6).map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
       "name": "SubMenu",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--submenu&viewMode=story"
     },
     {
-      "source": "function DropdownButtonControlledDemo() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <Flex align=\"center\">\n      <DropdownButton\n        open={open}\n        label=\"Drop it!\"\n        onOpen={prev => setOpen(prev)}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => setOpen(prev => !prev)}\n      >\n        Toggle \n      </A>\n    </Flex>\n  )\n}\n",
+      "source": "function DropdownButtonControlledDemo() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <Flex align=\"center\">\n      <DropdownButton\n        open={open}\n        label=\"Drop it!\"\n        onOpen={prev => setOpen(prev)}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => setOpen(prev => !prev)}\n      >\n        Toggle\n      </A>\n    </Flex>\n  )\n}\n",
       "name": "Controlled",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--controlled&viewMode=story"
     },
@@ -63,7 +63,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--extended&viewMode=story"
     },
     {
-      "source": "function DropdownButtonFadeDemo() {\n  return (\n    <Div>\n      <DropdownButton \n        label=\"Drop it!\"\n        fade\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "source": "function DropdownButtonFadeDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        fade\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
       "name": "Fade",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--fade&viewMode=story"
     },

@@ -2,12 +2,12 @@
   "props": [
     {
       "name": "open",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": ""
     },
     {
       "name": "defaultOpen",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": ""
     },
     {
@@ -17,32 +17,37 @@
     },
     {
       "name": "onChange",
-      "type": "(event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithValue<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>>) => void",
+      "type": "((event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithValue<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>>) => void) | undefined",
       "description": ""
     },
     {
       "name": "onOpen",
-      "type": "(open: boolean) => void",
-      "description": ""
-    },
-    {
-      "name": "fade",
-      "type": "boolean",
+      "type": "((open: boolean) => void) | undefined",
       "description": ""
     },
     {
       "name": "renderSelected",
-      "type": "(value: any) => React.ReactElement<any, string | React.JSXElementConstructor<any>>",
+      "type": "((value: any) => React.ReactElement<any, string | React.JSXElementConstructor<any>>) | undefined",
       "description": ""
     },
     {
       "name": "startIcon",
-      "type": "React.ReactElement<any, string | React.JSXElementConstructor<any>>",
+      "type": "React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined",
       "description": ""
     },
     {
       "name": "endIcon",
-      "type": "boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>>",
+      "type": "boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined",
+      "description": ""
+    },
+    {
+      "name": "menuOnTop",
+      "type": "boolean | undefined",
+      "description": ""
+    },
+    {
+      "name": "placeholder",
+      "type": "string | undefined",
       "description": ""
     }
   ],
@@ -63,7 +68,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-select--sub-menu&viewMode=story"
     },
     {
-      "source": "function SelectControlled() {\n  const [value, setValue] = useState()\n  const allValues = findAllValues(items)\n\n  return (\n    <Flex>\n      <Select\n        value={value}\n        onChange={event => setValue(event.target.value)}\n      >\n        {items.map(renderItem)}\n      </Select>\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => {\n          setValue((x: any) => {\n            const index = allValues.indexOf(x)\n\n            return allValues[index === -1 ? 0 : (index + 1) % allValues.length]\n          })\n        }}\n      >\n        Change value\n      </A>\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => setValue('nonsense')}\n      >\n        Change to invalid value\n      </A>\n    </Flex>\n  )\n}\n",
+      "source": "function SelectControlled() {\n  const [value, setValue] = useState('')\n  const allValues = findAllValues(items)\n\n  return (\n    <Flex>\n      <Select\n        value={value}\n        onChange={event => setValue(event.target.value)}\n      >\n        {items.map(renderItem)}\n      </Select>\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => {\n          setValue((x: any) => {\n            const index = allValues.indexOf(x)\n\n            return allValues[index === -1 ? 0 : (index + 1) % allValues.length]\n          })\n        }}\n      >\n        Change value\n      </A>\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => setValue('nonsense')}\n      >\n        Change to invalid value\n      </A>\n    </Flex>\n  )\n}\n",
       "name": "Controlled",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-select--controlled&viewMode=story"
     },
@@ -78,7 +83,7 @@
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-select--icons&viewMode=story"
     },
     {
-      "source": "function SelectRenderSelectedFn() {\n  const [value, setValue] = useState('Lovers')\n\n  return (\n    <Select\n      value={value}\n      onChange={event => setValue(event.target.value)}\n      renderSelected={(value: any) => `${value} (custom)`}\n    >\n      {items.map(renderItem)}\n    </Select>\n  )\n}\n",
+      "source": "function SelectRenderSelectedFn() {\n  const [value, setValue] = useState('Lovers')\n\n  return (\n    <Select\n      value={value}\n      onChange={event => setValue(event.target.value)}\n      renderSelected={(value: any) => (\n        <>\n          {value}\n          {' '}\n          (custom)\n        </>\n      )}\n    >\n      {items.map(renderItem)}\n    </Select>\n  )\n}\n",
       "name": "RenderSelectedFn",
       "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-select--render-selected-fn&viewMode=story"
     }

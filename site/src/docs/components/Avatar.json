@@ -2,17 +2,17 @@
   "props": [
     {
       "name": "src",
-      "type": "string",
+      "type": "string | undefined",
       "description": "The source of the Avatar's image"
     },
     {
       "name": "size",
-      "type": "number",
+      "type": "number | undefined",
       "description": "The size of the Avatar"
     },
     {
       "name": "name",
-      "type": "string",
+      "type": "string | undefined",
       "description": "The name of that will be transformed into the Avatar's initials"
     }
   ],

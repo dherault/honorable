@@ -12,7 +12,7 @@
     },
     {
       "name": "loading",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither the Button displays a loading state or not"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "name": "disabled",
-      "type": "boolean",
+      "type": "boolean | undefined",
       "description": "Weither the Button is disabled or not"
     }
   ],

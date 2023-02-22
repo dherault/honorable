@@ -2,12 +2,12 @@
   "props": [
     {
       "name": "size",
-      "type": "number",
+      "type": "number | undefined",
       "description": "The size of the Spinner"
     },
     {
       "name": "color",
-      "type": "string",
+      "type": "string | undefined",
       "description": "The color of the Spinner"
     }
   ],
