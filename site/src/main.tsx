@@ -1,14 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import './analytics'
-
 import App from './App'
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-
-root.render(
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 )

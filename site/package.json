@@ -1,24 +1,13 @@
 {
-  "name": "honorable-site",
-  "version": "1.0.0",
+  "name": "site",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start:watch": "npm start",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "clean": "rimraf node_modules package-lock.json && npm i --force"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "dependencies": {
     "firebase": "^9.17.1",
@@ -36,6 +25,11 @@
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0",
     "rimraf": "^4.1.2"
   }
 }
