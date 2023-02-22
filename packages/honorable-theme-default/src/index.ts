@@ -266,14 +266,6 @@ const theme: HonorableTheme = {
       },
     ],
   },
-  Card: {
-    Root: [
-      (_props: any, theme: any) => ({
-        elevation: 1,
-        backgroundColor: theme.mode === 'light' ? 'background' : 'background-light',
-      }),
-    ],
-  },
   Checkbox: {
     Root: [
       {
