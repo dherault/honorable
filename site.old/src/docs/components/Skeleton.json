@@ -1,0 +1,27 @@
+{
+  "props": [
+    {
+      "name": "animation",
+      "type": "string | boolean | undefined",
+      "description": ""
+    }
+  ],
+  "demos": [
+    {
+      "source": "function SkeletonBasic() {\n  return (\n    <Div>\n      <Skeleton\n        width={256}\n        height={256}\n      />\n      <Skeleton\n        mt={2}\n        variant=\"line\"\n      />\n      <Skeleton\n        mt={2}\n        variant=\"circular\"\n        width={256}\n        height={256}\n      />\n    </Div>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-skeleton--basic&viewMode=story"
+    },
+    {
+      "source": "function SkeletonWaveAnimation() {\n  return (\n    <Div>\n      <Skeleton\n        width={256}\n        height={256}\n        animation=\"wave\"\n      />\n      <Skeleton\n        mt={2}\n        variant=\"line\"\n        animation=\"wave\"\n      />\n      <Skeleton\n        mt={2}\n        variant=\"circular\"\n        width={64}\n        height={64}\n        animation=\"wave\"\n      />\n    </Div>\n  )\n}\n",
+      "name": "WaveAnimation",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-skeleton--wave-animation&viewMode=story"
+    },
+    {
+      "source": "function SkeletonNoAmination() {\n  return (\n    <Div>\n      <Skeleton\n        width={256}\n        height={256}\n        animation={false}\n      />\n      <Skeleton\n        mt={2}\n        variant=\"line\"\n        animation={false}\n      />\n      <Skeleton\n        mt={2}\n        variant=\"circular\"\n        width={64}\n        height={64}\n        animation={false}\n      />\n    </Div>\n  )\n}\n",
+      "name": "NoAmination",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-skeleton--no-animation&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-skeleton--parts&viewMode=story"
+}

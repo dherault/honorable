@@ -1,0 +1,67 @@
+{
+  "props": [
+    {
+      "name": "open",
+      "type": "boolean | undefined",
+      "description": ""
+    },
+    {
+      "name": "onClose",
+      "type": "((event: React.MouseEvent<Element, MouseEvent> | KeyboardEvent) => void) | undefined",
+      "description": ""
+    },
+    {
+      "name": "fade",
+      "type": "boolean | undefined",
+      "description": ""
+    },
+    {
+      "name": "transitionDuration",
+      "type": "number | undefined",
+      "description": ""
+    },
+    {
+      "name": "disableEscapeKey",
+      "type": "boolean | undefined",
+      "description": ""
+    },
+    {
+      "name": "portal",
+      "type": "boolean | undefined",
+      "description": ""
+    }
+  ],
+  "demos": [
+    {
+      "source": "function ModalBasic() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <>\n      <A\n        onClick={() => setOpen(true)}\n        userSelect=\"none\"\n      >\n        Open\n      </A>\n      <Modal\n        open={open}\n        onClose={() => setOpen(false)}\n      >\n        Content\n      </Modal>\n    </>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--basic&viewMode=story"
+    },
+    {
+      "source": "function ModalNoFade() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <>\n      <A\n        onClick={() => setOpen(true)}\n        userSelect=\"none\"\n      >\n        Open\n      </A>\n      <Modal\n        fade={false}\n        open={open}\n        onClose={() => setOpen(false)}\n      >\n        Content\n      </Modal>\n    </>\n  )\n}\n",
+      "name": "NoFade",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--no-fade&viewMode=story"
+    },
+    {
+      "source": "function ModalNoOpen() {\n  return (\n    <>\n      <A\n        userSelect=\"none\"\n      >\n        Open\n      </A>\n      <Modal\n        open={false}\n      >\n        Content\n      </Modal>\n    </>\n  )\n}\n",
+      "name": "Open",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--open&viewMode=story"
+    },
+    {
+      "source": "function ModalNoRealWorld() {\n  const [value, setValue] = useState<any>(null)\n\n  return (\n    <>\n      <A\n        onClick={() => {\n          setValue('value')\n          setTimeout(() => {\n            setValue(null)\n          }, 1000)\n        }}\n        userSelect=\"none\"\n      >\n        Set value\n      </A>\n      <P mt={1}>\n        {value ?? 'null'}\n      </P>\n      <Modal\n        open={!!value}\n        onClose={() => setValue(null)}\n      >\n        {value}\n      </Modal>\n    </>\n  )\n}\n",
+      "name": "RealWorld",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--real-world&viewMode=story"
+    },
+    {
+      "source": "function ModalCloseButton() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <>\n      <A\n        onClick={() => setOpen(true)}\n        userSelect=\"none\"\n      >\n        Open\n      </A>\n      <Modal\n        open={open}\n        onClose={() => setOpen(false)}\n      >\n        <Button onClick={() => setOpen(false)}>Close</Button>\n      </Modal>\n    </>\n  )\n}\n",
+      "name": "CloseButton",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--close-button&viewMode=story"
+    },
+    {
+      "source": "function ModalWillChangeContainer() {\n  return (\n    <Div\n      width={256}\n      height={256}\n      willChange=\"transform\"\n    >\n      <Modal>\n        Content\n      </Modal>\n    </Div>\n  )\n}\n",
+      "name": "WillChangeContainer",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--will-change-containerviewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-modal--parts&viewMode=story"
+}

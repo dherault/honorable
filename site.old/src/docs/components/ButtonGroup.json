@@ -1,0 +1,22 @@
+{
+  "props": [
+    {
+      "name": "direction",
+      "type": "\"row\" | \"column\" | undefined",
+      "description": "The direction of the ButtonGroup"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function ButtonGroupBasic() {\n  return (\n    <ButtonGroup>\n      <Button>Button 1</Button>\n      <Button>Button 2</Button>\n      <Button>Button 3</Button>\n    </ButtonGroup>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-buttongroup--basic&viewMode=story"
+    },
+    {
+      "source": "function ButtonGroupColumn() {\n  return (\n    <ButtonGroup direction=\"column\">\n      <Button>Button 1</Button>\n      <Button>Button 2</Button>\n      <Button>Button 3</Button>\n    </ButtonGroup>\n  )\n}\n",
+      "name": "Column",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-buttongroup--column&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-buttongroup--parts&viewMode=story"
+}

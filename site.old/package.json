@@ -1,0 +1,41 @@
+{
+  "name": "honorable-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:watch": "npm start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "clean": "rimraf node_modules package-lock.json && npm i --force"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "firebase": "^9.17.1",
+    "flexpad": "^4.0.1",
+    "honorable": "latest",
+    "honorable-theme-default": "latest",
+    "honorable-theme-honorable": "latest",
+    "markdown-to-jsx": "^7.1.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "5.0.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-transition-group": "^4.4.5"
+  },
+  "devDependencies": {
+    "rimraf": "^4.1.2"
+  }
+}

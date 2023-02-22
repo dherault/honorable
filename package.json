@@ -10,7 +10,7 @@
     "dev:honorable-theme-default": "(cd packages/honorable-theme-default && npm run dev)",
     "dev:honorable-theme-honorable": "(cd packages/honorable-theme-honorable && npm run dev)",
     "dev:designer": "npm run link:designer && (cd designer && npm run start:watch)",
-    "dev:site": "npm run link:site && (cd packages/honorable && npm run clean:peerDependencies) && (cd site && npm run start:watch)",
+    "dev:site": "npm run link:site && (cd packages/honorable && npm run clean:peerDependencies) && (cd site && npm run dev)",
     "dev:storybook": "npm run link:storybook && (cd storybook && npm run start:watch)",
     "dev:sb": "npm run dev:storybook",
     "link:packages": "npm run link:honorable && npm run link:honorable-theme-default && npm run link:honorable-theme-honorable",

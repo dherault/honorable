@@ -1,0 +1,52 @@
+{
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean | undefined",
+      "description": "Weither the Switch is checked or not"
+    },
+    {
+      "name": "defaultChecked",
+      "type": "boolean | undefined",
+      "description": "Weither the Switch is checked by default or not"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "description": "Weither the Switch is disabled or not"
+    },
+    {
+      "name": "onChange",
+      "type": "((event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithChecked<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>>) => void) | undefined",
+      "description": "Callback function called when the Switch checked state changes"
+    },
+    {
+      "name": "checkedBackground",
+      "type": "React.ReactNode",
+      "description": "The background react node of the Switch when it is checked.\nUseful to place an emoji like 🌜"
+    },
+    {
+      "name": "uncheckedBackground",
+      "type": "React.ReactNode",
+      "description": "The background react node of the Switch when it not checked\nUseful to place an emoji like 🌞"
+    },
+    {
+      "name": "labelPosition",
+      "type": "string | undefined",
+      "description": "The position of the label relative to the Checkbox"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function SwitchBasic() {\n  const [checked, setChecked] = useState<any>(null)\n\n  return (\n    <Switch\n      checked={checked}\n      onChange={event => setChecked(event.target.checked)}\n    />\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-switch--basic&viewMode=story"
+    },
+    {
+      "source": "function SwitchLabels() {\n  const [checked, setChecked] = useState<any>(null)\n\n  return (\n    <Div>\n      <Switch\n        checked={checked}\n        onChange={event => setChecked(event.target.checked)}\n      >\n        A switch\n      </Switch>\n      <Switch\n        mt={2}\n        labelPosition=\"left\"\n        checked={checked}\n        onChange={event => setChecked(event.target.checked)}\n      >\n        A switch\n      </Switch>\n      <Switch\n        mt={2}\n        labelPosition=\"top\"\n        checked={checked}\n        onChange={event => setChecked(event.target.checked)}\n      >\n        A switch\n      </Switch>\n      <Switch\n        mt={2}\n        labelPosition=\"bottom\"\n        checked={checked}\n        onChange={event => setChecked(event.target.checked)}\n      >\n        A switch\n      </Switch>\n    </Div>\n  )\n}\n",
+      "name": "Labels",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-switch--labels&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-switch--parts&viewMode=story"
+}

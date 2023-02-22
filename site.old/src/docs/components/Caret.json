@@ -1,0 +1,17 @@
+{
+  "props": [
+    {
+      "name": "rotation",
+      "type": "number | undefined",
+      "description": "The rotation of the Caret"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function CaretBasicDemo() {\n  return (\n    <Caret />\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-caret--basic&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-caret--parts&viewMode=story"
+}

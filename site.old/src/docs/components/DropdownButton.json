@@ -1,0 +1,82 @@
+{
+  "props": [
+    {
+      "name": "open",
+      "type": "boolean | undefined",
+      "description": "Whether the DropdownButton is open or not"
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean | undefined",
+      "description": "Whether the DropdownButton is open by default or not"
+    },
+    {
+      "name": "label",
+      "type": "string | undefined",
+      "description": "The label of the DropdownButton"
+    },
+    {
+      "name": "fade",
+      "type": "boolean | undefined",
+      "description": "Whether the DropdownButton's menu should fade in and out or not"
+    },
+    {
+      "name": "endIcon",
+      "type": "React.ReactNode",
+      "description": "The end icon for the button"
+    },
+    {
+      "name": "onChange",
+      "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
+      "description": "Callback function called when the DropdownButton returns a value"
+    },
+    {
+      "name": "onOpen",
+      "type": "((open: boolean) => void) | undefined",
+      "description": "Callback function called when the DropdownButton is opened or closed"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function DropdownButtonBasicDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        disabled\n        mt={1}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n    </Div>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--basic&viewMode=story"
+    },
+    {
+      "source": "function DropdownButtonDefaultOpenDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        defaultOpen\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "name": "DefaultOpen",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--defaultopen&viewMode=story"
+    },
+    {
+      "source": "function DropdownButtonSubMenuDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n      >\n        {makeItems(items, 6).map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "name": "SubMenu",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--submenu&viewMode=story"
+    },
+    {
+      "source": "function DropdownButtonControlledDemo() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <Flex align=\"center\">\n      <DropdownButton\n        open={open}\n        label=\"Drop it!\"\n        onOpen={prev => setOpen(prev)}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <A\n        ml={1}\n        userSelect=\"none\"\n        onClick={() => setOpen(prev => !prev)}\n      >\n        Toggle\n      </A>\n    </Flex>\n  )\n}\n",
+      "name": "Controlled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--controlled&viewMode=story"
+    },
+    {
+      "source": "function DropdownButtonExtendedDemo() {\n  return (\n    <ExtendTheme theme={{\n      DropdownButton: {\n        Menu: [\n          {\n            width: 256,\n            left: 'unset',\n          },\n        ],\n      },\n    }}\n    >\n      <DropdownButton\n        label=\"Drop it!\"\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n    </ExtendTheme>\n  )\n}\n",
+      "name": "Extended",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--extended&viewMode=story"
+    },
+    {
+      "source": "function DropdownButtonFadeDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        fade\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "name": "Fade",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--fade&viewMode=story"
+    },
+    {
+      "source": "function DropdownButtonEndIconDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        endIcon={(\n          <svg\n            width={10}\n            viewBox=\"0 0 16 16\"\n            fill=\"none\"\n            xmlns=\"http://www.w3.org/2000/svg\"\n          >\n            <path\n              d=\"M8.00001 12L2.80386 6H13.1962L8.00001 12Z\"\n              fill=\"currentColor\"\n            />\n          </svg>\n        )}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "name": "EndIcon",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--endicon&viewMode=story"
+    },
+    {
+      "source": "function DropdownButtonEventOrderDemo() {\n  return (\n    <Div>\n      <DropdownButton\n        label=\"Drop it!\"\n        onChange={() => console.log(1)}\n        onOpen={prev => console.log(2, prev)}\n      >\n        {items.map(renderItem)}\n      </DropdownButton>\n      <Div mt={1}>\n        Am I underneath?\n      </Div>\n    </Div>\n  )\n}\n",
+      "name": "EventOrder",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--eventorder&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-dropdownbutton--parts&viewMode=story"
+}

@@ -1,0 +1,41 @@
+{
+  "props": [],
+  "demos": [
+    {
+      "source": "function SliderBasic() {\n  const [value, setValue] = useState(0)\n\n  return (\n    <>\n      <Slider\n        value={value}\n        onChange={(event, value) => setValue(value)}\n      />\n      <Slider\n        mt={2}\n        disabled\n        value={value}\n        onChange={(event, value) => setValue(value)}\n      />\n    </>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--basic&viewMode=story"
+    },
+    {
+      "source": "function SliderKnobSize() {\n  const [value, setValue] = useState(0)\n\n  return (\n    <Slider\n      value={value}\n      knobSize={42}\n      onChange={(event, value) => setValue(value)}\n    />\n  )\n}\n",
+      "name": "KnobSize",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--knob-size&viewMode=story"
+    },
+    {
+      "source": "function SliderStep() {\n  const [value, setValue] = useState(0)\n\n  return (\n    <Slider\n      value={value}\n      step={0.1}\n      onChange={(event, value) => setValue(value)}\n    />\n  )\n}\n",
+      "name": "Step",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--step&viewMode=story"
+    },
+    {
+      "source": "function SliderMinMax() {\n  const [value, setValue] = useState(0.6)\n\n  return (\n    <>\n      <Slider\n        value={value}\n        onChange={(event, value) => setValue(value)}\n        min={0.5}\n      />\n      <Slider\n        value={value}\n        onChange={(event, value) => setValue(value)}\n        max={0.75}\n      />\n    </>\n  )\n}\n",
+      "name": "MinMax",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--min-max&viewMode=story"
+    },
+    {
+      "source": "function SliderMarks() {\n  const [value, setValue] = useState(0.6)\n\n  return (\n    <>\n      <Slider\n        value={value}\n        onChange={(event, value) => setValue(value)}\n        marks={[\n          { value: 0, label: '0' },\n          { value: 0.25, label: '25%' },\n          { value: 0.5, label: '5%' },\n          { value: 0.75, label: '75%' },\n          { value: 1, label: '100%' },\n        ]}\n      />\n      <Slider\n        mt={2}\n        value={value}\n        onChange={(event, value) => setValue(value)}\n        marks={[\n          { value: 0 },\n          { value: 0.25 },\n          { value: 0.5 },\n          { value: 0.75 },\n          { value: 1 },\n        ]}\n      />\n    </>\n  )\n}\n\nexport const Marks = SliderMarks.bind({}) \n\n// @name Multiple\n// @url https://storybook.honorable.design/iframe.html?args=&id=demos-slider--multiple&viewMode=story\n// START-SOURCE\nfunction SliderMultiple() {\n  const [value, setValue] = useState([0, 0.5])\n\n  return (\n    <>\n      <Slider\n        value={value}\n        onChange={(event, value) => setValue(value)}\n      />\n      <Slider\n        mt={2}\n        value={value}\n        noSwap\n        onChange={(event, value) => setValue(value)}\n      />\n    </>\n  )\n}\n",
+      "name": "Marks",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--marks&viewMode=story"
+    },
+    {
+      "source": "function SliderUncontrolled() {\n\n  return (\n    <>\n      <Slider />\n      <Slider\n        mt={2}\n        defaultValue={0.5}\n      />\n    </>\n  )\n}\n",
+      "name": "Uncontrolled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--uncontrolled&viewMode=story"
+    },
+    {
+      "source": "function SliderLabelTooltip() {\n\n  return (\n    <>\n      <Slider\n        labelTooltipDisplay=\"on\"\n      />\n      <Slider  \n        mt={2}\n        labelTooltipDisplay=\"auto\"\n      />\n    </>\n  )\n}\n",
+      "name": "LabelTooltip",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--label-tooltip&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-slider--parts&viewMode=story"
+}

@@ -1,0 +1,47 @@
+{
+  "props": [
+    {
+      "name": "value",
+      "type": "any",
+      "description": "The value of the selected Radio."
+    },
+    {
+      "name": "defaultValue",
+      "type": "any",
+      "description": "The value of the selected Radio by default."
+    },
+    {
+      "name": "onChange",
+      "type": "((event: import(\"/Users/sven/dev/honorable/packages/honorable/src/types\").TargetWithValue<React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | React.ChangeEvent<Element>>) => void) | undefined",
+      "description": "Callback function called when the RadioGroup returns a value"
+    },
+    {
+      "name": "row",
+      "type": "boolean | undefined",
+      "description": "Whether the RadioGroup is in a row or not"
+    }
+  ],
+  "demos": [
+    {
+      "source": "function RadioGroupBasic() {\n  return (\n    <RadioGroup>\n      <Radio value={0}>\n        Zero\n      </Radio>\n      <Radio value={1}>\n        One\n      </Radio>\n      <Radio value={2}>\n        Two\n      </Radio>\n    </RadioGroup>\n  )\n}\n",
+      "name": "Basic",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-radiogroup--basic&viewMode=story"
+    },
+    {
+      "source": "function RadioGroupControlled() {\n  const [value, setValue] = useState(null)\n\n  return (\n    <RadioGroup\n      value={value}\n      onChange={event => setValue(event.target.value)}\n    >\n      <Radio value={0}>\n        Zero\n      </Radio>\n      <Radio value={1}>\n        One\n      </Radio>\n      <Radio value={2}>\n        Two\n      </Radio>\n    </RadioGroup>\n  )\n}\n",
+      "name": "Controlled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-radiogroup--controlled&viewMode=story"
+    },
+    {
+      "source": "function RadioGroupDisabled() {\n  const [value, setValue] = useState(null)\n\n  return (\n    <RadioGroup\n      value={value}\n      onChange={event => setValue(event.target.value)}\n    >\n      <Radio value={0}>\n        Zero\n      </Radio>\n      <Radio\n        disabled\n        value={1}\n      >\n        One\n      </Radio>\n      <Radio value={2}>\n        Two\n      </Radio>\n    </RadioGroup>\n  )\n}\n",
+      "name": "Disabled",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-radiogroup--disabled&viewMode=story"
+    },
+    {
+      "source": "function RadioGroupRow() {\n  const [value, setValue] = useState(null)\n\n  return (\n    <RadioGroup\n      value={value}\n      onChange={event => setValue(event.target.value)}\n      row\n    >\n      <Radio value={0}>\n        Zero\n      </Radio>\n      <Radio\n        disabled\n        value={1}\n      >\n        One\n      </Radio>\n      <Radio value={2}>\n        Two\n      </Radio>\n    </RadioGroup>\n  )\n}\n",
+      "name": "Row",
+      "url": "https://storybook.honorable.design/iframe.html?args=&id=demos-radiogroup--row&viewMode=story"
+    }
+  ],
+  "partsUrl": "https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--parts&viewMode=story"
+}
