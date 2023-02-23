@@ -3,7 +3,20 @@ import { H2, H3, Iframe } from 'honorable'
 import DemoContainer from '../../components/DemoContainer'
 import PropsContainer from '../../components/PropsContainer'
 
-function ComponentPage({ componentName, componentJson }) {
+type ComponentPagePropsType = {
+  componentName: string
+  componentJson: {
+    demos: {
+      source: string
+      name: string
+      url: string
+    }[]
+    props: any
+    partsUrl: string
+  }
+}
+
+function ComponentPage({ componentName, componentJson }: ComponentPagePropsType) {
   return (
     <>
       <H2>{componentName}</H2>

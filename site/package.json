@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "tsc": "tsc",
     "preview": "vite preview",
     "clean": "rimraf node_modules package-lock.json && npm i --force"
   },

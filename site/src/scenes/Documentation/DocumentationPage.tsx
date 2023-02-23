@@ -4,7 +4,11 @@ import Markdown from 'markdown-to-jsx'
 
 import CodeBlock from '../../components/CodeBlock'
 
-function DocumentationPage({ contentUrl }) {
+type DocumentationPagePropsType = {
+  contentUrl: string
+}
+
+function DocumentationPage({ contentUrl }: DocumentationPagePropsType) {
   const [content, setContent] = useState('')
 
   useEffect(() => {

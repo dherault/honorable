@@ -20,7 +20,11 @@ function Xflex() {
         mt={2}
         textAlign="center"
       >
-        The <Pre>xflex</Pre> property
+        The
+        {' '}
+        <Pre>xflex</Pre>
+        {' '}
+        property
       </H1>
       <P
         mt={2}
@@ -30,7 +34,6 @@ function Xflex() {
         Think about a numpad:
       </P>
       <Numpad
-        cursor={null}
         mt={2}
       />
       <P
@@ -120,6 +123,7 @@ function ToggleGroup(props) {
     />
   )
 }
+
 function ToggleButton({ children, active = false, ...props }) {
   return (
     <Button
