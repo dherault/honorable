@@ -23,11 +23,14 @@ function Layout({ children }) {
           textDecoration="none"
           fontWeight={700}
         >
-          🙏 <Span ml={0.25}>Honorable</Span>
+          🙏
+          {' '}
+          <Span ml={0.25}>Honorable</Span>
         </H3>
         <A
           nav
           ml={2}
+          mb={0}
           as={Link}
           to="/docs/getting-started"
         >
