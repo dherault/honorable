@@ -8,6 +8,8 @@ import {
   Span,
 } from 'honorable'
 
+import { Link } from 'react-router-dom'
+
 import CommandLinePre from '../../../components/CommandLinePre'
 
 function HeroSection() {
@@ -51,7 +53,9 @@ function HeroSection() {
           mt={1}
           text="large"
         >
-          Create your own code conventions,<br />for over x+ components.
+          Create your own code conventions,
+          <br />
+          for over 16+ components.
         </P>
         <Div
           mt={2}
@@ -59,11 +63,9 @@ function HeroSection() {
           display-tablet-down="block"
         >
           <Button
-            as={A}
+            as={Link}
             size="large"
-            href="https://docs.honorable.design/quick-start"
-            target="_blank"
-            rel="noreferer noopener"
+            to="/docs/getting-started"
             textDecoration="none"
             _hover={{
               textDecoration: 'none',

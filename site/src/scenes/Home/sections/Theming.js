@@ -56,7 +56,7 @@ function ThemingSection() {
         xflex="x5b"
       >
         <H2>
-          Use x+ recipes
+          Use recipes
         </H2>
         <Div
           xflex="x5"

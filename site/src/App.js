@@ -28,10 +28,6 @@ function App() {
         <BrowserRouter>
           <Layout>
             <Routes>
-              {/* <Route
-                path="/onboarding"
-                element={<Onboarding />}
-              /> */}
               <Route
                 path="/docs"
                 element={<Documentation />}
