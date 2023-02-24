@@ -14,21 +14,17 @@ export default {
 // @url https://storybook.honorable.design/iframe.html?args=&id=demos-progressbar--basic&viewMode=story
 // START-SOURCE
 function TooltipBasic() {
-  const [progress, setProgress] = useState(0.25)
+  const [progress, setProgress] = useState(0)
 
   return (
-    <>
+    <Tooltip label={progress}>
       <A
-        onClick={() => setProgress(x => (x + 0.25) % 1.0001)}
+        onClick={() => setProgress(x => x + 1)}
         userSelect="none"
       >
         Progress
       </A>
-      <Tooltip
-        mt={1}
-        value={progress}
-      />
-    </>
+    </Tooltip>
   )
 }
 // END-SOURCE
