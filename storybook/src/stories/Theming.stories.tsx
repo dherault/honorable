@@ -5,26 +5,27 @@ export default {
   title: 'Components/Theming',
 }
 
-const extendedTheme1 = {
-  DropdownButton: {
-    Button: {
-      Children: [
-        ({ install }: any) => install && {
-          color: 'red',
-        },
-      ],
-    },
-  },
-}
+// const extendedTheme1: HonorableTheme = {
+//   DropdownButton: {
+
+//     Button: {
+//       Children: [
+//         ({ install }: any) => install && {
+//           color: 'red',
+//         },
+//       ],
+//     },
+//   },
+// }
 
 function Template1() {
   return (
-    <ExtendTheme theme={extendedTheme1}>
-      <DropdownButton
-        install
-        label="Install"
-      />
-    </ExtendTheme>
+    // <ExtendTheme theme={extendedTheme1}>
+    <DropdownButton
+      install
+      label="Install"
+    />
+    // </ExtendTheme>
   )
 }
 

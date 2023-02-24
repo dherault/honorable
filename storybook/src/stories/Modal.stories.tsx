@@ -29,47 +29,47 @@ function Template(args: any) {
   )
 }
 
-const transitionDuration = 1000
-const extendedTheme = {
-  Modal: {
-    InnerDefaultStyle: [
-      {
-        position: 'relative',
-        top: -12,
-        transition: `opacity ${transitionDuration}ms ease, top ${transitionDuration}ms ease`,
-      },
-    ],
-    InnerTransitionStyle: [
-      {
-        entering: { opacity: 1, top: 0 },
-        entered: { opacity: 1, top: 0 },
-      },
-    ],
-  },
-}
+// const transitionDuration = 1000
+// const extendedTheme = {
+//   Modal: {
+//     InnerDefaultStyle: [
+//       {
+//         position: 'relative',
+//         top: -12,
+//         transition: `opacity ${transitionDuration}ms ease, top ${transitionDuration}ms ease`,
+//       },
+//     ],
+//     InnerTransitionStyle: [
+//       {
+//         entering: { opacity: 1, top: 0 },
+//         entered: { opacity: 1, top: 0 },
+//       },
+//     ],
+//   },
+// }
 
-function Template2(args: any) {
-  const [open, setOpen] = useState(false)
+// function Template2(args: any) {
+//   const [open, setOpen] = useState(false)
 
-  return (
-    <ExtendTheme theme={extendedTheme}>
-      <A
-        onClick={() => setOpen(true)}
-        userSelect="none"
-      >
-        Open
-      </A>
-      <Modal
-        {...args}
-        open={open}
-        onClose={() => setOpen(false)}
-        transitionDuration={transitionDuration}
-      >
-        Content
-      </Modal>
-    </ExtendTheme>
-  )
-}
+//   return (
+//     <ExtendTheme theme={extendedTheme}>
+//       <A
+//         onClick={() => setOpen(true)}
+//         userSelect="none"
+//       >
+//         Open
+//       </A>
+//       <Modal
+//         {...args}
+//         open={open}
+//         onClose={() => setOpen(false)}
+//         transitionDuration={transitionDuration}
+//       >
+//         Content
+//       </Modal>
+//     </ExtendTheme>
+//   )
+// }
 
 function Template3(args: any) {
   const [open, setOpen] = useState(false)
@@ -346,9 +346,9 @@ Open.args = {
   onClose: null, // Weird sb bug
 }
 
-export const Extended = Template2.bind({}) as any
-Extended.args = {
-}
+// export const Extended = Template2.bind({}) as any
+// Extended.args = {
+// }
 
 export const NoOnClose = Template3.bind({}) as any
 NoOnClose.args = {

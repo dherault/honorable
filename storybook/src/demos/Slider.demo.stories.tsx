@@ -139,7 +139,7 @@ function SliderMarks() {
   )
 }
 
-export const Marks = SliderMarks.bind({}) 
+export const Marks = SliderMarks.bind({})
 
 // START-DEMO
 // @name Multiple
@@ -152,12 +152,14 @@ function SliderMultiple() {
     <>
       <Slider
         value={value}
+        // @ts-expect-error
         onChange={(event, value) => setValue(value)}
       />
       <Slider
         mt={2}
         value={value}
         noSwap
+        // @ts-expect-error
         onChange={(event, value) => setValue(value)}
       />
     </>
@@ -200,7 +202,7 @@ function SliderLabelTooltip() {
       <Slider
         labelTooltipDisplay="on"
       />
-      <Slider  
+      <Slider
         mt={2}
         labelTooltipDisplay="auto"
       />
@@ -219,7 +221,8 @@ export const Parts = createPartsTemplate(
   ),
   'Slider',
   []
-).bind({})
+).bind({}) as any
+
 Parts.args = {
   defaultValue: 0.5,
 }

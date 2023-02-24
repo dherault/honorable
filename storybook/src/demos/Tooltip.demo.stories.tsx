@@ -46,5 +46,5 @@ export const Parts = createPartsTemplate(
   ),
   'Tooltip',
   []
-).bind({})
+).bind({}) as any
 Parts.args = {}
