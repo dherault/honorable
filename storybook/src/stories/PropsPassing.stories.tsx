@@ -155,66 +155,66 @@ export const CustomPropsBreakpoints = Template7.bind({}) as any
 CustomPropsBreakpoints.args = {
 }
 
-function Template8() {
-  return (
-    <ExtendTheme
-      theme={{
-        colors: {
-          'some-red': {
-            light: 'red',
-            dark: 'green',
-          },
-        },
-        global: [
-          ({ coolColor }: any) => coolColor && {
-            color: 'some-red',
-          },
-        ],
-      }}
-    >
-      <Button
-        coolColor
-        color={null}
-        onClick={event => console.log(event)}
-      >
-        Do I NOT have a red text?
-      </Button>
-      <Button
-        coolColor
-        cool
-        color={undefined}
-      >
-        Do I have a red text?
-      </Button>
-      <Button
-        coolColor
-      >
-        Do I have a red text?
-      </Button>
-      <Div
-        coolColor // means red
-        color={null}
-      >
-        Do I NOT have a red text?
-      </Div>
-      <Div
-        coolColor // means red
-        color={undefined}
-      >
-        Do I have a red text?
-      </Div>
-      <Div
-        coolColor
-      >
-        Do I have a red text?
-      </Div>
-    </ExtendTheme>
-  )
-}
+// function Template8() {
+//   return (
+//     <ExtendTheme
+//       theme={{
+//         colors: {
+//           'some-red': {
+//             light: 'red',
+//             dark: 'green',
+//           },
+//         },
+//         global: [
+//           ({ coolColor }: any) => coolColor && {
+//             color: 'some-red',
+//           },
+//         ],
+//       }}
+//     >
+//       <Button
+//         coolColor
+//         color={null}
+//         onClick={event => console.log(event)}
+//       >
+//         Do I NOT have a red text?
+//       </Button>
+//       <Button
+//         coolColor
+//         cool
+//         color={undefined}
+//       >
+//         Do I have a red text?
+//       </Button>
+//       <Button
+//         coolColor
+//       >
+//         Do I have a red text?
+//       </Button>
+//       <Div
+//         coolColor // means red
+//         color={null}
+//       >
+//         Do I NOT have a red text?
+//       </Div>
+//       <Div
+//         coolColor // means red
+//         color={undefined}
+//       >
+//         Do I have a red text?
+//       </Div>
+//       <Div
+//         coolColor
+//       >
+//         Do I have a red text?
+//       </Div>
+//     </ExtendTheme>
+//   )
+// }
 
-export const DeepColorResolution = Template8.bind({}) as any
-DeepColorResolution.args = {
-}
+// export const DeepColorResolution = Template8.bind({}) as any
+// DeepColorResolution.args = {
+// }
 
 function Template9() {
   return (
